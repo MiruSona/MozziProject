@@ -14,4 +14,21 @@
 - 들어옴 20260906-fa5eace8 `Unity 조작 CLI 두 가지 조사 끝` (mem/0.3.0)
 - 거절 tag-standard body-thin secret-entropy `Claude Code 샌드박스와 uloop 연결`
 - 들어옴 20260906-26afb73e `Claude Code 샌드박스와 uloop 연결` (mem/0.3.0) --hold
+- 거절 tag-standard body-thin `필드 대신 찹쌀이 합성으로 얻는다`
+- 들어옴 20260906-e112b4d7 `필드 대신 찹쌀이 합성으로 얻는다` (human:MiruSona)
 - 들어옴 20260906-844cbe68 `Unity 공식 CLI 의 Claude Code 스킬 설치` (mem/0.3.0)
+- 들어옴 20260906-eeae6ba5 `몬스터 합성 조사 문서 남김` (mem/0.3.0)
+- 거절 decision-gate `합성은 2마리·골드+시간·별도 건물`
+- 거절 decision-gate `시작 때 찹쌀이 2마리 지급`
+- 들어옴 20260906-bfe1240b `합성은 2마리·골드+시간·별도 건물` (human:MiruSona) --new
+- 들어옴 20260906-1f6d6ef8 `시작 때 찹쌀이 2마리 지급` (human:MiruSona) --new
+- 거절 summary-len tag-shape body-thin summary-body-match `기획용 AI 툴·스킬 조사`
+- 들어옴 20260906-ed69c8ff `기획용 AI 툴·스킬 인터넷 조사` (mem/0.3.0)
+- 거절 tag-shape body-thin summary-body-match `기획 순서·기법 조사`
+- 들어옴 20260906-89063354 `찹쌀이는 번식과 도감 구매로 늘린다` (human:MiruSona) --new
+- 거절 tag-shape `기획 순서·기법 조사`
+- 들어옴 20260906-05c7e2c5 `기획 순서·기법 조사` (mem/0.3.0)
+- 들어옴 20260906-faba6389 `합성 결과는 정해진 종·다른 계열·변종 세 갈래` (human:MiruSona) --new
+- 들어옴 20260906-b0837296 `미리보기는 도감 미획득 종을 감춘다` (human:MiruSona) --new
+- 들어옴 20260906-592f5268 `찹쌀이 보관함 상세 설계` (mem/0.3.0) --new
+- 들어옴 20260906-468123a8 `찹쌀이 합성 1차 설계 끝` (mem/0.3.0)
