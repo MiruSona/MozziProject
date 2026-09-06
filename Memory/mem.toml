@@ -1,0 +1,107 @@
+schema    = 2
+name      = "ProjectMozzi2"
+tokenizer = "bigram-ko3col+word-en3col+contentless+norm"
+
+[repo]
+scopes = []
+pin_max = 10
+
+# 여기 든 패턴에 걸리면 mem add·set·index 가 그 기억을 안 받는다.
+# 오탐이면 이 목록에서 그 줄을 고친다. long-blob 은 대·소문자·숫자가
+# 다 섞인 덩어리만 잡으므로 CamelCase 이름은 안 걸린다.
+[secret]
+patterns = ["sk-ant-[A-Za-z0-9_-]{20,}", "sk-(proj|live|test)-[A-Za-z0-9_-]{20,}", "sk-[A-Za-z0-9]{20,}", "ghp_[A-Za-z0-9]{20,}", "github_pat_[A-Za-z0-9_]{20,}", "glpat-[A-Za-z0-9_-]{20,}", "xox[baprs]-[A-Za-z0-9-]{10,}", "AKIA[0-9A-Z]{16}", "-----BEGIN [A-Z ]*PRIVATE KEY-----", "eyJ[A-Za-z0-9_-]{10,}\\.[A-Za-z0-9_-]{10,}\\.[A-Za-z0-9_-]{10,}", "\\b\\d{6}-[1-4]\\d{6}\\b", "\\b(?:4\\d{3}|5[1-5]\\d{2}|3[47]\\d{2}|6011)[ -]?\\d{4}[ -]?\\d{4}[ -]?\\d{2,4}\\b", "(?i)\\b(password|passwd|pw|token|secret|api[_-]?key)\\b\\s*[:=]\\s*\\S{4,}", "[A-Za-z0-9+/]{40,}={1,2}", "[A-Za-z0-9+]{40,}={0,2}"]
+warn_patterns = ["[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}", "\\b01[016-9]-?\\d{3,4}-?\\d{4}\\b", "(?i)\\b(password|passwd|pw|token|secret|api[_-]?key)\\b\\s*[:=]\\s*\\S+"]
+
+[gc]
+warm_count = 1000
+warm_days = 90
+cold_count = 20000
+cold_days = 180
+hit_days = 30
+archive_days = 0
+archive_mb = 1024
+batch_limit = 200
+batch_percent = 2
+fold_after_days = 365
+db_max_mb = 60
+
+[budget]
+startup = 1000
+clear = 1000
+resume = 500
+compact = 800
+fork = 500
+subagent = 600
+
+[pin]
+max = 10
+
+[stopword]
+words = ["왜", "무엇", "뭐", "어떻게", "언제", "어디", "누가", "어느", "지금", "있는", "없는", "하는", "되는", "그것", "이것", "저것", "관련", "대한", "위한", "해서", "하고", "인가", "인지", "일까", "및", "등", "때", "수"]
+
+[hook]
+user_prompt = false
+max_bytes = 8000
+lines_per_section = 5
+# subagent_* 는 서브에이전트가 시작할 때 넣는 블록의 손잡이다.
+# subagent_skip 에 agent_type 을 적으면 그 종류에는 아무것도 안 넣는다.
+subagent_start = true
+subagent_max_bytes = 4000
+subagent_skip = []
+
+[search]
+rrf_k = 10
+bonus_cap = 1.5
+field_weights = [12, 3, 4, 1]
+k1 = 1.2
+b = 0.4
+rerank_top = 200
+abstain_floor = 0.15
+syn_weight = 0.5
+
+# 임베딩은 조건부다. 모델 파일이 없으면 조용히 낱말 검색만 한다.
+# path 는 낱말 임베딩 표(ko.bin) 자리다. 비면 Memory/model/ko.bin 을 본다.
+# 의미 검색 모델은 이 칸이 아니라 mem install 이 ~/.aimemory/models/ 에 깐다.
+[embed]
+enabled = false
+path = ""
+# model 이 비면 exe 가 아는 기본 모델을 쓴다.
+model = ""
+floor = 0.35
+rrf_weight = 1.5
+
+# 문서 품질 문턱. mem eval --quality 가 규칙을 강등하면 여기 적는다.
+[quality]
+dup_reject = 0.08
+dup_warn = 0.06
+# dup_vectors 는 중복 판정에 임베딩을 쓸지다. 기본 꺼짐 (설계 18-7).
+dup_vectors = false
+simhash_hamming = 8
+body_min_lines = 3
+body_warn = 120
+body_max = 300
+tag_min = 2
+tag_max = 5
+tag_broad_ratio = 0.2
+scope_skew_ratio = 0.9
+cold_days = 180
+precision_demote = 0.8
+precision_off = 0.6
+
+[synonym]
+"검색" = ["search"]
+"결정" = ["decision"]
+"기억" = ["memory", "메모리"]
+"색인" = ["index", "인덱스", "인덱싱"]
+"저장소" = ["repo", "repository"]
+"훅" = ["hook"]
+
+# 낱말 -> 대표말. 색인과 질의가 이 표를 똑같이 타서 같은 글자가 된다.
+# 왼쪽을 오른쪽으로 바꾼다. 여러 낱말 구·영어도 된다. 예 :
+# "인덱싱" = "색인"
+# "index" = "색인"
+[canon]
+
+# 폴더 이름 -> scope 값. 비어 있어도 된다 (없으면 폴더 이름 소문자를 쓴다).
+[scope]

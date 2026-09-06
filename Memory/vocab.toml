@@ -1,0 +1,177 @@
+# 이 저장소가 쓰는 낱말 표준이다. 여기 있는 것은 씨앗일 뿐이라
+# 프로젝트에 맞게 지우고 늘려서 쓴다.
+#
+# [scope] 가 비어 있는 동안은 「아직 안 정했다」로 보고 표준 밖 태그·scope 를
+# 경고로만 알린다. mem tags --add-scope <이름> 으로 첫 scope 를 정하면
+# 그때부터 목록 밖은 거절이다.
+
+# 태그 표준 목록. 왼쪽이 상위, 오른쪽이 하위다 (한 겹만 둔다).
+# 늘리려면 mem tags --add <태그> 를 쓴다.
+[tag]
+"art" = ["animation", "shader", "texture", "audio"]
+"bug" = []
+"build" = ["ci", "packaging", "pipeline"]
+"data" = ["save", "schema", "config"]
+"design" = ["architecture", "plan"]
+"doc" = ["guide"]
+"engine" = ["unity", "unreal", "godot"]
+"gameplay" = ["input", "camera", "physics", "ai"]
+"level" = ["tilemap", "levelgen", "spawn"]
+"net" = ["multiplayer", "server"]
+"perf" = ["profiling", "memory", "loadtime"]
+"platform" = ["android", "ios", "windows", "console"]
+"process" = ["effort", "review", "release"]
+"security" = ["secret", "permission"]
+"test" = ["unittest", "stress", "testdata"]
+"tool" = ["editor", "cli", "install"]
+"ui" = ["hud", "localization"]
+
+# 별칭 → 표준 태그. add·lint 가 조용히 바꿔 준다.
+[tag.alias]
+"anim" = "animation"
+"bugfix" = "bug"
+"design-review" = "design"
+"docs" = "doc"
+"estimate" = "effort"
+"loc" = "localization"
+"network" = "net"
+"optimization" = "perf"
+"qa" = "test"
+"sfx" = "audio"
+"unity3d" = "unity"
+"ux" = "ui"
+
+# 태그로 못 쓰는 낱말. 주제가 아니라 출처라서다 (author·sources 칸이 맡는다).
+[tag.deny]
+words = ["impl", "poc", "fieldtest", "survey", "decision-table", "wip", "misc", "etc", "note"]
+
+# scope 표준 목록. 툴·부품 이름 통째 하나만 쓴다. 주제를 붙이지 않는다.
+# 늘리려면 mem tags --add-scope <이름> 을 쓴다.
+[scope]
+"art" = []
+"code" = []
+"design" = []
+"game" = []
+"sound" = []
+
+[scope.alias]
+
+# 기억 종류 표다. 여기 없으면 코드 안 기본 7종으로 돈다.
+# 적은 종류의 적은 칸만 바뀐다. 기본 7종은 지울 수 없다.
+#   sources    none | warn | required        근거를 얼마나 세게 묻나
+#   body       free | issue-sections | numbered   본문 꼴 검사
+#   half_life  none | history(90일) | decision(720일)   검색 감쇠
+#   stale_days 낡음 후보 일수 (0 이면 안 묻는다)
+#   hook       세션 훅 절 이름 (비우면 안 실린다)
+
+[type.todo]
+label = "할 일"
+sources = "none"
+severity = false
+todo_status = true
+body = "free"
+evidence = false
+conclusion = false
+one_thing = false
+gate = false
+stale_days = 0
+half_life = "none"
+gc_keep = false
+search_bonus = false
+hook = "열린 이슈·할 일"
+
+[type.history]
+label = "기록"
+sources = "warn"
+severity = false
+todo_status = false
+body = "free"
+evidence = true
+conclusion = false
+one_thing = false
+gate = false
+stale_days = 180
+half_life = "history"
+gc_keep = false
+search_bonus = false
+hook = ""
+
+[type.issue]
+label = "이슈"
+sources = "required"
+severity = true
+todo_status = false
+body = "issue-sections"
+evidence = true
+conclusion = false
+one_thing = false
+gate = false
+stale_days = 0
+half_life = "none"
+gc_keep = true
+search_bonus = true
+hook = "열린 이슈·할 일"
+
+[type.caution]
+label = "주의"
+sources = "required"
+severity = true
+todo_status = false
+body = "free"
+evidence = false
+conclusion = false
+one_thing = false
+gate = false
+stale_days = 0
+half_life = "none"
+gc_keep = true
+search_bonus = false
+hook = "열린 이슈·할 일"
+
+[type.decision]
+label = "결정"
+sources = "required"
+severity = false
+todo_status = false
+body = "free"
+evidence = true
+conclusion = true
+one_thing = true
+gate = true
+stale_days = 1440
+half_life = "decision"
+gc_keep = true
+search_bonus = true
+hook = "최근 결정"
+
+[type.howto]
+label = "하는 법"
+sources = "none"
+severity = false
+todo_status = false
+body = "numbered"
+evidence = true
+conclusion = false
+one_thing = false
+gate = false
+stale_days = 1440
+half_life = "decision"
+gc_keep = true
+search_bonus = false
+hook = ""
+
+[type.fact]
+label = "환경 사실"
+sources = "required"
+severity = false
+todo_status = false
+body = "free"
+evidence = false
+conclusion = false
+one_thing = true
+gate = false
+stale_days = 360
+half_life = "none"
+gc_keep = true
+search_bonus = false
+hook = "환경"

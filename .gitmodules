@@ -1,0 +1,18 @@
+[submodule "Tools/DiagramTool"]
+	path = Tools/DiagramTool
+	url = https://github.com/MiruSona/officina-diagram-tool.git
+[submodule "Tools/ArtTool"]
+	path = Tools/ArtTool
+	url = https://github.com/MiruSona/officina-art-tool.git
+[submodule "Tools/SoundTool"]
+	path = Tools/SoundTool
+	url = https://github.com/MiruSona/officina-sound-tool.git
+[submodule "Tools/CodeTool"]
+	path = Tools/CodeTool
+	url = https://github.com/MiruSona/officina-code-tool.git
+[submodule "Tools/EffortTool"]
+	path = Tools/EffortTool
+	url = https://github.com/MiruSona/officina-effort-tool.git
+[submodule "Tools/AIMemoryTool"]
+	path = Tools/AIMemoryTool
+	url = https://github.com/MiruSona/officina-ai-memory-tool.git

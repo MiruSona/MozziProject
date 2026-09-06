@@ -1,0 +1,63 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact|fork",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mem",
+            "args": [
+              "hook",
+              "session-start"
+            ],
+            "timeout": 10,
+            "statusMessage": "기억 불러오는 중"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mem",
+            "args": [
+              "hook",
+              "subagent-start"
+            ],
+            "timeout": 10,
+            "statusMessage": "기억 불러오는 중"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(mem search:*)",
+      "PowerShell(mem search *)",
+      "Bash(mem show:*)",
+      "PowerShell(mem show *)",
+      "Bash(mem add:*)",
+      "PowerShell(mem add *)",
+      "Bash(mem set:*)",
+      "PowerShell(mem set *)",
+      "Bash(mem lint:*)",
+      "PowerShell(mem lint *)",
+      "Bash(mem review)",
+      "PowerShell(mem review)",
+      "Bash(mem review --kind:*)",
+      "PowerShell(mem review --kind *)",
+      "Bash(mem tags:*)",
+      "PowerShell(mem tags *)",
+      "Bash(mem index)",
+      "PowerShell(mem index)",
+      "Bash(mem status:*)",
+      "PowerShell(mem status *)",
+      "Bash(mem eval:*)",
+      "PowerShell(mem eval *)"
+    ]
+  }
+}

@@ -1,0 +1,121 @@
+# 이 저장소는 게임 저장소다. Unity 프로젝트는 ProjectMozziUnity/ 아래에 만든다.
+# Unity 규칙은 https://github.com/github/gitignore/blob/main/Unity.gitignore 를 바탕으로 하고
+# 경로 앞에 ProjectMozziUnity/ 를 붙였다.
+
+# ---- Unity 가 만들어 내는 것 ----
+ProjectMozziUnity/.utmp/
+ProjectMozziUnity/[Ll]ibrary/
+ProjectMozziUnity/[Tt]emp/
+ProjectMozziUnity/[Oo]bj/
+ProjectMozziUnity/[Bb]uild/
+ProjectMozziUnity/[Bb]uilds/
+ProjectMozziUnity/[Ll]ogs/
+ProjectMozziUnity/[Uu]ser[Ss]ettings/
+*.log
+
+# Blender 가 만드는 백업 파일
+*.blend1
+*.blend1.meta
+
+# MemoryCaptures 는 크고 민감한 값이 들어갈 수 있다
+ProjectMozziUnity/[Mm]emoryCaptures/
+
+# 녹화 파일은 크다
+ProjectMozziUnity/[Rr]ecordings/
+
+# Rider 플러그인이 자동으로 만드는 것
+ProjectMozziUnity/[Aa]ssets/Plugins/Editor/JetBrains*
+*.DotSettings.user
+
+# Visual Studio 캐시
+.vs/
+
+# Gradle 캐시
+.gradle/
+
+# 자동 생성되는 솔루션·프로젝트 파일
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity 가 만드는 meta 짝
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# 크래시 보고서
+sysinfo.txt
+mono_crash.*
+
+# 빌드 결과물
+*.apk
+*.aab
+*.unitypackage
+*.unitypackage.meta
+*.app
+
+# Crashlytics
+crashlytics-build.properties
+
+# TestRunner 가 만드는 것
+InitTestScene*.unity*
+
+# Addressables 기본 제외
+ProjectMozziUnity/ServerData
+ProjectMozziUnity/[Aa]ssets/StreamingAssets/aa*
+ProjectMozziUnity/[Aa]ssets/AddressableAssetsData/link.xml*
+ProjectMozziUnity/[Aa]ssets/Addressables_Temp*
+ProjectMozziUnity/[Aa]ssets/AddressableAssetsData/*/*.bin*
+
+# Visual Scripting 자동 생성 파일
+ProjectMozziUnity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
+ProjectMozziUnity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
+ProjectMozziUnity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
+ProjectMozziUnity/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
+
+# 플레이 모드 시험이 만드는 씬
+ProjectMozziUnity/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Assets 안에 생기는 캐시
+ProjectMozziUnity/[Aa]ssets/[Ss]ceneDependencyCache*
+
+# ---- AI 도구 개인 로컬 설정 (팀 공용 설정은 .claude/settings.json) ----
+.claude/settings.local.json
+.gemini/settings.json
+
+# ---- mem 이 만드는 것 ----
+# >>> mem >>>
+Memory/index.db
+Memory/index.db-wal
+Memory/index.db-shm
+Memory/index.lock
+Memory/index.lock.stale.*
+Memory/vectors.bin
+Memory/inbox/
+Memory/local/
+mem.exe
+.claude/*.mem-bak
+.gemini/*.mem-bak
+# <<< mem <<<
+
+# ---- 로컬 전용 문서 (개인 경로·기계 값이 든 것) ----
+*.local.md
+
+# ---- OS 잡파일 ----
+.DS_Store
+Thumbs.db
+desktop.ini
