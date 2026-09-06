@@ -15,6 +15,8 @@ description: Use when writing or editing any Markdown doc in this repo — 조�
 - **툴 이야기는 그 툴 서브모듈 안** : `Tools/<툴>/Docs/…`. 툴 개선 요청은 `Tools/<툴>/Docs/Todo/`.
 - 파일 이름은 **`YYYY-MM-DD-주제.md`**. (예: `2026-09-06-밭시스템설계.md`)
   `Docs/Guide/` 와 `Docs/Todo/진행상황.md` 처럼 계속 고쳐 쓰는 문서는 날짜를 안 붙인다.
+- **`Docs/Design/` 의 기획서는 계속 고쳐 쓰므로 날짜 없이 번호 이름**(`00-컨셉.md` · `03-시스템-<이름>.md`)**을 쓴다.**
+  조사·기록은 날짜 이름 그대로다.
 - 환경이나 컨벤션이 바뀌면 `Docs/Guide/` 의 해당 문서를 고친다.
 
 ## 어떻게 쓰나

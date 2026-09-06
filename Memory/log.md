@@ -32,3 +32,21 @@
 - 들어옴 20260906-b0837296 `미리보기는 도감 미획득 종을 감춘다` (human:MiruSona) --new
 - 들어옴 20260906-592f5268 `찹쌀이 보관함 상세 설계` (mem/0.3.0) --new
 - 들어옴 20260906-468123a8 `찹쌀이 합성 1차 설계 끝` (mem/0.3.0)
+- 거절 summary-len body-thin summary-body-match `기획·제작 순서 틀 초안`
+- 들어옴 20260906-859be838 `기획·제작 순서 틀 초안` (mem/0.3.0)
+- 거절 tag-standard body-thin summary-body-match `기획 루프 대시보드 툴 조사`
+- 거절 summary-len tag-standard body-thin summary-body-match `웹 프로토타입 툴 조사`
+- 들어옴 20260906-79e9e7c3 `기획 루프 대시보드 툴 조사` (mem/0.3.0)
+- 들어옴 20260906-a65e5d2e `웹 프로토타입 툴 조사` (mem/0.3.0)
+- 거절 summary-len tag-standard body-thin summary-body-match `수치·밸런스 대시보드 툴 조사`
+- 거절 tag-standard body-thin summary-body-match `수치·밸런스 대시보드 툴 조사`
+- 거절 tag-standard duplicate-hard `수치·밸런스 대시보드 툴 조사`
+- 들어옴 20260906-0b99d23d `수치·밸런스 대시보드 툴 조사` (mem/0.3.0) --new
+- 거절 tag-standard body-thin summary-body-match `필요한 프로토타입과 ProtoTool 부품 가늠`
+- 들어옴 20260906-0691a0ec `필요한 프로토타입과 ProtoTool 부품 가늠` (mem/0.3.0)
+- 거절 summary-len tag-shape body-thin summary-body-match `기획·제작 순서 틀 9단계 확정`
+- 거절 tag-shape `기획 순서 틀 9단계 확정`
+- 들어옴 20260906-32695942 `기획 순서 틀 9단계 확정` (mem/0.3.0)
+- 들어옴 20260906-46ab2802 `프로토타입은 웹 한 파일만` (mem/0.3.0)
+- 들어옴 20260906-79aa3731 `기획 툴을 둘로 나눔` (mem/0.3.0)
+- 들어옴 20260906-07eed168 `기획서 파일은 번호 이름` (mem/0.3.0)
