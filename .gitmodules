@@ -16,3 +16,9 @@
 [submodule "Tools/AIMemoryTool"]
 	path = Tools/AIMemoryTool
 	url = https://github.com/MiruSona/officina-ai-memory-tool.git
+[submodule "Tools/ProtoTool"]
+	path = Tools/ProtoTool
+	url = https://github.com/MiruSona/officina-game-prototype-tool.git
+[submodule "Tools/GamedesignTool"]
+	path = Tools/GamedesignTool
+	url = https://github.com/MiruSona/officina-game-design-tool.git
