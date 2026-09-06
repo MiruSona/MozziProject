@@ -52,3 +52,6 @@
 - 들어옴 20260906-07eed168 `기획서 파일은 번호 이름` (mem/0.3.0)
 - 거절 summary-len tag-standard body-thin summary-body-match duplicate-soft `툴 저장소 둘 만들어 서브모듈로 붙이고 공개 저장소 검사기 설치`
 - 들어옴 20260906-1b70bd38 `툴 저장소 둘 만들어 서브모듈로 붙이고 공개 저장소 검사기 설치` (mem/0.3.0)
+
+## 2026-09-07
+- 들어옴 20260907-bd1ea5fe `기획절차 정본을 GamedesignTool 저장소로 옮김` (mem/0.3.0)
