@@ -55,3 +55,17 @@
 
 ## 2026-09-07
 - 들어옴 20260907-bd1ea5fe `기획절차 정본을 GamedesignTool 저장소로 옮김` (mem/0.3.0)
+- 거절 summary-len title-shape tag-shape body-thin summary-body-match duplicate-soft `기획 단계는 stage 툴 상태 파일로 관리하고 훅 셋이 게임 저장소에 걸려 있다`
+- 거절 summary-len title-shape tag-shape body-thin summary-body-match `파이썬으로 Windows 경로 문자열을 만들 때 \b 가 백스페이스로 바뀐다`
+- 거절 summary-len title-shape tag-standard tag-shape sources-required body-thin summary-body-match duplicate-soft `GamedesignTool 1판 — 설계·구현·게임 저장소 연결을 한 밤에 끝냈다`
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match duplicate-soft `기획 단계는 stage 툴 상태 파일로 관리하고 훅 셋이 게임 저장소에 걸려 있다`
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match `파이썬으로 Windows 경로 문자열을 만들 때 \b 가 백스페이스로 바뀐다`
+- 거절 summary-len title-shape tag-standard sources-required body-thin summary-body-match duplicate-soft `GamedesignTool 1판 — 설계·구현·게임 저장소 연결을 한 밤에 끝냈다`
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match duplicate-soft `기획 단계는 stage 툴 상태 파일로 관리하고 훅 셋이 게임 저장소에 걸려 있다`
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match `파이썬으로 Windows 경로 문자열을 만들 때 \b 가 백스페이스로 바뀐다`
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match duplicate-soft `GamedesignTool 1판 — 설계·구현·게임 저장소 연결을 한 밤에 끝냈다`
+- 거절 sources-required body-thin summary-body-match duplicate-soft `GamedesignTool 1판을 한 밤에 끝냈다`
+- 들어옴 20260907-2eaba24a `기획 단계는 stage 툴 상태 파일과 훅 셋으로 지킨다` (mem/0.3.0)
+- 들어옴 20260907-8eab9f71 `파이썬 문자열의 백슬래시 b 가 백스페이스로 바뀐다` (mem/0.3.0)
+- 들어옴 20260907-b963854e `GamedesignTool 1판을 한 밤에 끝낸 기록` (mem/0.3.0)
+- 들어옴 20260907-1f39641b `다음 세션은 ③ 컨셉·코어루프부터, 훅 확인 먼저` (mem/0.3.0)

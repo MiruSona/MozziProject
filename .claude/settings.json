@@ -13,6 +13,16 @@
             ],
             "timeout": 10,
             "statusMessage": "기억 불러오는 중"
+          },
+          {
+            "type": "command",
+            "command": "Tools/GamedesignTool/bin/stage.exe",
+            "args": [
+              "show",
+              "--hook"
+            ],
+            "timeout": 10,
+            "statusMessage": "기획 단계 읽는 중"
           }
         ]
       }
@@ -29,6 +39,38 @@
             ],
             "timeout": 10,
             "statusMessage": "기억 불러오는 중"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "Tools/GamedesignTool/bin/stage.exe",
+            "args": [
+              "lint",
+              "--hook"
+            ],
+            "timeout": 10,
+            "statusMessage": "기획 순서 검사 중"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "Tools/GamedesignTool/bin/stage.exe",
+            "args": [
+              "done",
+              "--hook"
+            ],
+            "timeout": 10
           }
         ]
       }
@@ -57,7 +99,9 @@
       "Bash(mem status:*)",
       "PowerShell(mem status *)",
       "Bash(mem eval:*)",
-      "PowerShell(mem eval *)"
+      "PowerShell(mem eval *)",
+      "Bash(Tools/GamedesignTool/bin/stage.exe:*)",
+      "PowerShell(.\\Tools\\GamedesignTool\\bin\\stage.exe *)"
     ]
   }
 }
