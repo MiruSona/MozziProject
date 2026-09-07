@@ -103,3 +103,36 @@
 - 거절 tag-standard duplicate-soft decision-gate `떡 제작·판매는 초반 손, 골드 모이면 설비로 자동화`
 - 들어옴 20260907-a8a7654d `떡 제작·판매는 초반 손, 골드 모이면 설비로 자동화` (mem/0.3.0) --new
 - 들어옴 20260907-2c276a7c `09-07 밤 — 컨셉 승인·코어루프 1판·물음 셋, 5단계 진입` (mem/0.3.0)
+- 거절 summary-len title-shape tag-standard tag-shape body-thin summary-body-match `5단계 1판은 ProtoTool 없이 프로토타입 셋을 먼저 쓰고 겹친 뼈대를 나중에 툴로 뽑는다`
+- 거절 summary-len title-shape tag-standard tag-shape body-thin summary-body-match duplicate-soft `q1-1 프로토 임시 눈금 — 가루 15초·부재료 30초·상한 60·떡 10골드·번식 3분·구매 150·잉여 20골드`
+- 거절 title-shape tag-standard tag-shape body-thin summary-body-match `q1-2 조합판은 부재료 4종 넣고빼기 15조합 중 레시피 6개, 재료 무한·골드 없음`
+- 거절 title-shape tag-standard tag-shape body-thin summary-body-match `q1-3 시뮬 가정 — 1단계 잔디 무한 공급, 같은 종 같은 단계 짝이 생기면 바로 합성`
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match `5단계 1판은 ProtoTool 없이 프로토타입 셋을 먼저 쓰고 겹친 뼈대를 나중에 툴로 뽑는다`
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match duplicate-soft `q1-1 프로토 임시 눈금 — 가루 15초·부재료 30초·상한 60·떡 10골드·번식 3분·구매 150·잉여 20골드`
+- 거절 title-shape tag-standard body-thin summary-body-match `q1-2 조합판은 부재료 4종 넣고빼기 15조합 중 레시피 6개, 재료 무한·골드 없음`
+- 거절 title-shape tag-standard body-thin summary-body-match `q1-3 시뮬 가정 — 1단계 잔디 무한 공급, 같은 종 같은 단계 짝이 생기면 바로 합성`
+- 거절 summary-len title-shape body-thin summary-body-match `5단계 1판은 ProtoTool 없이 프로토타입 셋을 먼저 쓰고 겹친 뼈대를 나중에 툴로 뽑는다`
+- 거절 summary-len title-shape body-thin summary-body-match duplicate-soft `q1-1 프로토 임시 눈금 — 가루 15초·부재료 30초·상한 60·떡 10골드·번식 3분·구매 150·잉여 20골드`
+- 거절 title-shape body-thin summary-body-match `q1-2 조합판은 부재료 4종 넣고빼기 15조합 중 레시피 6개, 재료 무한·골드 없음`
+- 거절 title-shape body-thin summary-body-match `q1-3 시뮬 가정 — 1단계 잔디 무한 공급, 같은 종 같은 단계 짝이 생기면 바로 합성`
+- 거절 body-thin duplicate-soft `5단계 1판은 ProtoTool 없이 프로토타입 셋을 먼저 쓴다`
+- 거절 body-thin no-value duplicate-soft `q1-1 프로토 임시 눈금 승인`
+- 거절 body-thin no-value duplicate-soft `q1-2 조합판 모양 승인`
+- 거절 body-thin duplicate-soft `q1-3 시뮬 가정 승인`
+- 거절 body-thin no-value duplicate-soft `q1-1 프로토 임시 눈금 승인`
+- 들어옴 20260907-c913c50c `5단계 1판은 ProtoTool 없이 프로토타입 셋을 먼저 쓴다` (mem/0.3.0)
+- 들어옴 20260907-eacd4f4e `q1-1 프로토 임시 눈금 승인` (mem/0.3.0)
+- 들어옴 20260907-2a4e1976 `q1-2 조합판 모양 승인` (mem/0.3.0)
+- 들어옴 20260907-7f5d4599 `q1-3 시뮬 가정 승인` (mem/0.3.0)
+- 거절 summary-len title-shape body-thin `q1-2 떡 레시피 프로토타입 1판 — 부재료 4종·레시피 6개 HTML 한 장`
+- 들어옴 20260907-a2c43447 `q1-2 떡 레시피 프로토타입 1판 HTML 한 장` (mem/0.3.0)
+- 거절 summary-len title-shape body-thin summary-body-match `q1-3 합성 횟수 프로토타입 — 20% 눈금에서 3단계까지 평균 4.9회, 늪까지 37회, 60분 변종 0.3마리`
+- 들어옴 20260907-9d1ed00b `q1-3 합성 횟수 프로토타입 시뮬 결과` (mem/0.3.0)
+- 거절 summary-len title-shape body-thin multi-summary `q1-1 골드 고리 프로토 1판 — 봇 실측: 병목은 골드가 아니라 합성소 1칸·5분`
+- 들어옴 20260907-f22dea0d `q1-1 골드 고리 프로토 봇 실측 — 병목은 합성소 칸` (mem/0.3.0)
+- 들어옴 20260907-46dccb35 `5단계 1판 프로토타입 셋을 하룻밤에 만들었다` (mem/0.3.0)
+- 거절 severity issue-sections `60분 변종 1~3마리 기준은 5%·5분 눈금으로 구조적으로 못 채운다`
+- 거절 severity issue-sections `60분 변종 1~3마리 기준은 5%·5분 눈금으로 구조적으로 못 채운다`
+- 들어옴 20260907-2afca799 `60분 변종 1~3마리 기준은 5%·5분 눈금으로 구조적으로 못 채운다` (mem/0.3.0)
+- 거절 todo-status `사용자가 프로토타입 셋을 놀고 결과.md 채우기`
+- 들어옴 20260907-e19ad977 `사용자가 프로토타입 셋을 놀고 결과.md 채우기` (mem/0.3.0)

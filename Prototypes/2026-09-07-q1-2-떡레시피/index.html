@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>q1-2 떡 레시피 찾기 프로토타입</title>
+<script type="application/json" id="proto-meta">
+{ "물음": "재료 조합으로 떡 레시피를 찾는 것이 재미인가 노가다인가",
+  "기준": ["찹쌀가루 + 부재료 4종으로 10분 안에 새 레시피 2~4개 찾는다",
+           "같은 실패 조합을 3번 넘게 반복하지 않는다",
+           "「힌트가 있어야겠다」 (예/아니오 — 사용자가 씀)",
+           "끝나고 「하나 더 찾고 싶다」 (예/아니오 — 사용자가 씀)"],
+  "만든날": "2026-09-07" }
+</script>
+<style>
+  body { font-family: sans-serif; margin: 16px; max-width: 900px; }
+  h1 { font-size: 18px; }
+  h2 { font-size: 15px; margin: 18px 0 6px; }
+  .box { border: 1px solid #888; padding: 10px; margin-bottom: 10px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  button { padding: 8px 14px; font-size: 14px; cursor: pointer; }
+  .tog { min-width: 80px; }
+  .tog.on { background: #333; color: #fff; }
+  #result { font-size: 20px; min-height: 28px; }
+  #result.new { color: #b00; font-weight: bold; }
+  .book { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+  .cell { border: 1px solid #888; padding: 10px 4px; text-align: center; min-height: 40px; }
+  .cell.found { background: #dfd; }
+  table { border-collapse: collapse; font-size: 13px; }
+  td, th { border: 1px solid #aaa; padding: 3px 8px; }
+  .pass { color: #080; font-weight: bold; }
+  .fail { color: #b00; font-weight: bold; }
+  textarea { width: 100%; height: 140px; font-family: monospace; font-size: 12px; }
+  #timer { font-size: 22px; font-family: monospace; }
+</style>
+</head>
+<body>
+<h1>q1-2 · 재료 조합으로 떡 레시피 찾기 — 재미인가 노가다인가</h1>
+
+<div class="box row">
+  <button id="btnStart">10분 시작</button>
+  <span id="timer">10:00</span>
+  <span id="timerNote">(시작 버튼을 누르면 잰다. 10분이 지나도 계속 놀 수 있다)</span>
+</div>
+
+<div class="box">
+  <h2>재료 고르기 — 찹쌀가루는 항상 들어간다. 부재료를 켜고 끄고 「만들기」</h2>
+  <div class="row" id="ingredients"></div>
+  <div class="row" style="margin-top:10px">
+    <button id="btnMake">만들기</button>
+    <span id="result"></span>
+  </div>
+</div>
+
+<div class="box">
+  <h2>떡 레시피 도감 (<span id="foundCount">0</span> / <span id="totalCount">6</span>)</h2>
+  <div class="book" id="book"></div>
+</div>
+
+<div class="box">
+  <h2>시도 기록</h2>
+  <div style="max-height:220px; overflow:auto">
+  <table><thead><tr><th>#</th><th>시각</th><th>조합</th><th>결과</th><th>구분</th></tr></thead>
+  <tbody id="log"></tbody></table>
+  </div>
+</div>
+
+<div class="box">
+  <h2>판정 기준 — 지금 값</h2>
+  <table id="criteria"></table>
+  <p style="font-size:13px">③ 「힌트가 있어야겠다」 · ④ 「하나 더 찾고 싶다」 는 사용자가 <code>결과.md</code> 에 예/아니오로 쓴다.</p>
+</div>
+
+<div class="box">
+  <h2>기록 JSON</h2>
+  <div class="row"><button id="btnExport">JSON 뽑기</button><button id="btnCopy">복사</button><span id="copyNote"></span></div>
+  <textarea id="json"></textarea>
+</div>
+
+<script>
+// ===== CONST — 여기만 고치면 된다 =====
+const CONST = {
+  BASE: '찹쌀가루',
+  SUBS: ['팥', '콩', '쑥', '깨'],
+  // 숨은 레시피 6개. 부재료 집합(순서 무관) → 떡 이름
+  RECIPES: [
+    { subs: ['팥'],             name: '팥떡' },
+    { subs: ['쑥'],             name: '쑥떡' },
+    { subs: ['팥', '콩'],       name: '팥콩떡' },
+    { subs: ['쑥', '깨'],       name: '쑥깨떡' },
+    { subs: ['콩', '깨'],       name: '콩깨떡' },
+    { subs: ['팥', '쑥', '깨'], name: '팥쑥깨떡' },
+  ],
+  PLAIN: '평범한 떡',
+  TIME_LIMIT_MS: 10 * 60 * 1000,
+  IDLE_MS: 3000,
+};
+
+// ===== 순수 함수 : 조합 판정 =====
+// subs: 켠 부재료 이름 배열. 돌려줌: { name, recipeIndex } (recipeIndex -1 이면 평범)
+function keyOf(subs) {
+  return CONST.SUBS.filter(s => subs.includes(s)).join('+');
+}
+function judge(subs) {
+  const k = keyOf(subs);
+  for (let i = 0; i < CONST.RECIPES.length; i++) {
+    if (keyOf(CONST.RECIPES[i].subs) === k) return { name: CONST.RECIPES[i].name, recipeIndex: i };
+  }
+  return { name: CONST.PLAIN, recipeIndex: -1 };
+}
+if (typeof module !== 'undefined') module.exports = { CONST, judge, keyOf };
+
+// ===== 상태 =====
+const S = {
+  on: {},                 // 부재료 켬 여부
+  tries: [],              // { n, t, key, name, kind }
+  found: new Set(),       // recipeIndex
+  foundAt10: null,        // 10분 시점 찾은 수
+  plainCount: {},         // key -> 평범 나온 횟수
+  clicks: {},             // 버튼별 클릭 수
+  idles: 0, lastAct: null, idleTimer: null,
+  startAt: null, timerHandle: null, tenMinMarked: false,
+  firstAct: null,
+};
+CONST.SUBS.forEach(s => S.on[s] = false);
+
+function click(name) { S.clicks[name] = (S.clicks[name] || 0) + 1; act(); }
+function act() {
+  const now = Date.now();
+  if (!S.firstAct) S.firstAct = now;
+  S.lastAct = now;
+  clearTimeout(S.idleTimer);
+  S.idleTimer = setTimeout(() => { S.idles++; renderCriteria(); }, CONST.IDLE_MS);
+}
+function elapsedMs() { return S.startAt ? Date.now() - S.startAt : 0; }
+function mmss(ms) {
+  const s = Math.max(0, Math.round(ms / 1000));
+  return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+}
+
+// ===== 그리기 =====
+function renderIngredients() {
+  const wrap = document.getElementById('ingredients');
+  wrap.innerHTML = '';
+  const base = document.createElement('span');
+  base.textContent = '[' + CONST.BASE + ' ✓]';
+  wrap.appendChild(base);
+  CONST.SUBS.forEach(s => {
+    const b = document.createElement('button');
+    b.className = 'tog' + (S.on[s] ? ' on' : '');
+    b.textContent = s + (S.on[s] ? ' ✓' : '');
+    b.onclick = () => { S.on[s] = !S.on[s]; click('토글:' + s); renderIngredients(); };
+    wrap.appendChild(b);
+  });
+}
+function renderBook() {
+  const book = document.getElementById('book');
+  book.innerHTML = '';
+  CONST.RECIPES.forEach((r, i) => {
+    const c = document.createElement('div');
+    const f = S.found.has(i);
+    c.className = 'cell' + (f ? ' found' : '');
+    c.textContent = f ? r.name + ' (' + r.subs.join('+') + ')' : '???';
+    book.appendChild(c);
+  });
+  document.getElementById('foundCount').textContent = S.found.size;
+  document.getElementById('totalCount').textContent = CONST.RECIPES.length;
+}
+function renderLog() {
+  const tb = document.getElementById('log');
+  tb.innerHTML = '';
+  S.tries.slice().reverse().forEach(t => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + t.n + '</td><td>' + t.t + '</td><td>' + t.key + '</td><td>' + t.name + '</td><td>' + t.kind + '</td>';
+    tb.appendChild(tr);
+  });
+}
+function maxPlainRepeat() {
+  let m = 0;
+  for (const k in S.plainCount) m = Math.max(m, S.plainCount[k] - 1); // 첫 시도는 반복이 아니다
+  return m;
+}
+function renderCriteria() {
+  const f10 = S.foundAt10 === null ? S.found.size : S.foundAt10;
+  const c1ok = f10 >= 2 && f10 <= 4;
+  const rep = maxPlainRepeat();
+  const c2ok = rep <= 3;
+  const t = document.getElementById('criteria');
+  t.innerHTML =
+    '<tr><th>기준</th><th>지금 값</th><th>판정</th></tr>' +
+    '<tr><td>① 10분 안에 새 레시피 2~4개</td><td>' + f10 + '개' + (S.foundAt10 === null ? ' (아직 10분 전)' : ' (10분 시점)') + '</td><td class="' + (c1ok ? 'pass' : 'fail') + '">' + (c1ok ? '통과' : '불통') + '</td></tr>' +
+    '<tr><td>② 같은 실패 조합 반복 3번 이하</td><td>최대 반복 ' + rep + '번</td><td class="' + (c2ok ? 'pass' : 'fail') + '">' + (c2ok ? '통과' : '불통') + '</td></tr>' +
+    '<tr><td>총 시도 / 찾은 수 / 멈춤(3초+) / 논 시간</td><td colspan="2">' + S.tries.length + ' / ' + S.found.size + ' / ' + S.idles + ' / ' + mmss(playedMs()) + '</td></tr>';
+}
+function playedMs() { return S.firstAct ? Date.now() - S.firstAct : 0; }
+function renderTimer() {
+  const left = CONST.TIME_LIMIT_MS - elapsedMs();
+  const el = document.getElementById('timer');
+  if (left >= 0) el.textContent = mmss(left);
+  else el.textContent = '10분 지남 (+' + mmss(-left) + ')';
+  if (left <= 0 && !S.tenMinMarked) {
+    S.tenMinMarked = true;
+    S.foundAt10 = S.found.size;
+    renderCriteria();
+  }
+}
+
+// ===== 동작 =====
+function make() {
+  click('만들기');
+  const subs = CONST.SUBS.filter(s => S.on[s]);
+  const res = document.getElementById('result');
+  if (subs.length === 0) { res.className = ''; res.textContent = '부재료를 하나 이상 켜라'; return; }
+  const key = CONST.BASE + '+' + keyOf(subs);
+  const j = judge(subs);
+  let kind;
+  if (j.recipeIndex < 0) {
+    kind = '평범';
+    S.plainCount[key] = (S.plainCount[key] || 0) + 1;
+    res.className = ''; res.textContent = j.name;
+  } else if (S.found.has(j.recipeIndex)) {
+    kind = '이미 찾음';
+    res.className = ''; res.textContent = j.name + ' (이미 찾은 레시피)';
+  } else {
+    kind = '새것';
+    S.found.add(j.recipeIndex);
+    res.className = 'new'; res.textContent = '새 레시피! ' + j.name;
+  }
+  S.tries.push({ n: S.tries.length + 1, t: S.startAt ? mmss(elapsedMs()) : '-', key, name: j.name, kind });
+  renderBook(); renderLog(); renderCriteria();
+}
+function start() {
+  click('시작');
+  if (S.startAt) return;
+  S.startAt = Date.now();
+  S.timerHandle = setInterval(renderTimer, 250);
+  document.getElementById('btnStart').disabled = true;
+  document.getElementById('timerNote').textContent = '';
+}
+function summary() {
+  return {
+    proto: 'q1-2-떡레시피', date: new Date().toISOString(),
+    totalTries: S.tries.length,
+    found: S.found.size,
+    foundAt10min: S.foundAt10,
+    maxPlainRepeat: maxPlainRepeat(),
+    plainRepeatByCombo: S.plainCount,
+    idles3s: S.idles,
+    playedSec: Math.round(playedMs() / 1000),
+    timerElapsedSec: Math.round(elapsedMs() / 1000),
+    clicks: S.clicks,
+    criteria: { c1_found2to4: (S.foundAt10 === null ? S.found.size : S.foundAt10) >= 2 && (S.foundAt10 === null ? S.found.size : S.foundAt10) <= 4,
+                c2_repeatLe3: maxPlainRepeat() <= 3,
+                c3_needHint: '사용자가 결과.md 에 씀', c4_wantMore: '사용자가 결과.md 에 씀' },
+    tries: S.tries,
+  };
+}
+function exportJson() {
+  click('JSON뽑기');
+  document.getElementById('json').value = JSON.stringify(summary(), null, 2);
+}
+function copyJson() {
+  click('복사');
+  exportJson();
+  const ta = document.getElementById('json');
+  ta.select();
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) {}
+  if (navigator.clipboard) navigator.clipboard.writeText(ta.value).then(() => {}, () => {});
+  document.getElementById('copyNote').textContent = ok ? '복사됨' : '선택됨 — Ctrl+C';
+}
+
+document.getElementById('btnStart').onclick = start;
+document.getElementById('btnMake').onclick = make;
+document.getElementById('btnExport').onclick = exportJson;
+document.getElementById('btnCopy').onclick = copyJson;
+renderIngredients(); renderBook(); renderLog(); renderCriteria();
+setInterval(renderCriteria, 1000);
+</script>
+</body>
+</html>

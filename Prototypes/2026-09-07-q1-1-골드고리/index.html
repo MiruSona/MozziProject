@@ -1,0 +1,315 @@
+<script type="application/json" id="proto-meta">
+{ "물음": "재료 → 골드 → 합성 → 재료 고리가 닫히나",
+  "기준": ["30분 플레이에서 골드 0 에 붙어 멈춘 시간 3분 이하",
+           "「다음에 뭐 하지」 하고 멈춘 횟수 2회 이하",
+           "30분 안에 합성 3회 이상 걸었다",
+           "끝나고 한 판 더 생각이 든다 (예/아니오)"],
+  "만든날": "2026-09-07" }
+</script>
+<title>q1-1 골드 고리 프로토</title>
+<style>
+body{font-family:sans-serif;font-size:13px;margin:8px;background:#f4f4f4}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start}
+.box{border:1px solid #888;background:#fff;padding:6px;margin:4px 0;min-width:260px}
+.box h3{margin:0 0 4px 0;font-size:14px}
+button{margin:1px;font-size:12px}
+button.on{background:#ffd}
+table{border-collapse:collapse}td,th{border:1px solid #ccc;padding:1px 4px;text-align:left}
+.dex{display:grid;grid-template-columns:repeat(6,1fr);gap:2px}
+.dex div{border:1px solid #aaa;padding:2px;font-size:11px;min-height:28px}
+.dex .got{background:#dfd}
+.warn{color:#c00;font-weight:bold}
+.full{color:#c00;font-weight:bold}
+#log{max-height:120px;overflow:auto;font-size:11px;background:#fafafa}
+textarea{width:100%;height:80px;font-size:10px}
+#top{position:sticky;top:0;background:#eee;padding:4px;border-bottom:2px solid #888}
+.pass{color:#080;font-weight:bold}.fail{color:#c00;font-weight:bold}
+</style>
+
+<script>
+// ===CORE START===
+// 게임 논리. 화면과 떼어 놓았다. node 봇도 이 구간을 그대로 쓴다.
+const CONST = {
+  TICK: 0.1,                 // 게임 시간 1틱 = 0.1초
+  START_SPECIES: '잔디1', START_COUNT: 2, START_GOLD: 0,
+  POWDER_PERIOD: 15,         // 찹쌀이 1마리당 가루 1개 (초)
+  SUB_PERIOD: 30,            // 찹쌀이 1마리당 부재료 1개 (초)
+  TIER_PERIOD_MULT: [1, 1.5, 2],   // 부재료 주기 배수 (1·2·3단계)
+  FLOOR_CAP: 60,             // 바닥 상한 (가루+부재료 합계)
+  RICE_PRICE: [10, 30, 90],  // 떡 값 (부재료 단계별)
+  SYNTH_COST: [100, 500, 2000],       // 합성 골드 (낮은 단계 기준)
+  SYNTH_TIME: [5*60, 30*60, 120*60],  // 합성 대기 (초)
+  P_FIXED: 0.75, P_OTHER: 0.20, P_VARIANT: 0.05,  // 세 갈래
+  P3_OTHER: 0.60, P3_VARIANT: 0.40,               // 3단계끼리 (다음 단계 없음)
+  BREED_PERIOD: 180,         // 같은 종 2마리 이상이면 3분마다 1마리
+  BUY_PRICE: 150,            // 도감에 열린 계열 1단계 구매
+  MOZZI_SELL_PRICE: 20,      // 잉여 찹쌀이 팔기
+};
+const LINEAGES = ['잔디','물','용암','늪'];
+const NAMES = {잔디:['흰찹쌀이','풀찹쌀이','나무찹쌀이'], 물:['물찹쌀이','파도찹쌀이','상어찹쌀이'],
+  용암:['불찹쌀이','용암찹쌀이','화산찹쌀이'], 늪:['늪찹쌀이','이끼찹쌀이','악어찹쌀이']};
+const SUBNAMES = {잔디:'풀', 물:'물풀', 용암:'숯', 늪:'이끼'};
+const SPECIES = {}; const SPECIES_LIST = [];
+for (const l of LINEAGES) for (let t=1;t<=3;t++) for (const v of [false,true]) {
+  const key = l+t+(v?'v':'');
+  const sp = {key, l, t, v, name: (v?'빛나는 ':'')+NAMES[l][t-1], subKey: l+':'+t};
+  SPECIES[key]=sp; SPECIES_LIST.push(sp);
+}
+function subName(subKey){ const [l,t]=subKey.split(':'); return SUBNAMES[l]+'('+t+'단계)'; }
+function subTier(subKey){ return +subKey.split(':')[1]; }
+function riceName(subKey){ const [l,t]=subKey.split(':'); return SUBNAMES[l]+'떡('+t+'단계)'; }
+function ricePrice(subKey){ return CONST.RICE_PRICE[subTier(subKey)-1]; }
+
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+
+function newState(seed){
+  const s = { time:0, gold:CONST.START_GOLD, farm:{}, prodAcc:{}, breedAcc:{},
+    floor:{powder:0, sub:{}}, wh:{powder:0, sub:{}, rice:{}},
+    synth:null, dex:{}, swampOpen:false, log:[],
+    stats:{synthStarted:0, synthDone:0, goldZeroGameTime:0, bred:0, bought:0, mozziSold:0, riceSold:0, goldEarned:0},
+    rng: mulberry32(seed||1) };
+  addMozzi(s, CONST.START_SPECIES, CONST.START_COUNT);
+  return s;
+}
+function addMozzi(s, key, n){ s.farm[key]=(s.farm[key]||0)+(n||1); if(!s.dex[key]){ s.dex[key]=s.time; } if(SPECIES[key].l==='늪') s.swampOpen=true; }
+function removeMozzi(s, key, n){ s.farm[key]-= (n||1); if(s.farm[key]<=0) delete s.farm[key]; }
+function farmTotal(s){ return Object.values(s.farm).reduce((a,b)=>a+b,0); }
+function floorTotal(s){ return s.floor.powder + Object.values(s.floor.sub).reduce((a,b)=>a+b,0); }
+function floorFull(s){ return floorTotal(s) >= CONST.FLOOR_CAP; }
+function openLineages(s){ return ['잔디','물','용암'].concat(s.swampOpen?['늪']:[]); }
+function dexCount(s){ return Object.keys(s.dex).length; }
+function sum(o){ return Object.values(o).reduce((a,b)=>a+b,0); }
+function hasAnything(s){ return s.gold>0 || sum(s.wh.rice)>0 || s.wh.powder>0 || sum(s.wh.sub)>0 || floorTotal(s)>0; }
+// 기준 ① 근사 : 골드 0 이고 떡도 재료(창고+바닥)도 없다
+function isStuck(s){ return !hasAnything(s); }
+
+function tick(s){
+  const dt = CONST.TICK; s.time += dt;
+  // 생산 (바닥 상한 넘으면 멈춤)
+  if(!floorFull(s)){
+    for(const key in s.farm){
+      const sp=SPECIES[key], n=s.farm[key];
+      const acc = s.prodAcc[key] || (s.prodAcc[key]={p:0,sub:0});
+      acc.p += n*dt/CONST.POWDER_PERIOD;
+      acc.sub += n*dt/(CONST.SUB_PERIOD*CONST.TIER_PERIOD_MULT[sp.t-1]);
+      while(acc.p>=1 && !floorFull(s)){ acc.p-=1; s.floor.powder++; }
+      while(acc.sub>=1 && !floorFull(s)){ acc.sub-=1; s.floor.sub[sp.subKey]=(s.floor.sub[sp.subKey]||0)+1; }
+      if(acc.p>1) acc.p=1; if(acc.sub>1) acc.sub=1;   // 가득 찬 사이에 쌓인 몫은 버린다
+    }
+  }
+  // 번식 (같은 종 2마리 이상 · 변종 제외)
+  for(const key in s.farm){
+    const sp=SPECIES[key];
+    if(sp.v || s.farm[key]<2){ s.breedAcc[key]=0; continue; }
+    s.breedAcc[key]=(s.breedAcc[key]||0)+dt;
+    if(s.breedAcc[key]>=CONST.BREED_PERIOD){ s.breedAcc[key]-=CONST.BREED_PERIOD; addMozzi(s,key,1); s.stats.bred++; s.log.push(fmt(s.time)+' 번식 '+sp.name); }
+  }
+  // 합성 시계
+  if(s.synth){ s.synth.remain -= dt; if(s.synth.remain<=0) finishSynth(s); }
+  if(isStuck(s)) s.stats.goldZeroGameTime += dt;
+}
+function fmt(t){ t=Math.floor(t); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); }
+
+function pickup(s){
+  s.wh.powder += s.floor.powder; s.floor.powder=0;
+  for(const k in s.floor.sub){ s.wh.sub[k]=(s.wh.sub[k]||0)+s.floor.sub[k]; }
+  s.floor.sub={};
+}
+// 떡 만들기 : 가루 1 + 부재료 1 → 떡 1. n 은 숫자 또는 'all'
+function craft(s, subKey, n){
+  let can = Math.min(s.wh.powder, s.wh.sub[subKey]||0);
+  if(n!=='all') can=Math.min(can,n);
+  if(can<=0) return 0;
+  s.wh.powder-=can; s.wh.sub[subKey]-=can; if(s.wh.sub[subKey]<=0) delete s.wh.sub[subKey];
+  s.wh.rice[subKey]=(s.wh.rice[subKey]||0)+can; return can;
+}
+// 전부 만들기 : 비싼 부재료(높은 단계)부터
+function craftAll(s){ let made=0; for(const k of Object.keys(s.wh.sub).sort((a,b)=>subTier(b)-subTier(a))) made+=craft(s,k,'all'); return made; }
+function sell(s, subKey, n){
+  let can = s.wh.rice[subKey]||0; if(n!=='all') can=Math.min(can,n); if(can<=0) return 0;
+  s.wh.rice[subKey]-=can; if(s.wh.rice[subKey]<=0) delete s.wh.rice[subKey];
+  const g=can*ricePrice(subKey); s.gold+=g; s.stats.riceSold+=can; s.stats.goldEarned+=g; return g;
+}
+function sellAll(s){ let g=0; for(const k of Object.keys(s.wh.rice)) g+=sell(s,k,'all'); return g; }
+
+// ---- 합성 ----
+function nextTier(l,t){ return t>=3?null:l+(t+1); }
+function fixedResult(a,b){
+  const A=SPECIES[a], B=SPECIES[b]; const low=Math.min(A.t,B.t);
+  if(A.l===B.l) return nextTier(A.l, low);
+  const set=[A.l,B.l];
+  if(set.includes('잔디')&&set.includes('물')&&A.t>=2&&B.t>=2) return '늪1';
+  return nextTier(A.l, low);     // 첫 슬롯 계열의 다음 단계
+}
+function otherCandidates(s,a,b){ const ex=[SPECIES[a].l,SPECIES[b].l]; return openLineages(s).filter(l=>!ex.includes(l)).map(l=>l+'1'); }
+function synthCost(a,b){ const low=Math.min(SPECIES[a].t,SPECIES[b].t)-1; return {gold:CONST.SYNTH_COST[low], time:CONST.SYNTH_TIME[low]}; }
+function preview(s,a,b){
+  if(!a||!b) return null;
+  const fixed=fixedResult(a,b), others=otherCandidates(s,a,b), cost=synthCost(a,b);
+  const variantOf = fixed ? fixed+'v' : SPECIES[a].l+SPECIES[a].t+'v';
+  const outs=[];
+  if(fixed){
+    outs.push({p:CONST.P_FIXED, key:fixed, label:'정해진 종'});
+    outs.push({p:CONST.P_OTHER, keys:others, label:'다른 계열 1단계'});
+    outs.push({p:CONST.P_VARIANT, key:variantOf, label:'빛나는 변종'});
+  } else {
+    outs.push({p:CONST.P3_OTHER, keys:others, label:'다른 계열 1단계'});
+    outs.push({p:CONST.P3_VARIANT, key:variantOf, label:'빛나는 변종'});
+  }
+  return {cost, outs, fixed, others, variantOf};
+}
+function canSynth(s,a,b){
+  if(!a||!b||s.synth) return '합성소가 비어 있지 않거나 슬롯이 비었다';
+  if(a===b){ if((s.farm[a]||0)<2) return '같은 종은 2마리 필요'; }
+  else { if(!(s.farm[a]>0)||!(s.farm[b]>0)) return '농장에 없는 종'; }
+  if(s.gold<synthCost(a,b).gold) return '골드 부족';
+  return null;
+}
+function startSynth(s,a,b){
+  const why=canSynth(s,a,b); if(why) return why;
+  const pv=preview(s,a,b);
+  s.gold-=pv.cost.gold; removeMozzi(s,a); removeMozzi(s,b);
+  s.synth={a,b,remain:pv.cost.time,total:pv.cost.time,pv};
+  s.stats.synthStarted++; s.log.push(fmt(s.time)+' 합성 시작 '+SPECIES[a].name+'+'+SPECIES[b].name+' ('+pv.cost.gold+'골드)');
+  return null;
+}
+function finishSynth(s){
+  const {pv}=s.synth; const r=s.rng(); let acc=0, got=null, way='';
+  for(const o of pv.outs){ acc+=o.p; if(r<acc){ way=o.label; if(o.key) got=o.key; else { got = o.keys.length? o.keys[Math.floor(s.rng()*o.keys.length)] : (pv.fixed||pv.variantOf); } break; } }
+  if(!got){ got=pv.fixed||pv.variantOf; way='정해진 종'; }
+  const isNew=!s.dex[got];
+  addMozzi(s,got,1); s.stats.synthDone++; s.synth=null;
+  s.log.push(fmt(s.time)+' 합성 결과 ['+way+'] '+SPECIES[got].name+(isNew?' (도감 새 칸!)':''));
+}
+function buy(s,l){
+  if(!openLineages(s).includes(l)) return '안 열린 계열';
+  if(!s.dex[l+'1']) return '도감에 없는 종';
+  if(s.gold<CONST.BUY_PRICE) return '골드 부족';
+  s.gold-=CONST.BUY_PRICE; addMozzi(s,l+'1',1); s.stats.bought++; return null;
+}
+function sellMozzi(s,key){ if(!(s.farm[key]>0)) return '없음'; removeMozzi(s,key); s.gold+=CONST.MOZZI_SELL_PRICE; s.stats.mozziSold++; return null; }
+
+const CORE = {CONST,SPECIES,SPECIES_LIST,LINEAGES,SUBNAMES,newState,tick,pickup,craft,craftAll,sell,sellAll,preview,canSynth,startSynth,buy,sellMozzi,openLineages,farmTotal,floorTotal,floorFull,dexCount,isStuck,subName,riceName,ricePrice,fmt,sum,synthCost};
+if(typeof module!=='undefined') module.exports=CORE;
+// ===CORE END===
+</script>
+
+<div id="top"></div>
+<div class="row">
+  <div class="box" id="farm"></div>
+  <div class="box" id="wh"></div>
+  <div class="box" id="synth"></div>
+</div>
+<div class="row">
+  <div class="box" id="shop"></div>
+  <div class="box" id="dexbox"></div>
+</div>
+<div class="box"><h3>합성 로그</h3><div id="log"></div></div>
+<div class="box" id="record"></div>
+
+<script>
+// ===== 화면 · 기록 (버릴 코드) =====
+const S = newState(Date.now()%100000);
+const UI = { speed:1, started:false, startedAt:0, realPlayed:0, lastFrame:0, slotA:'', slotB:'',
+  clicks:{}, lastClick:0, idleCount:0, idleFlagged:false, stuckRealTime:0, speedLog:[], snap30:null, lastTickReal:0, acc:0 };
+function rec(name){ UI.clicks[name]=(UI.clicks[name]||0)+1; UI.lastClick=performance.now(); UI.idleFlagged=false; }
+
+function act(name, fn){ rec(name); const r=fn(); if(r) alert(r); render(); }
+window.A = {
+  start(){ UI.started=true; UI.startedAt=performance.now(); UI.lastFrame=UI.startedAt; UI.lastClick=UI.startedAt; rec('시작'); render(); },
+  speed(x){ UI.speed=x; UI.speedLog.push({real:Math.round(UI.realPlayed), game:Math.round(S.time), speed:x}); rec('배속'+x); render(); },
+  skip5(){ rec('5분건너뛰기'); for(let i=0;i<3000;i++) tick(S); render(); },
+  pickup(){ act('줍기',()=>pickup(S)); },
+  craft(k,n){ act('만들기'+(n==='all'?'전부':'1'),()=>{ craft(S,k,n); }); },
+  craftAll(){ act('만들기전부(모두)',()=>{ craftAll(S); }); },
+  sell(k,n){ act('팔기'+(n==='all'?'전부':'1'),()=>{ sell(S,k,n); }); },
+  sellAll(){ act('팔기전부(모두)',()=>{ sellAll(S); }); },
+  slot(i,v){ if(i===0) UI.slotA=v; else UI.slotB=v; rec('슬롯'); render(); },
+  synth(){ act('합성시작',()=>startSynth(S,UI.slotA,UI.slotB)); },
+  buy(l){ act('구매',()=>buy(S,l)); },
+  sellMozzi(k){ act('찹쌀이팔기',()=>sellMozzi(S,k)); },
+  copy(){ const t=document.getElementById('json'); t.select(); document.execCommand('copy'); rec('복사'); },
+};
+
+function frame(){
+  const now=performance.now();
+  if(UI.started){
+    const dtReal=(now-UI.lastFrame)/1000; UI.lastFrame=now; UI.realPlayed+=dtReal;
+    UI.acc+=dtReal*UI.speed;
+    let n=0; while(UI.acc>=CONST.TICK && n<20000){ tick(S); UI.acc-=CONST.TICK; n++; }
+    if(isStuck(S)) UI.stuckRealTime+=dtReal;
+    if(!UI.idleFlagged && now-UI.lastClick>=3000){ UI.idleFlagged=true; UI.idleCount++; }
+    if(!UI.snap30 && UI.realPlayed>=30*60) UI.snap30={gold:S.gold, dex:dexCount(S), synth:S.stats.synthStarted, mozzi:farmTotal(S)};
+  }
+  render(); requestAnimationFrame(frame);
+}
+let lastRender=0;
+function render(){
+  const now=performance.now(); if(now-lastRender<150 && !UI.forceRender) return; lastRender=now;
+  const spd=[1,10,60].map(x=>`<button class="${UI.speed===x?'on':''}" onclick="A.speed(${x})">×${x}</button>`).join('');
+  document.getElementById('top').innerHTML = `
+    ${UI.started?'':'<button onclick="A.start()" style="font-size:16px">▶ 시작 (30분 타이머 시작)</button>'}
+    <b>게임 시각</b> ${fmt(S.time)} &nbsp; <b>골드</b> ${S.gold} &nbsp; 배속 ${spd} <button onclick="A.skip5()">5분 건너뛰기</button>
+    &nbsp; <b>실제 논 시간</b> ${fmt(UI.realPlayed)} / 30:00 ${UI.realPlayed>=1800?'<span class="warn">30분 지남</span>':''}`;
+
+  // 농장
+  let farmRows=Object.keys(S.farm).map(k=>{ const sp=SPECIES[k]; const br=(!sp.v&&S.farm[k]>=2)?fmt(CONST.BREED_PERIOD-(S.breedAcc[k]||0)):'—';
+    return `<tr><td>${sp.name}</td><td>${sp.l}</td><td>${sp.t}</td><td>${S.farm[k]}</td><td>${br}</td><td><button onclick="A.sellMozzi('${k}')">팔기 ${CONST.MOZZI_SELL_PRICE}골드</button></td></tr>`; }).join('');
+  const fsub=Object.keys(S.floor.sub).map(k=>`${subName(k)} ${S.floor.sub[k]}`).join(' · ');
+  document.getElementById('farm').innerHTML=`<h3>농장 (${farmTotal(S)}마리)</h3>
+    <table><tr><th>종</th><th>계열</th><th>단계</th><th>마리</th><th>번식까지</th><th></th></tr>${farmRows||'<tr><td colspan=6>비었다</td></tr>'}</table>
+    <p>바닥 : 가루 ${S.floor.powder} · ${fsub||'부재료 0'} &nbsp; (${floorTotal(S)}/${CONST.FLOOR_CAP}) ${floorFull(S)?'<span class="full">가득 — 생산 멈춤</span>':''}</p>
+    <button onclick="A.pickup()" style="font-size:14px">줍기 (바닥 전부 → 창고)</button>`;
+
+  // 창고
+  const subRows=Object.keys(S.wh.sub).map(k=>`<tr><td>${subName(k)}</td><td>${S.wh.sub[k]}</td><td><button onclick="A.craft('${k}',1)">떡 1개</button><button onclick="A.craft('${k}','all')">떡 전부</button></td></tr>`).join('');
+  const riceRows=Object.keys(S.wh.rice).map(k=>`<tr><td>${riceName(k)}</td><td>${S.wh.rice[k]}</td><td>${ricePrice(k)}골드</td><td><button onclick="A.sell('${k}',1)">팔기 1개</button><button onclick="A.sell('${k}','all')">팔기 전부</button></td></tr>`).join('');
+  document.getElementById('wh').innerHTML=`<h3>창고</h3><p>찹쌀가루 ${S.wh.powder}</p>
+    <table><tr><th>부재료</th><th>수</th><th>가루1+부재료1→떡</th></tr>${subRows||'<tr><td colspan=3>없음</td></tr>'}</table>
+    <button onclick="A.craftAll()">떡 전부 만들기</button>
+    <table style="margin-top:4px"><tr><th>떡</th><th>수</th><th>값</th><th></th></tr>${riceRows||'<tr><td colspan=4>없음</td></tr>'}</table>
+    <button onclick="A.sellAll()">떡 전부 팔기</button>`;
+
+  // 합성소
+  const opts=(sel)=>'<option value="">-</option>'+Object.keys(S.farm).map(k=>`<option value="${k}" ${sel===k?'selected':''}>${SPECIES[k].name} ×${S.farm[k]}</option>`).join('');
+  const pv=preview(S,UI.slotA,UI.slotB); let pvHtml='';
+  if(pv){
+    const nm=k=>S.dex[k]?SPECIES[k].name:'???';
+    pvHtml='<table>'+pv.outs.map(o=>`<tr><td>${Math.round(o.p*100)}%</td><td>${o.label}</td><td>${o.key?nm(o.key):(o.keys.length?o.keys.map(nm).join(' / '):'(후보 없음→정해진 종)')}</td></tr>`).join('')+'</table>'
+      +`<p>비용 ${pv.cost.gold}골드 · ${fmt(pv.cost.time)}</p>`;
+    const used=(UI.slotA===UI.slotB)?2:1; if(farmTotal(S)-2<=0) pvHtml+='<p class="warn">농장 마지막 2마리예요!</p>';
+  }
+  const why=canSynth(S,UI.slotA,UI.slotB);
+  let synHtml='';
+  if(S.synth) synHtml=`<p><b>합성 중</b> ${SPECIES[S.synth.a].name}+${SPECIES[S.synth.b].name} — 남은 시간 ${fmt(S.synth.remain)}</p>`;
+  document.getElementById('synth').innerHTML=`<h3>합성소 (1칸)</h3>
+    슬롯1 <select onchange="A.slot(0,this.value)">${opts(UI.slotA)}</select>
+    슬롯2 <select onchange="A.slot(1,this.value)">${opts(UI.slotB)}</select>
+    ${pvHtml}<button onclick="A.synth()" ${why?'disabled':''} style="font-size:14px">시작</button> <small>${why||''}</small>${synHtml}`;
+
+  // 가판대
+  const buys=openLineages(S).map(l=>`<button onclick="A.buy('${l}')" ${S.dex[l+'1']?'':'disabled'}>${NAMES[l][0]} 사기 ${CONST.BUY_PRICE}골드</button>`).join('');
+  document.getElementById('shop').innerHTML=`<h3>가판대</h3>${buys}<p><small>찹쌀이 팔기는 농장 표의 버튼 (${CONST.MOZZI_SELL_PRICE}골드)</small></p>`;
+
+  // 도감
+  document.getElementById('dexbox').innerHTML=`<h3>도감 ${dexCount(S)}/24</h3><div class="dex">`+
+    SPECIES_LIST.map(sp=>`<div class="${S.dex[sp.key]?'got':''}">${S.dex[sp.key]?sp.name:'???'}<br><small>${sp.l} ${sp.t}${sp.v?' 변종':''}</small></div>`).join('')+'</div>';
+
+  document.getElementById('log').innerHTML=S.log.slice(-30).reverse().join('<br>');
+
+  // 기록
+  const c1=UI.stuckRealTime, c3=S.stats.synthStarted;
+  const j={ 물음:'q1-1 골드 고리', 실제논시간초:Math.round(UI.realPlayed), 게임시간초:Math.round(S.time), 버튼클릭:UI.clicks,
+    기준1_골드0멈춤_실제초:Math.round(c1), 기준2_근사_3초무입력횟수:UI.idleCount, 기준3_합성시작:c3, 합성완료:S.stats.synthDone,
+    배속기록:UI.speedLog, 골드:S.gold, 도감칸:dexCount(S), 마릿수:farmTotal(S), 번식:S.stats.bred, 구매:S.stats.bought, 찹쌀이팔기:S.stats.mozziSold, 떡판매:S.stats.riceSold, 번골드:S.stats.goldEarned,
+    시점30분:UI.snap30, 합성로그:S.log.filter(x=>x.includes('합성')) };
+  document.getElementById('record').innerHTML=`<h3>기록</h3>
+    <table><tr><th>기준</th><th>지금 값</th><th>판정</th></tr>
+    <tr><td>① 골드 0 (떡·재료도 없음) 실제 시간</td><td>${fmt(c1)}</td><td class="${c1<=180?'pass':'fail'}">${c1<=180?'통과':'불통'} (3분 이하)</td></tr>
+    <tr><td>② 3초 이상 무입력 횟수 (근사 — 진짜 횟수는 결과.md 에 직접 쓴다)</td><td>${UI.idleCount}</td><td>참고만</td></tr>
+    <tr><td>③ 합성 시작 횟수</td><td>${c3}</td><td class="${c3>=3?'pass':'fail'}">${c3>=3?'통과':'불통'} (3회 이상)</td></tr></table>
+    <p>30분 시점 : ${UI.snap30?`골드 ${UI.snap30.gold} · 도감 ${UI.snap30.dex}칸 · 합성 ${UI.snap30.synth}회 · ${UI.snap30.mozzi}마리`:'아직'}</p>
+    <textarea id="json" readonly>${JSON.stringify(j)}</textarea><br><button onclick="A.copy()">JSON 복사</button>`;
+}
+render(); requestAnimationFrame(frame);
+</script>
