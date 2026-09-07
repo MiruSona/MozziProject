@@ -69,3 +69,22 @@
 - 들어옴 20260907-8eab9f71 `파이썬 문자열의 백슬래시 b 가 백스페이스로 바뀐다` (mem/0.3.0)
 - 들어옴 20260907-b963854e `GamedesignTool 1판을 한 밤에 끝낸 기록` (mem/0.3.0)
 - 들어옴 20260907-1f39641b `다음 세션은 ③ 컨셉·코어루프부터, 훅 확인 먼저` (mem/0.3.0)
+- 거절 tag-shape body-thin `기존 기획 자료를 9단계와 대조했다`
+- 들어옴 20260907-ee5cdd8d `기존 기획 자료를 9단계와 대조했다` (mem/0.3.0)
+- 들어옴 20260907-986d1c9b `컨셉 물음 8개 답 받고 컨셉·코어루프 쓰기` (mem/0.3.0)
+- 덮음 20260907-1f39641b → 20260907-986d1c9b
+- 거절 tag-shape body-thin summary-body-match `고차비 원작 조사`
+- 들어옴 20260907-59796fdb `고차비 원작 조사` (mem/0.3.0)
+- 거절 tag-standard body-thin summary-body-match `컨셉 확정 값`
+- 들어옴 20260907-6d2a9ee9 `컨셉 확정 값` (mem/0.3.0)
+- 거절 tag-standard body-thin summary-body-match `컨셉 문서 60줄 경고는 무시`
+- 들어옴 20260907-2cc47a52 `컨셉 문서 60줄 경고는 무시` (mem/0.3.0)
+- 들어옴 20260907-520829fe `팬카페 2차 창작 규정 확인` (mem/0.3.0)
+- 들어옴 20260907-f405fb19 `컨셉 1판 초안` (mem/0.3.0)
+- 거절 summary-len title-shape tag-standard tag-shape body-thin howto-numbered summary-body-match `네이버 카페는 WebFetch 로 못 열고 Claude in Chrome 도구는 --chrome 으로 연 세션에만 뜬다`
+- 거절 summary-len title-shape tag-shape body-thin howto-numbered summary-body-match `네이버 카페는 WebFetch 로 못 열고 Claude in Chrome 도구는 --chrome 으로 연 세션에만 뜬다`
+- 거절 title-shape tag-shape body-thin howto-numbered duplicate-soft `네이버 카페는 WebFetch 로 못 열고 Claude in Chrome 도구는 --chrome 으로 연 세션에만 뜬다`
+- 거절 title-shape tag-shape body-thin howto-numbered duplicate-soft `네이버 카페는 WebFetch 로 못 열고 Claude in Chrome 도구는 --chrome 으로 연 세션에만 뜬다`
+- 들어옴 20260907-0c044291 `팬카페 같은 로그인 페이지는 --chrome 세션에서 본다` (mem/0.3.0)
+- 거절 title-shape tag-standard `팬카페에 팬게임 규정이 없어 무료·비상업·새 그림·카페 안 공유로 진행하고 문제는 사용자가 감수한다`
+- 들어옴 20260907-78974590 `팬카페에 팬게임 규정 없음 — 무료·새 그림·카페 안 공유로 간다` (mem/0.3.0)
