@@ -9,6 +9,7 @@
 # 늘리려면 mem tags --add <태그> 를 쓴다.
 [tag]
 "art" = ["animation", "shader", "texture", "audio"]
+"background" = []
 "balance" = []
 "bug" = []
 "build" = ["ci", "packaging", "pipeline"]
@@ -25,6 +26,7 @@
 "process" = ["effort", "review", "release"]
 "prototype" = []
 "recipe" = []
+"reference" = []
 "security" = ["secret", "permission"]
 "test" = ["unittest", "stress", "testdata"]
 "tool" = ["editor", "cli", "install"]
