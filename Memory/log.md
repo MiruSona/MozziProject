@@ -178,3 +178,10 @@
 - 들어옴 20260909-84384f61 `96분 뒤 골드 소비처가 합성뿐이다` (mem/0.3.0)
 - 들어옴 20260909-b590599c `프로토 자동 판정이 실제 시간 기준이다` (mem/0.3.0)
 - 들어옴 20260909-16a0b47d `사용자 아이디어 5개 기획서 반영 검토` (mem/0.3.0)
+- 거절 summary-len tag-standard body-thin summary-body-match `아트 생성 AI·오픈소스·AI 조작 편집툴 조사 1판`
+- 거절 summary-len tag-standard body-thin summary-body-match `아트 생성 AI·오픈소스·AI 조작 편집툴 조사 1판`
+- 거절 summary-len tag-standard `아트 생성 AI·편집툴 조사 1판`
+- 거절 summary-len `아트 생성 AI·편집툴 조사 1판`
+- 들어옴 20260909-2099ccc2 `아트 생성 AI·편집툴 조사 1판` (mem/0.3.0)
+- 거절 body-thin duplicate-soft `에테르AI 는 아트 AI 후보에서 뺀다`
+- 들어옴 20260909-b398739b `에테르AI 는 아트 AI 후보에서 뺀다` (mem/0.3.0) --new
