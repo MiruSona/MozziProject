@@ -136,3 +136,35 @@
 - 들어옴 20260907-2afca799 `60분 변종 1~3마리 기준은 5%·5분 눈금으로 구조적으로 못 채운다` (mem/0.3.0)
 - 거절 todo-status `사용자가 프로토타입 셋을 놀고 결과.md 채우기`
 - 들어옴 20260907-e19ad977 `사용자가 프로토타입 셋을 놀고 결과.md 채우기` (mem/0.3.0)
+
+## 2026-09-08
+- 거절 required-field title-shape tag-standard tag-shape sources-shape body-thin duplicate-soft `q1-3 ③ 변종 기준은 확률을 올려 맞추기로 했다 (5%→10~25% 시뮬 재실행)`
+- 거절 required-field title-shape tag-standard tag-shape sources-shape body-thin `q1-3 변종 확률 5~25% 실측 : 60분 안 변종 평균 0.30/0.59/0.96/1.29/1.66마리, 1~3마리 회차 247/440/609/714/759 (씨앗1·1000회, 다른계열 20%). 3단계 평균 4.93→6.27, 늪 37.1→49.4. 5% 값은 node 로 정확히 재현됨`
+- 거절 body-thin duplicate-soft `변종 기준은 확률을 올려 맞춘다`
+- 거절 required-field title-shape tag-standard sources-shape body-thin `q1-3 변종 확률 5~25% 실측 : 60분 안 변종 평균 0.30/0.59/0.96/1.29/1.66마리, 1~3마리 회차 247/440/609/714/759 (씨앗1·1000회, 다른계열 20%). 3단계 평균 4.93→6.27, 늪 37.1→49.4. 5% 값은 node 로 정확히 재현됨`
+- 들어옴 20260908-d402cc28 `q1-3 변종 확률 5~25% 씨앗1 실측` (mem/0.3.0)
+- 거절 body-thin duplicate-soft `변종 기준은 확률을 올려 맞춘다`
+- 들어옴 20260908-ad11b0cb `변종 기준은 확률을 올려 맞춘다` (mem/0.3.0)
+- 거절 duplicate-soft decision-gate `변종 확률 15% 로 타협`
+- 들어옴 20260908-ff2134b7 `변종 확률 15% 로 타협` (mem/0.3.0) --new
+- 들어옴 20260908-126f9f90 `q1-3 변종 확률 15% 로 올려 ③ 통과(타협)` (mem/0.3.0)
+- 거절 summary-len tag-standard body-thin summary-body-match `찹쌀이 웹 레퍼런스 22장 모음 — 슬라임 계열변형·3단계·idle 통통`
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match `아트 작업 절차 웹조사 — 3단계(방향·규칙·제작) 제안과 PixelLab MCP 도구 확인`
+- 들어옴 20260908-e032312d `찹쌀이 웹 레퍼런스 22장 모음` (mem/0.3.0)
+- 들어옴 20260908-1a9c28ab `아트 작업 절차 웹조사 1판` (mem/0.3.0)
+- 거절 summary-len tag-standard body-thin summary-body-match `배경·환경 참고 그림 28장 모음 — 세로화면·네 바닥·합성소·시점 비교`
+- 거절 tag-standard body-thin `배경·환경 참고 그림 28장을 모았다`
+- 거절 tag-standard body-thin `배경·환경 참고 그림 28장을 모았다`
+- 들어옴 20260908-0a90e887 `배경·환경 참고 그림 28장을 모았다` (mem/0.3.0)
+- 거절 duplicate-soft decision-gate `q1-2 떡레시피 통과, 부재료 4종은 너무 쉬움`
+- 들어옴 20260908-c4e6d01e `q1-2 떡레시피 통과, 부재료 4종은 너무 쉬움` (claude-fable-5.1/subagent) --new
+- 들어옴 20260908-26980bf2 `q1-1 골드 고리 불통 — 3단계로 되돌린다` (mem/0.3.0)
+- 들어옴 20260908-5b1fd3e4 `5단계 1판 판정 마침 · 3단계 되돌림` (mem/0.3.0)
+- 거절 summary-len todo-status body-thin summary-body-match `아트 A 단계 결정 11개는 다음 세션에서`
+- 들어옴 20260908-5a47f5b2 `아트 A 단계 결정 11개는 다음 세션에서` (mem/0.3.0)
+- 들어옴 20260908-0a311673 `골드 소비처·합성 병목 조사 끝` (mem/0.3.0)
+- 들어옴 20260908-f4838ff4 `코어루프 2판 안 가 채택 · 짝 구매 2단계까지` (mem/0.3.0)
+- 덮음 20260906-89063354 → 20260908-f4838ff4
+- 들어옴 20260908-1938cc2e `q2 골드 고리 2판 프로토 소단계 1~3 — 합성소 칸·영구 단축` (mem/0.3.0)
+- 들어옴 20260908-64fbdf68 `q2 2판 프로토 소단계 4~6 — 짝 구매·자동 판정·봇 실측` (mem/0.3.0)
+- 들어옴 20260908-b6c79c1e `q2 프로토 10분 놀고 눈금 둘 정하기` (mem/0.3.0)
