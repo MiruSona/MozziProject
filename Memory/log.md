@@ -186,3 +186,8 @@
 - 거절 body-thin duplicate-soft `에테르AI 는 아트 AI 후보에서 뺀다`
 - 들어옴 20260909-b398739b `에테르AI 는 아트 AI 후보에서 뺀다` (mem/0.3.0) --new
 - 들어옴 20260909-8509a9b7 `아트 조사 뒤 다음 할 일 고르기` (mem/0.3.0)
+- 거절 body-thin summary-body-match `찹쌀이 색값·그림 원본 확인`
+- 거절 tag-standard body-thin summary-body-match `가판대 SD 캐릭터 넣을지 결정`
+- 거절 body-thin summary-body-match `가판대 SD 캐릭터 넣을지 결정`
+- 들어옴 20260909-ddb748e2 `찹쌀이 색값·그림 원본 확인` (mem/0.3.0)
+- 들어옴 20260909-aae1d0e2 `가판대 SD 캐릭터 넣을지 결정` (mem/0.3.0)
