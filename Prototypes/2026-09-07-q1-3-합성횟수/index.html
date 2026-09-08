@@ -23,7 +23,7 @@
 <fieldset>
   <label>씨앗 <input id="seed" type="number" value="1"></label>
   <label>다른 계열 % <input id="pOther" type="number" value="20"></label>
-  <label>변종 % <input id="pVar" type="number" value="5"></label>
+  <label>변종 % <input id="pVar" type="number" value="15"></label>
   <label>횟수 <input id="runs" type="number" value="1000"></label>
   <button id="btnOne">1회 (과정 보기)</button>
   <button id="btnMany">1000회</button>
@@ -42,7 +42,7 @@
 // ===== 상수 덩이 (CONST) — 눈금은 전부 03-시스템-합성소.md 의 임시값 =====
 const CONST = {
   P_OTHER: 20,          // ② 다른 계열 % (화면 입력으로 덮어씀)
-  P_VARIANT: 5,         // ③ 빛나는 변종 % (화면 입력으로 덮어씀)
+  P_VARIANT: 15,        // ③ 빛나는 변종 % (화면 입력으로 덮어씀)
   P_OTHER_T3: 60,       // 3단계끼리 : ② 60 / ③ 40 (이 시뮬에선 3단계 짝을 안 합성해 안 쓰임)
   WAIT_MIN: { 1: 5, 2: 30, 3: 120 },   // 재료 낮은 단계 기준 대기 시간(분)
   WAIT_LIMIT: 60,       // (c) 변종 집계 대기 시간 상한(분)

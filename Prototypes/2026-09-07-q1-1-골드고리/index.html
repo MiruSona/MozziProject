@@ -224,7 +224,7 @@ window.A = {
   craftAll(){ act('만들기전부(모두)',()=>{ craftAll(S); }); },
   sell(k,n){ act('팔기'+(n==='all'?'전부':'1'),()=>{ sell(S,k,n); }); },
   sellAll(){ act('팔기전부(모두)',()=>{ sellAll(S); }); },
-  slot(i,v){ if(i===0) UI.slotA=v; else UI.slotB=v; rec('슬롯'); render(); },
+  slot(i,v){ if(i===0) UI.slotA=v; else UI.slotB=v; UI.synthDirty=true; rec('슬롯'); render(); },
   synth(){ act('합성시작',()=>startSynth(S,UI.slotA,UI.slotB)); },
   buy(l){ act('구매',()=>buy(S,l)); },
   sellMozzi(k){ act('찹쌀이팔기',()=>sellMozzi(S,k)); },
@@ -244,31 +244,34 @@ function frame(){
   render(); requestAnimationFrame(frame);
 }
 let lastRender=0;
+// innerHTML 은 내용이 바뀐 상자만 다시 쓴다. 매 프레임 다시 쓰면 버튼이 깜빡이고 열린 <select> 목록이 닫힌다.
+const lastHtml={};
+function setHtml(id, html){ if(lastHtml[id]===html) return; lastHtml[id]=html; document.getElementById(id).innerHTML=html; }
 function render(){
   const now=performance.now(); if(now-lastRender<150 && !UI.forceRender) return; lastRender=now;
   const spd=[1,10,60].map(x=>`<button class="${UI.speed===x?'on':''}" onclick="A.speed(${x})">×${x}</button>`).join('');
-  document.getElementById('top').innerHTML = `
+  setHtml('top', `
     ${UI.started?'':'<button onclick="A.start()" style="font-size:16px">▶ 시작 (30분 타이머 시작)</button>'}
     <b>게임 시각</b> ${fmt(S.time)} &nbsp; <b>골드</b> ${S.gold} &nbsp; 배속 ${spd} <button onclick="A.skip5()">5분 건너뛰기</button>
-    &nbsp; <b>실제 논 시간</b> ${fmt(UI.realPlayed)} / 30:00 ${UI.realPlayed>=1800?'<span class="warn">30분 지남</span>':''}`;
+    &nbsp; <b>실제 논 시간</b> ${fmt(UI.realPlayed)} / 30:00 ${UI.realPlayed>=1800?'<span class="warn">30분 지남</span>':''}`);
 
   // 농장
   let farmRows=Object.keys(S.farm).map(k=>{ const sp=SPECIES[k]; const br=(!sp.v&&S.farm[k]>=2)?fmt(CONST.BREED_PERIOD-(S.breedAcc[k]||0)):'—';
     return `<tr><td>${sp.name}</td><td>${sp.l}</td><td>${sp.t}</td><td>${S.farm[k]}</td><td>${br}</td><td><button onclick="A.sellMozzi('${k}')">팔기 ${CONST.MOZZI_SELL_PRICE}골드</button></td></tr>`; }).join('');
   const fsub=Object.keys(S.floor.sub).map(k=>`${subName(k)} ${S.floor.sub[k]}`).join(' · ');
-  document.getElementById('farm').innerHTML=`<h3>농장 (${farmTotal(S)}마리)</h3>
+  setHtml('farm', `<h3>농장 (${farmTotal(S)}마리)</h3>
     <table><tr><th>종</th><th>계열</th><th>단계</th><th>마리</th><th>번식까지</th><th></th></tr>${farmRows||'<tr><td colspan=6>비었다</td></tr>'}</table>
     <p>바닥 : 가루 ${S.floor.powder} · ${fsub||'부재료 0'} &nbsp; (${floorTotal(S)}/${CONST.FLOOR_CAP}) ${floorFull(S)?'<span class="full">가득 — 생산 멈춤</span>':''}</p>
-    <button onclick="A.pickup()" style="font-size:14px">줍기 (바닥 전부 → 창고)</button>`;
+    <button onclick="A.pickup()" style="font-size:14px">줍기 (바닥 전부 → 창고)</button>`);
 
   // 창고
   const subRows=Object.keys(S.wh.sub).map(k=>`<tr><td>${subName(k)}</td><td>${S.wh.sub[k]}</td><td><button onclick="A.craft('${k}',1)">떡 1개</button><button onclick="A.craft('${k}','all')">떡 전부</button></td></tr>`).join('');
   const riceRows=Object.keys(S.wh.rice).map(k=>`<tr><td>${riceName(k)}</td><td>${S.wh.rice[k]}</td><td>${ricePrice(k)}골드</td><td><button onclick="A.sell('${k}',1)">팔기 1개</button><button onclick="A.sell('${k}','all')">팔기 전부</button></td></tr>`).join('');
-  document.getElementById('wh').innerHTML=`<h3>창고</h3><p>찹쌀가루 ${S.wh.powder}</p>
+  setHtml('wh', `<h3>창고</h3><p>찹쌀가루 ${S.wh.powder}</p>
     <table><tr><th>부재료</th><th>수</th><th>가루1+부재료1→떡</th></tr>${subRows||'<tr><td colspan=3>없음</td></tr>'}</table>
     <button onclick="A.craftAll()">떡 전부 만들기</button>
     <table style="margin-top:4px"><tr><th>떡</th><th>수</th><th>값</th><th></th></tr>${riceRows||'<tr><td colspan=4>없음</td></tr>'}</table>
-    <button onclick="A.sellAll()">떡 전부 팔기</button>`;
+    <button onclick="A.sellAll()">떡 전부 팔기</button>`);
 
   // 합성소
   const opts=(sel)=>'<option value="">-</option>'+Object.keys(S.farm).map(k=>`<option value="${k}" ${sel===k?'selected':''}>${SPECIES[k].name} ×${S.farm[k]}</option>`).join('');
@@ -282,20 +285,23 @@ function render(){
   const why=canSynth(S,UI.slotA,UI.slotB);
   let synHtml='';
   if(S.synth) synHtml=`<p><b>합성 중</b> ${SPECIES[S.synth.a].name}+${SPECIES[S.synth.b].name} — 남은 시간 ${fmt(S.synth.remain)}</p>`;
-  document.getElementById('synth').innerHTML=`<h3>합성소 (1칸)</h3>
+  // 슬롯 <select> 에 포커스가 있는 동안(목록 열림)은 다시 쓰지 않는다 — 합성 중 남은 시간이 매초 바뀌어도 목록이 닫히지 않게. 슬롯을 고른 직후만 예외.
+  const synthEl=document.getElementById('synth');
+  if(!synthEl.contains(document.activeElement) || UI.synthDirty){ UI.synthDirty=false;
+  setHtml('synth', `<h3>합성소 (1칸)</h3>
     슬롯1 <select onchange="A.slot(0,this.value)">${opts(UI.slotA)}</select>
     슬롯2 <select onchange="A.slot(1,this.value)">${opts(UI.slotB)}</select>
-    ${pvHtml}<button onclick="A.synth()" ${why?'disabled':''} style="font-size:14px">시작</button> <small>${why||''}</small>${synHtml}`;
+    ${pvHtml}<button onclick="A.synth()" ${why?'disabled':''} style="font-size:14px">시작</button> <small>${why||''}</small>${synHtml}`); }
 
   // 가판대
   const buys=openLineages(S).map(l=>`<button onclick="A.buy('${l}')" ${S.dex[l+'1']?'':'disabled'}>${NAMES[l][0]} 사기 ${CONST.BUY_PRICE}골드</button>`).join('');
-  document.getElementById('shop').innerHTML=`<h3>가판대</h3>${buys}<p><small>찹쌀이 팔기는 농장 표의 버튼 (${CONST.MOZZI_SELL_PRICE}골드)</small></p>`;
+  setHtml('shop', `<h3>가판대</h3>${buys}<p><small>찹쌀이 팔기는 농장 표의 버튼 (${CONST.MOZZI_SELL_PRICE}골드)</small></p>`);
 
   // 도감
-  document.getElementById('dexbox').innerHTML=`<h3>도감 ${dexCount(S)}/24</h3><div class="dex">`+
-    SPECIES_LIST.map(sp=>`<div class="${S.dex[sp.key]?'got':''}">${S.dex[sp.key]?sp.name:'???'}<br><small>${sp.l} ${sp.t}${sp.v?' 변종':''}</small></div>`).join('')+'</div>';
+  setHtml('dexbox', `<h3>도감 ${dexCount(S)}/24</h3><div class="dex">`+
+    SPECIES_LIST.map(sp=>`<div class="${S.dex[sp.key]?'got':''}">${S.dex[sp.key]?sp.name:'???'}<br><small>${sp.l} ${sp.t}${sp.v?' 변종':''}</small></div>`).join('')+'</div>');
 
-  document.getElementById('log').innerHTML=S.log.slice(-30).reverse().join('<br>');
+  setHtml('log', S.log.slice(-30).reverse().join('<br>'));
 
   // 기록
   const c1=UI.stuckRealTime, c3=S.stats.synthStarted;
@@ -303,13 +309,13 @@ function render(){
     기준1_골드0멈춤_실제초:Math.round(c1), 기준2_근사_3초무입력횟수:UI.idleCount, 기준3_합성시작:c3, 합성완료:S.stats.synthDone,
     배속기록:UI.speedLog, 골드:S.gold, 도감칸:dexCount(S), 마릿수:farmTotal(S), 번식:S.stats.bred, 구매:S.stats.bought, 찹쌀이팔기:S.stats.mozziSold, 떡판매:S.stats.riceSold, 번골드:S.stats.goldEarned,
     시점30분:UI.snap30, 합성로그:S.log.filter(x=>x.includes('합성')) };
-  document.getElementById('record').innerHTML=`<h3>기록</h3>
+  setHtml('record', `<h3>기록</h3>
     <table><tr><th>기준</th><th>지금 값</th><th>판정</th></tr>
     <tr><td>① 골드 0 (떡·재료도 없음) 실제 시간</td><td>${fmt(c1)}</td><td class="${c1<=180?'pass':'fail'}">${c1<=180?'통과':'불통'} (3분 이하)</td></tr>
     <tr><td>② 3초 이상 무입력 횟수 (근사 — 진짜 횟수는 결과.md 에 직접 쓴다)</td><td>${UI.idleCount}</td><td>참고만</td></tr>
     <tr><td>③ 합성 시작 횟수</td><td>${c3}</td><td class="${c3>=3?'pass':'fail'}">${c3>=3?'통과':'불통'} (3회 이상)</td></tr></table>
     <p>30분 시점 : ${UI.snap30?`골드 ${UI.snap30.gold} · 도감 ${UI.snap30.dex}칸 · 합성 ${UI.snap30.synth}회 · ${UI.snap30.mozzi}마리`:'아직'}</p>
-    <textarea id="json" readonly>${JSON.stringify(j)}</textarea><br><button onclick="A.copy()">JSON 복사</button>`;
+    <textarea id="json" readonly>${JSON.stringify(j)}</textarea><br><button onclick="A.copy()">JSON 복사</button>`);
 }
 render(); requestAnimationFrame(frame);
 </script>
