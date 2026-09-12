@@ -96,6 +96,8 @@ ProjectMozziUnity/[Aa]ssets/[Ss]ceneDependencyCache*
 # ---- AI 도구 개인 로컬 설정 (팀 공용 설정은 .claude/settings.json) ----
 .claude/settings.local.json
 .gemini/settings.json
+# 로컬 하네스의 저장소별 규칙
+.claude/local/
 
 # ---- mem 이 만드는 것 ----
 # >>> mem >>>
