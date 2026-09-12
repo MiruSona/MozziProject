@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>q3 손님 주문 프로토</title>
+<script type="application/json" id="proto-meta">
+{ "물음": ["q3-1 손님 주문이 있는 판매가 재미인가 노동인가",
+           "q3-2 떡메 치기 과정이 레시피 실험을 지루하게 만드나",
+           "q3-3 점원 사기 전 첫 방치가 허탈한가"],
+  "기준": ["q3-1 ① 10분 판에서 주문 맞춤 비율 50% 이상",
+           "q3-1 ② 못 찾은 떡 주문(힌트)으로 레시피를 1개 이상 찾는다",
+           "q3-1 ③ 끝나고 「손님이 없는 즉시 판매가 낫다」 (예/아니오 · 아니오면 통과)",
+           "q3-2 ① 과정 있음 판 2분간 시도 수 ≥ 과정 없음 판의 60%",
+           "q3-2 ② 과정 있음 판에서 건너뛰기 사용 ≤ 시도의 30%",
+           "q3-2 ③ 「과정이 있는 쪽이 낫다」 (예/아니오)",
+           "q3-3 ① 점원 없이 자리 비우기 뒤 「허탈하다」 (예/아니오 · 아니오면 통과)",
+           "q3-3 ② 점원을 사는 시점이 게임 15분 안"],
+  "만든날": "2026-09-12" }
+</script>
+<style>
+body{font-family:sans-serif;font-size:13px;margin:0;background:#ddd;display:flex;justify-content:center}
+#phone{width:400px;max-width:100%;min-height:800px;background:#f7f5f0;padding:6px;box-sizing:border-box}
+.box{border:1px solid #999;background:#fff;padding:6px;margin:5px 0;border-radius:4px}
+.box h3{margin:0 0 4px 0;font-size:13px}
+button{font-size:12px;padding:3px 6px;margin:1px;cursor:pointer}
+button.on{background:#333;color:#fff}
+button:disabled{color:#999;cursor:default}
+table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccc;padding:1px 4px;text-align:left;font-size:12px}
+#top{position:sticky;top:0;background:#efe9dc;padding:5px;border:1px solid #999;border-radius:4px;z-index:5}
+#hud{font-size:11px;line-height:1.5}
+.big{font-size:14px;font-weight:bold}
+.night{background:#334;color:#fff}
+.warn{color:#c00;font-weight:bold}
+.pass{color:#080;font-weight:bold}.fail{color:#c00;font-weight:bold}
+.cust{border:1px solid #aaa;border-radius:4px;padding:3px;margin:2px 0;background:#fafaff;font-size:12px}
+.cust.hint{background:#fff4d6}
+.sub{display:inline-block;min-width:44px;margin:1px}
+.dex{display:grid;grid-template-columns:repeat(2,1fr);gap:3px}
+.dex div{border:1px solid #bbb;padding:2px;font-size:11px;border-radius:3px}
+.dex .got{background:#dfd}
+#pound{display:none;position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.55);color:#fff;
+  text-align:center;padding-top:200px;box-sizing:border-box;font-size:20px;z-index:20}
+#pound.flash{background:#fff;color:#000}
+#log{max-height:110px;overflow:auto;font-size:11px;background:#fbfbfb;border:1px solid #ddd}
+textarea{width:100%;height:70px;font-size:10px}
+small{font-size:11px;color:#555}
+</style>
+</head>
+<body>
+<div id="phone">
+
+<div id="top"></div>
+
+<div class="box" id="stall"></div>
+<div class="box" id="queue"></div>
+<div class="box" id="make"></div>
+<div class="box" id="lab"></div>
+<div class="box" id="dexbox"></div>
+<div class="box" id="farm"></div>
+<div class="box" id="shop"></div>
+<div class="box"><h3>기록</h3><div id="log"></div></div>
+<div class="box" id="record"></div>
+
+</div>
+<div id="pound" onclick="A.poundTap(event)"></div>
+
+<script>
+// ===CORE START===
+// 게임 논리. 화면과 떼어 놓았다. node 로 이 구간만 불러 쓸 수 있다.
+// 잣대 : 값은 전부 임시다. mem 20260912-01b50d85 · 7151c951 · 73600836 의 눈금을 그대로 옮겼다.
+const CONST = {
+  TICK: 0.1,                       // 게임 1틱 = 0.1초
+  SUBS: ['팥','콩','쑥','깨','잣','대추'],   // 부재료 6종 (전부 1단계 · 자리표시 이름)
+  SUB_VALUE: 10,                   // 1단계 부재료 값
+  SUB_PERIOD: 30,                  // 찹쌀이 1마리가 부재료 1개 (초)
+  START_MOZZI: {'팥':2},           // 시작 : 잔디 1단계(팥) 찹쌀이 2마리
+  NEW_MOZZI_PRICE: 150,            // 새 찹쌀이 얻기 (합성 대신 · 순서는 SUBS 차례)
+  COUNT_MULT: [1.5, 2, 3],         // 부재료 1·2·3개 계수 (임시)
+  PLAIN_RATE: 0.5,                 // 평범한 떡 = 부재료 값 합의 절반
+  ORDER_MULT: 1.5,                 // 주문 맞춤 계수
+  N_STEPS: [10, 20, 40, 70, 100],  // 한 판 손님 수 N
+  N_PRICE: [300, 800, 2000, 5000], // N 강화 값 (임시)
+  CUST_GAP: 5,                     // 손님 간격 (초)
+  QUEUE_MAX: 5,                    // 줄 상한
+  SHELF_MAX: 30,                   // 진열 상한
+  HINT_EVERY: 5,                   // 5명 중 1명은 못 찾은 떡 주문 (힌트)
+  CLERK_PRICE: 200,                // 점원 — 손님이 오면 자동 판매
+  STEAMER_PRICE: 500,              // 찜기 — 지정 레시피 자동 제작
+  CLERK_SPEED: 1,                  // 점원이 손님 1명 무는 데 걸리는 초
+  STEAMER_SPEED: 1,                // 찜기가 떡 1개 만드는 데 걸리는 초
+  AWAY_SEC: 300,                   // 자리 비우기 = 게임 5분 (게임 시간 기준 — q2 의 함정을 피한다)
+  POUND_TAPS: 3,                   // 떡메 치기 탭 수
+  POUND_MIN_GAP: 500,              // 탭 사이 최소 간격 (실제 ms)
+  DOUBLE_MS: 350,                  // 이 안에 두 번 누르면 건너뛰기
+};
+// 숨은 레시피 10개 : 1개짜리 6 · 2개짜리 3 · 3개짜리 1 (24칸 결정과 같은 비율)
+const RECIPES = [
+  {subs:['팥'], name:'팥떡'}, {subs:['콩'], name:'콩떡'}, {subs:['쑥'], name:'쑥떡'},
+  {subs:['깨'], name:'깨떡'}, {subs:['잣'], name:'잣떡'}, {subs:['대추'], name:'대추떡'},
+  {subs:['팥','콩'], name:'팥콩떡'}, {subs:['쑥','깨'], name:'쑥깨떡'}, {subs:['잣','대추'], name:'잣대추떡'},
+  {subs:['팥','쑥','깨'], name:'팥쑥깨떡'},
+];
+function keyOf(subs){ return CONST.SUBS.filter(s=>subs.includes(s)).join('+'); }
+function recipeIndexOf(subs){ const k=keyOf(subs); for(let i=0;i<RECIPES.length;i++) if(keyOf(RECIPES[i].subs)===k) return i; return -1; }
+// 떡 값 = 부재료 값 합 × 개수 계수. 평범한 떡은 합의 절반
+function priceOf(subs, isRecipe){
+  const n=subs.length, sum=n*CONST.SUB_VALUE;
+  return isRecipe ? Math.round(sum*CONST.COUNT_MULT[n-1]) : Math.round(sum*CONST.PLAIN_RATE);
+}
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; let t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function fmt(t){ t=Math.max(0,Math.floor(t)); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0'); }
+
+function newState(seed){
+  const s = {
+    time:0, day:1, gold:0,
+    farm:Object.assign({}, CONST.START_MOZZI),   // 부재료 이름 → 찹쌀이 마릿수
+    prodAcc:{},                                  // 부재료 이름 → 생산 누적
+    wh:{},                                       // 창고 부재료 (찹쌀가루는 무한이라 안 센다)
+    shelf:{},                                    // 진열대 : key → {name, price, subs, isRecipe, n}
+    found:{},                                    // 찾은 레시피 index → 게임 시각
+    tried:{},                                    // 해 본 조합 key → {n, name, isRecipe}
+    hinted:{},                                   // 힌트로 나온 적 있는 레시피 index → true
+    open:false, night:false, served:0, queue:[], custSeq:0, gapAcc:0,
+    nLevel:0,                                    // N 강화 단계 (0 = 10명)
+    clerk:false, steamer:false, steamerPick:null,
+    clerkAcc:0, steamerAcc:0,
+    clerkAt:null, steamerAt:null,                // 산 게임 시각
+    log:[], events:[],
+    stats:{tries:0, plainMade:0, recipeMade:0, served:0, orderHit:0, hintFound:0,
+           goldEarned:0, sold:0, poundTries:0, skips:0, awaySold:0, awayGold:0, awayMat:0, awayCount:0,
+           lostByEmpty:0},
+    rng: mulberry32(seed||1),
+  };
+  return s;
+}
+function nOf(s){ return CONST.N_STEPS[s.nLevel]; }
+function nPrice(s){ return s.nLevel>=CONST.N_PRICE.length?null:CONST.N_PRICE[s.nLevel]; }
+function shelfTotal(s){ return Object.values(s.shelf).reduce((a,b)=>a+b.n,0); }
+function foundCount(s){ return Object.keys(s.found).length; }
+function farmTotal(s){ return Object.values(s.farm).reduce((a,b)=>a+b,0); }
+function whTotal(s){ return Object.values(s.wh).reduce((a,b)=>a+b,0); }
+function nextMozziSub(s){ for(const k of CONST.SUBS) if(!s.farm[k]) return k; return CONST.SUBS[Object.values(s.farm).reduce((a,b)=>a+b,0)%CONST.SUBS.length]; }
+function shelfKey(subs, isRecipe){ return (isRecipe?'r:':'p:')+keyOf(subs); }
+function ev(s, kind, text){ s.events.push({t:Math.round(s.time), 종류:kind, 내용:text}); s.log.push(fmt(s.time)+' '+text); }
+
+// ---- 재료 ----
+function produce(s, dt){
+  for(const sub in s.farm){
+    const n=s.farm[sub];
+    s.prodAcc[sub]=(s.prodAcc[sub]||0)+n*dt/CONST.SUB_PERIOD;
+    while(s.prodAcc[sub]>=1){ s.prodAcc[sub]-=1; s.wh[sub]=(s.wh[sub]||0)+1; }
+  }
+}
+function hasSubs(s, subs){ return subs.every(x=>(s.wh[x]||0)>0); }
+function takeSubs(s, subs){ for(const x of subs) s.wh[x]--; }
+
+// ---- 제작 ----
+// subs : 부재료 이름 배열 (1~3개). 찹쌀가루는 무한이라 안 센다.
+// 돌려줌 : {ok, why, isRecipe, name, price, isNew}
+function craft(s, subs){
+  if(subs.length<1||subs.length>3) return {ok:false, why:'부재료는 1~3개'};
+  if(!hasSubs(s,subs)) return {ok:false, why:'재료가 모자라다'};
+  if(shelfTotal(s)>=CONST.SHELF_MAX) return {ok:false, why:'진열대가 가득 찼다 ('+CONST.SHELF_MAX+')'};
+  takeSubs(s,subs);
+  const ri=recipeIndexOf(subs), isRecipe=ri>=0;
+  const name=isRecipe?RECIPES[ri].name:'평범한 떡('+keyOf(subs)+')';
+  const price=priceOf(subs,isRecipe);
+  const k=shelfKey(subs,isRecipe);
+  if(!s.shelf[k]) s.shelf[k]={name, price, subs:subs.slice(), isRecipe, ri, n:0};
+  s.shelf[k].n++;
+  const tk=keyOf(subs);
+  if(!s.tried[tk]) s.tried[tk]={n:0, name, isRecipe};
+  s.tried[tk].n++;
+  s.stats.tries++;
+  let isNew=false;
+  if(isRecipe && s.found[ri]===undefined){
+    s.found[ri]=s.time; isNew=true;
+    if(s.hinted[ri]) s.stats.hintFound++;      // 힌트(못 찾은 떡 주문)로 찾은 레시피
+    ev(s,'제작','새 레시피! '+name+' ('+keyOf(subs)+' · '+price+'골드)'+(s.hinted[ri]?' [힌트로 찾음]':''));
+  } else {
+    ev(s,'제작',(isRecipe?'만들기 ':'시도 ')+name+' ('+price+'골드)');
+  }
+  if(isRecipe) s.stats.recipeMade++; else s.stats.plainMade++;
+  return {ok:true, isRecipe, name, price, isNew, ri};
+}
+
+// ---- 손님 ----
+function undiscoveredWithMats(s){
+  const out=[];
+  for(let i=0;i<RECIPES.length;i++) if(s.found[i]===undefined && hasSubs(s,RECIPES[i].subs)) out.push(i);
+  return out;
+}
+function makeCustomer(s){
+  s.custSeq++;
+  let ri=null, hint=false;
+  const hintTurn = (s.custSeq % CONST.HINT_EVERY)===0;
+  if(hintTurn){
+    const cand=undiscoveredWithMats(s);
+    if(cand.length){ ri=cand[Math.floor(s.rng()*cand.length)]; hint=true; s.hinted[ri]=true; }
+  }
+  if(ri===null){
+    const fs=Object.keys(s.found).map(Number);
+    if(fs.length) ri=fs[Math.floor(s.rng()*fs.length)];
+  }
+  const c={id:s.custSeq, ri, hint, since:s.time};
+  s.queue.push(c);
+  ev(s,'손님','손님 '+s.custSeq+' 도착 — '+wantLabel(s,c));
+  return c;
+}
+function wantLabel(s,c){
+  if(c.ri===null) return '아무 떡이나';
+  if(c.hint){
+    const r=RECIPES[c.ri], one=r.subs[Math.floor(c.id)%r.subs.length];
+    return '??? (못 찾은 떡 · 재료 '+r.subs.length+'개 · 그중 하나는 '+one+')';
+  }
+  return RECIPES[c.ri].name;
+}
+// 손님에게 판다. 원하는 떡이 있으면 ×1.5, 없으면 진열대에서 가장 싼 떡을 제값에
+function serve(s, idx){
+  const c=s.queue[idx]; if(!c) return {ok:false, why:'손님이 없다'};
+  if(shelfTotal(s)<=0){ s.stats.lostByEmpty++; return {ok:false, why:'진열대가 비었다'}; }
+  let key=null, hit=false;
+  if(c.ri!==null){
+    const want=shelfKey(RECIPES[c.ri].subs,true);
+    if(s.shelf[want]&&s.shelf[want].n>0){ key=want; hit=true; }
+  }
+  if(!key){
+    let best=null;
+    for(const k in s.shelf) if(s.shelf[k].n>0 && (best===null||s.shelf[k].price<s.shelf[best].price)) best=k;
+    key=best;
+  }
+  const item=s.shelf[key];
+  const gold=Math.round(item.price*(hit?CONST.ORDER_MULT:1));
+  item.n--; if(item.n<=0) delete s.shelf[key];
+  s.gold+=gold; s.stats.goldEarned+=gold; s.stats.sold++;
+  s.stats.served++; if(hit) s.stats.orderHit++;
+  s.served++;
+  s.queue.splice(idx,1);
+  ev(s,'판매','손님 '+c.id+' → '+item.name+' '+gold+'골드'+(hit?' [주문 맞춤 ×1.5]':(c.ri!==null?' [주문 못 맞춤]':'')));
+  if(s.served>=nOf(s)) closeStall(s);
+  return {ok:true, gold, hit};
+}
+function openStall(s){
+  if(s.open) return '이미 열려 있다';
+  if(s.night) return '밤이다 — 「다음날로」 를 먼저 누른다';
+  s.open=true; s.served=0; s.gapAcc=CONST.CUST_GAP; s.queue=[];
+  ev(s,'열기', s.day+'일째 가게 열기 (손님 '+nOf(s)+'명)');
+  return null;
+}
+function closeStall(s){
+  s.open=false; s.night=true; s.queue=[];
+  ev(s,'닫기', s.day+'일째 마감 — 손님 '+s.served+'명 · 밤');
+}
+function nextDay(s){
+  if(!s.night) return '아직 밤이 아니다';
+  s.day++; s.night=false;
+  ev(s,'다음날', s.day+'일째 아침');
+  return null;
+}
+
+// ---- 설비 ----
+function buyClerk(s){ if(s.clerk) return '이미 있다'; if(s.gold<CONST.CLERK_PRICE) return '골드 부족';
+  s.gold-=CONST.CLERK_PRICE; s.clerk=true; s.clerkAt=s.time; ev(s,'구매','점원 ('+CONST.CLERK_PRICE+'골드)'); return null; }
+function buySteamer(s){ if(s.steamer) return '이미 있다'; if(s.gold<CONST.STEAMER_PRICE) return '골드 부족';
+  s.gold-=CONST.STEAMER_PRICE; s.steamer=true; s.steamerAt=s.time; ev(s,'구매','찜기 ('+CONST.STEAMER_PRICE+'골드)'); return null; }
+function buyN(s){ const p=nPrice(s); if(p===null) return '더 못 올린다'; if(s.gold<p) return '골드 부족';
+  s.gold-=p; s.nLevel++; ev(s,'구매','손님 수 N → '+nOf(s)+'명 ('+p+'골드)'); return null; }
+function buyMozzi(s){
+  if(s.gold<CONST.NEW_MOZZI_PRICE) return '골드 부족';
+  const sub=nextMozziSub(s);
+  s.gold-=CONST.NEW_MOZZI_PRICE; s.farm[sub]=(s.farm[sub]||0)+1;
+  ev(s,'구매','새 찹쌀이 — '+sub+' 찹쌀이 ('+CONST.NEW_MOZZI_PRICE+'골드)'); return null;
+}
+
+// ---- 틱 ----
+function tick(s){
+  const dt=CONST.TICK; s.time+=dt;
+  produce(s,dt);
+  // 손님 도착
+  if(s.open){
+    if(s.queue.length<CONST.QUEUE_MAX && s.served+s.queue.length<nOf(s)){
+      s.gapAcc+=dt;
+      if(s.gapAcc>=CONST.CUST_GAP){ s.gapAcc=0; makeCustomer(s); }
+    }
+    // 점원 : 손님이 오면 알아서 판다
+    if(s.clerk && s.queue.length>0 && shelfTotal(s)>0){
+      s.clerkAcc+=dt;
+      if(s.clerkAcc>=CONST.CLERK_SPEED){ s.clerkAcc=0; serve(s,0); }
+    } else s.clerkAcc=0;
+  }
+  // 찜기 : 지정 레시피를 재료 있는 대로 만들어 진열 상한까지 채운다
+  if(s.steamer && s.steamerPick!==null && s.steamerPick!==undefined && s.found[s.steamerPick]!==undefined){
+    const subs=RECIPES[s.steamerPick].subs;
+    if(hasSubs(s,subs) && shelfTotal(s)<CONST.SHELF_MAX){
+      s.steamerAcc+=dt;
+      if(s.steamerAcc>=CONST.STEAMER_SPEED){ s.steamerAcc=0; craft(s,subs); }
+    } else s.steamerAcc=0;
+  }
+}
+// 자리 비우기 : 게임 시간 AWAY_SEC 만큼 건너뛴다 (실제 시간이 아니라 게임 시간 기준)
+function away(s){
+  const g0=s.gold, sold0=s.stats.sold, mat0=whTotal(s);
+  ev(s,'자리비우기','자리 비우기 시작 (게임 '+(CONST.AWAY_SEC/60)+'분 · '+(s.open?'가게 열림':'가게 닫힘')+' · '+(s.clerk?'점원 있음':'점원 없음')+')');
+  const n=Math.round(CONST.AWAY_SEC/CONST.TICK);
+  for(let i=0;i<n;i++) tick(s);
+  const r={팔린떡:s.stats.sold-sold0, 번골드:s.gold-g0, 쌓인재료:whTotal(s)-mat0, 줄:s.queue.length, 점원:s.clerk};
+  s.stats.awaySold+=r.팔린떡; s.stats.awayGold+=Math.max(0,r.번골드); s.stats.awayMat+=r.쌓인재료; s.stats.awayCount++;
+  ev(s,'자리비우기','돌아옴 — 팔린 떡 '+r.팔린떡+' · 번 골드 '+r.번골드+' · 쌓인 재료 '+r.쌓인재료+' · 줄 '+r.줄+'명');
+  return r;
+}
+
+// ---- 자동 판정 ----
+// extra : {twoMinOn, twoMinOff, poundTries, skips} — 화면 쪽이 잰 값
+function judge(s, extra){
+  extra=extra||{};
+  const st=s.stats, pct=x=>Math.round(x*100)+'%';
+  const r={'q3-1':{}, 'q3-2':{}, 'q3-3':{}};
+  const hitRate=st.served?st.orderHit/st.served:0;
+  r['q3-1']['①']={값:pct(hitRate)+' ('+st.orderHit+'/'+st.served+')', 통과:st.served>0?hitRate>=0.5:null, 메모:'손님 응대 '+st.served+'명'};
+  r['q3-1']['②']={값:st.hintFound+'개', 통과:st.hintFound>=1, 메모:'힌트로 나온 레시피 '+Object.keys(s.hinted).length+'개 중'};
+  r['q3-1']['③']={값:'—', 통과:null, 메모:'사용자가 결과.md 에 씀'};
+  const on=extra.twoMinOn, off=extra.twoMinOff;
+  const ratio=(on!==null&&on!==undefined&&off)?on/off:null;
+  r['q3-2']['①']={값:(on==null?'—':on)+' / '+(off==null?'—':off), 통과:ratio===null?null:ratio>=0.6,
+    메모:ratio===null?'2분 재기를 두 판 다 해야 판정한다':'과정 있음 ÷ 없음 = '+pct(ratio)};
+  const pt=extra.poundTries||0, sk=extra.skips||0, skRate=pt?sk/pt:0;
+  r['q3-2']['②']={값:sk+' / '+pt+' = '+pct(skRate), 통과:pt>0?skRate<=0.3:null, 메모:'과정 있음으로 시도한 미발견 조합 '+pt+'회'};
+  r['q3-2']['③']={값:'—', 통과:null, 메모:'사용자가 결과.md 에 씀'};
+  r['q3-3']['①']={값:'—', 통과:null, 메모:'사용자가 결과.md 에 씀 (자리 비우기 '+st.awayCount+'회 · 그동안 팔린 떡 '+st.awaySold+')'};
+  r['q3-3']['②']={값:s.clerkAt===null?'아직 안 삼':fmt(s.clerkAt), 통과:s.clerkAt===null?null:s.clerkAt<=15*60, 메모:'게임 15분 안'};
+  return r;
+}
+
+const CORE={CONST,RECIPES,keyOf,recipeIndexOf,priceOf,newState,tick,craft,serve,openStall,closeStall,nextDay,
+  buyClerk,buySteamer,buyN,buyMozzi,away,judge,nOf,nPrice,shelfTotal,foundCount,farmTotal,whTotal,hasSubs,
+  makeCustomer,wantLabel,undiscoveredWithMats,fmt,shelfKey,nextMozziSub};
+if(typeof module!=='undefined') module.exports=CORE;
+// ===CORE END===
+</script>
+
+<script>
+// ===== 화면 · 기록 (버릴 코드) =====
+const S=newState(Date.now()%100000);
+const UI={
+  started:false, speed:1, realPlayed:0, lastFrame:0, acc:0,
+  process:true,                 // 「과정 있음/없음」 스위치
+  pick:{},                      // 실험에서 켠 부재료
+  twoMin:{on:null, off:null},   // 2분 실험 재기 결과 (과정 있음 / 없음)
+  timer:null,                   // {mode, left, count} 재는 중
+  poundTries:0, skips:0,        // 과정 있음으로 시도한 미발견 조합 · 건너뛰기 사용
+  pound:null,                   // {subs, taps, lastTap, lastClick}
+  clicks:{}, awayLog:[], lastMsg:'',
+};
+function rec(n){ UI.clicks[n]=(UI.clicks[n]||0)+1; }
+function msg(t){ UI.lastMsg=t; }
+
+window.A={
+  start(){ UI.started=true; UI.lastFrame=performance.now(); rec('시작'); ev(S,'시작','시작'); render(true); },
+  speed(x){ UI.speed=x; rec('배속'+x); render(true); },
+  process(v){ UI.process=v; rec('과정'+(v?'있음':'없음')); render(true); },
+  open(){ rec('열기'); const w=openStall(S); if(w) msg(w); render(true); },
+  nextDay(){ rec('다음날'); const w=nextDay(S); if(w) msg(w); render(true); },
+  serve(i){ rec('팔기'); const r=serve(S,i); if(!r.ok) msg(r.why); render(true); },
+  buyClerk(){ rec('점원'); const w=buyClerk(S); if(w) msg(w); render(true); },
+  buySteamer(){ rec('찜기'); const w=buySteamer(S); if(w) msg(w); render(true); },
+  buyN(){ rec('N강화'); const w=buyN(S); if(w) msg(w); render(true); },
+  buyMozzi(){ rec('새찹쌀이'); const w=buyMozzi(S); if(w) msg(w); render(true); },
+  pickSteamer(v){ S.steamerPick=v===''?null:+v; rec('찜기지정'); render(true); },
+  toggle(sub){ UI.pick[sub]=!UI.pick[sub]; rec('재료토글'); render(true); },
+  clearPick(){ UI.pick={}; render(true); },
+  makeFound(ri){ rec('도감만들기'); doCraft(RECIPES[ri].subs, true); },
+  tryPick(){
+    const subs=CONST.SUBS.filter(x=>UI.pick[x]);
+    if(subs.length<1||subs.length>3){ msg('부재료를 1~3개 고른다'); render(true); return; }
+    rec('실험');
+    doCraft(subs, recipeIndexOf(subs)>=0 && S.found[recipeIndexOf(subs)]!==undefined);
+  },
+  away(){ rec('자리비우기'); const r=away(S); UI.awayLog.push(Object.assign({게임시각:fmt(S.time)}, r));
+    msg('비운 동안 : 팔린 떡 '+r.팔린떡+' · 번 골드 '+r.번골드+' · 쌓인 재료 '+r.쌓인재료+(r.줄?' · 줄 '+r.줄+'명이 기다리는 중':'')); render(true); },
+  timer(){
+    if(UI.timer){ finishTimer(); }
+    else { UI.timer={mode:UI.process?'on':'off', left:120, count:0}; rec('2분재기'); msg('2분 재기 시작 — 과정 '+(UI.process?'있음':'없음')); }
+    render(true);
+  },
+  poundTap(e){
+    const p=UI.pound; if(!p) return;
+    const now=performance.now();
+    if(now-p.lastClick<CONST.DOUBLE_MS){    // 두 번 빨리 = 건너뛰기
+      UI.skips++; rec('건너뛰기'); ev(S,'시도','떡메 건너뛰기'); finishPound(); return;
+    }
+    p.lastClick=now;
+    if(now-p.lastTap<CONST.POUND_MIN_GAP) return;   // 너무 이른 탭은 안 친 것
+    p.lastTap=now; p.taps++;
+    if(p.taps>=CONST.POUND_TAPS){ flashPound(); setTimeout(finishPound, 220); }
+    else drawPound();
+  },
+};
+// 제작 한 번. found 이면 탭 한 번, 아니면 과정 스위치에 따라 떡메 치기
+function doCraft(subs, isFound){
+  if(!hasSubs(S,subs)){ msg('재료가 모자라다 : '+subs.join('·')); render(true); return; }
+  if(shelfTotal(S)>=CONST.SHELF_MAX){ msg('진열대가 가득 찼다'); render(true); return; }
+  if(UI.timer) UI.timer.count++;
+  if(isFound || !UI.process){ finishCraft(subs); return; }
+  UI.poundTries++;
+  UI.pound={subs, taps:0, lastTap:0, lastClick:0};
+  document.getElementById('pound').style.display='block';
+  drawPound();
+}
+function drawPound(){
+  const p=UI.pound; if(!p) return;
+  const el=document.getElementById('pound'); el.className='';
+  el.innerHTML='<div>떡메 치기</div><div style="font-size:60px">'+'●'.repeat(p.taps)+'○'.repeat(CONST.POUND_TAPS-p.taps)+'</div>'
+    +'<div style="font-size:14px">화면을 '+CONST.POUND_TAPS+'번 친다 (탭 사이 0.5초)<br>두 번 빨리 누르면 건너뛴다</div>';
+}
+function flashPound(){ const el=document.getElementById('pound'); el.className='flash'; el.innerHTML='<div style="font-size:40px">쿵!</div>'; }
+function finishPound(){ const p=UI.pound; UI.pound=null; document.getElementById('pound').style.display='none'; if(p) finishCraft(p.subs); }
+function finishCraft(subs){
+  const r=craft(S,subs);
+  if(!r.ok) msg(r.why);
+  else msg((r.isNew?'새 레시피! ':'')+r.name+' — '+r.price+'골드');
+  render(true);
+}
+function finishTimer(){
+  const t=UI.timer; if(!t) return;
+  UI.twoMin[t.mode]=t.count;
+  ev(S,'2분재기','2분 재기 끝 — 과정 '+(t.mode==='on'?'있음':'없음')+' · 시도 '+t.count+'회');
+  msg('2분 재기 끝 : 과정 '+(t.mode==='on'?'있음':'없음')+' 시도 '+t.count+'회');
+  UI.timer=null;
+}
+
+function frame(){
+  const now=performance.now();
+  if(UI.started){
+    const dtReal=(now-UI.lastFrame)/1000; UI.lastFrame=now; UI.realPlayed+=dtReal;
+    if(UI.timer){ UI.timer.left-=dtReal; if(UI.timer.left<=0) finishTimer(); }
+    UI.acc+=dtReal*UI.speed;
+    let n=0; while(UI.acc>=CONST.TICK && n<20000){ tick(S); UI.acc-=CONST.TICK; n++; }
+  } else UI.lastFrame=now;
+  render(); requestAnimationFrame(frame);
+}
+let lastRender=0;
+const lastHtml={};
+function setHtml(id, html){ if(lastHtml[id]===html) return; lastHtml[id]=html; document.getElementById(id).innerHTML=html; }
+
+// 2분간 시도 수 (지금 재는 중이면 그 값, 아니면 마지막 결과)
+function twoMinNow(){ return UI.timer?UI.timer.count:(UI.process?UI.twoMin.on:UI.twoMin.off); }
+
+function render(force){
+  const now=performance.now(); if(!force && now-lastRender<150) return; lastRender=now;
+  const st=S.stats, hit=st.served?Math.round(st.orderHit/st.served*100):0;
+  const spd=[1,5,10].map(x=>`<button class="${UI.speed===x?'on':''}" onclick="A.speed(${x})">×${x}</button>`).join('');
+  setHtml('top', `
+    ${UI.started?'':'<button onclick="A.start()" style="font-size:15px">▶ 시작</button> '}
+    <span class="big">${S.day}일째 ${S.open?'· 영업 중':(S.night?'· 밤':'· 준비')}</span>
+    &nbsp;<span class="big">${S.gold}골드</span> &nbsp;<small>게임 ${fmt(S.time)} · 실제 ${fmt(UI.realPlayed)}</small><br>
+    배속 ${spd}
+    &nbsp;과정 <button class="${UI.process?'on':''}" onclick="A.process(true)">있음</button><button class="${!UI.process?'on':''}" onclick="A.process(false)">없음</button>
+    &nbsp;<button onclick="A.timer()">${UI.timer?'2분 재기 멈춤 ('+Math.ceil(UI.timer.left)+'초 · '+UI.timer.count+'회)':'2분 재기 시작'}</button>
+    <div id="hud">시도 <b>${st.tries}</b> · 찾은 레시피 <b>${foundCount(S)}/${RECIPES.length}</b> · 2분간 시도 <b>${twoMinNow()===null||twoMinNow()===undefined?'—':twoMinNow()}</b>
+      (있음 ${UI.twoMin.on===null?'—':UI.twoMin.on} / 없음 ${UI.twoMin.off===null?'—':UI.twoMin.off})<br>
+      손님 응대 <b>${st.served}</b> · 주문 맞춤 <b>${hit}%</b> · 번 골드 ${st.goldEarned} · 건너뛰기 ${UI.skips}/${UI.poundTries}</div>
+    ${UI.lastMsg?'<div class="warn">'+UI.lastMsg+'</div>':''}`);
+
+  // 가판대 : 열기 · 다음날 · 진열대
+  const shelfRows=Object.keys(S.shelf).map(k=>{ const it=S.shelf[k];
+    return `<tr><td>${it.name}</td><td>${it.n}</td><td>${it.price}골드</td></tr>`; }).join('');
+  setHtml('stall', `<h3>가판대 — ${S.day}일째 · 손님 ${S.served}/${nOf(S)}명</h3>
+    <button onclick="A.open()" ${S.open||S.night?'disabled':''} style="font-size:14px">열기</button>
+    <button onclick="A.nextDay()" ${S.night?'':'disabled'} style="font-size:14px">다음날로</button>
+    <button onclick="A.away()">자리 비우기 (게임 5분)</button>
+    <p style="margin:4px 0"><b>진열대 ${shelfTotal(S)}/${CONST.SHELF_MAX}</b></p>
+    <table>${shelfRows||'<tr><td colspan=3>비었다</td></tr>'}</table>`);
+
+  // 손님 줄
+  const qRows=S.queue.map((c,i)=>{
+    const want=wantLabel(S,c);
+    const have=c.ri!==null && S.shelf[shelfKey(RECIPES[c.ri].subs,true)];
+    return `<div class="cust${c.hint?' hint':''}">손님 ${c.id} — <b>${want}</b> ${have?'<span class="pass">있다 ×1.5</span>':''}
+      <small>기다림 ${fmt(S.time-c.since)}</small>
+      <button onclick="A.serve(${i})">팔기</button></div>`; }).join('');
+  setHtml('queue', `<h3>손님 줄 ${S.queue.length}/${CONST.QUEUE_MAX} ${S.clerk?'· 점원이 판다':''}</h3>
+    ${qRows||'<small>'+(S.open?'손님을 기다리는 중 (5초마다 한 명)':'가게가 닫혀 있다')+'</small>'}`);
+
+  // 만들기 (찾은 레시피 · 탭 한 번)
+  const mkRows=RECIPES.map((r,i)=>{ if(S.found[i]===undefined) return '';
+    const can=hasSubs(S,r.subs);
+    return `<tr><td>${r.name}</td><td><small>${r.subs.join('+')}</small></td><td>${priceOf(r.subs,true)}골드</td>
+      <td><button onclick="A.makeFound(${i})" ${can?'':'disabled'}>만들기</button></td></tr>`; }).join('');
+  setHtml('make', `<h3>만들기 (찾은 레시피 · 탭 한 번)</h3>
+    <table>${mkRows||'<tr><td>아직 찾은 레시피가 없다 — 아래에서 실험한다</td></tr>'}</table>`);
+
+  // 실험 (조합 시도)
+  const picks=CONST.SUBS.map(x=>`<button class="sub ${UI.pick[x]?'on':''}" onclick="A.toggle('${x}')" ${(S.wh[x]||0)?'':'disabled'}>${x} ${S.wh[x]||0}</button>`).join('');
+  const cur=CONST.SUBS.filter(x=>UI.pick[x]);
+  const curKey=keyOf(cur), triedIt=S.tried[curKey];
+  const triedRows=Object.keys(S.tried).sort().map(k=>`<tr><td>${k}</td><td>${S.tried[k].isRecipe?'<b>'+S.tried[k].name+'</b>':'평범'}</td><td>${S.tried[k].n}회</td></tr>`).join('');
+  setHtml('lab', `<h3>실험 — 찹쌀가루(무한) + 부재료 1~3개</h3>
+    ${picks}<br>
+    <small>고른 것 : ${cur.length?curKey:'없음'} ${triedIt?'<b class="warn">· 해 본 조합 ('+triedIt.name+')</b>':''}</small><br>
+    <button onclick="A.tryPick()" style="font-size:14px">만들기${UI.process?' (미발견이면 떡메 3탭)':''}</button>
+    <button onclick="A.clearPick()">비우기</button>
+    <details><summary><small>해 본 조합 ${Object.keys(S.tried).length}가지</small></summary>
+    <table>${triedRows||'<tr><td>없음</td></tr>'}</table></details>`);
+
+  // 도감 (3재료 힌트 하나)
+  setHtml('dexbox', `<h3>레시피 도감 ${foundCount(S)}/${RECIPES.length}</h3><div class="dex">`+
+    RECIPES.map((r,i)=>{ const got=S.found[i]!==undefined;
+      let label='???';
+      if(got) label=r.name+'<br><small>'+r.subs.join('+')+' · '+priceOf(r.subs,true)+'골드</small>';
+      else if(r.subs.length===3) label='???<br><small>재료 3개 · '+r.subs[0]+' 들어감 (힌트)</small>';
+      else label='???<br><small>재료 '+r.subs.length+'개</small>';
+      return `<div class="${got?'got':''}">${label}</div>`; }).join('')+'</div>');
+
+  // 농장 (뼈대)
+  const farmRows=Object.keys(S.farm).map(k=>`<tr><td>${k} 찹쌀이</td><td>${S.farm[k]}마리</td><td>창고 ${S.wh[k]||0}</td></tr>`).join('');
+  setHtml('farm', `<h3>농장 (뼈대) — ${farmTotal(S)}마리 · 30초에 1개</h3>
+    <table>${farmRows}</table>
+    <button onclick="A.buyMozzi()" ${S.gold<CONST.NEW_MOZZI_PRICE?'disabled':''}>새 찹쌀이 얻기 (${CONST.NEW_MOZZI_PRICE}골드 → ${nextMozziSub(S)})</button>`);
+
+  // 설비 상점
+  const np=nPrice(S);
+  const pickOpts='<option value="">(안 정함)</option>'+RECIPES.map((r,i)=>S.found[i]===undefined?'':
+    `<option value="${i}" ${S.steamerPick===i?'selected':''}>${r.name}</option>`).join('');
+  setHtml('shop', `<h3>설비</h3>
+    <button onclick="A.buyClerk()" ${S.clerk||S.gold<CONST.CLERK_PRICE?'disabled':''}>점원 ${CONST.CLERK_PRICE}골드${S.clerk?' (샀다 '+fmt(S.clerkAt)+')':''}</button>
+    <button onclick="A.buySteamer()" ${S.steamer||S.gold<CONST.STEAMER_PRICE?'disabled':''}>찜기 ${CONST.STEAMER_PRICE}골드${S.steamer?' (샀다 '+fmt(S.steamerAt)+')':''}</button><br>
+    ${S.steamer?`찜기 지정 <select onchange="A.pickSteamer(this.value)">${pickOpts}</select>`:''}
+    <p style="margin:4px 0"><button onclick="A.buyN()" ${np===null||S.gold<np?'disabled':''}>손님 수 N 강화 ${np===null?'(끝)':'→ '+CONST.N_STEPS[S.nLevel+1]+'명 '+np+'골드'}</button>
+    <small>지금 N ${nOf(S)}명</small></p>`);
+
+  setHtml('log', S.log.slice(-40).reverse().join('<br>'));
+
+  // 판정 표 · JSON
+  const J=judge(S,{twoMinOn:UI.twoMin.on, twoMinOff:UI.twoMin.off, poundTries:UI.poundTries, skips:UI.skips});
+  const CRIT={'q3-1':{'①':'10분 판 주문 맞춤 비율 ≥ 50%','②':'힌트 주문으로 레시피 1개 이상 찾기','③':'「즉시 판매가 낫다」 아니오'},
+    'q3-2':{'①':'과정 있음 2분 시도 ≥ 없음의 60%','②':'건너뛰기 ≤ 시도의 30%','③':'「과정이 있는 쪽이 낫다」'},
+    'q3-3':{'①':'점원 없이 자리 비운 뒤 「허탈하다」 아니오','②':'점원 구매가 게임 15분 안'}};
+  const rows=Object.keys(CRIT).map(q=>Object.keys(CRIT[q]).map(n=>{ const x=J[q][n];
+    return `<tr><td>${q} ${n}</td><td>${CRIT[q][n]}</td><td>${x.값}</td><td class="${x.통과===null?'':(x.통과?'pass':'fail')}">${x.통과===null?'—':(x.통과?'통과':'불통')}</td></tr>`;
+  }).join('')).join('');
+  setHtml('record', `<h3>자동 판정</h3><table><tr><th>#</th><th>기준</th><th>값</th><th></th></tr>${rows}</table>
+    <p><small>자리 비우기 ${S.stats.awayCount}회 · 그동안 팔린 떡 ${S.stats.awaySold} · 번 골드 ${S.stats.awayGold} · 쌓인 재료 ${S.stats.awayMat}</small></p>
+    <textarea id="json" readonly>${JSON.stringify(buildRecord())}</textarea><br>
+    <button onclick="A.copy()">JSON 복사</button>`);
+}
+A.copy=function(){ const t=document.getElementById('json'); t.select(); document.execCommand('copy'); rec('복사'); };
+
+function buildRecord(){
+  return { 물음:'q3 손님 주문', 만든날:'2026-09-12',
+    실제논시간초:Math.round(UI.realPlayed), 게임시간초:Math.round(S.time), 일째:S.day,
+    과정스위치:UI.process?'있음':'없음', 배속:UI.speed, 버튼클릭:UI.clicks,
+    골드:S.gold, 번골드:S.stats.goldEarned,
+    시도:S.stats.tries, 찾은레시피:foundCount(S), 해본조합:Object.keys(S.tried).length,
+    레시피떡:S.stats.recipeMade, 평범한떡:S.stats.plainMade,
+    손님응대:S.stats.served, 주문맞춤:S.stats.orderHit, 진열비어놓침:S.stats.lostByEmpty,
+    힌트로찾은레시피:S.stats.hintFound, 힌트로나온레시피:Object.keys(S.hinted).length,
+    이분간시도:{과정있음:UI.twoMin.on, 과정없음:UI.twoMin.off},
+    떡메시도:UI.poundTries, 건너뛰기:UI.skips,
+    점원산시각초:S.clerkAt===null?null:Math.round(S.clerkAt), 찜기산시각초:S.steamerAt===null?null:Math.round(S.steamerAt),
+    손님수N:nOf(S), 진열:shelfTotal(S), 찹쌀이:S.farm, 창고:S.wh,
+    자리비우기:UI.awayLog,
+    판정:judge(S,{twoMinOn:UI.twoMin.on, twoMinOff:UI.twoMin.off, poundTries:UI.poundTries, skips:UI.skips}),
+    이벤트:S.events };
+}
+render(true); requestAnimationFrame(frame);
+</script>
+</body>
+</html>
