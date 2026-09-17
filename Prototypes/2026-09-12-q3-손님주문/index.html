@@ -75,6 +75,10 @@ const CONST = {
   SUB_PERIOD: 30,                  // 찹쌀이 1마리가 부재료 1개 (초)
   START_MOZZI: {'팥':2},           // 시작 : 잔디 1단계(팥) 찹쌀이 2마리
   NEW_MOZZI_PRICE: 150,            // 새 찹쌀이 얻기 (합성 대신 · 순서는 SUBS 차례)
+  PAIR_PRICE: 150,                 // 짝 사기 — 가진 종 1마리 더 (도감 짝 구매 1단계 150)
+  BREED_PERIOD: 180,               // 같은 종 2마리 이상이면 180초마다 그 종 1마리 (q2 값 그대로 · 종마다 따로)
+  FARM_MAX: 20,                    // 농장 상한 (담장 · 03-시스템-합성소 「10~20」의 위쪽) — 차면 번식·구매 멈춤
+  FLOOR_CAP: 60,                   // 창고 부재료 합계 상한 (q2 값) — 차면 생산 멈춤
   COUNT_MULT: [1.5, 2, 3],         // 부재료 1·2·3개 계수 (임시)
   PLAIN_RATE: 0.5,                 // 평범한 떡 = 부재료 값 합의 절반
   ORDER_MULT: 1.5,                 // 주문 맞춤 계수
@@ -115,7 +119,8 @@ function newState(seed){
     time:0, day:1, gold:0,
     farm:Object.assign({}, CONST.START_MOZZI),   // 부재료 이름 → 찹쌀이 마릿수
     prodAcc:{},                                  // 부재료 이름 → 생산 누적
-    wh:{},                                       // 창고 부재료 (찹쌀가루는 무한이라 안 센다)
+    breedAcc:{},                                 // 부재료 이름 → 번식 시계 (초)
+    wh:{},                                       // 창고 부재료 (찹쌀가루는 무한이라 안 센다 · 합계 상한 FLOOR_CAP)
     shelf:{},                                    // 진열대 : key → {name, price, subs, isRecipe, n}
     found:{},                                    // 찾은 레시피 index → 게임 시각
     tried:{},                                    // 해 본 조합 key → {n, name, isRecipe}
@@ -128,7 +133,7 @@ function newState(seed){
     log:[], events:[],
     stats:{tries:0, plainMade:0, recipeMade:0, served:0, orderHit:0, hintFound:0,
            goldEarned:0, sold:0, poundTries:0, skips:0, awaySold:0, awayGold:0, awayMat:0, awayCount:0,
-           lostByEmpty:0},
+           lostByEmpty:0, bred:0, paired:0, awayBred:0},
     rng: mulberry32(seed||1),
   };
   return s;
@@ -139,16 +144,33 @@ function shelfTotal(s){ return Object.values(s.shelf).reduce((a,b)=>a+b.n,0); }
 function foundCount(s){ return Object.keys(s.found).length; }
 function farmTotal(s){ return Object.values(s.farm).reduce((a,b)=>a+b,0); }
 function whTotal(s){ return Object.values(s.wh).reduce((a,b)=>a+b,0); }
+function whFull(s){ return whTotal(s)>=CONST.FLOOR_CAP; }
+function farmFull(s){ return farmTotal(s)>=CONST.FARM_MAX; }
 function nextMozziSub(s){ for(const k of CONST.SUBS) if(!s.farm[k]) return k; return CONST.SUBS[Object.values(s.farm).reduce((a,b)=>a+b,0)%CONST.SUBS.length]; }
 function shelfKey(subs, isRecipe){ return (isRecipe?'r:':'p:')+keyOf(subs); }
 function ev(s, kind, text){ s.events.push({t:Math.round(s.time), 종류:kind, 내용:text}); s.log.push(fmt(s.time)+' '+text); }
 
 // ---- 재료 ----
+// 창고 합계가 FLOOR_CAP 이면 생산이 멈춘다 (q2 바닥 상한과 같은 규칙). 가득 찬 사이에 쌓인 몫은 버린다
 function produce(s, dt){
+  if(whFull(s)) return;
   for(const sub in s.farm){
     const n=s.farm[sub];
     s.prodAcc[sub]=(s.prodAcc[sub]||0)+n*dt/CONST.SUB_PERIOD;
-    while(s.prodAcc[sub]>=1){ s.prodAcc[sub]-=1; s.wh[sub]=(s.wh[sub]||0)+1; }
+    while(s.prodAcc[sub]>=1 && !whFull(s)){ s.prodAcc[sub]-=1; s.wh[sub]=(s.wh[sub]||0)+1; }
+    if(s.prodAcc[sub]>1) s.prodAcc[sub]=1;
+  }
+}
+// ---- 번식 ---- (q2 규칙 그대로) 같은 종 2마리 이상이면 시계가 돌고 BREED_PERIOD 마다 1마리. 농장이 차면 멈춘다
+function breed(s, dt){
+  for(const sub in s.farm){
+    if(s.farm[sub]<2){ s.breedAcc[sub]=0; continue; }
+    if(farmFull(s)){ s.breedAcc[sub]=0; continue; }
+    s.breedAcc[sub]=(s.breedAcc[sub]||0)+dt;
+    if(s.breedAcc[sub]>=CONST.BREED_PERIOD){
+      s.breedAcc[sub]-=CONST.BREED_PERIOD; s.farm[sub]++; s.stats.bred++;
+      ev(s,'번식',sub+' 찹쌀이 번식 → '+s.farm[sub]+'마리 (농장 '+farmTotal(s)+'/'+CONST.FARM_MAX+')');
+    }
   }
 }
 function hasSubs(s, subs){ return subs.every(x=>(s.wh[x]||0)>0); }
@@ -266,16 +288,26 @@ function buySteamer(s){ if(s.steamer) return '이미 있다'; if(s.gold<CONST.ST
 function buyN(s){ const p=nPrice(s); if(p===null) return '더 못 올린다'; if(s.gold<p) return '골드 부족';
   s.gold-=p; s.nLevel++; ev(s,'구매','손님 수 N → '+nOf(s)+'명 ('+p+'골드)'); return null; }
 function buyMozzi(s){
+  if(farmFull(s)) return '농장이 가득 찼다 ('+CONST.FARM_MAX+'마리)';
   if(s.gold<CONST.NEW_MOZZI_PRICE) return '골드 부족';
   const sub=nextMozziSub(s);
   s.gold-=CONST.NEW_MOZZI_PRICE; s.farm[sub]=(s.farm[sub]||0)+1;
   ev(s,'구매','새 찹쌀이 — '+sub+' 찹쌀이 ('+CONST.NEW_MOZZI_PRICE+'골드)'); return null;
+}
+// 짝 사기 : 이미 가진 종 1마리 더 (도감 짝 구매 1단계 150). 1마리짜리 새 종은 이걸 사야 번식이 시작된다
+function buyPair(s, sub){
+  if(!s.farm[sub]) return '아직 없는 종이다';
+  if(farmFull(s)) return '농장이 가득 찼다 ('+CONST.FARM_MAX+'마리)';
+  if(s.gold<CONST.PAIR_PRICE) return '골드 부족';
+  s.gold-=CONST.PAIR_PRICE; s.farm[sub]++; s.stats.paired++;
+  ev(s,'짝구매','짝 사기 — '+sub+' 찹쌀이 → '+s.farm[sub]+'마리 ('+CONST.PAIR_PRICE+'골드)'); return null;
 }
 
 // ---- 틱 ----
 function tick(s){
   const dt=CONST.TICK; s.time+=dt;
   produce(s,dt);
+  breed(s,dt);
   // 손님 도착
   if(s.open){
     if(s.queue.length<CONST.QUEUE_MAX && s.served+s.queue.length<nOf(s)){
@@ -299,13 +331,13 @@ function tick(s){
 }
 // 자리 비우기 : 게임 시간 AWAY_SEC 만큼 건너뛴다 (실제 시간이 아니라 게임 시간 기준)
 function away(s){
-  const g0=s.gold, sold0=s.stats.sold, mat0=whTotal(s);
+  const g0=s.gold, sold0=s.stats.sold, mat0=whTotal(s), bred0=s.stats.bred;
   ev(s,'자리비우기','자리 비우기 시작 (게임 '+(CONST.AWAY_SEC/60)+'분 · '+(s.open?'가게 열림':'가게 닫힘')+' · '+(s.clerk?'점원 있음':'점원 없음')+')');
   const n=Math.round(CONST.AWAY_SEC/CONST.TICK);
   for(let i=0;i<n;i++) tick(s);
-  const r={팔린떡:s.stats.sold-sold0, 번골드:s.gold-g0, 쌓인재료:whTotal(s)-mat0, 줄:s.queue.length, 점원:s.clerk};
-  s.stats.awaySold+=r.팔린떡; s.stats.awayGold+=Math.max(0,r.번골드); s.stats.awayMat+=r.쌓인재료; s.stats.awayCount++;
-  ev(s,'자리비우기','돌아옴 — 팔린 떡 '+r.팔린떡+' · 번 골드 '+r.번골드+' · 쌓인 재료 '+r.쌓인재료+' · 줄 '+r.줄+'명');
+  const r={팔린떡:s.stats.sold-sold0, 번골드:s.gold-g0, 쌓인재료:whTotal(s)-mat0, 태어난찹쌀이:s.stats.bred-bred0, 줄:s.queue.length, 점원:s.clerk};
+  s.stats.awaySold+=r.팔린떡; s.stats.awayGold+=Math.max(0,r.번골드); s.stats.awayMat+=r.쌓인재료; s.stats.awayBred+=r.태어난찹쌀이; s.stats.awayCount++;
+  ev(s,'자리비우기','돌아옴 — 팔린 떡 '+r.팔린떡+' · 번 골드 '+r.번골드+' · 쌓인 재료 '+r.쌓인재료+' · 태어난 찹쌀이 '+r.태어난찹쌀이+'마리 · 줄 '+r.줄+'명');
   return r;
 }
 
@@ -332,7 +364,7 @@ function judge(s, extra){
 }
 
 const CORE={CONST,RECIPES,keyOf,recipeIndexOf,priceOf,newState,tick,craft,serve,openStall,closeStall,nextDay,
-  buyClerk,buySteamer,buyN,buyMozzi,away,judge,nOf,nPrice,shelfTotal,foundCount,farmTotal,whTotal,hasSubs,
+  buyClerk,buySteamer,buyN,buyMozzi,buyPair,breed,produce,away,judge,nOf,nPrice,shelfTotal,foundCount,farmTotal,whTotal,whFull,farmFull,hasSubs,
   makeCustomer,wantLabel,undiscoveredWithMats,fmt,shelfKey,nextMozziSub};
 if(typeof module!=='undefined') module.exports=CORE;
 // ===CORE END===
@@ -365,6 +397,7 @@ window.A={
   buySteamer(){ rec('찜기'); const w=buySteamer(S); if(w) msg(w); render(true); },
   buyN(){ rec('N강화'); const w=buyN(S); if(w) msg(w); render(true); },
   buyMozzi(){ rec('새찹쌀이'); const w=buyMozzi(S); if(w) msg(w); render(true); },
+  buyPair(sub){ rec('짝사기'); const w=buyPair(S,sub); if(w) msg(w); render(true); },
   pickSteamer(v){ S.steamerPick=v===''?null:+v; rec('찜기지정'); render(true); },
   toggle(sub){ UI.pick[sub]=!UI.pick[sub]; rec('재료토글'); render(true); },
   clearPick(){ UI.pick={}; render(true); },
@@ -376,7 +409,7 @@ window.A={
     doCraft(subs, recipeIndexOf(subs)>=0 && S.found[recipeIndexOf(subs)]!==undefined);
   },
   away(){ rec('자리비우기'); const r=away(S); UI.awayLog.push(Object.assign({게임시각:fmt(S.time)}, r));
-    msg('비운 동안 : 팔린 떡 '+r.팔린떡+' · 번 골드 '+r.번골드+' · 쌓인 재료 '+r.쌓인재료+(r.줄?' · 줄 '+r.줄+'명이 기다리는 중':'')); render(true); },
+    msg('비운 동안 : 팔린 떡 '+r.팔린떡+' · 번 골드 '+r.번골드+' · 쌓인 재료 '+r.쌓인재료+' · 태어난 찹쌀이 '+r.태어난찹쌀이+'마리'+(r.줄?' · 줄 '+r.줄+'명이 기다리는 중':'')); render(true); },
   timer(){
     if(UI.timer){ finishTimer(); }
     else { UI.timer={mode:UI.process?'on':'off', left:120, count:0}; rec('2분재기'); msg('2분 재기 시작 — 과정 '+(UI.process?'있음':'없음')); }
@@ -511,11 +544,15 @@ function render(force){
       else label='???<br><small>재료 '+r.subs.length+'개</small>';
       return `<div class="${got?'got':''}">${label}</div>`; }).join('')+'</div>');
 
-  // 농장 (뼈대)
-  const farmRows=Object.keys(S.farm).map(k=>`<tr><td>${k} 찹쌀이</td><td>${S.farm[k]}마리</td><td>창고 ${S.wh[k]||0}</td></tr>`).join('');
-  setHtml('farm', `<h3>농장 (뼈대) — ${farmTotal(S)}마리 · 30초에 1개</h3>
-    <table>${farmRows}</table>
-    <button onclick="A.buyMozzi()" ${S.gold<CONST.NEW_MOZZI_PRICE?'disabled':''}>새 찹쌀이 얻기 (${CONST.NEW_MOZZI_PRICE}골드 → ${nextMozziSub(S)})</button>`);
+  // 농장 (뼈대) — 종별 마리 · 번식까지 · 짝 사기
+  const farmRows=Object.keys(S.farm).map(k=>{ const br=S.farm[k]>=2?(farmFull(S)?'가득':fmt(CONST.BREED_PERIOD-(S.breedAcc[k]||0))):'—';
+    return `<tr><td>${k} 찹쌀이</td><td>${S.farm[k]}마리</td><td>${br}</td><td>창고 ${S.wh[k]||0}</td>
+      <td><button onclick="A.buyPair('${k}')" ${farmFull(S)||S.gold<CONST.PAIR_PRICE?'disabled':''}>짝 사기 ${CONST.PAIR_PRICE}골드</button></td></tr>`; }).join('');
+  setHtml('farm', `<h3>농장 (뼈대) — 마리 ${farmTotal(S)}/${CONST.FARM_MAX} · 재료 ${whTotal(S)}/${CONST.FLOOR_CAP}${whFull(S)?' <span class="warn">가득 — 생산 멈춤</span>':''}${farmFull(S)?' <span class="warn">담장 가득 — 번식·구매 멈춤</span>':''}</h3>
+    <small>30초에 1개 · 같은 종 2마리 이상이면 ${CONST.BREED_PERIOD}초마다 1마리 태어남 · 번식 ${S.stats.bred}회</small>
+    <table><tr><th>종</th><th>마리</th><th>번식까지</th><th>창고</th><th></th></tr>${farmRows}</table>
+    <button onclick="A.buyMozzi()" ${farmFull(S)||S.gold<CONST.NEW_MOZZI_PRICE?'disabled':''}>새 찹쌀이 얻기 (${CONST.NEW_MOZZI_PRICE}골드 → ${nextMozziSub(S)})</button>
+    <small>새 종은 1마리라 번식이 안 된다 — 위 「짝 사기」 로 2마리를 채워야 시계가 돈다</small>`);
 
   // 설비 상점
   const np=nPrice(S);
@@ -539,7 +576,7 @@ function render(force){
     return `<tr><td>${q} ${n}</td><td>${CRIT[q][n]}</td><td>${x.값}</td><td class="${x.통과===null?'':(x.통과?'pass':'fail')}">${x.통과===null?'—':(x.통과?'통과':'불통')}</td></tr>`;
   }).join('')).join('');
   setHtml('record', `<h3>자동 판정</h3><table><tr><th>#</th><th>기준</th><th>값</th><th></th></tr>${rows}</table>
-    <p><small>자리 비우기 ${S.stats.awayCount}회 · 그동안 팔린 떡 ${S.stats.awaySold} · 번 골드 ${S.stats.awayGold} · 쌓인 재료 ${S.stats.awayMat}</small></p>
+    <p><small>자리 비우기 ${S.stats.awayCount}회 · 그동안 팔린 떡 ${S.stats.awaySold} · 번 골드 ${S.stats.awayGold} · 쌓인 재료 ${S.stats.awayMat} · 태어난 찹쌀이 ${S.stats.awayBred}마리</small></p>
     <textarea id="json" readonly>${JSON.stringify(buildRecord())}</textarea><br>
     <button onclick="A.copy()">JSON 복사</button>`);
 }
@@ -557,7 +594,8 @@ function buildRecord(){
     이분간시도:{과정있음:UI.twoMin.on, 과정없음:UI.twoMin.off},
     떡메시도:UI.poundTries, 건너뛰기:UI.skips,
     점원산시각초:S.clerkAt===null?null:Math.round(S.clerkAt), 찜기산시각초:S.steamerAt===null?null:Math.round(S.steamerAt),
-    손님수N:nOf(S), 진열:shelfTotal(S), 찹쌀이:S.farm, 창고:S.wh,
+    손님수N:nOf(S), 진열:shelfTotal(S), 찹쌀이:S.farm, 마리:farmTotal(S), 창고:S.wh, 재료합계:whTotal(S),
+    번식:S.stats.bred, 짝구매:S.stats.paired, 비운동안태어난찹쌀이:S.stats.awayBred,
     자리비우기:UI.awayLog,
     판정:judge(S,{twoMinOn:UI.twoMin.on, twoMinOff:UI.twoMin.off, poundTries:UI.poundTries, skips:UI.skips}),
     이벤트:S.events };
