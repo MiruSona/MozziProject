@@ -226,3 +226,11 @@
 - 거절 decision-gate `찹쌀이 아트 갈래·시점·AI 비중 1차 가결`
 - 들어옴 20260913-5cb4809e `아트 1차 결정 나머지 답하기` (mem/0.3.0)
 - 들어옴 20260913-188b52e6 `찹쌀이 아트 갈래·시점·AI 비중 1차 가결` (mem/0.3.0) --new
+- 거절 summary-len title-shape tag-standard tag-shape body-thin summary-body-match `q3 프로토는 N 강화 값 300/800/2,000/5,000(프로토 값)으로 잰다. 수치표 제안값 800/2,500/7,000/20,000 은 판정 뒤 따로 정한다`
+- 들어옴 20260913-77f8c41d `q3 프로토는 싼 N 강화 값으로 잰다` (mem/0.3.0)
+- 들어옴 20260913-65cad62d `q3 프로토에 번식·농장 상한·재료 상한·짝 사기 추가` (mem/0.3.0)
+
+## 2026-09-16
+- 거절 tag-standard sources-required duplicate-soft `로컬 하네스 프로젝트 규칙 얹고 1판 실측`
+- 거절 tag-standard duplicate-soft `로컬 하네스 프로젝트 규칙 얹고 1판 실측`
+- 들어옴 20260916-d2f6ecd2 `로컬 하네스 프로젝트 규칙 얹고 1판 실측` (mem/0.3.0)
