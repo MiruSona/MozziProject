@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+#if UNITY_EDITOR || MOZZI_DEBUG
 using System;
 using System.Collections.Generic;
 using Mozzi.Core;
@@ -14,7 +14,7 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 판정용 디버그 패널 (세로조각1판설계 4-7). 오른쪽 위 「D」 로 접었다 편다. 에디터에서만 컴파일된다.
+    // 판정용 디버그 패널 (세로조각1판설계 4-7). 오른쪽 위 「D」 로 접었다 편다. 에디터와 MOZZI_DEBUG 정의 빌드에서만 컴파일된다.
     // 배속 ×1/×5/×10 · 20마리 채우기 · 골드 +1,000 · 5분 건너뛰기 · 세이브 지우기.
     public sealed class DebugPanel : ObjectBase
     {

@@ -124,3 +124,6 @@ desktop.ini
 
 # ---- GamedesignTool 이 굽는 대시보드 — 사진이지 정본이 아니다 ----
 Docs/Todo/대시보드.html
+
+# WebGL 빌드 출력 (Editor/WebGlBuild.cs 가 저장소 뿌리 Build/WebGL 에 낸다)
+/Build/

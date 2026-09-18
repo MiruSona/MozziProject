@@ -47,7 +47,7 @@ namespace Mozzi.Game.Ui
         private RecipeCodexScreen _recipeCodexScreen;
         private OverlayScreen _open;
         private OfflinePopup _offlinePopup;
-#if UNITY_EDITOR
+#if UNITY_EDITOR || MOZZI_DEBUG
         private DebugPanel _debugPanel;
 #endif
 
@@ -88,7 +88,7 @@ namespace Mozzi.Game.Ui
             _offlinePopup.Bind(_offlinePopup.Hide);
             _offlinePopup.Hide();
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || MOZZI_DEBUG
             _debugPanel = _resource.Rent<DebugPanel>(PrefabKeys.UiDebugPanel, _canvas.transform);
             StretchToParent(_debugPanel.transform as RectTransform);
             _debugPanel.Bind(OnDebugSkipped);
@@ -166,7 +166,7 @@ namespace Mozzi.Game.Ui
 
             _offlinePopup = null;
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || MOZZI_DEBUG
             if (_debugPanel != null)
             {
                 _resource.Return(_debugPanel);
@@ -238,7 +238,7 @@ namespace Mozzi.Game.Ui
         private void KeepTopmost()
         {
             _offlinePopup.transform.SetAsLastSibling();
-#if UNITY_EDITOR
+#if UNITY_EDITOR || MOZZI_DEBUG
             _debugPanel.transform.SetAsLastSibling();
 #endif
         }
@@ -250,7 +250,7 @@ namespace Mozzi.Game.Ui
             KeepTopmost();
         }
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || MOZZI_DEBUG
         // 디버그 「5분 건너뛰기」 뒤. 이벤트 없이 바뀐 더미 · 담장 수를 되읽고 팝업을 띄운다.
         private void OnDebugSkipped(double seconds)
         {

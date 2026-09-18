@@ -102,6 +102,7 @@ namespace Mozzi.Save
                 if (File.Exists(_filePath))
                 {
                     File.Delete(_filePath);
+                    WebGlFsUtil.Sync();
                 }
             }
             catch (Exception e)
@@ -134,6 +135,7 @@ namespace Mozzi.Save
             try
             {
                 File.WriteAllText(_filePath, JsonUtility.ToJson(file, true));
+                WebGlFsUtil.Sync();
             }
             catch (Exception e)
             {

@@ -330,3 +330,6 @@
 - 거절 summary-len title-shape body-thin summary-body-match `오프라인 걸음은 번식 시각만 맞추면 되고 생산까지 사건으로 잡으면 20마리 3일에 1.4초 걸린다`
 - 들어옴 20260918-d908308d `풀링된 UI 화면은 OnReturn 에서 배선을 푼다` (mem/0.3.0)
 - 들어옴 20260918-ea4b1525 `오프라인 걸음은 번식만 사건으로 잡는다` (mem/0.3.0)
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match `WebGL 세이브는 파일 쓴 뒤 FS.syncfs 를 불러야 IndexedDB 에 남는다`
+- 거절 body-thin `WebGL 세이브는 syncfs 뒤에야 남는다`
+- 들어옴 20260918-c527568c `WebGL 세이브는 syncfs 뒤에야 남는다` (mem/0.3.0)
