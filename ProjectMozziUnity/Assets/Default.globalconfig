@@ -1,0 +1,20 @@
+is_global = true
+
+# 컨벤션 문서가 사람에게 시킨 것 중 기계가 잡을 수 있는 것만 골랐다.
+# 번호는 Microsoft.Unity.Analyzers doc/index.md 와 대조했다 (2026-09-18).
+
+# error — 틀린 답을 내거나 조용히 침묵하는 것
+dotnet_diagnostic.UNT0007.severity = error
+dotnet_diagnostic.UNT0008.severity = error
+dotnet_diagnostic.UNT0010.severity = error
+dotnet_diagnostic.UNT0011.severity = error
+dotnet_diagnostic.UNT0004.severity = error
+# UNT0005 는 애널라이저에서 retired 다. 되살아날 때를 위해 줄만 남긴다.
+dotnet_diagnostic.UNT0005.severity = error
+dotnet_diagnostic.UNT0006.severity = error
+dotnet_diagnostic.UNT0013.severity = error
+
+# warning — 고칠 길은 하나지만 남의 코드를 옮겨 올 때 막히면 시끄러운 것
+dotnet_diagnostic.UNT0002.severity = warning
+dotnet_diagnostic.UNT0003.severity = warning
+dotnet_diagnostic.UNT0001.severity = warning

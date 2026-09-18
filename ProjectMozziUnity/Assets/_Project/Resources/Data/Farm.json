@@ -1,0 +1,17 @@
+{
+  "rows": [
+    {
+      "id": "default",
+      "fenceMax": 20,
+      "producePeriodSec": 30,
+      "tierMult1": 1.0,
+      "tierMult2": 1.5,
+      "tierMult3": 2.0,
+      "breedPeriodSec": 180,
+      "storageSellPrice": 20,
+      "storageMax": 0,
+      "startSpeciesId": "grass1",
+      "startCount": 2
+    }
+  ]
+}

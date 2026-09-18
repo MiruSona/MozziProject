@@ -1,0 +1,214 @@
+using System.Collections.Generic;
+using Mozzi.Core;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
+
+namespace Mozzi.Game.Ui
+{
+    // 농장 화면(자원바 · 아래 띠 · 밤 덮개). 프리팹은 모양만 갖고 여기서 UiNames 로 자식을 찾아 값을 넣는다.
+    // 값이 바뀔 때 숫자가 커졌다 돌아오는 튐 1종과, 아침에 덮개가 걷히는 밝아짐 1종을 돈다.
+    public sealed class FarmScreen : ObjectBase
+    {
+        private const string PrefabName = "FarmScreen";
+        private const float BumpDuration = 0.25f;
+        private const float BumpScale = 1.5f;
+        private const float DawnDuration = 0.5f;
+
+        private readonly Dictionary<string, Text> _ingredientTexts = new Dictionary<string, Text>();
+        private readonly Dictionary<Text, float> _bumps = new Dictionary<Text, float>();
+        private readonly List<Text> _bumpDone = new List<Text>();
+
+        private Text _title;
+        private Text _gold;
+        private Text _day;
+        private Text _fence;
+        private Image _nightCover;
+        private Text _nightText;
+        private GameObject _nextDayButton;
+        private float _nightAlpha;
+        private float _dawnTime;
+        private bool _dawning;
+        private bool _bound;
+
+        // 아래 띠의 도감 둘 · 보관함 버튼은 IUiHub 로 열고, 「다음날로」는 넘겨받은 onNextDay 를 부른다.
+        public void Bind(IReadOnlyList<string> ingredientIds, IUiHub ui, UnityAction onNextDay)
+        {
+            if (_bound)
+            {
+                return;
+            }
+
+            _title = UiBindUtil.Find<Text>(transform, UiNames.FarmTitleText, PrefabName);
+            _gold = UiBindUtil.Find<Text>(transform, UiNames.FarmGoldText, PrefabName);
+            _day = UiBindUtil.Find<Text>(transform, UiNames.FarmDayText, PrefabName);
+            _fence = UiBindUtil.Find<Text>(transform, UiNames.FarmFenceText, PrefabName);
+
+            for (int i = 0; i < ingredientIds.Count; i++)
+            {
+                string childName = UiNames.FarmIngredientPrefix + ingredientIds[i];
+                _ingredientTexts[ingredientIds[i]] = UiBindUtil.Find<Text>(transform, childName, PrefabName);
+            }
+
+            UiBindUtil.BindButton(transform, UiNames.FarmCodexButton, PrefabName, ui.OpenMozziCodex);
+            UiBindUtil.BindButton(transform, UiNames.FarmStorageButton, PrefabName, ui.OpenStorage);
+            UiBindUtil.BindButton(transform, UiNames.FarmRecipeCodexButton, PrefabName, ui.OpenRecipeCodex);
+            _nextDayButton = UiBindUtil.BindButton(transform, UiNames.FarmNextDayButton, PrefabName, onNextDay).gameObject;
+
+            _nightCover = UiBindUtil.Find<Image>(transform, UiNames.FarmNightCover, PrefabName);
+            _nightAlpha = _nightCover.color.a;
+            _nightText = UiBindUtil.Find<Text>(_nightCover.transform, UiNames.FarmNightText, PrefabName);
+            UiBindUtil.SetText(_nightText, "밤이 됐어요\n아래 「다음날로」를 눌러요");
+
+            UiBindUtil.SetText(_title, "농장");
+            _bound = true;
+        }
+
+        // 풀로 돌아갈 때 배선을 푼다. 씬을 다시 열면 같은 인스턴스가 새 UiManager 로 다시 Bind 된다.
+        public override void OnReturn()
+        {
+            base.OnReturn();
+            UiBindUtil.UnbindAllButtons(transform);
+            _ingredientTexts.Clear();
+            _bumps.Clear();
+            _bumpDone.Clear();
+            _dawning = false;
+            _nextDayButton = null;
+            _bound = false;
+        }
+
+        public void SetGold(int gold, bool bump)
+        {
+            UiBindUtil.SetText(_gold, gold + " G");
+            if (bump)
+            {
+                StartBump(_gold);
+            }
+        }
+
+        public void SetDay(int day, bool isNight)
+        {
+            string suffix = "낮";
+            if (isNight)
+            {
+                suffix = "밤";
+            }
+
+            UiBindUtil.SetText(_day, day + "일째 " + suffix);
+        }
+
+        // 밤이면 덮개 + 「다음날로」 를 바로 켠다. 낮이면 덮개를 걷되 animate 면 0.5초 밝아진 뒤 끈다.
+        public void SetNight(bool isNight, bool animate)
+        {
+            UiBindUtil.SetActive(_nextDayButton, isNight);
+
+            if (isNight)
+            {
+                _dawning = false;
+                SetCoverAlpha(_nightAlpha);
+                UiBindUtil.SetActive(_nightCover.gameObject, true);
+                return;
+            }
+
+            if (animate && _nightCover.gameObject.activeSelf)
+            {
+                _dawning = true;
+                _dawnTime = 0f;
+                return;
+            }
+
+            _dawning = false;
+            UiBindUtil.SetActive(_nightCover.gameObject, false);
+        }
+
+        public void SetFence(int count, int max)
+        {
+            UiBindUtil.SetText(_fence, count + "/" + max);
+        }
+
+        public void SetIngredient(string ingredientId, string label, int count, int cap, bool bump)
+        {
+            Text text;
+            if (_ingredientTexts.TryGetValue(ingredientId, out text) == false)
+            {
+                return;
+            }
+
+            UiBindUtil.SetText(text, label + " " + count + "/" + cap);
+            if (bump)
+            {
+                StartBump(text);
+            }
+        }
+
+        public void Process(float deltaTime)
+        {
+            StepDawn(deltaTime);
+            StepBumps(deltaTime);
+        }
+
+        private void StepDawn(float deltaTime)
+        {
+            if (_dawning == false)
+            {
+                return;
+            }
+
+            _dawnTime += deltaTime;
+            float k = Mathf.Clamp01(_dawnTime / DawnDuration);
+            SetCoverAlpha(Mathf.Lerp(_nightAlpha, 0f, k));
+            if (k >= 1f)
+            {
+                _dawning = false;
+                UiBindUtil.SetActive(_nightCover.gameObject, false);
+            }
+        }
+
+        private void StepBumps(float deltaTime)
+        {
+            if (_bumps.Count == 0)
+            {
+                return;
+            }
+
+            _bumpDone.Clear();
+            List<Text> keys = new List<Text>(_bumps.Keys);
+            for (int i = 0; i < keys.Count; i++)
+            {
+                Text text = keys[i];
+                float t = _bumps[text] + deltaTime;
+                _bumps[text] = t;
+
+                float k = Mathf.Clamp01(t / BumpDuration);
+                float scale = Mathf.Lerp(BumpScale, 1f, k);
+                text.rectTransform.localScale = new Vector3(scale, scale, 1f);
+                if (k >= 1f)
+                {
+                    _bumpDone.Add(text);
+                }
+            }
+
+            for (int i = 0; i < _bumpDone.Count; i++)
+            {
+                _bumps.Remove(_bumpDone[i]);
+            }
+        }
+
+        private void SetCoverAlpha(float alpha)
+        {
+            Color c = _nightCover.color;
+            c.a = alpha;
+            _nightCover.color = c;
+
+            // 안내 글자도 같이 옅어진다.
+            Color tc = _nightText.color;
+            tc.a = alpha / _nightAlpha;
+            _nightText.color = tc;
+        }
+
+        private void StartBump(Text text)
+        {
+            _bumps[text] = 0f;
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+  "rows": [
+    { "id": "slot2", "kind": "slot", "level": 2, "price": 300, "rate": 1.0 },
+    { "id": "slot3", "kind": "slot", "level": 3, "price": 1000, "rate": 1.0 },
+    { "id": "slot4", "kind": "slot", "level": 4, "price": 3000, "rate": 1.0 },
+    { "id": "shortcut1", "kind": "shortcut", "level": 1, "price": 200, "rate": 0.9 },
+    { "id": "shortcut2", "kind": "shortcut", "level": 2, "price": 400, "rate": 0.8 },
+    { "id": "shortcut3", "kind": "shortcut", "level": 3, "price": 800, "rate": 0.7 },
+    { "id": "shortcut4", "kind": "shortcut", "level": 4, "price": 1600, "rate": 0.6 },
+    { "id": "shortcut5", "kind": "shortcut", "level": 5, "price": 3200, "rate": 0.5 },
+    { "id": "pair1", "kind": "pair", "level": 1, "price": 150, "rate": 1.0 },
+    { "id": "pair2", "kind": "pair", "level": 2, "price": 750, "rate": 1.0 }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "rows": [
+    {
+      "id": "default",
+      "customersPerDay": 10,
+      "customerGapSec": 5,
+      "queueMax": 5,
+      "shelfMax": 30,
+      "hintEvery": 5,
+      "orderMult": 1.5,
+      "plainRate": 0.5,
+      "countMult1": 1.5,
+      "countMult2": 2.0,
+      "countMult3": 3.0,
+      "clerkPrice": 200,
+      "clerkSpeedSec": 1,
+      "poundTaps": 3,
+      "poundGapMs": 500,
+      "doubleTapMs": 350
+    }
+  ]
+}

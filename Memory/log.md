@@ -277,3 +277,56 @@
 - 들어옴 20260918-027b9301 `세로 조각 UI 는 프리팹 + 코드 배선` (claude/fable-5.1) --new
 - 덮음 20260918-57938c6b → 20260918-027b9301
 - 승격 20260918-311c8374
+- 거절 summary-len tag-standard duplicate-soft `Git Bash 가 unity command 의 /경로 인자를 바꾼다`
+- 거절 summary-len tag-standard secret-entropy `세로 조각 소단계 1 — 템플릿 설치 · Farm 씬`
+- 거절 summary-len duplicate-soft `Git Bash 가 unity command 의 /경로 인자를 바꾼다`
+- 거절 summary-len secret-entropy `세로 조각 소단계 1 — 템플릿 설치 · Farm 씬`
+- 들어옴 20260918-e0d7b17b `세로 조각 소단계 1 — 템플릿 설치 · Farm 씬` (mem/0.3.0)
+- 거절 summary-len duplicate-soft `Git Bash 가 unity command 의 /경로 인자를 바꾼다`
+- 들어옴 20260918-6b9b387c `Git Bash 가 unity command 의 /경로 인자를 바꾼다` (mem/0.3.0) --new
+- 거절 summary-len title-shape duplicate-soft `세로 조각 소단계 2 — JSON 7장 · StaticData · Save`
+- 들어옴 20260918-836a5315 `세로 조각 소단계 2 — 데이터 층·세이브` (mem/0.3.0)
+- 거절 tag-standard duplicate-soft `unity eval 은 eval_file 로 친다`
+- 들어옴 20260918-27ccae73 `소단계 3a 농장 규칙 층 넷 완료` (claude/fable-5.1)
+- 들어옴 20260918-3631865e `unity eval 은 eval_file 로 친다` (claude/fable-5.1)
+- 거절 summary-len title-shape tag-standard `Manager Dispose 에서 Unity 오브젝트 반납은 null 검사 뒤`
+- 거절 summary-len title-shape tag-standard `capture_game_view 저장 경로는 프로젝트 안 · 9:16 은 width/height 로`
+- 거절 summary-len title-shape `Manager Dispose 에서 Unity 오브젝트 반납은 null 검사 뒤`
+- 거절 summary-len title-shape `capture_game_view 저장 경로는 프로젝트 안 · 세로 캡처는 크기 지정`
+- 거절 summary-len title-shape `소단계 3b 농장 화면 — Object 셋 · FarmViewManager · UiManager · 프리팹 4장`
+- 들어옴 20260918-28c54544 `Dispose 의 Unity 오브젝트 반납은 null 검사 뒤` (mem/0.3.0)
+- 들어옴 20260918-90f19ba8 `capture_game_view 경로는 프로젝트 안 · 세로는 크기 지정` (mem/0.3.0)
+- 거절 title-shape `소단계 3b 농장 화면 — Object 셋 · View · Ui · 프리팹 4장`
+- 들어옴 20260918-b692e5dc `소단계 3b 농장 화면 — View · Ui · 프리팹 4장` (mem/0.3.0)
+- 거절 tag-count tag-standard severity `EventBus 핸들러가 Refresh 로 순회 중 컬렉션을 비운다`
+- 거절 tag-count `EventBus 핸들러가 Refresh 로 순회 중 컬렉션을 비운다`
+- 거절 tag-count duplicate-soft `소단계 4 합성소·도감·보관함 Unity 구현 실측`
+- 들어옴 20260918-2d194e1a `EventBus 핸들러가 Refresh 로 순회 중 컬렉션을 비운다` (mem/0.3.0)
+- 들어옴 20260918-7602e9d4 `소단계 4 합성소·도감·보관함 Unity 구현 실측` (mem/0.3.0)
+- 거절 title-shape tag-standard duplicate-hard `capture_game_view 는 --source screen 이어야 UI 가 찍힌다`
+- 거절 tag-standard `Mathf.RoundToInt 는 .5 를 짝수로 보낸다`
+- 거절 tag-standard `떡메 덮개가 떠 있으면 실험 입력을 막아야 한다`
+- 거절 tag-standard duplicate-soft `세로 조각 소단계 5 가판대·손님·도감 구현 기록`
+- 들어옴 20260918-af9a4da8 `캡처는 --source screen 이어야 UI 가 찍힌다` (mem/0.3.0) --new
+- 들어옴 20260918-d5a29666 `Mathf.RoundToInt 는 .5 를 짝수로 보낸다` (mem/0.3.0)
+- 들어옴 20260918-29ec180e `떡메 덮개가 떠 있으면 실험 입력을 막아야 한다` (mem/0.3.0)
+- 들어옴 20260918-01efb7ba `세로 조각 소단계 5 가판대·손님·도감 구현 기록` (mem/0.3.0) --new
+- 거절 tag-standard `부재료 없는 종은 생산 셈에서 먼저 뺀다`
+- 들어옴 20260918-21db313e `소단계 6 낮밤·다음날·오프라인 팝업 실측` (mem/0.3.0)
+- 거절 tag-standard `소단계 7 플레이스홀더·디버그 패널 실측`
+- 들어옴 20260918-e67e4284 `부재료 없는 종은 생산 셈에서 먼저 뺀다` (mem/0.3.0)
+- 들어옴 20260918-5e67752a `소단계 7 플레이스홀더·디버그 패널 실측` (mem/0.3.0)
+- 거절 tag-standard `세로 조각 1판 소단계 1~7 구현 실측`
+- 거절 tag-standard `세로 조각 1판 소단계 1~7 구현 실측`
+- 거절 tag-standard `세로 조각 1판 소단계 1~7 구현 실측`
+- 들어옴 20260918-915772dd `세로 조각 1판 소단계 1~7 구현 실측` (mem/0.3.0)
+- 거절 required-field title-shape tag-standard tag-shape severity sources-shape body-thin `세이브 savedAtUtcTicks 를 PowerShell 로 옮길 때 [long] 을 안 붙이면 int 곱이 double 로 넘쳐 6.39E+17 로 깨진다 — [long]600*[long]10000000 로 계산한다`
+- 거절 title-shape severity body-thin summary-body-match `세이브 savedAtUtcTicks 를 PowerShell 로 옮길 때는 [long] 을 붙인다`
+- 거절 title-shape `세이브 savedAtUtcTicks 를 PowerShell 로 옮길 때는 [long] 을 붙인다`
+- 들어옴 20260918-3e28ecf5 `세이브 시각을 PowerShell 로 옮길 땐 [long]` (mem/0.3.0)
+- 거절 summary-len title-shape tag-standard severity body-thin summary-body-match `풀링된 UI 화면은 OnReturn 에서 배선을 풀어야 씬 재시작 뒤 새 Manager 를 잡는다`
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match `오프라인 걸음은 번식 시각만 맞추면 되고 생산까지 사건으로 잡으면 20마리 3일에 1.4초 걸린다`
+- 거절 summary-len title-shape severity body-thin summary-body-match `풀링된 UI 화면은 OnReturn 에서 배선을 풀어야 씬 재시작 뒤 새 Manager 를 잡는다`
+- 거절 summary-len title-shape body-thin summary-body-match `오프라인 걸음은 번식 시각만 맞추면 되고 생산까지 사건으로 잡으면 20마리 3일에 1.4초 걸린다`
+- 들어옴 20260918-d908308d `풀링된 UI 화면은 OnReturn 에서 배선을 푼다` (mem/0.3.0)
+- 들어옴 20260918-ea4b1525 `오프라인 걸음은 번식만 사건으로 잡는다` (mem/0.3.0)
