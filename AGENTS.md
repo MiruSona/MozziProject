@@ -119,9 +119,11 @@
 
 ## 10. 게임 코드 규칙
 
-- 설정과 연결은 **코드에 둔다.** 인스펙터에서만 알 수 있는 배선은 만들지 않는다. **AI 는 인스펙터를 못 본다.**
+- **흐름 배선은 코드에 둔다.** 「어느 버튼이 어느 Manager 를 부르나」「누가 누구를 참조하나」 같은 연결은 코드에 있어야 diff 로 읽고 검토할 수 있다. 프리팹·씬에 Manager 참조나 UnityEvent(OnClick 인스펙터 연결)를 넣지 않는다.
+- **모양은 프리팹에 둬도 된다.** 레이아웃 · 위치 · 크기 · 색 · 자식 이름 같은 것이다. 코드는 자식 이름 상수(`UiNames`)로 찾아 배선한다.
+- 씬·프리팹의 값은 AI 도 Unity CLI(`unity command get_component_properties` 등)로 읽고 쓸 수 있다. 「AI 는 인스펙터를 못 본다」는 옛 전제(2026-08-20 조사)는 2026-09-18 에 사용자가 거뒀다.
 - ScriptableObject 는 **수치 데이터 통**으로만 쓴다. 이벤트 배선 도구로 쓰지 않는다.
-- 근거 : `Tools/CodeTool/Docs/Research/2026-08-20-Unity프로젝트구조조사.md`
+- 근거 : `Tools/CodeTool/Docs/Research/2026-08-20-Unity프로젝트구조조사.md` (인스펙터 전제만 낡았다 — CodeTool 쪽 갱신은 그 툴 `Docs/Todo/` 에 남긴다)
 - Unity 프로젝트 파일은 `ProjectMozziUnity/` 안에만 둔다. 저장소 뿌리에 흩지 않는다.
 
 ## 11. 툴 서브모듈 규칙

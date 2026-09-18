@@ -252,3 +252,28 @@
 - 들어옴 20260918-c65f70f0 `8단계로 되돌려 Unity 세로 조각부터 만든다` (mem/0.3.0) --new
 - 거절 duplicate-soft decision-gate `8단계 판정은 사용자가 직접 해 본다`
 - 들어옴 20260918-7850afb8 `8단계 판정은 사용자가 직접 해 본다` (mem/0.3.0) --new
+- 거절 multi-summary duplicate-soft decision-gate `찹쌀이 아트 규격 1차 가결 — 해상도·크기·타일·외곽선·빛`
+- 거절 multi-summary duplicate-soft `찹쌀이 아트 규격 1차 가결 — 해상도·크기·타일·외곽선·빛`
+- 거절 multi-summary duplicate-soft `찹쌀이 아트 규격 1차 가결 — 해상도·크기·타일·외곽선·빛`
+- 들어옴 20260918-87c39e6e `찹쌀이 아트 규격 1차 가결 — 해상도·크기·타일·외곽선·빛` (mem/0.3.0) --new
+- 들어옴 20260918-3fec9561 `세로 조각 1판 범위와 뺄 것` (mem/0.3.0) --new
+- 들어옴 20260918-ace5b370 `재료 상한은 종마다 100` (mem/0.3.0) --new
+- 거절 title-shape secret-entropy `수치는 JSON 정본과 StaticDataManager, 관리 프로그램은 나중`
+- 거절 title-shape secret-entropy `수치는 JSON 정본과 StaticDataManager, 관리 프로그램은 나중`
+- 들어옴 20260918-7fb3582e `수치는 JSON 정본, 편집 툴은 나중` (mem/0.3.0) --new
+- 거절 required-field title-shape tag-standard tag-shape severity sources-shape body-thin `unity command 인자는 --이름 값 꼴이다 (asset=값 꼴은 INVALID_COMMAND_ARGS)`
+- 들어옴 20260918-6d0c3569 `unity command 인자는 --이름 값 꼴` (mem/0.3.0)
+- 거절 tag-standard duplicate-soft `아트 B 단계 시작 — 06-아트규칙.md 씀`
+- 들어옴 20260918-4ca5d49d `아트 B 단계 시작 — 06-아트규칙.md 씀` (mem/0.3.0)
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match `농장 1차 설계 — 상한은 바닥 기준 · 번식은 농장에 바로 · 보관함 상한 없음`
+- 들어옴 20260918-146879a8 `농장 1차 설계의 제안 값 묶음` (mem/0.3.0) --hold
+- 들어옴 20260918-60be7b97 `Docs/Design 바로 아래 날짜 이름은 lint 가 막는다` (mem/0.3.0)
+- 거절 summary-len title-shape tag-standard decision-gate `세로 조각 코드 구조 — 씬 하나 · UI 코드 생성 · JsonUtility`
+- 거절 decision-gate `세로 조각 1판 레시피 10 · 3단계 재료는 2단계 것`
+- 들어옴 20260918-57938c6b `세로 조각 코드 구조 안 — 씬 하나 · UI 코드 생성` (mem/0.3.0) --new --hold
+- 들어옴 20260918-311c8374 `세로 조각 1판 레시피 10 · 재료 짝 안` (mem/0.3.0) --new --hold
+- 들어옴 20260918-756b4011 `재료 상한 100 은 창고 기준으로 확정` (claude/fable-5.1) --new
+- 덮음 20260918-146879a8 → 20260918-756b4011
+- 들어옴 20260918-027b9301 `세로 조각 UI 는 프리팹 + 코드 배선` (claude/fable-5.1) --new
+- 덮음 20260918-57938c6b → 20260918-027b9301
+- 승격 20260918-311c8374
