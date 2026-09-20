@@ -436,3 +436,4 @@
 - 거절 required-field tag-shape severity sources-shape body-thin `그림요청목록 4번은 끝났다 — 다음 갱신 때 배선 현황 줄을 같이 본다`
 - 거절 severity sources-shape `그림요청목록 4번은 끝났다 — 한 항목이 끝나면 네 군데를 같이 맞춘다`
 - 들어옴 20260920-05ae5a0b `그림요청목록 4번은 끝났다 — 한 항목이 끝나면 네 군데를 같이 맞춘다` (mem/0.3.0)
+- 들어옴 20260920-6040a4a0 `재료 아이콘 아트 세션 공수 눈금` (mem/0.3.0)
