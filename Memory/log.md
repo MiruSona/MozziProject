@@ -402,3 +402,34 @@
 - 들어옴 20260920-c46ab988 `Unity CLI 반환값과 eval 이름 함정 셋` (mem/0.3.0)
 - 거절 tag-standard todo-status `다음 아트 일은 재료 그림부터 한다`
 - 들어옴 20260920-2d86e50f `다음 아트 일은 재료 그림부터 한다` (mem/0.3.0)
+- 거절 title-shape tag-count severity `찹쌀이 몸 spriteKey 가 24종 모두 Mozzi/body 라 그림만 넣어서는 종별 몸이 안 뜬다`
+- 거절 tag-standard `찹쌀이 종별 몸은 그림만 넣어선 안 뜬다`
+- 들어옴 20260920-01a0bb39 `찹쌀이 종별 몸은 그림만 넣어선 안 뜬다` (mem/0.3.0)
+- 들어옴 20260920-7adc7f42 `Unity CLI 를 쓸 때 걸리는 자리 다섯` (mem/0.3.0)
+- 거절 summary-len tag-standard body-thin howto-numbered summary-body-match duplicate-soft `PixelLab 로 28px 재료 아이콘 묶음 뽑는 법`
+- 들어옴 20260920-f5fe6235 `WebGL 아티팩트 로딩 막힘 실측` (mem/0.3.0)
+- 들어옴 20260920-39d7aa99 `WebGL 빌드 내서 아티팩트에 올리기` (mem/0.3.0)
+- 들어옴 20260920-c3b896f3 `WebGL 받는 크기 16MB 줄이기` (mem/0.3.0)
+- 들어옴 20260920-11b31f30 `재료 아이콘 6종은 2판 D벌로 확정` (mem/0.3.0)
+- 거절 howto-numbered `작은 아이콘은 AI 보다 PIL 직접 그리기`
+- 거절 relative-date `작은 아이콘은 AI 보다 PIL 직접 그리기`
+- 들어옴 20260920-159e1b91 `작은 아이콘은 AI 보다 PIL 직접 그리기` (mem/0.3.0)
+- 거절 required-field title-shape tag-standard severity sources-shape duplicate-soft `Play 가 꺼진 줄 모르고 eval 을 쏘면 Edit 모드 씬에 오브젝트가 생긴다`
+- 거절 tag-count sources-note-only duplicate-soft `Play 꺼진 줄 모르고 쏜 eval`
+- 들어옴 20260920-cf330b3d `Play 꺼진 줄 모르고 쏜 eval` (mem/0.3.0)
+- 들어옴 20260920-a0ce30f8 `더미 숫자가 재료 그림을 덮는다` (mem/0.3.0)
+- 거절 tag-standard body-thin howto-numbered secret-entropy `아티팩트용 WebGL 로딩 페이지는 저장소에 있다`
+- 들어옴 20260920-183d629a `아티팩트용 WebGL 로딩 페이지는 저장소에 있다` (mem/0.3.0)
+- 거절 summary-len title-shape tag-standard tag-shape body-thin summary-body-match `더미 수량 글자는 그림 아래 · 어두운 외곽선 0.6 + FaceDilate 0.3`
+- 거절 summary-len title-shape tag-standard body-thin summary-body-match `더미 수량 글자는 그림 아래 · 어두운 외곽선 0.6 + FaceDilate 0.3`
+- 들어옴 20260920-d86a1991 `더미 수량 글자를 그림 아래로 내리고 외곽선을 둘렀다` (mem/0.3.0)
+- 거절 title-shape tag-standard `TMP 모바일 SDF 는 OUTLINE_ON 키워드를 켜야 외곽선이 보인다`
+- 들어옴 20260920-d6138ba5 `TMP 모바일 SDF 는 키워드를 켜야 외곽선이 보인다` (mem/0.3.0)
+- 거절 tag-standard sources-note-only body-thin summary-body-match `WebGL 받는 양을 16.07 → 12.95MB 로 줄였다`
+- 들어옴 20260920-1a227be9 `WebGL 받는 양을 16.07 에서 12.95MB 로 줄였다` (mem/0.3.0)
+- 들어옴 20260920-a6b63d57 `DiskSize 를 뺐더니 wasm 이 0.39MB 늘었다` (mem/0.3.0)
+- 들어옴 20260920-cf55aacc `WebGL 보완 묶음 네 가지를 한 판에 끝냈다` (mem/0.3.0)
+- 덮음 20260920-a0ce30f8 → 20260920-d86a1991
+- 들어옴 20260920-dc37e09b `PixelLab 로 28px 아이콘 묶음 뽑기` (mem/0.3.0) --new
+- 들어옴 20260920-9ab901b5 `코드 최적화를 DiskSize 로 되돌렸다` (mem/0.3.0) --new
+- 들어옴 20260920-74617258 `WebGL v8 판을 아티팩트에 올림` (mem/0.3.0)
