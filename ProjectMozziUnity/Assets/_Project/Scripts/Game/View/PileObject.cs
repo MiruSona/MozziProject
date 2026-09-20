@@ -1,5 +1,6 @@
 using Mozzi.Core;
 using Mozzi.Data.Rows;
+using TMPro;
 using UnityEngine;
 
 namespace Mozzi.Game.View
@@ -12,7 +13,7 @@ namespace Mozzi.Game.View
         private const float PickJump = 0.7f;
 
         private SpriteRenderer _renderer;
-        private TextMesh _label;
+        private TMP_Text _label;
         private Vector3 _basePosition;
         private float _pickTime;
         private bool _picking;
@@ -32,12 +33,7 @@ namespace Mozzi.Game.View
                 _renderer.sprite = SpriteUtil.White;
             }
 
-            _label = GetComponentInChildren<TextMesh>();
-            if (_label != null && _label.font == null)
-            {
-                _label.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-                _label.GetComponent<MeshRenderer>().material = _label.font.material;
-            }
+            _label = GetComponentInChildren<TMP_Text>();
         }
 
         public void Setup(IngredientRow ingredient, Vector2 position)

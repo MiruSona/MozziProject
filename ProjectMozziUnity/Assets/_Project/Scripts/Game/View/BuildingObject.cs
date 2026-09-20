@@ -1,4 +1,5 @@
 using Mozzi.Core;
+using TMPro;
 using UnityEngine;
 
 namespace Mozzi.Game.View
@@ -10,7 +11,7 @@ namespace Mozzi.Game.View
         private const string BadgeName = "Badge";
 
         private SpriteRenderer _renderer;
-        private TextMesh _label;
+        private TMP_Text _label;
         private GameObject _badge;
 
         public BuildingKind Kind { get; private set; }
@@ -23,12 +24,7 @@ namespace Mozzi.Game.View
                 _renderer.sprite = SpriteUtil.White;
             }
 
-            _label = GetComponentInChildren<TextMesh>();
-            if (_label != null && _label.font == null)
-            {
-                _label.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-                _label.GetComponent<MeshRenderer>().material = _label.font.material;
-            }
+            _label = GetComponentInChildren<TMP_Text>();
 
             Transform badge = transform.Find(BadgeName);
             if (badge != null)

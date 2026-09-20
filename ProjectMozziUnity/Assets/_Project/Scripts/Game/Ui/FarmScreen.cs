@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Mozzi.Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -15,16 +16,16 @@ namespace Mozzi.Game.Ui
         private const float BumpScale = 1.5f;
         private const float DawnDuration = 0.5f;
 
-        private readonly Dictionary<string, Text> _ingredientTexts = new Dictionary<string, Text>();
-        private readonly Dictionary<Text, float> _bumps = new Dictionary<Text, float>();
-        private readonly List<Text> _bumpDone = new List<Text>();
+        private readonly Dictionary<string, TMP_Text> _ingredientTexts = new Dictionary<string, TMP_Text>();
+        private readonly Dictionary<TMP_Text, float> _bumps = new Dictionary<TMP_Text, float>();
+        private readonly List<TMP_Text> _bumpDone = new List<TMP_Text>();
 
-        private Text _title;
-        private Text _gold;
-        private Text _day;
-        private Text _fence;
+        private TMP_Text _title;
+        private TMP_Text _gold;
+        private TMP_Text _day;
+        private TMP_Text _fence;
         private Image _nightCover;
-        private Text _nightText;
+        private TMP_Text _nightText;
         private GameObject _nextDayButton;
         private float _nightAlpha;
         private float _dawnTime;
@@ -39,15 +40,15 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            _title = UiBindUtil.Find<Text>(transform, UiNames.FarmTitleText, PrefabName);
-            _gold = UiBindUtil.Find<Text>(transform, UiNames.FarmGoldText, PrefabName);
-            _day = UiBindUtil.Find<Text>(transform, UiNames.FarmDayText, PrefabName);
-            _fence = UiBindUtil.Find<Text>(transform, UiNames.FarmFenceText, PrefabName);
+            _title = UiBindUtil.Find<TMP_Text>(transform, UiNames.FarmTitleText, PrefabName);
+            _gold = UiBindUtil.Find<TMP_Text>(transform, UiNames.FarmGoldText, PrefabName);
+            _day = UiBindUtil.Find<TMP_Text>(transform, UiNames.FarmDayText, PrefabName);
+            _fence = UiBindUtil.Find<TMP_Text>(transform, UiNames.FarmFenceText, PrefabName);
 
             for (int i = 0; i < ingredientIds.Count; i++)
             {
                 string childName = UiNames.FarmIngredientPrefix + ingredientIds[i];
-                _ingredientTexts[ingredientIds[i]] = UiBindUtil.Find<Text>(transform, childName, PrefabName);
+                _ingredientTexts[ingredientIds[i]] = UiBindUtil.Find<TMP_Text>(transform, childName, PrefabName);
             }
 
             UiBindUtil.BindButton(transform, UiNames.FarmCodexButton, PrefabName, ui.OpenMozziCodex);
@@ -57,7 +58,7 @@ namespace Mozzi.Game.Ui
 
             _nightCover = UiBindUtil.Find<Image>(transform, UiNames.FarmNightCover, PrefabName);
             _nightAlpha = _nightCover.color.a;
-            _nightText = UiBindUtil.Find<Text>(_nightCover.transform, UiNames.FarmNightText, PrefabName);
+            _nightText = UiBindUtil.Find<TMP_Text>(_nightCover.transform, UiNames.FarmNightText, PrefabName);
             UiBindUtil.SetText(_nightText, "밤이 됐어요\n아래 「다음날로」를 눌러요");
 
             UiBindUtil.SetText(_title, "농장");
@@ -128,7 +129,7 @@ namespace Mozzi.Game.Ui
 
         public void SetIngredient(string ingredientId, string label, int count, int cap, bool bump)
         {
-            Text text;
+            TMP_Text text;
             if (_ingredientTexts.TryGetValue(ingredientId, out text) == false)
             {
                 return;
@@ -172,10 +173,10 @@ namespace Mozzi.Game.Ui
             }
 
             _bumpDone.Clear();
-            List<Text> keys = new List<Text>(_bumps.Keys);
+            List<TMP_Text> keys = new List<TMP_Text>(_bumps.Keys);
             for (int i = 0; i < keys.Count; i++)
             {
-                Text text = keys[i];
+                TMP_Text text = keys[i];
                 float t = _bumps[text] + deltaTime;
                 _bumps[text] = t;
 
@@ -206,7 +207,7 @@ namespace Mozzi.Game.Ui
             _nightText.color = tc;
         }
 
-        private void StartBump(Text text)
+        private void StartBump(TMP_Text text)
         {
             _bumps[text] = 0f;
         }

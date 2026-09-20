@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -17,8 +18,8 @@ namespace Mozzi.Game.Ui
         public readonly Button MaterialBButton;
         public readonly Button StartButton;
         public readonly Button TakeButton;
-        public readonly Text PreviewText;
-        public readonly Text RemainText;
+        public readonly TMP_Text PreviewText;
+        public readonly TMP_Text RemainText;
 
         public SynthesisSlotView(Transform slotRoot, string prefabName,
             UnityAction onBuySlot, UnityAction onMaterialA, UnityAction onMaterialB, UnityAction onStart, UnityAction onTake)
@@ -33,8 +34,8 @@ namespace Mozzi.Game.Ui
             MaterialBButton = UiBindUtil.BindButton(slotRoot, UiNames.SynthesisMaterialBButton, prefabName, onMaterialB);
             StartButton = UiBindUtil.BindButton(slotRoot, UiNames.SynthesisStartButton, prefabName, onStart);
             TakeButton = UiBindUtil.BindButton(slotRoot, UiNames.SynthesisTakeButton, prefabName, onTake);
-            PreviewText = UiBindUtil.Find<Text>(slotRoot, UiNames.SynthesisPreviewText, prefabName);
-            RemainText = UiBindUtil.Find<Text>(slotRoot, UiNames.SynthesisRemainText, prefabName);
+            PreviewText = UiBindUtil.Find<TMP_Text>(slotRoot, UiNames.SynthesisPreviewText, prefabName);
+            RemainText = UiBindUtil.Find<TMP_Text>(slotRoot, UiNames.SynthesisRemainText, prefabName);
         }
 
         public void ShowGroup(GameObject group)

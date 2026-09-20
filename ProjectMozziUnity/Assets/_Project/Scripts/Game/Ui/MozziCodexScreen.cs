@@ -3,6 +3,7 @@ using Mozzi.Data;
 using Mozzi.Data.Rows;
 using Mozzi.Game.Codex;
 using Mozzi.Game.Wallet;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +20,7 @@ namespace Mozzi.Game.Ui
         private ICodexHub _codex;
         private IWalletHub _wallet;
         private IStaticDataHub _data;
-        private Text _countText;
+        private TMP_Text _countText;
 
         protected override string PrefabName
         {
@@ -36,7 +37,7 @@ namespace Mozzi.Game.Ui
             _codex = InGameHub.Get<ICodexHub>();
             _wallet = InGameHub.Get<IWalletHub>();
             _data = InGameHub.Get<IStaticDataHub>();
-            _countText = UiBindUtil.Find<Text>(transform, UiNames.CodexCountText, PrefabName);
+            _countText = UiBindUtil.Find<TMP_Text>(transform, UiNames.CodexCountText, PrefabName);
 
             IReadOnlyList<MozziSpeciesRow> rows = _data.Species.All;
             for (int i = 0; i < rows.Count; i++)

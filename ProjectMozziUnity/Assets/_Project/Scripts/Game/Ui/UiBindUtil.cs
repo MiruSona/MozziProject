@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -38,7 +39,7 @@ namespace Mozzi.Game.Ui
             return component != null;
         }
 
-        public static void SetText(Text text, string value)
+        public static void SetText(TMP_Text text, string value)
         {
             if (text.text != value)
             {
@@ -66,16 +67,16 @@ namespace Mozzi.Game.Ui
         }
 
         // 버튼 안 "Label" 글자. 없으면 null.
-        public static Text LabelOf(Button button)
+        public static TMP_Text LabelOf(Button button)
         {
-            Text label;
-            TryFind<Text>(button.transform, UiNames.ButtonLabel, out label);
+            TMP_Text label;
+            TryFind<TMP_Text>(button.transform, UiNames.ButtonLabel, out label);
             return label;
         }
 
         public static void SetLabel(Button button, string value)
         {
-            Text label = LabelOf(button);
+            TMP_Text label = LabelOf(button);
             if (label != null)
             {
                 SetText(label, value);

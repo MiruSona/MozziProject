@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,8 +9,8 @@ namespace Mozzi.Game.Ui
     public sealed class StorageRowView
     {
         public readonly GameObject Root;
-        public readonly Text NameText;
-        public readonly Text CountText;
+        public readonly TMP_Text NameText;
+        public readonly TMP_Text CountText;
         public readonly Button PlaceButton;
         public readonly Button SellButton;
         public readonly Button SellAllButton;
@@ -19,8 +20,8 @@ namespace Mozzi.Game.Ui
         public StorageRowView(Transform rowRoot, string prefabName, UnityAction onPlace, UnityAction onSell, UnityAction onSellAll)
         {
             Root = rowRoot.gameObject;
-            NameText = UiBindUtil.Find<Text>(rowRoot, UiNames.StorageRowNameText, prefabName);
-            CountText = UiBindUtil.Find<Text>(rowRoot, UiNames.StorageRowCountText, prefabName);
+            NameText = UiBindUtil.Find<TMP_Text>(rowRoot, UiNames.StorageRowNameText, prefabName);
+            CountText = UiBindUtil.Find<TMP_Text>(rowRoot, UiNames.StorageRowCountText, prefabName);
             PlaceButton = UiBindUtil.BindButton(rowRoot, UiNames.StoragePlaceButton, prefabName, onPlace);
             SellButton = UiBindUtil.BindButton(rowRoot, UiNames.StorageSellButton, prefabName, onSell);
             SellAllButton = UiBindUtil.BindButton(rowRoot, UiNames.StorageSellAllButton, prefabName, onSellAll);

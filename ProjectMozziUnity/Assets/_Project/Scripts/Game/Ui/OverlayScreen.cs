@@ -1,4 +1,5 @@
 using Mozzi.Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,8 +9,8 @@ namespace Mozzi.Game.Ui
     // Bind 는 UiManager 가 PostInit 에서 한 번 부르고, Refresh 는 열 때와 이벤트 때 부른다.
     public abstract class OverlayScreen : ObjectBase
     {
-        private Text _title;
-        private Text _gold;
+        private TMP_Text _title;
+        private TMP_Text _gold;
         private bool _bound;
 
         protected abstract string PrefabName { get; }
@@ -28,8 +29,8 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            _title = UiBindUtil.Find<Text>(transform, UiNames.TitleText, PrefabName);
-            _gold = UiBindUtil.Find<Text>(transform, UiNames.GoldText, PrefabName);
+            _title = UiBindUtil.Find<TMP_Text>(transform, UiNames.TitleText, PrefabName);
+            _gold = UiBindUtil.Find<TMP_Text>(transform, UiNames.GoldText, PrefabName);
             UiBindUtil.BindButton(transform, UiNames.CloseButton, PrefabName, ui.CloseAll);
             UiBindUtil.SetText(_title, Title);
 

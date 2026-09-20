@@ -4,6 +4,7 @@ using Mozzi.Game.Farm;
 using Mozzi.Game.Storage;
 using Mozzi.Game.Wallet;
 using Mozzi.Save;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +20,7 @@ namespace Mozzi.Game.Ui
         private IWalletHub _wallet;
         private IStaticDataHub _data;
         private GameObject _emptyText;
-        private Text _fenceText;
+        private TMP_Text _fenceText;
 
         protected override string PrefabName
         {
@@ -39,7 +40,7 @@ namespace Mozzi.Game.Ui
             _data = InGameHub.Get<IStaticDataHub>();
 
             _emptyText = UiBindUtil.FindObject(transform, UiNames.StorageEmptyText, PrefabName);
-            _fenceText = UiBindUtil.Find<Text>(transform, UiNames.StorageFenceText, PrefabName);
+            _fenceText = UiBindUtil.Find<TMP_Text>(transform, UiNames.StorageFenceText, PrefabName);
 
             for (int i = 0; i < UiNames.StorageRowCount; i++)
             {

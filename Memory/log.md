@@ -333,3 +333,53 @@
 - 거절 summary-len title-shape tag-standard body-thin summary-body-match `WebGL 세이브는 파일 쓴 뒤 FS.syncfs 를 불러야 IndexedDB 에 남는다`
 - 거절 body-thin `WebGL 세이브는 syncfs 뒤에야 남는다`
 - 들어옴 20260918-c527568c `WebGL 세이브는 syncfs 뒤에야 남는다` (mem/0.3.0)
+
+## 2026-09-20
+- 거절 required-field title-shape tag-shape sources-shape body-thin howto-numbered `Unity WebGL 빌드는 아티팩트에서 돈다. .unityweb 확장자는 거절되니 data·framework·wasm 세 파일을 .wasm 이름으로 올리고 로더 config 의 Url 만 새 이름으로 바꾼다 (Brotli + decompressionFallback, 12.3MB, 09-20 사용자 확인)`
+- 거절 summary-len sources-shape body-thin howto-numbered summary-body-match `Unity WebGL 빌드를 아티팩트에 올리는 법`
+- 들어옴 20260920-53b9dfa6 `Unity WebGL 빌드를 아티팩트에 올리는 법` (mem/0.3.0)
+- 들어옴 20260920-ca7f4400 `찹쌀이 그림 48 → 64×64 로 바꿈` (mem/0.3.0)
+- 덮음 20260918-87c39e6e → 20260920-ca7f4400
+- 거절 required-field title-shape tag-standard tag-shape severity sources-shape body-thin `찹쌀이 스프라이트 크기는 bounds.size.y 로 나눠 맞추고 변종 테두리는 native 를 되곱한다`
+- 거절 required-field title-shape tag-standard severity sources-shape body-thin `찹쌀이 스프라이트 크기는 bounds.size.y 로 나눠 맞추고 변종 테두리는 native 를 되곱한다`
+- 들어옴 20260920-d7c39b56 `그림 원래 크기로 나눠 찹쌀이 크기를 맞춘다` (mem/0.3.0)
+- 들어옴 20260920-3bfb65d6 `스프라이트는 ISpriteSource 로 넣고 없으면 null` (mem/0.3.0)
+- 들어옴 20260920-9ffa4630 `WebGL 에서 legacy Text 글씨가 통째로 사라진다` (mem/0.3.0)
+- 거절 required-field title-shape tag-shape sources-shape body-thin `찹쌀이 그림 배율은 캔버스가 아니라 몸 높이(39/64)를 기준으로 잡는다`
+- 거절 required-field title-shape tag-shape sources-shape `찹쌀이 그림 배율은 캔버스가 아니라 몸 높이(39/64)를 기준으로 잡는다`
+- 거절 required-field title-shape tag-shape `찹쌀이 그림 배율은 캔버스가 아니라 몸 높이(39/64)를 기준으로 잡는다`
+- 거절 required-field title-shape tag-standard `찹쌀이 그림 배율은 캔버스가 아니라 몸 높이(39/64)를 기준으로 잡는다`
+- 거절 title-shape tag-standard `찹쌀이 그림 배율은 캔버스가 아니라 몸 높이(39/64)를 기준으로 잡는다`
+- 들어옴 20260920-68c5c1fb `찹쌀이 배율은 몸 높이 39/64 기준으로 잡는다` (mem/0.3.0)
+- 거절 severity duplicate-hard `Game 뷰가 가로면 캡처가 360x640 이 아니다`
+- 들어옴 20260920-b1f9bda3 `Game 뷰가 가로면 캡처가 360x640 이 아니다` (mem/0.3.0) --new
+- 거절 tag-standard `세로 조각 그림 요청 목록과 훅 현황`
+- 들어옴 20260920-82db27a9 `세로 조각 그림 요청 목록과 훅 현황` (mem/0.3.0)
+- 거절 title-shape tag-standard `Animator speed 0 에서 Play 는 Update(0) 이 필요`
+- 들어옴 20260920-f4f0d6c6 `Animator speed 0 이면 Play 뒤 Update(0)` (mem/0.3.0)
+- 들어옴 20260920-7f23b10a `클립이 private int 필드를 직접 흔든다` (mem/0.3.0)
+- 들어옴 20260920-688f3a26 `찹쌀이 볼 기준 자리는 대칭 12.5px` (mem/0.3.0)
+- 거절 no-value duplicate-soft decision-gate secret-entropy `찹쌀이 배율은 몸 높이 35/64 기준으로 잡는다`
+- 들어옴 20260920-ba48830e `찹쌀이 배율은 몸 높이 35/64 기준으로 잡는다` (mem/0.3.0)
+- 덮음 20260920-68c5c1fb → 20260920-ba48830e
+- 거절 title-shape duplicate-soft `capture_game_view 는 width/height 를 줘야 360x640 으로 나온다`
+- 거절 duplicate-hard `캡처는 width/height 를 줘야 안 늘어난다`
+- 들어옴 20260920-4578aa9b `캡처는 width/height 를 줘야 안 늘어난다` (mem/0.3.0)
+- 덮음 20260920-b1f9bda3 → 20260920-4578aa9b
+- 들어옴 20260920-de028beb `일시정지 Step 은 captureDeltaTime 을 안 본다` (mem/0.3.0)
+- 들어옴 20260920-659a02a7 `eval_file 은 메서드 몸통으로 감싼다` (mem/0.3.0)
+- 거절 tag-standard sources-required `찹쌀이 레이어·점프 배선 2판 끝`
+- 들어옴 20260920-dda4af98 `찹쌀이 레이어·점프 배선 2판 끝` (mem/0.3.0)
+- 거절 todo-status duplicate-soft `왕관 그림이 머리에 안 얹힌다`
+- 들어옴 20260920-f7a7af3b `왕관 그림이 머리에 안 얹힌다` (mem/0.3.0)
+- 들어옴 20260920-e069e6d8 `찹쌀이 몸 높이 기준은 35px 이다` (mem/0.3.0) --new
+- 덮음 20260920-68c5c1fb → 20260920-e069e6d8
+- 들어옴 20260920-11bd2a72 `찹쌀이는 몸·볼·표정·악세 레이어로 나눠 그린다` (mem/0.3.0)
+- 거절 decision-gate `점프는 움직임=코드 · 모양=그린 프레임 · 재생=Animator`
+- 들어옴 20260920-65f02b0c `점프는 움직임=코드 · 모양=그린 프레임 · 재생=Animator` (mem/0.3.0) --new
+- 들어옴 20260920-f0abdb05 `첫 한 마리 확인 결과 40/48/56 · 외곽선 없음 유지` (mem/0.3.0) --new
+- 거절 todo-status `왕관 규칙과 표정 규칙을 기획에서 정한다`
+- 들어옴 20260920-e4c36d2c `왕관 규칙과 표정 규칙을 기획에서 정한다` (mem/0.3.0)
+- 거절 summary-len tag-standard tag-shape body-thin summary-body-match `변종 찹쌀이의 노란 네모 배경은 껐다`
+- 들어옴 20260920-22f5bcd3 `변종 찹쌀이 노란 네모 배경 끄기` (mem/0.3.0)
+- 들어옴 20260920-dfbfc6f8 `변종 표시 방법 다시 정하기` (mem/0.3.0)

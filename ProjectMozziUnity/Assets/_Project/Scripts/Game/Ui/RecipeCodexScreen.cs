@@ -4,6 +4,7 @@ using Mozzi.Data.Rows;
 using Mozzi.Game.Codex;
 using Mozzi.Game.Stall;
 using Mozzi.Game.Wallet;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +24,7 @@ namespace Mozzi.Game.Ui
         private IStallHub _stall;
         private IWalletHub _wallet;
         private IStaticDataHub _data;
-        private Text _countText;
+        private TMP_Text _countText;
 
         protected override string PrefabName
         {
@@ -41,7 +42,7 @@ namespace Mozzi.Game.Ui
             _stall = InGameHub.Get<IStallHub>();
             _wallet = InGameHub.Get<IWalletHub>();
             _data = InGameHub.Get<IStaticDataHub>();
-            _countText = UiBindUtil.Find<Text>(transform, UiNames.RecipeCodexCountText, PrefabName);
+            _countText = UiBindUtil.Find<TMP_Text>(transform, UiNames.RecipeCodexCountText, PrefabName);
 
             IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
             for (int i = 0; i < rows.Count; i++)

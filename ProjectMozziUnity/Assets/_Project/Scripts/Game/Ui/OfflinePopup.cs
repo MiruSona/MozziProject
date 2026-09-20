@@ -1,4 +1,5 @@
 using Mozzi.Core;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -11,9 +12,9 @@ namespace Mozzi.Game.Ui
     {
         private const string PrefabName = "OfflinePopup";
 
-        private Text _title;
-        private Text _time;
-        private Text _body;
+        private TMP_Text _title;
+        private TMP_Text _time;
+        private TMP_Text _body;
         private bool _bound;
 
         public bool IsOpen
@@ -28,9 +29,9 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            _title = UiBindUtil.Find<Text>(transform, UiNames.OfflineTitleText, PrefabName);
-            _time = UiBindUtil.Find<Text>(transform, UiNames.OfflineTimeText, PrefabName);
-            _body = UiBindUtil.Find<Text>(transform, UiNames.OfflineBodyText, PrefabName);
+            _title = UiBindUtil.Find<TMP_Text>(transform, UiNames.OfflineTitleText, PrefabName);
+            _time = UiBindUtil.Find<TMP_Text>(transform, UiNames.OfflineTimeText, PrefabName);
+            _body = UiBindUtil.Find<TMP_Text>(transform, UiNames.OfflineBodyText, PrefabName);
 
             Button cover = GetComponent<Button>();
             cover.onClick.RemoveAllListeners();

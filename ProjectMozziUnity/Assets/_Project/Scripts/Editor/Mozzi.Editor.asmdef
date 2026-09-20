@@ -2,7 +2,9 @@
     "name": "Mozzi.Editor",
     "rootNamespace": "Mozzi.EditorTools",
     "references": [
-        "Mozzi.Runtime"
+        "Mozzi.Runtime",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [
         "Editor"

@@ -6,6 +6,7 @@ using Mozzi.Game.Codex;
 using Mozzi.Game.Inventory;
 using Mozzi.Game.Stall;
 using Mozzi.Game.Wallet;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,24 +42,24 @@ namespace Mozzi.Game.Ui
         private IStaticDataHub _data;
         private IUiHub _ui;
 
-        private Text _status;
-        private Text _shelf;
-        private Text _expInfo;
+        private TMP_Text _status;
+        private TMP_Text _shelf;
+        private TMP_Text _expInfo;
         private Button _expMake;
         private Button _openButton;
         private Button _clerkButton;
 
         private GameObject _poundPanel;
-        private Text _poundHint;
-        private Text _poundCount;
+        private TMP_Text _poundHint;
+        private TMP_Text _poundCount;
         private RectTransform _poundDough;
         private PoundAgent _pound;
 
         private GameObject _madePanel;
         private Image _madeFlash;
         private GameObject _madeNew;
-        private Text _madeName;
-        private Text _madePrice;
+        private TMP_Text _madeName;
+        private TMP_Text _madePrice;
         private float _flashTime;
         private bool _flashing;
 
@@ -83,8 +84,8 @@ namespace Mozzi.Game.Ui
             _ui = InGameHub.Get<IUiHub>();
             _pound = new PoundAgent(this, _data.Stalls.Get(StallRowId));
 
-            _status = UiBindUtil.Find<Text>(transform, UiNames.StallStatusText, PrefabName);
-            _shelf = UiBindUtil.Find<Text>(transform, UiNames.StallShelfText, PrefabName);
+            _status = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallStatusText, PrefabName);
+            _shelf = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallShelfText, PrefabName);
 
             for (int i = 0; i < _stall.QueueMax; i++)
             {
@@ -109,15 +110,15 @@ namespace Mozzi.Game.Ui
                     delegate { OnToggle(id); });
             }
 
-            _expInfo = UiBindUtil.Find<Text>(transform, UiNames.StallExpInfoText, PrefabName);
+            _expInfo = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallExpInfoText, PrefabName);
             _expMake = UiBindUtil.BindButton(transform, UiNames.StallExpMakeButton, PrefabName, OnExpMake);
             _openButton = UiBindUtil.BindButton(transform, UiNames.StallOpenButton, PrefabName, OnOpenOrNextDay);
             _clerkButton = UiBindUtil.BindButton(transform, UiNames.StallClerkButton, PrefabName, OnBuyClerk);
             UiBindUtil.BindButton(transform, UiNames.StallRecipeCodexButton, PrefabName, _ui.OpenRecipeCodex);
 
             _poundPanel = UiBindUtil.FindObject(transform, UiNames.PoundPanel, PrefabName);
-            _poundHint = UiBindUtil.Find<Text>(_poundPanel.transform, UiNames.PoundHintText, PrefabName);
-            _poundCount = UiBindUtil.Find<Text>(_poundPanel.transform, UiNames.PoundCountText, PrefabName);
+            _poundHint = UiBindUtil.Find<TMP_Text>(_poundPanel.transform, UiNames.PoundHintText, PrefabName);
+            _poundCount = UiBindUtil.Find<TMP_Text>(_poundPanel.transform, UiNames.PoundCountText, PrefabName);
             _poundDough = UiBindUtil.Find<RectTransform>(_poundPanel.transform, UiNames.PoundDoughBox, PrefabName);
             Button poundButton = _poundPanel.GetComponent<Button>();
             poundButton.onClick.RemoveAllListeners();
@@ -126,8 +127,8 @@ namespace Mozzi.Game.Ui
             _madePanel = UiBindUtil.FindObject(transform, UiNames.StallMadePanel, PrefabName);
             _madeFlash = UiBindUtil.Find<Image>(_madePanel.transform, UiNames.StallMadeFlash, PrefabName);
             _madeNew = UiBindUtil.FindObject(_madePanel.transform, UiNames.StallMadeNewText, PrefabName);
-            _madeName = UiBindUtil.Find<Text>(_madePanel.transform, UiNames.StallMadeNameText, PrefabName);
-            _madePrice = UiBindUtil.Find<Text>(_madePanel.transform, UiNames.StallMadePriceText, PrefabName);
+            _madeName = UiBindUtil.Find<TMP_Text>(_madePanel.transform, UiNames.StallMadeNameText, PrefabName);
+            _madePrice = UiBindUtil.Find<TMP_Text>(_madePanel.transform, UiNames.StallMadePriceText, PrefabName);
             Button madeButton = _madePanel.GetComponent<Button>();
             madeButton.onClick.RemoveAllListeners();
             madeButton.onClick.AddListener(CloseMade);

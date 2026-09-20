@@ -7,6 +7,7 @@ using Mozzi.Game.Storage;
 using Mozzi.Game.Synthesis;
 using Mozzi.Game.Wallet;
 using Mozzi.Save;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,14 +34,14 @@ namespace Mozzi.Game.Ui
         private IWalletHub _wallet;
         private IStaticDataHub _data;
 
-        private Text _shortcutText;
+        private TMP_Text _shortcutText;
         private Button _shortcutBuyButton;
         private GameObject _pickPanel;
-        private Text _pickTitle;
+        private TMP_Text _pickTitle;
         private GameObject _resultPanel;
         private RectTransform _resultBox;
         private Image _resultBoxImage;
-        private Text _resultName;
+        private TMP_Text _resultName;
         private GameObject _resultNew;
 
         private int _pickSlot = -1;
@@ -67,7 +68,7 @@ namespace Mozzi.Game.Ui
             _wallet = InGameHub.Get<IWalletHub>();
             _data = InGameHub.Get<IStaticDataHub>();
 
-            _shortcutText = UiBindUtil.Find<Text>(transform, UiNames.SynthesisShortcutText, PrefabName);
+            _shortcutText = UiBindUtil.Find<TMP_Text>(transform, UiNames.SynthesisShortcutText, PrefabName);
             _shortcutBuyButton = UiBindUtil.BindButton(transform, UiNames.SynthesisShortcutBuyButton, PrefabName, OnBuyShortcut);
 
             for (int i = 0; i < _synthesis.MaxSlotCount; i++)
@@ -85,7 +86,7 @@ namespace Mozzi.Game.Ui
             }
 
             _pickPanel = UiBindUtil.FindObject(transform, UiNames.SynthesisPickPanel, PrefabName);
-            _pickTitle = UiBindUtil.Find<Text>(_pickPanel.transform, UiNames.SynthesisPickTitleText, PrefabName);
+            _pickTitle = UiBindUtil.Find<TMP_Text>(_pickPanel.transform, UiNames.SynthesisPickTitleText, PrefabName);
             UiBindUtil.BindButton(_pickPanel.transform, UiNames.SynthesisPickCloseButton, PrefabName, ClosePick);
             for (int i = 0; i < UiNames.SynthesisPickRowCount; i++)
             {
@@ -99,7 +100,7 @@ namespace Mozzi.Game.Ui
             _resultPanel = UiBindUtil.FindObject(transform, UiNames.SynthesisResultPanel, PrefabName);
             _resultBoxImage = UiBindUtil.Find<Image>(_resultPanel.transform, UiNames.SynthesisResultBox, PrefabName);
             _resultBox = _resultBoxImage.rectTransform;
-            _resultName = UiBindUtil.Find<Text>(_resultPanel.transform, UiNames.SynthesisResultNameText, PrefabName);
+            _resultName = UiBindUtil.Find<TMP_Text>(_resultPanel.transform, UiNames.SynthesisResultNameText, PrefabName);
             _resultNew = UiBindUtil.FindObject(_resultPanel.transform, UiNames.SynthesisResultNewText, PrefabName);
             _resultPanel.GetComponent<Button>().onClick.RemoveAllListeners();
             _resultPanel.GetComponent<Button>().onClick.AddListener(CloseResult);
