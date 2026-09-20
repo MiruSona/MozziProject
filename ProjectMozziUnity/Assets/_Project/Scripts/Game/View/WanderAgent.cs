@@ -18,11 +18,15 @@ namespace Mozzi.Game.View
         {
         }
 
+        // 지금 걷고 있나. 쉬는 중이면 false 다 — 뜀(MozziHopAgent)이 이 값을 보고 통통 뛴다.
+        public bool IsMoving { get; private set; }
+
         public void Reset(Rect area, Vector2 start)
         {
             _area = area;
             _target = start;
             _rest = Random.Range(0f, RestMax);
+            IsMoving = false;
         }
 
         public Vector2 Step(Vector2 position, float deltaTime)
@@ -30,9 +34,11 @@ namespace Mozzi.Game.View
             if (_rest > 0f)
             {
                 _rest -= deltaTime;
+                IsMoving = false;
                 return position;
             }
 
+            IsMoving = true;
             Vector2 next = Vector2.MoveTowards(position, _target, Speed * deltaTime);
             if (Vector2.Distance(next, _target) < 0.05f)
             {

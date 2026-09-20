@@ -18,8 +18,22 @@ namespace Mozzi.Game.View
         public const float MozziTier2Px = 48f;
         public const float MozziTier3Px = 56f;
 
+        // 찹쌀이 그림은 64 캔버스에 그리고 그 안에서 몸(왕관 없이)은 세로 35px 이다 (body_hop0 불투명 bbox y16~50).
+        // 위 40/48/56 은 몸 높이 기준이라 캔버스 여백만큼 크게 찍어야 맞는다.
+        public const float MozziCanvasPx = 64f;
+        public const float MozziBodyHeightPx = 35f;
+
         // 변종 테두리는 몸보다 이만큼 큰 네모다 (배율).
         public const float ShinyBorderScale = 1.2f;
+
+        // 변종 표시는 네모 배경 대신 다른 방법으로 다시 정한다 — 2026-09-20 사용자 판정으로 끔.
+        public const bool MozziShinyBorderVisible = false;
+
+        // 찹쌀이 뜀 높이 (px). 뜨는 것은 Visual 자식뿐이라 콜라이더·담장 판정은 그대로다.
+        public const float MozziHopHeightPx = 12f;
+
+        // 찹쌀이 정렬 기준. 아래쪽 마리가 앞에 오게 y 를 빼서 쓴다.
+        public const int MozziSortBase = 300;
 
         public const float PilePx = 28f;
         public const float BuildingWidthPx = 140f;

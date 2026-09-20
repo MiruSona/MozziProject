@@ -34,6 +34,9 @@ namespace Mozzi.Game.View
         private readonly List<string> _removePiles = new List<string>();
         private readonly Dictionary<string, Vector2> _pileSpots = new Dictionary<string, Vector2>();
 
+        // 종 id → 레이어 그림 묶음. 24종이 스프라이트를 찾는 일을 한 번씩만 하게 담아 둔다.
+        private readonly Dictionary<string, MozziSpriteSet> _spriteSets = new Dictionary<string, MozziSpriteSet>();
+
         private IResourceHub _resource;
         private IFarmHub _farm;
         private IStaticDataHub _data;
@@ -121,6 +124,7 @@ namespace Mozzi.Game.View
             _mozziObjects.Clear();
             _pileObjects.Clear();
             _mozziList.Clear();
+            _spriteSets.Clear();
 
             ReturnIfAlive(_synthesisBuilding);
             ReturnIfAlive(_stallBuilding);
@@ -246,8 +250,9 @@ namespace Mozzi.Game.View
                     continue;
                 }
 
+                MozziSpeciesRow species = _data.Species.Get(mozzi.SpeciesId);
                 MozziObject obj = _resource.Rent<MozziObject>(PrefabKeys.Mozzi, _root);
-                obj.Setup(mozzi.Id, _data.Species.Get(mozzi.SpeciesId), WanderRect(), NextStart());
+                obj.Setup(mozzi.Id, species, SpriteSetOf(species), WanderRect(), NextStart());
                 _mozziObjects[mozzi.Id] = obj;
                 _mozziList.Add(obj);
             }
@@ -273,6 +278,19 @@ namespace Mozzi.Game.View
                 _mozziList.Remove(obj);
                 _resource.Return(obj);
             }
+        }
+
+        private MozziSpriteSet SpriteSetOf(MozziSpeciesRow species)
+        {
+            MozziSpriteSet set;
+            if (_spriteSets.TryGetValue(species.id, out set))
+            {
+                return set;
+            }
+
+            set = MozziSpriteSet.Load(_resource, species);
+            _spriteSets[species.id] = set;
+            return set;
         }
 
         private static bool HasMozzi(IReadOnlyList<FarmMozzi> mozzis, int id)
