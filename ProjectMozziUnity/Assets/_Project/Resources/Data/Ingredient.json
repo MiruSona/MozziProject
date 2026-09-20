@@ -1,10 +1,10 @@
 {
   "rows": [
-    { "id": "redbean", "name": "팥", "tier": 1, "value": 10, "cap": 100, "colorHex": "#8B2C2C" },
-    { "id": "bean", "name": "콩", "tier": 1, "value": 10, "cap": 100, "colorHex": "#E0C060" },
-    { "id": "mugwort", "name": "쑥", "tier": 1, "value": 10, "cap": 100, "colorHex": "#5A8A3A" },
-    { "id": "sesame", "name": "깨", "tier": 2, "value": 30, "cap": 100, "colorHex": "#D9C9A0" },
-    { "id": "pinenut", "name": "잣", "tier": 2, "value": 30, "cap": 100, "colorHex": "#F0E6C8" },
-    { "id": "jujube", "name": "대추", "tier": 2, "value": 30, "cap": 100, "colorHex": "#A0402A" }
+    { "id": "redbean", "name": "팥", "tier": 1, "value": 10, "cap": 100, "colorHex": "#8B2C2C", "spriteKey": "Ingredient/redbean" },
+    { "id": "bean", "name": "콩", "tier": 1, "value": 10, "cap": 100, "colorHex": "#E0C060", "spriteKey": "Ingredient/bean" },
+    { "id": "mugwort", "name": "쑥", "tier": 1, "value": 10, "cap": 100, "colorHex": "#5A8A3A", "spriteKey": "Ingredient/mugwort" },
+    { "id": "sesame", "name": "깨", "tier": 2, "value": 30, "cap": 100, "colorHex": "#D9C9A0", "spriteKey": "Ingredient/sesame" },
+    { "id": "pinenut", "name": "잣", "tier": 2, "value": 30, "cap": 100, "colorHex": "#F0E6C8", "spriteKey": "Ingredient/pinenut" },
+    { "id": "jujube", "name": "대추", "tier": 2, "value": 30, "cap": 100, "colorHex": "#A0402A", "spriteKey": "Ingredient/jujube" }
   ]
 }

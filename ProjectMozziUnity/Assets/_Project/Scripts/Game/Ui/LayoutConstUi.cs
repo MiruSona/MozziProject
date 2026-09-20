@@ -9,5 +9,14 @@ namespace Mozzi.Game.Ui
         public const float ResourceBarHeight = 56f;
         public const float BuildingStripHeight = 80f;
         public const float BottomBarHeight = 80f;
+
+        // 부재료 그림 칸 (px). 아이콘을 켜면 글씨를 그만큼 오른쪽으로 민다.
+        public const float IngredientIconSize = 18f;
+        public const float IngredientIconLeft = 2f;
+        public const float IngredientTextIndent = 20f;
+
+        public const float ToggleIconSize = 20f;
+        public const float ToggleIconLeft = 4f;
+        public const float ToggleTextIndent = 24f;
     }
 }

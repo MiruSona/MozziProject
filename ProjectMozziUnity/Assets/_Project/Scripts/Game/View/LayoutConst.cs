@@ -55,6 +55,10 @@ namespace Mozzi.Game.View
         public const int MozziSortBase = 300;
 
         public const float PilePx = 28f;
+
+        // 수량 글자를 더미 한가운데에서 이만큼 아래로 내린다 (px). 그림 절반 14 + 사이 6 이다.
+        public const float PileLabelBelowPx = 20f;
+
         public const float BuildingWidthPx = 140f;
         public const float BuildingHeightPx = 64f;
 

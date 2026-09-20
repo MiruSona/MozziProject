@@ -6,6 +6,8 @@ using Mozzi.Game.Codex;
 using Mozzi.Game.Inventory;
 using Mozzi.Game.Stall;
 using Mozzi.Game.Wallet;
+using Mozzi.Hubs;
+using Mozzi.Resource;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,6 +34,7 @@ namespace Mozzi.Game.Ui
         private readonly List<Button> _makeRows = new List<Button>();
         private readonly List<string> _makeRowRecipes = new List<string>();
         private readonly Dictionary<string, Button> _expToggles = new Dictionary<string, Button>();
+        private readonly Dictionary<string, Image> _expIcons = new Dictionary<string, Image>();
         private readonly List<string> _selected = new List<string>();
 
         private IStallHub _stall;
@@ -102,12 +105,15 @@ namespace Mozzi.Game.Ui
                 _makeRowRecipes.Add(null);
             }
 
+            IResourceHub resource = GlobalHub.Get<IResourceHub>();
             IReadOnlyList<string> ids = _inventory.IngredientIds;
             for (int i = 0; i < ids.Count; i++)
             {
                 string id = ids[i];
-                _expToggles[id] = UiBindUtil.BindButton(transform, UiNames.StallExpTogglePrefix + id, PrefabName,
+                Button toggle = UiBindUtil.BindButton(transform, UiNames.StallExpTogglePrefix + id, PrefabName,
                     delegate { OnToggle(id); });
+                _expToggles[id] = toggle;
+                SetToggleIcon(toggle, id, resource.GetSprite(_data.Ingredients.Get(id).spriteKey));
             }
 
             _expInfo = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallExpInfoText, PrefabName);
@@ -137,9 +143,49 @@ namespace Mozzi.Game.Ui
             UiBindUtil.SetActive(_madePanel, false);
         }
 
+        // 그림이 없으면 아이콘을 끄고 글씨를 가운데로 되돌린다. 토글이 54px 이라 이름과 그림 둘 다는 못 넣는다.
+        private void SetToggleIcon(Button toggle, string ingredientId, Sprite sprite)
+        {
+            Image icon;
+            if (UiBindUtil.TryFind<Image>(toggle.transform, UiNames.IngredientIcon, out icon) == false)
+            {
+                return;
+            }
+
+            _expIcons[ingredientId] = icon;
+            icon.sprite = sprite;
+            UiBindUtil.SetActive(icon.gameObject, sprite != null);
+
+            TMP_Text label = UiBindUtil.LabelOf(toggle);
+            if (label == null)
+            {
+                return;
+            }
+
+            float indent = 0f;
+            if (sprite != null)
+            {
+                indent = LayoutConstUi.ToggleTextIndent;
+            }
+
+            label.margin = new Vector4(indent, 0f, 0f, 0f);
+        }
+
+        private bool HasToggleIcon(string ingredientId)
+        {
+            Image icon;
+            if (_expIcons.TryGetValue(ingredientId, out icon) == false)
+            {
+                return false;
+            }
+
+            return icon.gameObject.activeSelf;
+        }
+
         protected override void UnbindChildren()
         {
             _queueCells.Clear();
+            _expIcons.Clear();
             _makeRows.Clear();
             _makeRowRecipes.Clear();
             _expToggles.Clear();
@@ -351,7 +397,15 @@ namespace Mozzi.Game.Ui
                 }
 
                 pair.Value.interactable = on || (count > 0 && full == false);
-                UiBindUtil.SetLabel(pair.Value, _data.Ingredients.Get(id).name + " " + count);
+
+                // 아이콘이 켜져 있으면 이름은 그림이 대신하므로 숫자만 쓴다.
+                string head = _data.Ingredients.Get(id).name + " ";
+                if (HasToggleIcon(id))
+                {
+                    head = "";
+                }
+
+                UiBindUtil.SetLabel(pair.Value, head + count);
             }
 
             UiBindUtil.SetText(_expInfo, ExperimentInfo());

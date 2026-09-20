@@ -17,6 +17,7 @@ namespace Mozzi.Game.Ui
         private const float DawnDuration = 0.5f;
 
         private readonly Dictionary<string, TMP_Text> _ingredientTexts = new Dictionary<string, TMP_Text>();
+        private readonly Dictionary<string, Image> _ingredientIcons = new Dictionary<string, Image>();
         private readonly Dictionary<TMP_Text, float> _bumps = new Dictionary<TMP_Text, float>();
         private readonly List<TMP_Text> _bumpDone = new List<TMP_Text>();
 
@@ -48,7 +49,15 @@ namespace Mozzi.Game.Ui
             for (int i = 0; i < ingredientIds.Count; i++)
             {
                 string childName = UiNames.FarmIngredientPrefix + ingredientIds[i];
-                _ingredientTexts[ingredientIds[i]] = UiBindUtil.Find<TMP_Text>(transform, childName, PrefabName);
+                TMP_Text text = UiBindUtil.Find<TMP_Text>(transform, childName, PrefabName);
+                _ingredientTexts[ingredientIds[i]] = text;
+
+                Image icon;
+                if (UiBindUtil.TryFind<Image>(text.transform, UiNames.IngredientIcon, out icon))
+                {
+                    _ingredientIcons[ingredientIds[i]] = icon;
+                    SetIngredientIcon(ingredientIds[i], null);
+                }
             }
 
             UiBindUtil.BindButton(transform, UiNames.FarmCodexButton, PrefabName, ui.OpenMozziCodex);
@@ -71,6 +80,7 @@ namespace Mozzi.Game.Ui
             base.OnReturn();
             UiBindUtil.UnbindAllButtons(transform);
             _ingredientTexts.Clear();
+            _ingredientIcons.Clear();
             _bumps.Clear();
             _bumpDone.Clear();
             _dawning = false;
@@ -127,6 +137,34 @@ namespace Mozzi.Game.Ui
             UiBindUtil.SetText(_fence, count + "/" + max);
         }
 
+        // 그림이 없으면 아이콘을 끄고 글씨를 왼쪽 끝으로 되돌린다. 칸 폭이 58px 이라 둘 다는 못 넣는다.
+        public void SetIngredientIcon(string ingredientId, Sprite sprite)
+        {
+            Image icon;
+            if (_ingredientIcons.TryGetValue(ingredientId, out icon) == false)
+            {
+                return;
+            }
+
+            icon.sprite = sprite;
+            UiBindUtil.SetActive(icon.gameObject, sprite != null);
+
+            TMP_Text text;
+            if (_ingredientTexts.TryGetValue(ingredientId, out text) == false)
+            {
+                return;
+            }
+
+            float indent = 0f;
+            if (sprite != null)
+            {
+                indent = LayoutConstUi.IngredientTextIndent;
+            }
+
+            text.margin = new Vector4(indent, 0f, 0f, 0f);
+        }
+
+        // 아이콘이 켜져 있으면 이름은 그림이 대신하므로 숫자만 쓴다.
         public void SetIngredient(string ingredientId, string label, int count, int cap, bool bump)
         {
             TMP_Text text;
@@ -135,7 +173,13 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            UiBindUtil.SetText(text, label + " " + count + "/" + cap);
+            string head = label + " ";
+            if (HasIcon(ingredientId))
+            {
+                head = "";
+            }
+
+            UiBindUtil.SetText(text, head + count + "/" + cap);
             if (bump)
             {
                 StartBump(text);
@@ -205,6 +249,17 @@ namespace Mozzi.Game.Ui
             Color tc = _nightText.color;
             tc.a = alpha / _nightAlpha;
             _nightText.color = tc;
+        }
+
+        private bool HasIcon(string ingredientId)
+        {
+            Image icon;
+            if (_ingredientIcons.TryGetValue(ingredientId, out icon) == false)
+            {
+                return false;
+            }
+
+            return icon.gameObject.activeSelf;
         }
 
         private void StartBump(TMP_Text text)

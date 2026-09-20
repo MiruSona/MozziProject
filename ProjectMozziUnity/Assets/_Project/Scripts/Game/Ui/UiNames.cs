@@ -29,6 +29,9 @@ namespace Mozzi.Game.Ui
         // 부재료 칸은 "Ingredient_" + 부재료 id (예 Ingredient_redbean).
         public const string FarmIngredientPrefix = "Ingredient_";
 
+        // 부재료 칸·실험 토글 안의 그림 자식 (Image). 그림이 없으면 꺼 둔다.
+        public const string IngredientIcon = "Icon";
+
         // 밤 덮개(농장 자리만) · 아래 띠의 「다음날로」. 낮에는 둘 다 꺼 둔다.
         public const string FarmNightCover = "NightCover";
         public const string FarmNightText = "NightText";

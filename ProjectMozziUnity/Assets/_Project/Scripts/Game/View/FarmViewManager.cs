@@ -22,6 +22,8 @@ namespace Mozzi.Game.View
     {
         private const int GridColumns = 5;
         private const float GridJitter = 0.35f;
+        // 더미 줄이 담장 안쪽 바닥에서 뜨는 높이. 그림 아래 수량 글자가 앞 담장에 안 걸리게 잡았다.
+        private const float PileRowUnits = 1.8f;
         // 변종 테두리(1.2배)까지 안 겹치게 반지름 합에 이만큼 곱한다.
         private const float SeparateMargin = LayoutConst.ShinyBorderScale;
 
@@ -222,7 +224,7 @@ namespace Mozzi.Game.View
         {
             IReadOnlyList<IngredientRow> rows = _data.Ingredients.All;
             Rect area = LayoutConst.FarmRect;
-            float y = area.yMin + 1.3f;
+            float y = area.yMin + PileRowUnits;
             float step = area.width / (rows.Count + 1);
 
             for (int i = 0; i < rows.Count; i++)
@@ -341,8 +343,9 @@ namespace Mozzi.Game.View
 
                 if (has == false)
                 {
+                    IngredientRow row = _data.Ingredients.Get(pair.Key);
                     pile = _resource.Rent<PileObject>(PrefabKeys.IngredientPile, _root);
-                    pile.Setup(_data.Ingredients.Get(pair.Key), _pileSpots[pair.Key]);
+                    pile.Setup(row, _resource.GetSprite(row.spriteKey), _pileSpots[pair.Key]);
                     _pileObjects[pair.Key] = pile;
                 }
 

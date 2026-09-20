@@ -76,6 +76,7 @@ namespace Mozzi.Game.Ui
             _farmScreen = _resource.Rent<FarmScreen>(PrefabKeys.UiFarmScreen, _canvas.transform);
             StretchToParent(_farmScreen.transform as RectTransform);
             _farmScreen.Bind(_inventory.IngredientIds, this, _clock.AdvanceDay);
+            BindIngredientIcons();
 
             _synthesisScreen = RentOverlay<SynthesisScreen>(PrefabKeys.UiSynthesisScreen);
             _codexScreen = RentOverlay<MozziCodexScreen>(PrefabKeys.UiMozziCodexScreen);
@@ -300,6 +301,17 @@ namespace Mozzi.Game.Ui
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
             rect.localScale = Vector3.one;
+        }
+
+        // 부재료 그림은 Resources 에 있으면 끼우고 없으면 null 이라 아이콘이 꺼진다.
+        private void BindIngredientIcons()
+        {
+            IReadOnlyList<string> ids = _inventory.IngredientIds;
+            for (int i = 0; i < ids.Count; i++)
+            {
+                string key = _data.Ingredients.Get(ids[i]).spriteKey;
+                _farmScreen.SetIngredientIcon(ids[i], _resource.GetSprite(key));
+            }
         }
 
         private void RefreshAll()
