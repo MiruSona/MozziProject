@@ -11,7 +11,26 @@ namespace Mozzi.Game.View
 
         public const float ResourceBarBottomPx = 56f;
         public const float BuildingStripBottomPx = 136f;
-        public const float FarmBottomPx = 560f;
+        public const float FarmBottomPx = 552f;
+
+        // 농장 바닥 타일 칸 수. 세로 13칸 × 32 = 416 이라 136~552 에 딱 떨어진다.
+        public const int FarmTileCols = 12;
+        public const int FarmTileRows = 13;
+
+        // 담장 두께 (유닛). 타일 한 칸이다.
+        public const float FenceUnits = 1f;
+
+        // 바닥 변종을 섞는 고정 시드. 캡처 판정을 되풀이할 수 있어야 한다.
+        public const int FarmGroundSeed = 20260920;
+
+        // 바닥 변종 비율. 기본 · 꽃이고 나머지가 돌이다.
+        public const double FarmGroundBaseRatio = 0.82;
+        public const double FarmGroundFlowerRatio = 0.1;
+
+        // 타일맵 층 정렬. 찹쌀이가 쓰는 145~446 의 위아래로 뺐다.
+        public const int GroundSortOrder = -10;
+        public const int FenceBackSortOrder = -5;
+        public const int FenceFrontSortOrder = 600;
 
         // 찹쌀이 단계별 크기 (px). 세로조각1판설계 3-2 의 40/48/56.
         public const float MozziTier1Px = 40f;

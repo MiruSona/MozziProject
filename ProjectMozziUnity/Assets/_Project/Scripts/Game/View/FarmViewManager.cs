@@ -46,6 +46,7 @@ namespace Mozzi.Game.View
 
         private Transform _root;
         private Camera _camera;
+        private IFarmGroundPainter _groundPainter;
         private BuildingObject _synthesisBuilding;
         private BuildingObject _stallBuilding;
         private int _placedCount;
@@ -55,7 +56,9 @@ namespace Mozzi.Game.View
             _root = new GameObject("FarmView").transform;
             _camera = Camera.main;
             _resource = GlobalHub.Get<IResourceHub>();
-            CreateGround();
+
+            _groundPainter = new TilemapFarmGroundPainter();
+            _groundPainter.Paint(_root, _resource);
         }
 
         public void PostInit()
@@ -129,6 +132,11 @@ namespace Mozzi.Game.View
             ReturnIfAlive(_synthesisBuilding);
             ReturnIfAlive(_stallBuilding);
 
+            if (_groundPainter != null)
+            {
+                _groundPainter.Clear();
+            }
+
             if (_root != null)
             {
                 Object.Destroy(_root.gameObject);
@@ -143,21 +151,6 @@ namespace Mozzi.Game.View
             }
 
             _resource.Return(obj);
-        }
-
-        // 담장 안 바닥. 색만 있는 네모 하나다.
-        private void CreateGround()
-        {
-            Rect area = LayoutConst.FarmRect;
-            GameObject ground = new GameObject("Ground");
-            ground.transform.SetParent(_root);
-            ground.transform.position = new Vector3(area.center.x, area.center.y, 0f);
-            ground.transform.localScale = new Vector3(area.width + 0.8f, area.height + 0.8f, 1f);
-
-            SpriteRenderer renderer = ground.AddComponent<SpriteRenderer>();
-            renderer.sprite = SpriteUtil.White;
-            renderer.color = new Color(0.36f, 0.55f, 0.3f);
-            renderer.sortingOrder = -10;
         }
 
         private void PlaceBuildings()
@@ -229,7 +222,7 @@ namespace Mozzi.Game.View
         {
             IReadOnlyList<IngredientRow> rows = _data.Ingredients.All;
             Rect area = LayoutConst.FarmRect;
-            float y = area.yMin + 0.7f;
+            float y = area.yMin + 1.3f;
             float step = area.width / (rows.Count + 1);
 
             for (int i = 0; i < rows.Count; i++)
@@ -306,11 +299,17 @@ namespace Mozzi.Game.View
             return false;
         }
 
-        // 걷는 범위는 담장 안에서 더미 줄(아래 1.3 유닛)을 뺀 자리다.
+        // 담장 안에서 담장 두께와 더미 줄을 뺀 자리다. 옆 담장은 찹쌀이 앞이라 좌우를 더 뺀다.
         private static Rect WanderRect()
         {
             Rect area = LayoutConst.FarmRect;
-            return Rect.MinMaxRect(area.xMin, area.yMin + 1.3f, area.xMax, area.yMax);
+            float side = LayoutConst.FenceUnits * 0.75f;
+            float top = LayoutConst.FenceUnits * 0.5f;
+            return Rect.MinMaxRect(
+                area.xMin + side,
+                area.yMin + LayoutConst.FenceUnits + 1.3f,
+                area.xMax - side,
+                area.yMax - top);
         }
 
         // 격자 + 흔들림. 20마리가 처음부터 겹치지 않게 놓는다.

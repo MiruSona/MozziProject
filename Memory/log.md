@@ -383,3 +383,20 @@
 - 거절 summary-len tag-standard tag-shape body-thin summary-body-match `변종 찹쌀이의 노란 네모 배경은 껐다`
 - 들어옴 20260920-22f5bcd3 `변종 찹쌀이 노란 네모 배경 끄기` (mem/0.3.0)
 - 들어옴 20260920-dfbfc6f8 `변종 표시 방법 다시 정하기` (mem/0.3.0)
+- 거절 summary-len tag-standard body-thin summary-body-match `농장 바닥·담장 타일 조사`
+- 들어옴 20260920-3f7f95f7 `농장 바닥·담장 타일 조사` (mem/0.3.0)
+- 들어옴 20260920-adf0850e `자체 타일맵 시스템을 따로 만든다` (mem/0.3.0)
+- 들어옴 20260920-5a744d35 `농장 바닥 12x13 칸과 담장 타일 한 벌` (mem/0.3.0)
+- 거절 tag-standard duplicate-soft `농장 바닥·담장을 Tilemap 층 셋으로 깔았다`
+- 거절 tag-standard duplicate-soft `농장 바닥·담장을 Tilemap 층 셋으로 깔았다`
+- 들어옴 20260920-ffeee724 `농장 바닥·담장을 Tilemap 층 셋으로 깔았다` (mem/0.3.0)
+- 거절 title-shape `PixelLab 로 32px 농장 바닥·담장 뽑기 — create_tiles_pro 는 옆면이 붙어 나온다`
+- 들어옴 20260920-72115361 `PixelLab 로 32px 바닥·담장 타일 뽑는 법` (mem/0.3.0)
+- 거절 duplicate-hard decision-gate `풀밭 위에서도 외곽선 없음·40/48/56 유지`
+- 들어옴 20260920-b1a624c1 `풀밭 위에서도 외곽선 없음·40/48/56 유지` (mem/0.3.0) --new
+- 들어옴 20260920-29b7271c `32px 풀밭·나무울타리 밋밋함 푸는 법` (mem/0.3.0)
+- 거절 decision-gate `농장 풀밭·담장 그림 3판 확정`
+- 들어옴 20260920-75d7251d `농장 풀밭·담장 그림 3판 확정` (mem/0.3.0) --new
+- 들어옴 20260920-e96db827 `농장 바닥·담장 타일 한 판 끝` (mem/0.3.0)
+- 들어옴 20260920-4f50c290 `농장 담장 실물 확인 둘` (mem/0.3.0)
+- 들어옴 20260920-c46ab988 `Unity CLI 반환값과 eval 이름 함정 셋` (mem/0.3.0)
