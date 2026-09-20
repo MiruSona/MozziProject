@@ -433,3 +433,6 @@
 - 들어옴 20260920-dc37e09b `PixelLab 로 28px 아이콘 묶음 뽑기` (mem/0.3.0) --new
 - 들어옴 20260920-9ab901b5 `코드 최적화를 DiskSize 로 되돌렸다` (mem/0.3.0) --new
 - 들어옴 20260920-74617258 `WebGL v8 판을 아티팩트에 올림` (mem/0.3.0)
+- 거절 required-field tag-shape severity sources-shape body-thin `그림요청목록 4번은 끝났다 — 다음 갱신 때 배선 현황 줄을 같이 본다`
+- 거절 severity sources-shape `그림요청목록 4번은 끝났다 — 한 항목이 끝나면 네 군데를 같이 맞춘다`
+- 들어옴 20260920-05ae5a0b `그림요청목록 4번은 끝났다 — 한 항목이 끝나면 네 군데를 같이 맞춘다` (mem/0.3.0)
