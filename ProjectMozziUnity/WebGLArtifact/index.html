@@ -1,0 +1,192 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>모찌 세로 조각 1판</title>
+<style>
+  :root { --ground: #1d1a24; --panel: #2a2633; --ink: #efe9f4; --dim: #a79fb3; --accent: #f2b8c6; --warn: #ffd479; --bad: #ff8a80; }
+  html, body { height: 100%; }
+  body { background: var(--ground); color: var(--ink); font-family: "Noto Sans KR", "Malgun Gothic", system-ui, sans-serif;
+         display: flex; flex-direction: column; align-items: center; gap: 8px; padding-inline: 16px; padding-block: 8px; box-sizing: border-box; }
+  #stage { position: relative; flex: 1 1 auto; min-height: 0; aspect-ratio: 9 / 16; max-width: 100%; background: var(--panel); }
+  #unity-canvas { width: 100%; height: 100%; display: block; background: var(--panel); outline: none; }
+  #loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; box-sizing: border-box; }
+  #bar { width: 72%; height: 8px; background: #453f52; border-radius: 4px; overflow: hidden; }
+  #fill { width: 0%; height: 100%; background: var(--accent); transition: width .2s; }
+  #msg { font-size: 13px; color: var(--dim); font-variant-numeric: tabular-nums; }
+  #detail { font: 11px/1.7 Consolas, monospace; color: var(--dim); font-variant-numeric: tabular-nums; text-align: left; white-space: pre; }
+  #stall { display: none; font-size: 12px; color: var(--warn); text-align: center; max-width: 290px; line-height: 1.6; }
+  button { font: inherit; font-size: 12px; padding: 7px 12px; border-radius: 6px; border: 1px solid #5b5470;
+           background: #3a3448; color: var(--ink); cursor: pointer; }
+  #log { flex: 0 0 auto; width: 100%; max-width: 480px; max-height: 22%; overflow: auto; font: 12px/1.5 Consolas, monospace; color: var(--bad); white-space: pre-wrap; word-break: break-all; }
+  footer { flex: 0 0 auto; font-size: 12px; color: var(--dim); }
+</style>
+
+<div id="stage">
+  <canvas id="unity-canvas" width="405" height="720" tabindex="-1"></canvas>
+  <div id="loading">
+    <div id="bar"><div id="fill"></div></div>
+    <div id="msg">준비 중…</div>
+    <div id="detail"></div>
+    <div id="stall"></div>
+    <button id="btn-retry" type="button">처음부터 다시</button>
+  </div>
+</div>
+<div id="log" hidden></div>
+<footer>세로 조각 1판 · WebGL · 디버그 패널은 「D」</footer>
+
+<script>
+  var logEl = document.getElementById("log");
+  var fillEl = document.getElementById("fill");
+  var msgEl = document.getElementById("msg");
+  var detailEl = document.getElementById("detail");
+  var stallEl = document.getElementById("stall");
+
+  function showLog(text) { logEl.hidden = false; logEl.textContent += text + "\n"; }
+  window.addEventListener("error", function (e) { showLog("[오류] " + (e.message || e.type) + (e.filename ? " @ " + e.filename : "")); });
+  window.addEventListener("unhandledrejection", function (e) { showLog("[거절] " + (e.reason && e.reason.message || e.reason)); });
+  document.addEventListener("securitypolicyviolation", function (e) { showLog("[CSP] " + e.violatedDirective + " ← " + e.blockedURI); });
+  document.getElementById("btn-retry").onclick = function () { location.reload(); };
+
+  // 올린 파일이 놓인 자리. 새 빌드를 올릴 때 이 한 줄만 바꾸면 아래가 모두 따라간다.
+  var BASE = "Build/v8/";
+
+  // 받는 일은 로더에게 맡기지 않는다. 로더는 재시도가 없어서 한 번 끊기면 그대로 멈춘다.
+  // 여기서 한 개씩 받아 브라우저 캐시에 채워 두고, 로더에게는 같은 주소를 준다.
+  // blob: 으로 바로 넘기는 길은 아티팩트 보안 정책(connect-src)이 막는다 — 실측 2026-09-20.
+  var PARTS = [
+    { key: "frameworkUrl", file: "framework.wasm", name: "틀  ", size: 76650 },
+    { key: "dataUrl", file: "data.wasm", name: "자료", size: 4210186 },
+    { key: "codeUrl", file: "code.wasm", name: "엔진", size: 8780874 }
+  ];
+  var TOTAL = 13067710;
+  var TRIES = 6;
+  var STALL_MS = 30000;
+
+  var own = {};
+  for (var i = 0; i < PARTS.length; i++) { own[PARTS[i].file] = { got: 0, done: false, tries: 0 }; }
+
+  function mb(n) { return (n / 1048576).toFixed(1); }
+
+  var startedAt = Date.now();
+  var phase = 1;
+  var running = true;
+  var lastBytes = -1;
+  var lastMove = Date.now();
+
+  function draw() {
+    var lines = [];
+    var sum = 0;
+    for (var i = 0; i < PARTS.length; i++) {
+      var p = PARTS[i];
+      var s = own[p.file];
+      sum += s.got;
+      var mark = s.done ? "끝    " : (s.got > 0 ? "받는 중" : "대기  ");
+      var note = s.tries > 1 && !s.done ? "  " + s.tries + "번째" : "";
+      lines.push(p.name + " " + mark + " " + mb(s.got) + "/" + mb(p.size) + "MB" + note);
+    }
+    var secs = Math.round((Date.now() - startedAt) / 1000);
+    detailEl.textContent = lines.join("\n") + "\n" + secs + "초 경과";
+
+    if (phase === 1) { fillEl.style.width = Math.round(60 * sum / TOTAL) + "%"; }
+
+    if (sum > lastBytes) { lastBytes = sum; lastMove = Date.now(); }
+    var stuck = Math.round((Date.now() - lastMove) / 1000);
+    if (running && phase === 1 && stuck >= 20) {
+      stallEl.style.display = "block";
+      stallEl.textContent = stuck + "초째 멈춰 있습니다.\n30초가 되면 그 파일만 자동으로 다시 받습니다.\n기다려 주세요 (최대 " + TRIES + "번).";
+    } else if (running) {
+      stallEl.style.display = "none";
+    }
+  }
+  var timer = setInterval(draw, 400);
+
+  // 한 파일을 끝까지 받는다. 30초 동안 한 바이트도 안 늘면 끊고 그 파일만 처음부터 다시 받는다.
+  // 캐시를 끄지 않는다 — 여기서 받아 둔 것을 곧이어 로더가 그대로 집어가야 하기 때문이다.
+  function fetchPart(p) {
+    var s = own[p.file];
+    s.tries = s.tries + 1;
+    s.got = 0;
+
+    var controller = new AbortController();
+    var lastGrow = Date.now();
+    var watchdog = setInterval(function () {
+      if (Date.now() - lastGrow > STALL_MS) { controller.abort(); }
+    }, 1000);
+
+    return fetch(BASE + p.file, { signal: controller.signal }).then(function (res) {
+      if (res.ok === false) { throw new Error("HTTP " + res.status); }
+      if (!res.body || !res.body.getReader) { return res.arrayBuffer().then(function (b) { return b.byteLength; }); }
+
+      var reader = res.body.getReader();
+      function pump() {
+        return reader.read().then(function (r) {
+          if (r.done) { return s.got; }
+          s.got = s.got + r.value.length;
+          lastGrow = Date.now();
+          return pump();
+        });
+      }
+      return pump();
+    }).then(function (size) {
+      clearInterval(watchdog);
+      s.done = true;
+      showLog("[받음] " + p.file + " " + mb(size) + "MB");
+      logEl.hidden = true;
+    }).catch(function (err) {
+      clearInterval(watchdog);
+      showLog("[다시받기] " + p.file + " " + s.tries + "번째 실패 : " + (err && err.message || err));
+      if (s.tries >= TRIES) { throw new Error(p.file + " 를 " + TRIES + "번 받다 실패했다"); }
+      return new Promise(function (r) { setTimeout(r, 2000); }).then(function () { return fetchPart(p); });
+    });
+  }
+
+  function downloadAll(index) {
+    if (index >= PARTS.length) { return Promise.resolve(); }
+    var p = PARTS[index];
+    msgEl.textContent = "미리 받는 중… " + (index + 1) + "/" + PARTS.length;
+    return fetchPart(p).then(function () { return downloadAll(index + 1); });
+  }
+
+  var config = {
+    arguments: [],
+    dataUrl: BASE + "data.wasm",
+    frameworkUrl: BASE + "framework.wasm",
+    codeUrl: BASE + "code.wasm",
+    streamingAssetsUrl: "StreamingAssets",
+    companyName: "DefaultCompany",
+    productName: "ProjectMozziUnity",
+    productVersion: "1.0",
+    cacheControl: function () { return "no-store"; },
+    showBanner: function (m, t) { showLog("[" + (t || "알림") + "] " + m); }
+  };
+
+  function fail(e) {
+    running = false;
+    clearInterval(timer);
+    stallEl.style.display = "block";
+    stallEl.textContent = "여기서 막혔습니다. 아래 줄을 그대로 알려 주세요.";
+    showLog("[중단] " + (e && e.message || e));
+  }
+
+  downloadAll(0).then(function () {
+    phase = 2;
+    stallEl.style.display = "none";
+    msgEl.textContent = "엔진 켜는 중… (49MB 푸는 중이라 느립니다)";
+    fillEl.style.width = "62%";
+    return new Promise(function (resolve, reject) {
+      var script = document.createElement("script");
+      script.src = BASE + "loader.js";
+      script.onload = resolve;
+      script.onerror = function () { reject(new Error("로더 스크립트를 못 받았다 (" + script.src + ")")); };
+      document.body.appendChild(script);
+    });
+  }).then(function () {
+    return createUnityInstance(document.getElementById("unity-canvas"), config, function (p) {
+      fillEl.style.width = Math.round(62 + 38 * p) + "%";
+    });
+  }).then(function () {
+    running = false;
+    clearInterval(timer);
+    document.getElementById("loading").hidden = true;
+  }).catch(fail);
+</script>
+
+</body></html>
