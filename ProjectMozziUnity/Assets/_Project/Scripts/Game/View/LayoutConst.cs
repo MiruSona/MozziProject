@@ -65,6 +65,13 @@ namespace Mozzi.Game.View
         // 건물 알림 점 크기 (px).
         public const float BadgePx = 14f;
 
+        // 건물 그림은 아래 18px 을 이름 띠로 비워 놨다 (그림 위끝에서 y 46~64, 가운데 y≈55).
+        // 건물 한가운데에서 이만큼 아래로 내리면 띠 가운데다.
+        public const float BuildingLabelBelowPx = 23f;
+
+        // 이름 글자 크기 (px). 18px 띠 안에 들어가야 한다.
+        public const float BuildingLabelPx = 12f;
+
         public static float HalfWidth
         {
             get { return ScreenWidthPx / PixelsPerUnit * 0.5f; }

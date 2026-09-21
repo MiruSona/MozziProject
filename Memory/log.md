@@ -450,3 +450,8 @@
 - 들어옴 20260921-0285738e `건물 그림 배선은 다른 세션이 맡는다` (mem/0.3.0)
 - 들어옴 20260921-a615c471 `게임에 들어간 그림은 바닥·담장·재료·건물까지다` (mem/0.3.0)
 - 덮음 20260920-82db27a9 → 20260921-a615c471
+- 거절 summary-len tag-standard body-thin summary-body-match duplicate-soft `건물 2채 배선은 몸 스케일 하나로 그림·네모 두 경우를 같이 계산한다`
+- 거절 summary-len title-shape tag-standard severity body-thin summary-body-match `TMP 월드 글자는 fontSize 10 이 1유닛 — 부모 scale 을 1로 돌리면 글자가 두 배로 커진다`
+- 들어옴 20260921-9a76455e `건물은 몸 스케일 하나로 그림·네모를 같이 센다` (mem/0.3.0)
+- 들어옴 20260921-824083cf `TMP 월드 글자는 fontSize 10 이 1유닛` (mem/0.3.0)
+- 들어옴 20260921-3a3f0cd6 `그림 배선 1건 눈금 — 넘김 표가 있으면 20분` (mem/0.3.0)

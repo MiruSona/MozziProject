@@ -161,10 +161,10 @@ namespace Mozzi.Game.View
             float y = LayoutConst.BuildingCenterY;
 
             _synthesisBuilding = _resource.Rent<BuildingObject>(PrefabKeys.Building, _root);
-            _synthesisBuilding.Setup(BuildingKind.Synthesis, new Vector2(-x, y));
+            _synthesisBuilding.Setup(BuildingKind.Synthesis, _resource.GetSprite(SpriteKeys.BuildingSynthesis), new Vector2(-x, y));
 
             _stallBuilding = _resource.Rent<BuildingObject>(PrefabKeys.Building, _root);
-            _stallBuilding.Setup(BuildingKind.Stall, new Vector2(x, y));
+            _stallBuilding.Setup(BuildingKind.Stall, _resource.GetSprite(SpriteKeys.BuildingStall), new Vector2(x, y));
         }
 
         // 합성소는 Done 칸이 하나라도 있으면, 가판대는 열려 있고 줄이 있으면 점을 켠다.

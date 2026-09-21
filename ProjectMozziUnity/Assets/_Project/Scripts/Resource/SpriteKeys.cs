@@ -13,5 +13,9 @@ namespace Mozzi.Resource
         public const string FarmFenceSide = "Farm/fence_side";
         public const string FarmFenceCornerTop = "Farm/fence_corner_top";
         public const string FarmFenceCornerBottom = "Farm/fence_corner_bottom";
+
+        // 건물 2채. 데이터 표가 없어 키를 코드 상수로 둔다.
+        public const string BuildingSynthesis = "Building/synthesis";
+        public const string BuildingStall = "Building/stall";
     }
 }
