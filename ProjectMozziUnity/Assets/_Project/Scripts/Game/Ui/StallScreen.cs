@@ -33,10 +33,13 @@ namespace Mozzi.Game.Ui
         private readonly List<Button> _queueCells = new List<Button>();
         private readonly List<Button> _makeRows = new List<Button>();
         private readonly List<string> _makeRowRecipes = new List<string>();
+        private readonly List<Image> _makeRowIcons = new List<Image>();
+        private readonly List<Image> _queueIcons = new List<Image>();
         private readonly Dictionary<string, Button> _expToggles = new Dictionary<string, Button>();
         private readonly Dictionary<string, Image> _expIcons = new Dictionary<string, Image>();
         private readonly List<string> _selected = new List<string>();
 
+        private IResourceHub _resource;
         private IStallHub _stall;
         private IClockHub _clock;
         private ICodexHub _codex;
@@ -60,6 +63,7 @@ namespace Mozzi.Game.Ui
 
         private GameObject _madePanel;
         private Image _madeFlash;
+        private Image _madeIcon;
         private GameObject _madeNew;
         private TMP_Text _madeName;
         private TMP_Text _madePrice;
@@ -85,6 +89,7 @@ namespace Mozzi.Game.Ui
             _inventory = InGameHub.Get<IInventoryHub>();
             _data = InGameHub.Get<IStaticDataHub>();
             _ui = InGameHub.Get<IUiHub>();
+            _resource = GlobalHub.Get<IResourceHub>();
             _pound = new PoundAgent(this, _data.Stalls.Get(StallRowId));
 
             _status = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallStatusText, PrefabName);
@@ -93,19 +98,22 @@ namespace Mozzi.Game.Ui
             for (int i = 0; i < _stall.QueueMax; i++)
             {
                 int index = i;
-                _queueCells.Add(UiBindUtil.BindButton(transform, UiNames.StallQueueCellPrefix + i, PrefabName,
-                    delegate { OnServe(index); }));
+                Button cell = UiBindUtil.BindButton(transform, UiNames.StallQueueCellPrefix + i, PrefabName,
+                    delegate { OnServe(index); });
+                _queueCells.Add(cell);
+                _queueIcons.Add(IconOf(cell.transform));
             }
 
             for (int i = 0; i < UiNames.StallMakeRowCount; i++)
             {
                 int index = i;
-                _makeRows.Add(UiBindUtil.BindButton(transform, UiNames.StallMakeRowPrefix + i, PrefabName,
-                    delegate { OnMakeRow(index); }));
+                Button row = UiBindUtil.BindButton(transform, UiNames.StallMakeRowPrefix + i, PrefabName,
+                    delegate { OnMakeRow(index); });
+                _makeRows.Add(row);
                 _makeRowRecipes.Add(null);
+                _makeRowIcons.Add(IconOf(row.transform));
             }
 
-            IResourceHub resource = GlobalHub.Get<IResourceHub>();
             IReadOnlyList<string> ids = _inventory.IngredientIds;
             for (int i = 0; i < ids.Count; i++)
             {
@@ -113,7 +121,7 @@ namespace Mozzi.Game.Ui
                 Button toggle = UiBindUtil.BindButton(transform, UiNames.StallExpTogglePrefix + id, PrefabName,
                     delegate { OnToggle(id); });
                 _expToggles[id] = toggle;
-                SetToggleIcon(toggle, id, resource.GetSprite(_data.Ingredients.Get(id).spriteKey));
+                SetToggleIcon(toggle, id, _resource.GetSprite(_data.Ingredients.Get(id).spriteKey));
             }
 
             _expInfo = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallExpInfoText, PrefabName);
@@ -132,6 +140,7 @@ namespace Mozzi.Game.Ui
 
             _madePanel = UiBindUtil.FindObject(transform, UiNames.StallMadePanel, PrefabName);
             _madeFlash = UiBindUtil.Find<Image>(_madePanel.transform, UiNames.StallMadeFlash, PrefabName);
+            _madeIcon = IconOf(_madePanel.transform);
             _madeNew = UiBindUtil.FindObject(_madePanel.transform, UiNames.StallMadeNewText, PrefabName);
             _madeName = UiBindUtil.Find<TMP_Text>(_madePanel.transform, UiNames.StallMadeNameText, PrefabName);
             _madePrice = UiBindUtil.Find<TMP_Text>(_madePanel.transform, UiNames.StallMadePriceText, PrefabName);
@@ -141,6 +150,14 @@ namespace Mozzi.Game.Ui
 
             UiBindUtil.SetActive(_poundPanel, false);
             UiBindUtil.SetActive(_madePanel, false);
+        }
+
+        // 칸 안의 떡 그림 자식. 프리팹에 없으면 null 이고, 그때는 예전처럼 글자만 나온다.
+        private static Image IconOf(Transform root)
+        {
+            Image icon;
+            UiBindUtil.TryFind<Image>(root, UiNames.CakeIcon, out icon);
+            return icon;
         }
 
         // 그림이 없으면 아이콘을 끄고 글씨를 가운데로 되돌린다. 토글이 54px 이라 이름과 그림 둘 다는 못 넣는다.
@@ -185,14 +202,18 @@ namespace Mozzi.Game.Ui
         protected override void UnbindChildren()
         {
             _queueCells.Clear();
+            _queueIcons.Clear();
             _expIcons.Clear();
             _makeRows.Clear();
             _makeRowRecipes.Clear();
+            _makeRowIcons.Clear();
             _expToggles.Clear();
             _selected.Clear();
             _flashing = false;
             _pound = null;
+            _madeIcon = null;
 
+            _resource = null;
             _stall = null;
             _clock = null;
             _codex = null;
@@ -313,6 +334,7 @@ namespace Mozzi.Game.Ui
                 {
                     cell.image.color = CellEmpty;
                     cell.interactable = false;
+                    SetQueueIcon(i, null);
                     UiBindUtil.SetLabel(cell, "");
                     continue;
                 }
@@ -325,8 +347,54 @@ namespace Mozzi.Game.Ui
                 }
 
                 cell.interactable = _stall.Shelf.Count > 0;
-                UiBindUtil.SetLabel(cell, OrderLabel(customer));
+                SetQueueCell(i, customer);
             }
+        }
+
+        // 찾은 떡 주문만 그림 + 이름 한 줄. 못 찾은 주문·아무거나는 그림 없이 예전 글자 그대로다.
+        private void SetQueueCell(int index, StallCustomer customer)
+        {
+            Sprite sprite = null;
+            if (customer.HasOrder && _codex.IsRecipeOpen(customer.orderRecipeId))
+            {
+                sprite = _resource.GetSprite(_data.Recipes.Get(customer.orderRecipeId).spriteKey);
+            }
+
+            SetQueueIcon(index, sprite);
+            if (sprite == null)
+            {
+                UiBindUtil.SetLabel(_queueCells[index], OrderLabel(customer));
+                return;
+            }
+
+            UiBindUtil.SetLabel(_queueCells[index], _data.Recipes.Get(customer.orderRecipeId).name);
+        }
+
+        // 그림은 칸 위쪽에 놓고 글자를 그만큼 아래로 민다. 66×56 이라 둘을 나란히 놓을 자리가 없다.
+        private void SetQueueIcon(int index, Sprite sprite)
+        {
+            Image icon = _queueIcons[index];
+            if (icon == null)
+            {
+                return;
+            }
+
+            icon.sprite = sprite;
+            UiBindUtil.SetActive(icon.gameObject, sprite != null);
+
+            TMP_Text label = UiBindUtil.LabelOf(_queueCells[index]);
+            if (label == null)
+            {
+                return;
+            }
+
+            float top = 0f;
+            if (sprite != null)
+            {
+                top = LayoutConstUi.QueueTextTopMargin;
+            }
+
+            label.margin = new Vector4(0f, top, 0f, 0f);
         }
 
         // 못 찾은 떡 주문은 「? 팥+콩」처럼 재료 이름만 보인다.
@@ -377,9 +445,37 @@ namespace Mozzi.Game.Ui
 
                 RecipeRow recipe = open[i];
                 _makeRowRecipes[i] = recipe.id;
+                SetMakeRowIcon(i, _resource.GetSprite(recipe.spriteKey));
                 UiBindUtil.SetLabel(_makeRows[i], recipe.name + " " + _stall.PreviewPrice(recipe.ingredientIds) + "G");
                 _makeRows[i].interactable = _stall.CanMake(recipe.ingredientIds);
             }
+        }
+
+        // 재료 토글과 같은 셈법 — 그림을 켜면 라벨을 그만큼 오른쪽으로 민다.
+        private void SetMakeRowIcon(int rowIndex, Sprite sprite)
+        {
+            Image icon = _makeRowIcons[rowIndex];
+            if (icon == null)
+            {
+                return;
+            }
+
+            icon.sprite = sprite;
+            UiBindUtil.SetActive(icon.gameObject, sprite != null);
+
+            TMP_Text label = UiBindUtil.LabelOf(_makeRows[rowIndex]);
+            if (label == null)
+            {
+                return;
+            }
+
+            float indent = 0f;
+            if (sprite != null)
+            {
+                indent = LayoutConstUi.MakeRowTextIndent;
+            }
+
+            label.margin = new Vector4(indent, 0f, 0f, 0f);
         }
 
         private void RefreshExperiment()
@@ -557,11 +653,15 @@ namespace Mozzi.Game.Ui
         private void PlayMade(MakeResult made)
         {
             string name = PlainName;
+            string spriteKey = SpriteKeys.CakePlain;
             if (made.IsPlain == false)
             {
-                name = _data.Recipes.Get(made.RecipeId).name;
+                RecipeRow recipe = _data.Recipes.Get(made.RecipeId);
+                name = recipe.name;
+                spriteKey = recipe.spriteKey;
             }
 
+            SetMadeIcon(_resource.GetSprite(spriteKey));
             UiBindUtil.SetActive(_madeNew, made.IsNewRecipe);
             if (made.IsNewRecipe)
             {
@@ -581,6 +681,17 @@ namespace Mozzi.Game.Ui
 
             _madeFlash.color = new Color(1f, 1f, 1f, alpha);
             UiBindUtil.SetActive(_madePanel, true);
+        }
+
+        private void SetMadeIcon(Sprite sprite)
+        {
+            if (_madeIcon == null)
+            {
+                return;
+            }
+
+            _madeIcon.sprite = sprite;
+            UiBindUtil.SetActive(_madeIcon.gameObject, sprite != null);
         }
 
         private void CloseMade()

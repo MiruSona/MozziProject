@@ -17,5 +17,8 @@ namespace Mozzi.Resource
         // 건물 2채. 데이터 표가 없어 키를 코드 상수로 둔다.
         public const string BuildingSynthesis = "Building/synthesis";
         public const string BuildingStall = "Building/stall";
+
+        // 평범한 떡. Recipe 표에 줄이 없어 건물과 같이 코드 상수로 둔다.
+        public const string CakePlain = "Cake/plain_cake";
     }
 }

@@ -4,6 +4,8 @@ using Mozzi.Data.Rows;
 using Mozzi.Game.Codex;
 using Mozzi.Game.Stall;
 using Mozzi.Game.Wallet;
+using Mozzi.Hubs;
+using Mozzi.Resource;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +19,9 @@ namespace Mozzi.Game.Ui
         private const string Unknown = UiText.Unknown;
         private const string Hidden = "?";
         private const string Joiner = " + ";
+
+        // 못 찾은 떡은 같은 그림을 검은 실루엣으로 보여 준다 (알파는 그림 것을 그대로 쓴다).
+        private static readonly Color UnknownTint = new Color(0.118f, 0.118f, 0.141f, 1f);
 
         private readonly Dictionary<string, RecipeCellView> _cells = new Dictionary<string, RecipeCellView>();
 
@@ -44,6 +49,7 @@ namespace Mozzi.Game.Ui
             _data = InGameHub.Get<IStaticDataHub>();
             _countText = UiBindUtil.Find<TMP_Text>(transform, UiNames.RecipeCodexCountText, PrefabName);
 
+            IResourceHub resource = GlobalHub.Get<IResourceHub>();
             IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
             for (int i = 0; i < rows.Count; i++)
             {
@@ -55,8 +61,47 @@ namespace Mozzi.Game.Ui
                     continue;
                 }
 
-                _cells[rows[i].id] = new RecipeCellView(cellRoot, PrefabName);
+                RecipeCellView cell = new RecipeCellView(cellRoot, PrefabName);
+                _cells[rows[i].id] = cell;
+                SetCellIcon(cell, resource.GetSprite(rows[i].spriteKey));
             }
+        }
+
+        // 그림이 없으면 아이콘을 꺼 두고 글자 셋을 칸 왼쪽(아이콘 넣기 전 자리)으로 되돌린다.
+        private void SetCellIcon(RecipeCellView cell, Sprite sprite)
+        {
+            if (cell.Icon == null)
+            {
+                return;
+            }
+
+            cell.Icon.sprite = sprite;
+            UiBindUtil.SetActive(cell.Icon.gameObject, sprite != null);
+
+            float left = LayoutConstUi.CodexCellTextLeftNoIcon;
+            float width = LayoutConstUi.CodexCellTextWidthNoIcon;
+            if (sprite != null)
+            {
+                left = LayoutConstUi.CodexCellTextLeft;
+                width = LayoutConstUi.CodexCellTextWidth;
+            }
+
+            MoveCellText(cell.NameText, left, width);
+            MoveCellText(cell.IngredientText, left, width);
+            MoveCellText(cell.PriceText, left, width);
+        }
+
+        // 글자 한 줄의 가로 자리와 폭만 바꾼다. 세로(y·높이)는 프리팹 값을 그대로 둔다.
+        private static void MoveCellText(TMP_Text text, float left, float width)
+        {
+            if (text == null)
+            {
+                return;
+            }
+
+            RectTransform rect = text.rectTransform;
+            rect.anchoredPosition = new Vector2(left, rect.anchoredPosition.y);
+            rect.sizeDelta = new Vector2(width, rect.sizeDelta.y);
         }
 
         protected override void UnbindChildren()
@@ -90,6 +135,17 @@ namespace Mozzi.Game.Ui
 
         private void RefreshCell(RecipeRow row, RecipeCellView cell, bool open)
         {
+            if (cell.Icon != null)
+            {
+                Color tint = UnknownTint;
+                if (open)
+                {
+                    tint = Color.white;
+                }
+
+                cell.Icon.color = tint;
+            }
+
             if (open == false)
             {
                 UiBindUtil.SetText(cell.NameText, Unknown);

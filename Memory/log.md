@@ -455,3 +455,48 @@
 - 들어옴 20260921-9a76455e `건물은 몸 스케일 하나로 그림·네모를 같이 센다` (mem/0.3.0)
 - 들어옴 20260921-824083cf `TMP 월드 글자는 fontSize 10 이 1유닛` (mem/0.3.0)
 - 들어옴 20260921-3a3f0cd6 `그림 배선 1건 눈금 — 넘김 표가 있으면 20분` (mem/0.3.0)
+- 거절 required-field severity body-thin `ArtTool 문서에 PIL 직접 그리기 길이 안 보인다`
+- 거절 body-thin summary-body-match duplicate-soft `ArtTool 문서에 PIL 직접 그리기 길이 안 보인다`
+- 들어옴 20260921-1346c57f `PIL 직접 그리기 길이 ArtTool 안내서에 없다` (mem/0.3.0)
+- 거절 required-field tag-standard tag-shape sources-shape body-thin `떡 아이콘 시안 두 벌(24px) 을 PIL 로 그렸다`
+- 거절 required-field tag-shape severity sources-shape body-thin `24px 떡 위 고물은 낱개를 떼고 잎은 하나만 놓아야 읽힌다`
+- 거절 required-field tag-count sources-shape body-thin `떡 아이콘 시안 두 벌(24px) 을 PIL 로 그렸다`
+- 거절 tag-shape `떡 아이콘 시안 두 벌(24px) 을 PIL 로 그렸다`
+- 거절 tag-standard `떡 아이콘 시안 두 벌(24px) 을 PIL 로 그렸다`
+- 거절 decision-gate `떡 아이콘 시안 두 벌(24px) 을 PIL 로 그렸다`
+- 거절 severity `24px 떡 위 고물은 낱개를 떼고 잎은 하나만 놓아야 읽힌다`
+- 들어옴 20260921-d2398054 `떡 아이콘 시안 두 벌(24px) 을 PIL 로 그려 판정 대기` (mem/0.3.0)
+- 들어옴 20260921-7f7ad503 `24px 떡 위 고물은 낱개를 떼고 잎은 하나만 놓아야 읽힌다` (mem/0.3.0)
+- 들어옴 20260921-9acfa073 `떡 아이콘 3판 — 반 자른 단면 구도 두 벌(24px) 을 그렸다` (mem/0.3.0)
+- 들어옴 20260921-36f69167 `떡 아이콘 4판 — 알+45도 반쪽 구도 두 해석(tilt·turn)` (mem/0.3.0)
+- 거절 title-shape `떡 아이콘 5판 — 32x32 확정, 알+기운 반쪽 한 벌(setG_32)`
+- 들어옴 20260921-86eefe70 `떡 아이콘 5판 — 32x32 확정본 한 벌` (mem/0.3.0)
+- 들어옴 20260921-25b791c0 `떡 아이콘 6판 — 통통한 반쪽과 갈색 깨` (mem/0.3.0)
+- 거절 tag-shape scope-standard body-thin `서브모듈 갱신 뒤 Tools setup.ps1 로 실행 파일 다시 만들기`
+- 거절 tag-standard `서브모듈 갱신 뒤 Tools setup.ps1 로 실행 파일 다시 만들기`
+- 거절 tag-standard `서브모듈 갱신 뒤 Tools setup.ps1 로 실행 파일 다시 만들기`
+- 들어옴 20260921-449146ae `서브모듈 갱신 뒤 Tools setup.ps1 로 실행 파일 다시 만들기` (mem/0.3.0)
+- 들어옴 20260921-15b97a1a `effort 는 PATH 에 없다 — bin 경로로 직접 부른다` (mem/0.3.0)
+- 들어옴 20260921-4fa34bab `떡 아이콘 7판 — 같은 크기 두 알 단면` (mem/0.3.0)
+- 거절 duplicate-soft decision-gate `떡 아이콘 11종 확정 — 32x32 두 알 단면`
+- 거절 summary-len sources-required body-thin first-line-conclusion no-value `떡 아이콘 11종 확정 — 32x32 두 알 단면`
+- 들어옴 20260921-080917b9 `떡 아이콘 11종 확정본 — 32x32 두 알` (mem/0.3.0)
+- 거절 decision-gate `떡 그림은 네 자리에 Icon 자식으로 꽂는다`
+- 들어옴 20260921-9dc88f03 `떡 그림은 네 자리에 Icon 자식으로 꽂는다` (mem/0.3.0) --new
+- 거절 body-thin `손님 칸에 그림을 켜면 손님 글자가 빠진다`
+- 들어옴 20260921-3f3f79e6 `손님 칸에 그림을 켜면 손님 글자가 빠진다` (mem/0.3.0)
+- 들어옴 20260921-298e2bf3 `떡 아이콘 11장 공수 — 시안 8판에 40분` (mem/0.3.0)
+- 들어옴 20260921-7970741f `게임에 들어간 그림은 바닥·재료·건물·떡까지다` (mem/0.3.0)
+- 덮음 20260921-a615c471 → 20260921-7970741f
+- 거절 tag-standard decision-gate `새 떡 발견 연출에서 떡 그림은 흰 섬광보다 먼저 그린다`
+- 거절 tag-standard `새 떡 발견 연출에서 떡 그림은 흰 섬광보다 먼저 그린다`
+- 들어옴 20260921-359ba949 `새 떡 발견 연출에서 떡 그림은 흰 섬광보다 먼저 그린다` (mem/0.3.0) --new
+- 들어옴 20260921-859bc550 `도감 칸은 그림 유무에 따라 글자 셋 자리를 코드가 되돌린다` (mem/0.3.0)
+- 들어옴 20260921-d5657798 `WebGL v9 를 구웠다 — 건물·떡 그림이 든 판` (mem/0.3.0)
+- 들어옴 20260921-361fa0f0 `사용자가 폰 아티팩트에서 건물·떡 그림 작동을 확인했다` (mem/0.3.0)
+- 거절 summary-len tag-shape body-thin summary-body-match `떡 아이콘 11종과 건물 2채 그림을 사용자가 게임에서 작동 확인`
+- 거절 tag-standard `그림 배선은 아트 세션이 직접 하고 세로 조각 세션은 검사만 한다`
+- 들어옴 20260921-0c702c1c `그림 배선은 아트 세션이 직접 하고 세로 조각 세션은 검사만 한다` (mem/0.3.0) --new
+- 들어옴 20260921-b4d25f20 `아티팩트는 이 대화가 읽지 않은 판에 덮어쓰기를 거절한다` (mem/0.3.0)
+- 들어옴 20260921-9db4f7a8 `떡·건물 그림 작동을 사용자가 눈으로 확인` (mem/0.3.0)
+- 들어옴 20260921-4794a351 `검사 고침 + WebGL 빌드 한 판은 55분 잡고 19분 걸렸다` (mem/0.3.0)

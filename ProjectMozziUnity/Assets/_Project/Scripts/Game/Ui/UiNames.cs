@@ -32,6 +32,10 @@ namespace Mozzi.Game.Ui
         // 부재료 칸·실험 토글 안의 그림 자식 (Image). 그림이 없으면 꺼 둔다.
         public const string IngredientIcon = "Icon";
 
+        // 떡 그림 자식. 도감 칸 · 발견 연출 · 만들기 줄 · 손님 칸이 같은 이름을 쓴다.
+        // 한 칸 안에 재료 그림과 떡 그림을 같이 넣지 않는다 — 이름이 같아 FindDeep 가 먼저 만난 쪽을 집는다.
+        public const string CakeIcon = "Icon";
+
         // 밤 덮개(농장 자리만) · 아래 띠의 「다음날로」. 낮에는 둘 다 꺼 둔다.
         public const string FarmNightCover = "NightCover";
         public const string FarmNightText = "NightText";
