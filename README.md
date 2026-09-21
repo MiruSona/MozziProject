@@ -7,7 +7,7 @@
 | 폴더 | 무엇 |
 | --- | --- |
 | `Docs/` | 기획·설계·조사·할 일 문서. 참고 자료는 `Docs/Reference/` |
-| `Tools/` | 툴 여섯 (git 서브모듈). DiagramTool · ArtTool · SoundTool · CodeTool · EffortTool · AIMemoryTool |
+| `Tools/` | 툴 여덟 (git 서브모듈). DiagramTool · ArtTool · SoundTool · CodeTool · EffortTool · AIMemoryTool · ProtoTool · GamedesignTool |
 | `ProjectMozziUnity/` | Unity 프로젝트 **(아직 없다. 사용자가 Unity Hub 로 만든다)** |
 | `Memory/` | AI 기억 저장소 (`mem`). 결정·주의·기록이 여기 쌓인다 |
 
