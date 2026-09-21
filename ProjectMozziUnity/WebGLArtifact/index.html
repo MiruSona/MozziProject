@@ -46,17 +46,17 @@
   document.getElementById("btn-retry").onclick = function () { location.reload(); };
 
   // 올린 파일이 놓인 자리. 새 빌드를 올릴 때 이 한 줄만 바꾸면 아래가 모두 따라간다.
-  var BASE = "Build/v8/";
+  var BASE = "Build/v9/";
 
   // 받는 일은 로더에게 맡기지 않는다. 로더는 재시도가 없어서 한 번 끊기면 그대로 멈춘다.
   // 여기서 한 개씩 받아 브라우저 캐시에 채워 두고, 로더에게는 같은 주소를 준다.
   // blob: 으로 바로 넘기는 길은 아티팩트 보안 정책(connect-src)이 막는다 — 실측 2026-09-20.
   var PARTS = [
     { key: "frameworkUrl", file: "framework.wasm", name: "틀  ", size: 76650 },
-    { key: "dataUrl", file: "data.wasm", name: "자료", size: 4210186 },
-    { key: "codeUrl", file: "code.wasm", name: "엔진", size: 8780874 }
+    { key: "dataUrl", file: "data.wasm", name: "자료", size: 4222775 },
+    { key: "codeUrl", file: "code.wasm", name: "엔진", size: 8821675 }
   ];
-  var TOTAL = 13067710;
+  var TOTAL = 13121100;
   var TRIES = 6;
   var STALL_MS = 30000;
 
