@@ -70,6 +70,8 @@
 ## 6. Git 규칙
 
 - `commit`, `pull`, `push` 는 하기 전에 반드시 사용자 승인을 받는다.
+- **commit·push 하기 전에 기억을 먼저 최신화한다** — mem(결정·기록·할 일)과 Claude 내장 기억을 갱신하고
+  남길 것을 남긴 뒤 커밋한다. 기억 파일(`Memory/`)이 같은 커밋에 실리게 하려는 것이다.
 - push 요청을 받으면 `git commit` → `git pull --rebase` → `git push` 순서로 한다.
 - 커밋 메시지는 한국어로, 무엇을 왜 바꿨는지 짧게 쓴다.
 - 그림·소리·영상은 **Git LFS** 로 잡는다. 규칙은 `.gitattributes` 에 있다.

@@ -578,3 +578,9 @@
 - 거절 body-thin duplicate-soft `unity-cli 로 UI 화면 캡처하고 eval 돌릴 때 함정`
 - 들어옴 20260922-782671fc `unity-cli 로 UI 화면 캡처하고 eval 돌릴 때 함정` (mem/0.3.0)
 - 들어옴 20260922-ccdec504 `진열대 칸 남은 확인 셋` (mem/0.3.0)
+- 거절 title-shape `그림 작업 순서는 레퍼런스→PIL 프로토→PixelLab 베이스→PIL 겹 나누기→ArtTool`
+- 거절 howto-numbered `서브에이전트 판 공수는 본줄 예상의 5~10배로 어림한다`
+- 들어옴 20260922-b1226ef6 `09-22 밤 판 — 시무룩 입 6px 와 진열대 묶음 칸을 푸시` (mem/0.3.0)
+- 들어옴 20260922-4968c1c7 `그림 작업 순서 — PIL 프로토 뒤 PixelLab 베이스` (mem/0.3.0)
+- 들어옴 20260922-6b835f79 `서브에이전트 판 공수 어림하는 법` (mem/0.3.0)
+- 거절 required-field title-shape tag-standard tag-shape sources-shape body-thin duplicate-soft `그림 작업 순서는 레퍼런스 조사 → PIL 프로토(두 벌·사용자 확인) → PixelLab 베이스 → PIL 겹 나누기 → 필요하면 ArtTool → Unity 다. Aseprite 는 필수 아님`
