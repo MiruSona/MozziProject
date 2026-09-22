@@ -104,6 +104,13 @@ namespace Mozzi.Game.Ui
         public const string StallClerkButton = "ClerkButton";
         public const string StallRecipeCodexButton = "RecipeCodexButton";
 
+        // 손님 줄 칸 안의 겹 그림 넷 (Image). 그림이 없으면 꺼 둔다.
+        // 이름에 Customer 접두어를 반드시 붙인다 — FindDeep 가 화면 전체에서 먼저 만난 자식을 집기 때문이다.
+        public const string CustomerBody = "CustomerBody";
+        public const string CustomerHair = "CustomerHair";
+        public const string CustomerShirt = "CustomerShirt";
+        public const string CustomerFace = "CustomerFace";
+
         // 떡메 3탭 덮개 (StallScreen 안). 덮개 자체가 큰 버튼이다.
         public const string PoundPanel = "PoundPanel";
         public const string PoundHintText = "PoundHintText";

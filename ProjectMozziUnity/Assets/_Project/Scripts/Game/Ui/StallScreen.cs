@@ -35,6 +35,7 @@ namespace Mozzi.Game.Ui
         private readonly List<string> _makeRowRecipes = new List<string>();
         private readonly List<Image> _makeRowIcons = new List<Image>();
         private readonly List<Image> _queueIcons = new List<Image>();
+        private readonly List<CustomerCellView> _queueCustomers = new List<CustomerCellView>();
         private readonly Dictionary<string, Button> _expToggles = new Dictionary<string, Button>();
         private readonly Dictionary<string, Image> _expIcons = new Dictionary<string, Image>();
         private readonly List<string> _selected = new List<string>();
@@ -102,6 +103,7 @@ namespace Mozzi.Game.Ui
                     delegate { OnServe(index); });
                 _queueCells.Add(cell);
                 _queueIcons.Add(IconOf(cell.transform));
+                _queueCustomers.Add(new CustomerCellView(cell.transform));
             }
 
             for (int i = 0; i < UiNames.StallMakeRowCount; i++)
@@ -203,6 +205,7 @@ namespace Mozzi.Game.Ui
         {
             _queueCells.Clear();
             _queueIcons.Clear();
+            _queueCustomers.Clear();
             _expIcons.Clear();
             _makeRows.Clear();
             _makeRowRecipes.Clear();
@@ -334,6 +337,7 @@ namespace Mozzi.Game.Ui
                 {
                     cell.image.color = CellEmpty;
                     cell.interactable = false;
+                    _queueCustomers[i].Hide();
                     SetQueueIcon(i, null);
                     UiBindUtil.SetLabel(cell, "");
                     continue;
@@ -351,7 +355,7 @@ namespace Mozzi.Game.Ui
             }
         }
 
-        // 찾은 떡 주문만 그림 + 이름 한 줄. 못 찾은 주문·아무거나는 그림 없이 예전 글자 그대로다.
+        // 손님 그림을 겹으로 깔고 주문 떡은 오른쪽 위 구석에. 겹 자리가 없는 프리팹은 예전 글자판 그대로다.
         private void SetQueueCell(int index, StallCustomer customer)
         {
             Sprite sprite = null;
@@ -360,7 +364,16 @@ namespace Mozzi.Game.Ui
                 sprite = _resource.GetSprite(_data.Recipes.Get(customer.orderRecipeId).spriteKey);
             }
 
+            CustomerCellView view = _queueCustomers[index];
+            view.Apply(_resource, CustomerLook.FromSeed(customer.lookSeed), FaceOf(customer));
             SetQueueIcon(index, sprite);
+
+            if (view.IsShowing)
+            {
+                UiBindUtil.SetLabel(_queueCells[index], OrderLine(customer));
+                return;
+            }
+
             if (sprite == null)
             {
                 UiBindUtil.SetLabel(_queueCells[index], OrderLabel(customer));
@@ -370,7 +383,50 @@ namespace Mozzi.Game.Ui
             UiBindUtil.SetLabel(_queueCells[index], _data.Recipes.Get(customer.orderRecipeId).name);
         }
 
-        // 그림은 칸 위쪽에 놓고 글자를 그만큼 아래로 민다. 66×56 이라 둘을 나란히 놓을 자리가 없다.
+        // 주문 떡이 진열대에 있으면 웃고, 없으면 시무룩. 아무거나 사는 손님은 기본 얼굴이다.
+        private CustomerFace FaceOf(StallCustomer customer)
+        {
+            if (customer.HasOrder == false)
+            {
+                return CustomerFace.Idle;
+            }
+
+            IReadOnlyList<ShelfItem> shelf = _stall.Shelf;
+            for (int i = 0; i < shelf.Count; i++)
+            {
+                if (shelf[i].recipeId == customer.orderRecipeId)
+                {
+                    return CustomerFace.Happy;
+                }
+            }
+
+            return CustomerFace.Sad;
+        }
+
+        // 손님 그림이 「손님」 글자를 대신하므로 주문만 한 줄로 쓴다.
+        private string OrderLine(StallCustomer customer)
+        {
+            if (customer.HasOrder == false)
+            {
+                return "아무거나";
+            }
+
+            RecipeRow recipe = _data.Recipes.Get(customer.orderRecipeId);
+            if (_codex.IsRecipeOpen(recipe.id))
+            {
+                return recipe.name;
+            }
+
+            List<string> names = new List<string>();
+            for (int i = 0; i < recipe.ingredientIds.Count; i++)
+            {
+                names.Add(_data.Ingredients.Get(recipe.ingredientIds[i]).name);
+            }
+
+            return "? " + string.Join("+", names);
+        }
+
+        // 그림이 켜지면 글자를 그 아래로 민다. 손님 겹이 있으면 떡 그림과 상관없이 늘 민다.
         private void SetQueueIcon(int index, Sprite sprite)
         {
             Image icon = _queueIcons[index];
@@ -389,7 +445,7 @@ namespace Mozzi.Game.Ui
             }
 
             float top = 0f;
-            if (sprite != null)
+            if (sprite != null || _queueCustomers[index].IsShowing)
             {
                 top = LayoutConstUi.QueueTextTopMargin;
             }

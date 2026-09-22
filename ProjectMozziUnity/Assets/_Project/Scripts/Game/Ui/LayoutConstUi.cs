@@ -35,13 +35,27 @@ namespace Mozzi.Game.Ui
         public const float CakeIconMadeY = 90f;
         public const float MadeNewTextY = 160f;
 
-        // 만들기 줄(170×27) · 손님 주문 칸(66×56).
+        // 만들기 줄(170×27) · 손님 주문 칸(68×80).
         public const float CakeIconMakeRowSize = 24f;
         public const float CakeIconMakeRowLeft = 3f;
         public const float MakeRowTextIndent = 28f;
 
-        public const float CakeIconQueueSize = 32f;
-        public const float CakeIconQueueTop = 1f;
-        public const float QueueTextTopMargin = 30f;
+        // 손님 주문 칸. 손님 그림이 들어가며 66×56 에서 키웠고 아래 위젯을 QueueRowShiftY 만큼 내렸다.
+        // 폭 68 은 다섯 칸이 360 폭에 드는 상한이다.
+        public const float QueueCellWidth = 68f;
+        public const float QueueCellHeight = 80f;
+        public const float QueueRowShiftY = 24f;
+
+        // 손님 겹 그림 넷이 겹쳐 놓이는 자리 (칸 왼쪽 위 기준). 실체는 38×51 이라 48×64 안에 든다.
+        public const float CustomerCanvasWidth = 48f;
+        public const float CustomerCanvasHeight = 64f;
+        public const float CustomerLayerLeft = -3f;
+        public const float CustomerLayerTop = 2f;
+
+        // 주문 떡 그림은 칸 오른쪽 위 구석에 작게. 글자는 손님 그림 아래로 내린다.
+        public const float CakeIconQueueSize = 24f;
+        public const float CakeIconQueueTop = 2f;
+        public const float CakeIconQueueRight = 2f;
+        public const float QueueTextTopMargin = 64f;
     }
 }

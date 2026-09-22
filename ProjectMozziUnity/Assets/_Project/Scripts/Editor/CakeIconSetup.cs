@@ -102,8 +102,9 @@ namespace Mozzi.Editor
             for (int i = 0; i < QueueCellCount; i++)
             {
                 Transform queueCell = FindDeep(root.transform, UiNames.StallQueueCellPrefix + i);
-                MakeIcon(queueCell, LayoutConstUi.CakeIconQueueSize, new Vector2(0.5f, 1f),
-                    new Vector2(0f, -LayoutConstUi.CakeIconQueueTop));
+                // 손님 그림이 칸 왼쪽을 채우므로 떡은 오른쪽 위 구석에 작게 둔다 (자리 값은 LayoutConstUi 한 곳).
+                MakeIcon(queueCell, LayoutConstUi.CakeIconQueueSize, new Vector2(1f, 1f),
+                    new Vector2(-LayoutConstUi.CakeIconQueueRight, -LayoutConstUi.CakeIconQueueTop));
             }
 
             PrefabUtility.SaveAsPrefabAsset(root, StallScreenPath);

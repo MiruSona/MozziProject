@@ -424,6 +424,8 @@ namespace Mozzi.Game.Stall
                 customer = RollNormalOrder();
             }
 
+            // 겉꼴을 정하는 자리는 여기 하나다. 0 은 안 쓴다 (안 뽑힌 옛 세이브와 가른다).
+            customer.lookSeed = Random.Range(1, int.MaxValue);
             _state.queue.Add(customer);
             return customer;
         }

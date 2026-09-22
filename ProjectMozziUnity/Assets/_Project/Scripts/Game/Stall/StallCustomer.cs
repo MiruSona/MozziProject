@@ -9,6 +9,9 @@ namespace Mozzi.Game.Stall
         public string orderRecipeId = "";
         public bool isHint;
 
+        // 겉꼴(머리 모양·색·옷 색) 씨앗. 도착할 때 한 번 뽑아 세이브에 싣는다 — CustomerLook.FromSeed 가 푼다.
+        public int lookSeed;
+
         public StallCustomer()
         {
         }
