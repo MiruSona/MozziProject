@@ -94,6 +94,12 @@ namespace Mozzi.Game.Ui
         // 실험 토글은 "ExpToggle_" + 부재료 id.
         public const string StallStatusText = "StatusText";
         public const string StallShelfText = "ShelfText";
+
+        // 진열대 묶음 칸은 "ShelfCell_" + 번호(0~23). 칸 안 떡 그림은 CakeIcon, 개수 글자는 CountText.
+        // 칸이 없는 옛 프리팹이면 ShelfText 글자판으로 돌아간다.
+        public const string StallShelfCellPrefix = "ShelfCell_";
+        public const int StallShelfCellCount = 24;
+        public const string StallShelfCountText = "CountText";
         public const string StallQueueCellPrefix = "QueueCell_";
         public const string StallMakeRowPrefix = "MakeRow_";
         public const int StallMakeRowCount = 10;

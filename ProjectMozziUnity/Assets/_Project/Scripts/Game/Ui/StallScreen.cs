@@ -36,6 +36,7 @@ namespace Mozzi.Game.Ui
         private readonly List<Image> _makeRowIcons = new List<Image>();
         private readonly List<Image> _queueIcons = new List<Image>();
         private readonly List<CustomerCellView> _queueCustomers = new List<CustomerCellView>();
+        private readonly List<ShelfCellView> _shelfCells = new List<ShelfCellView>();
         private readonly Dictionary<string, Button> _expToggles = new Dictionary<string, Button>();
         private readonly Dictionary<string, Image> _expIcons = new Dictionary<string, Image>();
         private readonly List<string> _selected = new List<string>();
@@ -95,6 +96,7 @@ namespace Mozzi.Game.Ui
 
             _status = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallStatusText, PrefabName);
             _shelf = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallShelfText, PrefabName);
+            BindShelfCells();
 
             for (int i = 0; i < _stall.QueueMax; i++)
             {
@@ -154,6 +156,29 @@ namespace Mozzi.Game.Ui
             UiBindUtil.SetActive(_madePanel, false);
         }
 
+        // 진열대 묶음 칸 24개. 하나도 없는 옛 프리팹이면 비워 두고 ShelfText 글자판으로 돌아간다.
+        private void BindShelfCells()
+        {
+            for (int i = 0; i < UiNames.StallShelfCellCount; i++)
+            {
+                RectTransform cell;
+                if (UiBindUtil.TryFind<RectTransform>(transform, UiNames.StallShelfCellPrefix + i, out cell) == false)
+                {
+                    break;
+                }
+
+                ShelfCellView view = new ShelfCellView(cell);
+                if (view.HasParts == false)
+                {
+                    break;
+                }
+
+                _shelfCells.Add(view);
+            }
+
+            UiBindUtil.SetActive(_shelf.gameObject, _shelfCells.Count == 0);
+        }
+
         // 칸 안의 떡 그림 자식. 프리팹에 없으면 null 이고, 그때는 예전처럼 글자만 나온다.
         private static Image IconOf(Transform root)
         {
@@ -206,6 +231,7 @@ namespace Mozzi.Game.Ui
             _queueCells.Clear();
             _queueIcons.Clear();
             _queueCustomers.Clear();
+            _shelfCells.Clear();
             _expIcons.Clear();
             _makeRows.Clear();
             _makeRowRecipes.Clear();
@@ -280,10 +306,17 @@ namespace Mozzi.Game.Ui
                 state = "열림";
             }
 
-            UiBindUtil.SetText(_status, "오늘 손님 " + _stall.ServedToday + "/" + _stall.CustomersPerDay + " · " + state);
+            UiBindUtil.SetText(_status, "오늘 손님 " + _stall.ServedToday + "/" + _stall.CustomersPerDay + " · " + state
+                + " · 진열 " + _stall.Shelf.Count + "/" + _stall.ShelfMax);
         }
 
-        // 종류별 수를 표 순서대로, 평범한 떡은 맨 뒤에 묶는다.
+        // 묶음 칸 하나에 드는 떡 수 = ceil(상한 ÷ 6). 올림이라야 한 종류가 상한까지 차도 6칸 안에 든다.
+        private static int ShelfUnit(int shelfMax)
+        {
+            return (shelfMax + 5) / 6;
+        }
+
+        // 종류별 수를 표 순서대로, 평범한 떡은 맨 뒤에 묶는다. 칸이 있으면 묶음 칸으로, 없으면 옛 글자판으로.
         private void RefreshShelf()
         {
             IReadOnlyList<ShelfItem> shelf = _stall.Shelf;
@@ -302,8 +335,14 @@ namespace Mozzi.Game.Ui
                 counts[shelf[i].recipeId] = count + 1;
             }
 
-            List<string> parts = new List<string>();
             IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
+            if (_shelfCells.Count > 0)
+            {
+                RefreshShelfCells(rows, counts, plain);
+                return;
+            }
+
+            List<string> parts = new List<string>();
             for (int i = 0; i < rows.Count; i++)
             {
                 int count;
@@ -325,6 +364,54 @@ namespace Mozzi.Game.Ui
             }
 
             UiBindUtil.SetText(_shelf, "진열대 " + shelf.Count + "/" + _stall.ShelfMax + "\n" + body);
+        }
+
+        // 레시피표 순서로 묶음 칸을 펼치고 평범한 떡은 맨 뒤. 남은 칸은 끈다.
+        private void RefreshShelfCells(IReadOnlyList<RecipeRow> rows, Dictionary<string, int> counts, int plain)
+        {
+            int unit = ShelfUnit(_stall.ShelfMax);
+            int cellIndex = 0;
+            for (int i = 0; i < rows.Count; i++)
+            {
+                int count;
+                if (counts.TryGetValue(rows[i].id, out count) == false)
+                {
+                    continue;
+                }
+
+                cellIndex = FillCells(cellIndex, _resource.GetSprite(rows[i].spriteKey), count, unit);
+            }
+
+            if (plain > 0)
+            {
+                cellIndex = FillCells(cellIndex, _resource.GetSprite(SpriteKeys.CakePlain), plain, unit);
+            }
+
+            for (int i = cellIndex; i < _shelfCells.Count; i++)
+            {
+                _shelfCells[i].Hide();
+            }
+        }
+
+        // 한 종류 count 개를 unit 씩 칸에 나눠 담고 다음 칸 번호를 돌려준다. 칸이 모자라면 경고만 남기고 멈춘다.
+        private int FillCells(int cellIndex, Sprite sprite, int count, int unit)
+        {
+            int left = count;
+            while (left > 0)
+            {
+                if (cellIndex >= _shelfCells.Count)
+                {
+                    Debug.LogWarning("[StallScreen] 진열대 칸 " + _shelfCells.Count + " 을 넘겼다 — 남은 떡 " + left);
+                    return cellIndex;
+                }
+
+                int inCell = Mathf.Min(left, unit);
+                _shelfCells[cellIndex].Set(sprite, inCell);
+                left -= inCell;
+                cellIndex++;
+            }
+
+            return cellIndex;
         }
 
         private void RefreshQueue()

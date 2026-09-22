@@ -57,5 +57,23 @@ namespace Mozzi.Game.Ui
         public const float CakeIconQueueTop = 2f;
         public const float CakeIconQueueRight = 2f;
         public const float QueueTextTopMargin = 64f;
+
+        // 진열대 묶음 칸 (진열대칸설계 2-1). 40×40 · 사이 3 · 8×3 = 341×126, 옛 ShelfText 자리 (8, -60) 부터.
+        // 아래 위젯은 ShelfShiftY 만큼 내렸다 (구역 아래 끝 -186 + 틈 4 = QueueCell -190).
+        public const float ShelfCellSize = 40f;
+        public const float ShelfCellGap = 3f;
+        public const int ShelfCellColumns = 8;
+        public const int ShelfCellRows = 3;
+        public const float ShelfCellLeft = 8f;
+        public const float ShelfCellTop = 60f;
+        public const float ShelfShiftY = 86f;
+
+        // 칸 안 떡 그림은 원본 32px 그대로 왼쪽 위, 개수 글자(×5)는 오른쪽 아래 구석.
+        public const float CakeIconShelfSize = 32f;
+        public const float CakeIconShelfInset = 4f;
+        public const float ShelfCountTextWidth = 22f;
+        public const float ShelfCountTextHeight = 12f;
+        public const float ShelfCountTextInset = 1f;
+        public const float ShelfCountFontSize = 10f;
     }
 }

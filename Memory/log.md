@@ -565,3 +565,16 @@
 - 들어옴 20260922-4c07864e `손님 그림 확정부터 Unity 배선까지 하루에 끝냄` (mem/0.3.0)
 - 들어옴 20260922-3a1c53ee `손님 시무룩 입을 3~4px 로 키우기` (mem/0.3.0)
 - 들어옴 20260922-4f24d9e9 `손님 lookSeed 세이브 왕복 확인` (mem/0.3.0)
+- 거절 tag-standard duplicate-soft `시무룩 입은 이미 4px 이라 웃음과 대칭이다`
+- 들어옴 20260922-b489cec3 `시무룩 입은 이미 4px 이라 웃음과 대칭이다` (mem/0.3.0)
+- 거절 tag-standard body-thin `진열대 칸은 떡 묶음 단위로 그린다`
+- 들어옴 20260922-ec7fcb9b `진열대 칸은 떡 묶음 단위로 그린다` (mem/0.3.0)
+- 들어옴 20260922-a009fdd3 `손님 시무룩 입을 4px 에서 6px 로 넓혀 웃음과 구별되게 했다` (mem/0.3.0)
+- 거절 summary-len title-shape duplicate-soft `진열대 묶음 칸 설계서를 씀 — 40×40 8×3 · 아래 86px 내림 · unit 올림`
+- 들어옴 20260922-e03038ac `진열대 묶음 칸 설계서를 썼다` (mem/0.3.0)
+- 거절 summary-len duplicate-soft `가판대 진열대를 떡 묶음 칸 8×3 으로 바꿔 Play 확인`
+- 거절 summary-len tag-standard body-thin duplicate-soft `unity-cli 캡처와 eval 함정 둘`
+- 들어옴 20260922-0fdca93c `가판대 진열대를 떡 묶음 칸 8×3 으로 바꿔 Play 확인` (mem/0.3.0)
+- 거절 body-thin duplicate-soft `unity-cli 로 UI 화면 캡처하고 eval 돌릴 때 함정`
+- 들어옴 20260922-782671fc `unity-cli 로 UI 화면 캡처하고 eval 돌릴 때 함정` (mem/0.3.0)
+- 들어옴 20260922-ccdec504 `진열대 칸 남은 확인 셋` (mem/0.3.0)
