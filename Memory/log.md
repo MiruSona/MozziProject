@@ -584,3 +584,15 @@
 - 들어옴 20260922-4968c1c7 `그림 작업 순서 — PIL 프로토 뒤 PixelLab 베이스` (mem/0.3.0)
 - 들어옴 20260922-6b835f79 `서브에이전트 판 공수 어림하는 법` (mem/0.3.0)
 - 거절 required-field title-shape tag-standard tag-shape sources-shape body-thin duplicate-soft `그림 작업 순서는 레퍼런스 조사 → PIL 프로토(두 벌·사용자 확인) → PixelLab 베이스 → PIL 겹 나누기 → 필요하면 ArtTool → Unity 다. Aseprite 는 필수 아님`
+- 거절 tag-standard sources-note-only `웹 빌드 공유는 itch.io 로 한다`
+- 거절 tag-standard sources-required `그림 배선 전수 검사 — 61장 모두 이어짐`
+- 들어옴 20260922-d84efaaa `웹 빌드 공유는 itch.io 로 한다` (mem/0.3.0)
+- 거절 tag-standard `그림 배선 전수 검사 — 61장 모두 이어짐`
+- 들어옴 20260922-790899e5 `그림 배선 전수 검사 — 61장 모두 이어짐` (mem/0.3.0)
+- 거절 summary-len title-shape sources-note-only `Windows PowerShell 5.1 Compress-Archive 는 zip 경로를 역슬래시로 넣는다`
+- 거절 summary-len duplicate-soft secret-entropy `itch.io 용 WebGL v10 빌드와 zip 을 냈다`
+- 들어옴 20260922-b778cbce `Compress-Archive 는 zip 경로를 역슬래시로 넣는다` (mem/0.3.0)
+- 들어옴 20260922-259ee136 `itch.io 용 WebGL v10 빌드와 zip 을 냈다` (mem/0.3.0)
+
+## 2026-09-23
+- 들어옴 20260923-55d7cb09 `itch.io 에 WebGL v10 을 올려 비밀 링크 공유가 됐다` (mem/0.3.0)
