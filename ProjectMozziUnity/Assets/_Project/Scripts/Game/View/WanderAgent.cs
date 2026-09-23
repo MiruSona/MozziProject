@@ -4,12 +4,16 @@ using UnityEngine;
 namespace Mozzi.Game.View
 {
     // 담장 안에서 목표점을 골라 천천히 걷고, 닿으면 잠깐 쉬었다가 다시 고른다.
+    // 걷는 속도는 개체마다 다르다 — 같으면 같이 출발한 애들이 같은 속도로 미끄러져 보인다.
     public sealed class WanderAgent : AgentBase<MozziObject>
     {
-        private const float Speed = 0.6f;
+        // 개체 속도 범위. 기준 0.6 을 가운데 두고 흩는다.
+        public const float SpeedMin = 0.5f;
+        public const float SpeedMax = 0.75f;
         private const float RestMin = 1f;
         private const float RestMax = 3f;
 
+        private float _speed = SpeedMin;
         private Rect _area;
         private Vector2 _target;
         private float _rest;
@@ -21,8 +25,15 @@ namespace Mozzi.Game.View
         // 지금 걷고 있나. 쉬는 중이면 false 다 — 뜀(MozziHopAgent)이 이 값을 보고 통통 뛴다.
         public bool IsMoving { get; private set; }
 
-        public void Reset(Rect area, Vector2 start)
+        public float Speed
         {
+            get { return _speed; }
+        }
+
+        // speed 는 MozziObject 가 씨앗으로 뽑아 준다.
+        public void Reset(Rect area, Vector2 start, float speed)
+        {
+            _speed = speed;
             _area = area;
             _target = start;
             _rest = Random.Range(0f, RestMax);
@@ -39,7 +50,7 @@ namespace Mozzi.Game.View
             }
 
             IsMoving = true;
-            Vector2 next = Vector2.MoveTowards(position, _target, Speed * deltaTime);
+            Vector2 next = Vector2.MoveTowards(position, _target, _speed * deltaTime);
             if (Vector2.Distance(next, _target) < 0.05f)
             {
                 _rest = Random.Range(RestMin, RestMax);

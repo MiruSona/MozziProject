@@ -74,8 +74,13 @@ namespace Mozzi.Game.View
             _visual.SetLift(0f);
             _visual.PlayIdle(0f);
 
-            _wander.Reset(area, start);
-            _hop.Reset();
+            // 움직임 개성은 mozziId 를 씨앗으로 뽑는다 — 재생·풀 재사용 뒤에도 같은 마리는 같은 걸음이다.
+            System.Random rng = new System.Random(mozziId);
+            _wander.Reset(area, start, Range(rng, WanderAgent.SpeedMin, WanderAgent.SpeedMax));
+            _hop.Reset(
+                Range(rng, MozziHopAgent.JumpSecMin, MozziHopAgent.JumpSecMax),
+                Range(rng, MozziHopAgent.HopRestSecMin, MozziHopAgent.HopRestSecMax),
+                Range(rng, MozziHopAgent.FirstDelaySecMin, MozziHopAgent.FirstDelaySecMax));
             ApplySort();
         }
 
@@ -97,6 +102,11 @@ namespace Mozzi.Game.View
 
             _visual.StepBlink(deltaTime);
             ApplySort();
+        }
+
+        private static float Range(System.Random rng, float min, float max)
+        {
+            return min + (float)rng.NextDouble() * (max - min);
         }
 
         // 밀어낸 뒤 담장 안으로 되돌린다.
