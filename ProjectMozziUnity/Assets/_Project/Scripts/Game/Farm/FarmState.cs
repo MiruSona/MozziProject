@@ -9,6 +9,8 @@ namespace Mozzi.Game.Farm
     public sealed class FarmState
     {
         public int nextMozziId = 1;
+        // 담장 단계. 0 이면 기본 상한(Farm 표 fenceMax)이고 Growth 표 fence 행만큼 늘어난다.
+        public int fenceLevel = 0;
         public List<FarmMozziState> mozzis = new List<FarmMozziState>();
         public List<CountEntry> piles = new List<CountEntry>();
         public List<FarmSpeciesClockState> clocks = new List<FarmSpeciesClockState>();

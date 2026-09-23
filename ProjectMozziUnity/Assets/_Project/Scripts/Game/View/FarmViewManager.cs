@@ -452,7 +452,7 @@ namespace Mozzi.Game.View
             MozziObject mozzi = hit.GetComponent<MozziObject>();
             if (mozzi != null)
             {
-                Debug.Log("[View] 찹쌀이 탭 " + mozzi.SpeciesId + " #" + mozzi.MozziId);
+                _ui.OpenMozziPopup(mozzi.MozziId);
             }
         }
 

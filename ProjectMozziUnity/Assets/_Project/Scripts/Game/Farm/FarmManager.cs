@@ -6,6 +6,7 @@ using Mozzi.Data.Rows;
 using Mozzi.Events;
 using Mozzi.Game.Clock;
 using Mozzi.Game.Inventory;
+using Mozzi.Game.Wallet;
 using Mozzi.Save;
 using UnityEngine;
 
@@ -34,9 +35,12 @@ namespace Mozzi.Game.Farm
         private ISaveHub _save;
         private IClockHub _clock;
         private IInventoryHub _inventory;
+        private IWalletHub _wallet;
 
         private FarmRow _row;
         private int _nextMozziId = 1;
+        private int _fenceLevel;
+        private int _maxFenceLevel;
         private bool _restored;
         private OfflineReport _offlineReport;
 
@@ -45,9 +49,43 @@ namespace Mozzi.Game.Farm
             get { return Key; }
         }
 
+        // 담장 단계의 rate 는 「더해지는 마리 수」라 누적값이다 — 단계마다 더하지 않고 현재 단계 한 행만 더한다.
         public int FenceMax
         {
-            get { return _row.fenceMax; }
+            get
+            {
+                GrowthRow row = GrowthUtil.Find(_data.Growths, GrowthUtil.KindFence, _fenceLevel);
+                if (row == null)
+                {
+                    return _row.fenceMax;
+                }
+
+                return _row.fenceMax + (int)row.rate;
+            }
+        }
+
+        public int FenceLevel
+        {
+            get { return _fenceLevel; }
+        }
+
+        public int MaxFenceLevel
+        {
+            get { return _maxFenceLevel; }
+        }
+
+        public int NextFencePrice
+        {
+            get
+            {
+                GrowthRow row = GrowthUtil.Find(_data.Growths, GrowthUtil.KindFence, _fenceLevel + 1);
+                if (row == null)
+                {
+                    return -1;
+                }
+
+                return row.price;
+            }
         }
 
         public int MozziCount
@@ -81,8 +119,10 @@ namespace Mozzi.Game.Farm
             _save = InGameHub.Get<ISaveHub>();
             _clock = InGameHub.Get<IClockHub>();
             _inventory = InGameHub.Get<IInventoryHub>();
+            _wallet = InGameHub.Get<IWalletHub>();
 
             _row = _data.Farms.Get(FarmRowId);
+            _maxFenceLevel = GrowthUtil.MaxLevel(_data.Growths, GrowthUtil.KindFence);
             _offlineReport = new OfflineReport(0, new List<CountEntry>(), new List<CountEntry>());
 
             _save.Register(this);
@@ -92,7 +132,7 @@ namespace Mozzi.Game.Farm
             }
 
             ApplyOffline(_clock.OfflineSeconds);
-            Debug.Log("[Farm] 마릿수 " + _mozzis.Count + "/" + _row.fenceMax + " · " + _offlineReport.Describe());
+            Debug.Log("[Farm] 마릿수 " + _mozzis.Count + "/" + FenceMax + " · " + _offlineReport.Describe());
         }
 
         // 한 걸음은 생산 → 번식 순서다. 오프라인(ApplyOffline)도 같은 두 함수를 쓴다.
@@ -157,7 +197,7 @@ namespace Mozzi.Game.Farm
 
         public bool Place(string speciesId)
         {
-            if (_mozzis.Count >= _row.fenceMax)
+            if (_mozzis.Count >= FenceMax)
             {
                 return false;
             }
@@ -192,6 +232,19 @@ namespace Mozzi.Game.Farm
             return false;
         }
 
+        public bool BuyFence()
+        {
+            int price = NextFencePrice;
+            if (price < 0 || _wallet.Pay(price) == false)
+            {
+                return false;
+            }
+
+            _fenceLevel++;
+            EventBus.Publish(new FenceUpgradedEvent(_fenceLevel, FenceMax));
+            return true;
+        }
+
         public void Skip(double seconds)
         {
             ApplyOffline(seconds);
@@ -201,6 +254,7 @@ namespace Mozzi.Game.Farm
         {
             FarmState state = new FarmState();
             state.nextMozziId = _nextMozziId;
+            state.fenceLevel = _fenceLevel;
 
             for (int i = 0; i < _mozzis.Count; i++)
             {
@@ -238,6 +292,8 @@ namespace Mozzi.Game.Farm
 
             _restored = true;
             _nextMozziId = Math.Max(1, state.nextMozziId);
+            // 표가 줄어든 옛 세이브도 표 안으로 맞춘다.
+            _fenceLevel = Mathf.Clamp(state.fenceLevel, 0, _maxFenceLevel);
 
             for (int i = 0; i < state.mozzis.Count; i++)
             {
@@ -358,7 +414,7 @@ namespace Mozzi.Game.Farm
         // 번식 한 걸음. 태어났으면 그 마리, 아니면 null. 2마리 밑이거나 담장이 차면 시계가 0 으로 돌아간다 (농장 문서 6절).
         private FarmMozzi StepBreed(string speciesId, double deltaTime)
         {
-            if (_countBySpecies[speciesId] < 2 || _mozzis.Count >= _row.fenceMax)
+            if (_countBySpecies[speciesId] < 2 || _mozzis.Count >= FenceMax)
             {
                 _breedClock[speciesId] = 0;
                 return null;
@@ -450,7 +506,7 @@ namespace Mozzi.Game.Farm
         private double NextEventSec()
         {
             double next = OfflineMaxStepSec;
-            if (_mozzis.Count >= _row.fenceMax)
+            if (_mozzis.Count >= FenceMax)
             {
                 return next;
             }

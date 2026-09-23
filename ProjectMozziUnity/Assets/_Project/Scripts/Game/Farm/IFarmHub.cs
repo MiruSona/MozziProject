@@ -5,7 +5,15 @@ namespace Mozzi.Game.Farm
     // 농장 창구. 규칙은 Docs/Design/03-시스템-농장.md 가 정본이다.
     public interface IFarmHub
     {
+        // 담장 상한 = Farm 표 fenceMax + 담장 단계만큼 더한 수 (Growth 표 fence 행).
         int FenceMax { get; }
+
+        int FenceLevel { get; }
+
+        int MaxFenceLevel { get; }
+
+        // 다음 담장 단계 값. 최대면 -1.
+        int NextFencePrice { get; }
 
         int MozziCount { get; }
 
@@ -27,6 +35,9 @@ namespace Mozzi.Game.Farm
         bool Place(string speciesId);
 
         bool Remove(int mozziId);
+
+        // 담장을 한 단계 올린다. 최대이거나 골드가 모자라면 false.
+        bool BuyFence();
 
         // 디버그용. 안 켠 것처럼 seconds 만큼 한 번에 진행하고 OfflineReport 를 갈아 끼운다. 이벤트는 안 낸다.
         void Skip(double seconds);

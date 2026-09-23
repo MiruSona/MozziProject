@@ -9,6 +9,9 @@
     { "id": "shortcut4", "kind": "shortcut", "level": 4, "price": 1600, "rate": 0.6 },
     { "id": "shortcut5", "kind": "shortcut", "level": 5, "price": 3200, "rate": 0.5 },
     { "id": "pair1", "kind": "pair", "level": 1, "price": 150, "rate": 1.0 },
-    { "id": "pair2", "kind": "pair", "level": 2, "price": 750, "rate": 1.0 }
+    { "id": "pair2", "kind": "pair", "level": 2, "price": 750, "rate": 1.0 },
+    { "id": "fence1", "kind": "fence", "level": 1, "price": 300, "rate": 10 },
+    { "id": "fence2", "kind": "fence", "level": 2, "price": 1000, "rate": 20 },
+    { "id": "fence3", "kind": "fence", "level": 3, "price": 3000, "rate": 30 }
   ]
 }

@@ -16,5 +16,8 @@ namespace Mozzi.Game.Ui
         void OpenRecipeCodex();
 
         void CloseAll();
+
+        // 농장 찹쌀이를 탭했을 때. 종 이름과 「보관함으로」 를 보여 준다.
+        void OpenMozziPopup(int mozziId);
     }
 }

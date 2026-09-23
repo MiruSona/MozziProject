@@ -37,6 +37,7 @@ namespace Mozzi.Game.Ui
         private ISynthesisHub _synthesis;
         private IStallHub _stall;
         private ISaveHub _save;
+        private IStorageHub _storage;
 
         private Canvas _canvas;
         private FarmScreen _farmScreen;
@@ -47,6 +48,7 @@ namespace Mozzi.Game.Ui
         private RecipeCodexScreen _recipeCodexScreen;
         private OverlayScreen _open;
         private OfflinePopup _offlinePopup;
+        private MozziPopup _mozziPopup;
 #if UNITY_EDITOR || MOZZI_DEBUG
         private DebugPanel _debugPanel;
 #endif
@@ -72,6 +74,7 @@ namespace Mozzi.Game.Ui
             _synthesis = InGameHub.Get<ISynthesisHub>();
             _stall = InGameHub.Get<IStallHub>();
             _save = InGameHub.Get<ISaveHub>();
+            _storage = InGameHub.Get<IStorageHub>();
 
             _farmScreen = _resource.Rent<FarmScreen>(PrefabKeys.UiFarmScreen, _canvas.transform);
             StretchToParent(_farmScreen.transform as RectTransform);
@@ -89,6 +92,11 @@ namespace Mozzi.Game.Ui
             _offlinePopup.Bind(_offlinePopup.Hide);
             _offlinePopup.Hide();
 
+            _mozziPopup = _resource.Rent<MozziPopup>(PrefabKeys.UiMozziPopup, _canvas.transform);
+            StretchToParent(_mozziPopup.transform as RectTransform);
+            _mozziPopup.Bind(OnMozziPopupStore, _mozziPopup.Hide);
+            _mozziPopup.Hide();
+
 #if UNITY_EDITOR || MOZZI_DEBUG
             _debugPanel = _resource.Rent<DebugPanel>(PrefabKeys.UiDebugPanel, _canvas.transform);
             StretchToParent(_debugPanel.transform as RectTransform);
@@ -103,6 +111,7 @@ namespace Mozzi.Game.Ui
             _subscriptions.Add(EventBus.Subscribe<MozziBornEvent>(this, OnMozziBorn));
             _subscriptions.Add(EventBus.Subscribe<MozziPlacedEvent>(this, OnMozziPlaced));
             _subscriptions.Add(EventBus.Subscribe<MozziRemovedEvent>(this, OnMozziRemoved));
+            _subscriptions.Add(EventBus.Subscribe<FenceUpgradedEvent>(this, OnFenceUpgraded));
             _subscriptions.Add(EventBus.Subscribe<DayStartedEvent>(this, OnDayStarted));
             _subscriptions.Add(EventBus.Subscribe<NightFellEvent>(this, OnNightFell));
             _subscriptions.Add(EventBus.Subscribe<StorageChangedEvent>(this, OnStorageChanged));
@@ -167,6 +176,13 @@ namespace Mozzi.Game.Ui
 
             _offlinePopup = null;
 
+            if (_mozziPopup != null)
+            {
+                _resource.Return(_mozziPopup);
+            }
+
+            _mozziPopup = null;
+
 #if UNITY_EDITOR || MOZZI_DEBUG
             if (_debugPanel != null)
             {
@@ -220,6 +236,40 @@ namespace Mozzi.Game.Ui
             _open = null;
         }
 
+        // 농장에 없는 id 면 안 연다 (탭과 사라짐이 같은 프레임에 겹칠 때).
+        public void OpenMozziPopup(int mozziId)
+        {
+            string speciesId = FindFarmSpecies(mozziId);
+            if (speciesId == null)
+            {
+                return;
+            }
+
+            _mozziPopup.Show(mozziId, _data.Species.Get(speciesId).name);
+            KeepTopmost();
+        }
+
+        private string FindFarmSpecies(int mozziId)
+        {
+            IReadOnlyList<FarmMozzi> mozzis = _farm.Mozzis;
+            for (int i = 0; i < mozzis.Count; i++)
+            {
+                if (mozzis[i].Id == mozziId)
+                {
+                    return mozzis[i].SpeciesId;
+                }
+            }
+
+            return null;
+        }
+
+        // 「보관함으로」. 옮기고 나면 팝업을 닫는다 — 농장 Object 는 FarmViewManager 가 목록 대조로 거둔다.
+        private void OnMozziPopupStore(int mozziId)
+        {
+            _storage.TakeFromFarm(mozziId);
+            _mozziPopup.Hide();
+        }
+
         private void Open(OverlayScreen screen)
         {
             if (_open == screen)
@@ -239,6 +289,7 @@ namespace Mozzi.Game.Ui
         private void KeepTopmost()
         {
             _offlinePopup.transform.SetAsLastSibling();
+            _mozziPopup.transform.SetAsLastSibling();
 #if UNITY_EDITOR || MOZZI_DEBUG
             _debugPanel.transform.SetAsLastSibling();
 #endif
@@ -365,6 +416,11 @@ namespace Mozzi.Game.Ui
         private void OnMozziRemoved(MozziRemovedEvent evt)
         {
             _farmScreen.SetFence(evt.FarmCount, _farm.FenceMax);
+        }
+
+        private void OnFenceUpgraded(FenceUpgradedEvent evt)
+        {
+            _farmScreen.SetFence(_farm.MozziCount, evt.FenceMax);
         }
 
         private void OnDayStarted(DayStartedEvent evt)

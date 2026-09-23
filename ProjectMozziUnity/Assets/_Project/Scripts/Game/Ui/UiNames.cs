@@ -89,6 +89,7 @@ namespace Mozzi.Game.Ui
         public const string StorageSellAllButton = "SellAllButton";
         public const string StorageEmptyText = "EmptyText";
         public const string StorageFenceText = "FenceText";
+        public const string StorageFenceButton = "FenceButton";
 
         // 가판대 (Prefabs/UI/StallScreen). 줄 칸은 "QueueCell_" + 번호, 만들기 줄은 "MakeRow_" + 번호,
         // 실험 토글은 "ExpToggle_" + 부재료 id.
@@ -134,6 +135,13 @@ namespace Mozzi.Game.Ui
         public const string OfflineTitleText = "OfflineTitleText";
         public const string OfflineTimeText = "OfflineTimeText";
         public const string OfflineBodyText = "OfflineBodyText";
+
+        // 찹쌀이 팝업 (Prefabs/UI/MozziPopup). 뿌리는 닫기 덮개, 상자 안에 이름 · 「보관함으로」 · 「닫기」.
+        public const string MozziPopupBox = "MozziPopupBox";
+        public const string MozziPopupTitleText = "MozziPopupTitleText";
+        public const string MozziPopupNameText = "MozziPopupNameText";
+        public const string MozziPopupStoreButton = "MozziPopupStoreButton";
+        public const string MozziPopupCloseButton = "MozziPopupCloseButton";
 
         // 디버그 패널 (Prefabs/UI/DebugPanel · 에디터 전용). 「D」 로 접었다 편다.
         public const string DebugToggleButton = "DebugToggleButton";
