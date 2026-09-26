@@ -22,3 +22,9 @@
 [submodule "Tools/GamedesignTool"]
 	path = Tools/GamedesignTool
 	url = https://github.com/MiruSona/officina-game-design-tool.git
+[submodule "Tools/DataTool"]
+	path = Tools/DataTool
+	url = https://github.com/MiruSona/officina-data-tool.git
+[submodule "Tools/AssetTool"]
+	path = Tools/AssetTool
+	url = https://github.com/MiruSona/officina-asset-tool.git
