@@ -23,6 +23,20 @@
             ],
             "timeout": 10,
             "statusMessage": "기획 단계 읽는 중"
+          },
+          {
+            "type": "command",
+            "command": "powershell",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "Tools/setup.ps1",
+              "-Check"
+            ],
+            "timeout": 20,
+            "statusMessage": "툴 낡았는지 보는 중"
           }
         ]
       }
