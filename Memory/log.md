@@ -717,3 +717,26 @@
 - 거절 severity relative-date `pro_flash 는 타일 격자·바탕색을 못 맞춘다`
 - 들어옴 20261003-44c311aa `pro_flash 는 타일 격자·바탕색을 못 맞춘다` (mem/0.3.0)
 - 들어옴 20261003-f82e1640 `주인 10차 A · 볼 샛노랑 · 선 110 · 크기 그대로` (mem/0.3.0)
+- 거절 summary-len tag-standard body-thin howto-numbered duplicate-soft `가판대 주인 v11 작은 크기 — 줄여서 다시 그리게 하기`
+- 거절 summary-len body-thin howto-numbered duplicate-soft `가판대 주인 v11 작은 크기 — 줄여서 다시 그리게 하기`
+- 들어옴 20261003-5e0ea152 `주인 v11 작은 크기 — 줄여서 다시 그리기` (mem/0.3.0) --new
+- 거절 summary-len title-shape tag-shape body-thin `메인 화면 v3 배치 확정 · 잔디·울타리 새로 · 가판대·합성소 전용 화면 · 칸마다 기계 · UI 줄이기`
+- 거절 summary-len tag-standard tag-shape body-thin duplicate-soft `PixelLab 큰 그림·바닥·타일 뽑을 때 함정 넷`
+- 거절 summary-len duplicate-soft `전용 화면·칸마다 기계·UI 줄이기 확정`
+- 거절 summary-len duplicate-soft `PixelLab 큰 그림·바닥·타일 함정 넷`
+- 들어옴 20261003-a3c71261 `전용 화면·칸마다 기계·UI 줄이기 확정` (mem/0.3.0) --new
+- 들어옴 20261003-2cd7a2ea `PixelLab 큰 그림·바닥·타일 함정 넷` (mem/0.3.0) --new
+- 거절 multi-summary duplicate-hard `전용 화면은 실내·사람 크게·건물은 단순하게`
+- 거절 multi-summary duplicate-hard `전용 화면은 실내·사람 크게·건물은 단순하게`
+- 들어옴 20261003-62f8fe5c `전용 화면은 실내·사람 크게·건물은 단순하게` (mem/0.3.0) --new
+- 들어옴 20261003-77acb5b4 `가판대 v4 · 주방 화면 · 건물 확정` (mem/0.3.0) --new
+- 들어옴 20261003-dd04eb55 `확정 시안을 정식 그림으로 다시 뽑기` (mem/0.3.0) --new
+- 거절 summary-len tag-shape body-thin `주방 화면 v1 방향과 합성소 화면 v4 확정`
+- 거절 summary-len tag-shape body-thin `주방 화면 v1 방향과 합성소 화면 v4 확정`
+- 들어옴 20261003-aefbb7f2 `주방 화면 v1 방향과 합성소 화면 v4 확정` (mem/0.3.0)
+- 거절 duplicate-soft decision-gate `가판대 구도는 v5 안쪽 버전, 보관함은 단순화 후보 3`
+- 거절 duplicate-hard `가판대 v5 구도와 보관함 후보 3 의 정식 그림 일감 셋`
+- 들어옴 20261003-07543a40 `가판대 구도는 v5 안쪽 버전, 보관함은 단순화 후보 3` (mem/0.3.0) --new
+- 들어옴 20261003-7158a6fd `가판대 v5 구도와 보관함 후보 3 의 정식 그림 일감 셋` (mem/0.3.0) --new
+- 덮음 20261003-a07bc816 → 20261003-650ffef1
+- 들어옴 20261003-936ee22a `반복 03 이번 세션 — 그림 시안 확정까지` (mem/0.3.0) --new
