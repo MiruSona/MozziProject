@@ -45,7 +45,7 @@
 | `layers/` | 색을 구운 겹 46장 (게임에 넣을 때 이것을 옮긴다) |
 | `ref/owner_B.png` | 견줄 것 : 가판대 주인 1차 B안 64×80 |
 | `bake_parts.py` | `raw/` → `src/` · `layers/` 굽기 + 검사. `python bake_parts.py` |
-| `make_previews.py` | `Docs/Reference/Art/시안/` 의 시안 석 장 만들기 |
+| `make_previews.py` | `Docs/Reference/Art/시안/` 의 시안 석 장 만들기 (지금 석 장은 `시안/지난판/손님/` 으로 옮겨 두었다) |
 | `bake_log.txt` | 마지막으로 구운 판의 검사 출력 |
 
 ## 색 — 6단 램프

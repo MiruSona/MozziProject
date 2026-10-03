@@ -209,7 +209,7 @@ def board():
 
 
 def compare(a2):
-    old = Image.open(os.path.join(OUT, '2026-10-03-메인화면-나.png')).convert('RGBA').crop((40, 150, 40 + 1080, 150 + 1920))
+    old = Image.open(os.path.join(OUT, '지난판', '메인화면', '2026-10-03-메인화면-나.png')).convert('RGBA').crop((40, 150, 40 + 1080, 150 + 1920))
     M = 40; top = 120; c = Image.new('RGBA', (M * 3 + 2160, top + 1920 + 40), BG); d = ImageDraw.Draw(c)
     d.text((M, 30), 'v1 「나」 (지금 찹쌀이 · 지금 풀 · 어두운 패널)', font=font(34), fill=(255, 240, 220))
     d.text((M * 2 + 1080, 30), 'v2 「나」 (새 화풍 찹쌀이 · 풀 · 울타리 · 밝은 패널 · 메뉴 확정안)', font=font(34), fill=(255, 240, 220))
