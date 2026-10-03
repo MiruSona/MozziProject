@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Mozzi.Core;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Events;
 using Mozzi.Game.Clock;
 using Mozzi.Game.Codex;
@@ -61,22 +60,22 @@ namespace Mozzi.Game.Stall
 
         public int CustomersPerDay
         {
-            get { return _row.customersPerDay; }
+            get { return _row.CustomersPerDay; }
         }
 
         public int QueueMax
         {
-            get { return _row.queueMax; }
+            get { return _row.QueueMax; }
         }
 
         public int ShelfMax
         {
-            get { return _row.shelfMax; }
+            get { return _row.ShelfMax; }
         }
 
         public int ClerkPrice
         {
-            get { return _row.clerkPrice; }
+            get { return _row.ClerkPrice; }
         }
 
         public IReadOnlyList<ShelfItem> Shelf
@@ -116,7 +115,7 @@ namespace Mozzi.Game.Stall
             _subscriptions.Add(EventBus.Subscribe<DayStartedEvent>(this, OnDayStarted));
 
             Debug.Log("[Stall] 열림 " + _state.isOpen + " · 점원 " + _state.hasClerk + " · 진열 " + _state.shelf.Count
-                + "/" + _row.shelfMax + " · 줄 " + _state.queue.Count + " · 오늘 " + _state.servedToday + "/" + _row.customersPerDay
+                + "/" + _row.ShelfMax + " · 줄 " + _state.queue.Count + " · 오늘 " + _state.servedToday + "/" + _row.CustomersPerDay
                 + " · " + _offlineReport.Describe());
         }
 
@@ -157,15 +156,15 @@ namespace Mozzi.Game.Stall
             }
 
             _state.isOpen = true;
-            _state.nextCustomerSec = _row.customerGapSec;
-            _state.clerkSec = _row.clerkSpeedSec;
+            _state.nextCustomerSec = _row.CustomerGapSec;
+            _state.clerkSec = _row.ClerkSpeedSec;
             EventBus.Publish(new StallOpenedEvent(_clock.Day));
             return true;
         }
 
         public bool CanMake(IReadOnlyList<string> ingredientIds)
         {
-            if (IsValidCombo(ingredientIds) == false || _state.shelf.Count >= _row.shelfMax)
+            if (IsValidCombo(ingredientIds) == false || _state.shelf.Count >= _row.ShelfMax)
             {
                 return false;
             }
@@ -197,7 +196,7 @@ namespace Mozzi.Game.Stall
             string recipeId = "";
             if (recipe != null)
             {
-                recipeId = recipe.id;
+                recipeId = recipe.Id;
             }
 
             _state.shelf.Add(new ShelfItem(recipeId, price));
@@ -211,7 +210,7 @@ namespace Mozzi.Game.Stall
             bool isNew = false;
             if (recipe != null)
             {
-                isNew = _codex.DiscoverRecipe(recipe.id);
+                isNew = _codex.DiscoverRecipe(recipe.Id);
             }
 
             EventBus.Publish(new RiceCakeMadeEvent(recipeId, price, isNew));
@@ -254,13 +253,13 @@ namespace Mozzi.Game.Stall
 
         public bool BuyClerk()
         {
-            if (_state.hasClerk || _wallet.Pay(_row.clerkPrice) == false)
+            if (_state.hasClerk || _wallet.Pay(_row.ClerkPrice) == false)
             {
                 return false;
             }
 
             _state.hasClerk = true;
-            _state.clerkSec = _row.clerkSpeedSec;
+            _state.clerkSec = _row.ClerkSpeedSec;
             return true;
         }
 
@@ -298,18 +297,18 @@ namespace Mozzi.Game.Stall
         private void Normalize()
         {
             _state.shelf.RemoveAll(IsUnknownShelfItem);
-            while (_state.shelf.Count > _row.shelfMax)
+            while (_state.shelf.Count > _row.ShelfMax)
             {
                 _state.shelf.RemoveAt(_state.shelf.Count - 1);
             }
 
             _state.queue.RemoveAll(IsUnknownCustomer);
-            while (_state.queue.Count > _row.queueMax)
+            while (_state.queue.Count > _row.QueueMax)
             {
                 _state.queue.RemoveAt(_state.queue.Count - 1);
             }
 
-            if (_state.servedToday >= _row.customersPerDay)
+            if (_state.servedToday >= _row.CustomersPerDay)
             {
                 _state.isOpen = false;
             }
@@ -342,7 +341,7 @@ namespace Mozzi.Game.Stall
                 return null;
             }
 
-            _state.nextCustomerSec += _row.customerGapSec;
+            _state.nextCustomerSec += _row.CustomerGapSec;
             return Arrive();
         }
 
@@ -351,7 +350,7 @@ namespace Mozzi.Game.Stall
         {
             if (_state.hasClerk == false || _state.queue.Count == 0 || _state.shelf.Count == 0)
             {
-                _state.clerkSec = _row.clerkSpeedSec;
+                _state.clerkSec = _row.ClerkSpeedSec;
                 return false;
             }
 
@@ -361,7 +360,7 @@ namespace Mozzi.Game.Stall
                 return false;
             }
 
-            _state.clerkSec = _row.clerkSpeedSec;
+            _state.clerkSec = _row.ClerkSpeedSec;
             return true;
         }
 
@@ -404,14 +403,14 @@ namespace Mozzi.Game.Stall
 
         private bool CanArrive()
         {
-            return _state.queue.Count < _row.queueMax && _state.arrivedToday < _row.customersPerDay;
+            return _state.queue.Count < _row.QueueMax && _state.arrivedToday < _row.CustomersPerDay;
         }
 
         // 오늘 n번째 손님이 hintEvery 의 배수면 힌트 손님 후보. 힌트감이 없으면 보통 주문이다.
         private StallCustomer Arrive()
         {
             _state.arrivedToday++;
-            bool hintTurn = _row.hintEvery > 0 && _state.arrivedToday % _row.hintEvery == 0;
+            bool hintTurn = _row.HintEvery > 0 && _state.arrivedToday % _row.HintEvery == 0;
 
             StallCustomer customer = null;
             if (hintTurn)
@@ -437,7 +436,7 @@ namespace Mozzi.Game.Stall
             IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
             for (int i = 0; i < rows.Count; i++)
             {
-                if (_codex.IsRecipeOpen(rows[i].id) == false && HasAllIngredients(rows[i]))
+                if (_codex.IsRecipeOpen(rows[i].Id) == false && HasAllIngredients(rows[i]))
                 {
                     _candidates.Add(rows[i]);
                 }
@@ -448,7 +447,7 @@ namespace Mozzi.Game.Stall
                 return null;
             }
 
-            return new StallCustomer(_candidates[Random.Range(0, _candidates.Count)].id, true);
+            return new StallCustomer(_candidates[Random.Range(0, _candidates.Count)].Id, true);
         }
 
         // 찾은 떡 중 무작위. 하나도 없으면 아무거나.
@@ -458,7 +457,7 @@ namespace Mozzi.Game.Stall
             IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
             for (int i = 0; i < rows.Count; i++)
             {
-                if (_codex.IsRecipeOpen(rows[i].id))
+                if (_codex.IsRecipeOpen(rows[i].Id))
                 {
                     _candidates.Add(rows[i]);
                 }
@@ -469,14 +468,14 @@ namespace Mozzi.Game.Stall
                 return new StallCustomer("", false);
             }
 
-            return new StallCustomer(_candidates[Random.Range(0, _candidates.Count)].id, false);
+            return new StallCustomer(_candidates[Random.Range(0, _candidates.Count)].Id, false);
         }
 
         private bool HasAllIngredients(RecipeRow recipe)
         {
-            for (int i = 0; i < recipe.ingredientIds.Count; i++)
+            for (int i = 0; i < recipe.IngredientIds.Length; i++)
             {
-                if (_inventory.Has(recipe.ingredientIds[i], 1) == false)
+                if (_inventory.Has(recipe.IngredientIds[i], 1) == false)
                 {
                     return false;
                 }
@@ -518,7 +517,7 @@ namespace Mozzi.Game.Stall
             int sum = 0;
             for (int i = 0; i < ingredientIds.Count; i++)
             {
-                sum += _data.Ingredients.Get(ingredientIds[i]).value;
+                sum += _data.Ingredients.Get(ingredientIds[i]).Value;
             }
 
             return PriceUtil.CakePrice(sum, ingredientIds.Count, recipe != null, _row);
@@ -621,7 +620,7 @@ namespace Mozzi.Game.Stall
 
         private bool IsDayDone()
         {
-            return _state.servedToday >= _row.customersPerDay;
+            return _state.servedToday >= _row.CustomersPerDay;
         }
     }
 }

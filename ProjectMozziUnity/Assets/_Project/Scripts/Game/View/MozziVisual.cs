@@ -36,6 +36,7 @@ namespace Mozzi.Game.View
         private Transform _accOffset;
 
         private Sprite[] _bodyHops;
+        private bool _hasBody;
         private int _idleHash;
         private int _hopHash;
 
@@ -109,6 +110,7 @@ namespace Mozzi.Game.View
             }
 
             _bodyHops = set.BodyHops;
+            _hasBody = set.HasBody;
             _bodyFrame = 0;
             _shownFrame = -1;
             _body.color = bodyColor;
@@ -128,6 +130,17 @@ namespace Mozzi.Game.View
             SetLayer(_cheekR, set.Cheek);
             SetLayer(_face, set.FaceOf(faceIndex));
             SetLayer(_acc, set.Accessory);
+        }
+
+        // 표정만 갈아 끼운다. 흰 네모 폴백이면 얹을 자리가 없어 그대로 꺼 둔다.
+        public void SetFace(Sprite sprite)
+        {
+            if (_hasBody == false)
+            {
+                return;
+            }
+
+            SetLayer(_face, sprite);
         }
 
         // 볼 기준 자리. Animator 는 Anchor 를 안 건드리니 여기서 한 번 놓으면 된다.

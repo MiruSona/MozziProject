@@ -7,11 +7,12 @@ namespace Mozzi.Game.View
     // 뜨는 것은 Visual 자식의 y 뿐이라 루트 위치·콜라이더는 그대로다 — 줍기·탭·밀어내기 판정이 안 흔들린다.
     public sealed class MozziHopAgent : AgentBase<MozziObject>
     {
-        // 개체 값의 범위. 기준 0.35 / 0.15 초를 가운데 두고 흩는다 (아트규칙 5절).
-        public const float JumpSecMin = 0.3f;
-        public const float JumpSecMax = 0.42f;
-        public const float HopRestSecMin = 0.1f;
-        public const float HopRestSecMax = 0.25f;
+        // 개체 값의 범위. 기준 0.65 / 0.22 초를 가운데 두고 흩는다 (아트규칙 5절).
+        // 반복 01 피드백 2 로 뜀 0.35 → 0.65 초, 높이 12 → 24px 로 키웠다 (높이는 LayoutConst.MozziHopHeightPx).
+        public const float JumpSecMin = 0.55f;
+        public const float JumpSecMax = 0.75f;
+        public const float HopRestSecMin = 0.15f;
+        public const float HopRestSecMax = 0.3f;
         // 걷기 시작 뒤 첫 뜀까지 더 기다리는 시간. 같이 걷기 시작한 애들이 첫 뜀부터 어긋나게.
         public const float FirstDelaySecMin = 0f;
         public const float FirstDelaySecMax = 0.3f;

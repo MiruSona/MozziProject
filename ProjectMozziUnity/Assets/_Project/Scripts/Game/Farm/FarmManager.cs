@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Mozzi.Core;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Events;
 using Mozzi.Game.Clock;
 using Mozzi.Game.Inventory;
@@ -57,10 +56,10 @@ namespace Mozzi.Game.Farm
                 GrowthRow row = GrowthUtil.Find(_data.Growths, GrowthUtil.KindFence, _fenceLevel);
                 if (row == null)
                 {
-                    return _row.fenceMax;
+                    return _row.FenceMax;
                 }
 
-                return _row.fenceMax + (int)row.rate;
+                return _row.FenceMax + (int)row.Rate;
             }
         }
 
@@ -84,7 +83,7 @@ namespace Mozzi.Game.Farm
                     return -1;
                 }
 
-                return row.price;
+                return row.Price;
             }
         }
 
@@ -142,10 +141,10 @@ namespace Mozzi.Game.Farm
             {
                 MozziSpeciesRow species = _data.Species.Get(_speciesOrder[i]);
                 int dropped = StepProduce(species, deltaTime);
-                int pile = PileOf(species.ingredientId);
+                int pile = PileOf(species.IngredientId);
                 for (int d = dropped - 1; d >= 0; d--)
                 {
-                    EventBus.Publish(new IngredientDroppedEvent(species.ingredientId, pile - d));
+                    EventBus.Publish(new IngredientDroppedEvent(species.IngredientId, pile - d));
                 }
             }
 
@@ -334,9 +333,9 @@ namespace Mozzi.Game.Farm
 
         private void SeedStart()
         {
-            for (int i = 0; i < _row.startCount; i++)
+            for (int i = 0; i < _row.StartCount; i++)
             {
-                Place(_row.startSpeciesId);
+                Place(_row.StartSpeciesId);
             }
         }
 
@@ -365,36 +364,36 @@ namespace Mozzi.Game.Farm
 
         private double ProducePeriodOf(MozziSpeciesRow species)
         {
-            double mult = _row.tierMult1;
-            if (species.tier == 2)
+            double mult = _row.TierMult1;
+            if (species.Tier == 2)
             {
-                mult = _row.tierMult2;
+                mult = _row.TierMult2;
             }
-            else if (species.tier >= 3)
+            else if (species.Tier >= 3)
             {
-                mult = _row.tierMult3;
+                mult = _row.TierMult3;
             }
 
-            return _row.producePeriodSec * mult;
+            return _row.ProducePeriodSec * mult;
         }
 
         // 생산 한 걸음. 이번 걸음에 더미로 떨어진 개수를 준다. 이벤트는 부르는 쪽 몫이다.
         // 창고가 찬 종은 시계가 0 으로 돌아가고 멈춘다 (농장 문서 5절). 부재료가 없는 종(늪)은 생산이 없다.
         private int StepProduce(MozziSpeciesRow species, double deltaTime)
         {
-            int count = _countBySpecies[species.id];
-            if (count <= 0 || string.IsNullOrEmpty(species.ingredientId))
+            int count = _countBySpecies[species.Id];
+            if (count <= 0 || string.IsNullOrEmpty(species.IngredientId))
             {
                 return 0;
             }
 
-            if (_inventory.IsFull(species.ingredientId))
+            if (_inventory.IsFull(species.IngredientId))
             {
-                _produceAcc[species.id] = 0;
+                _produceAcc[species.Id] = 0;
                 return 0;
             }
 
-            double acc = _produceAcc[species.id] + count * deltaTime / ProducePeriodOf(species);
+            double acc = _produceAcc[species.Id] + count * deltaTime / ProducePeriodOf(species);
             int dropped = 0;
             while (acc >= 1)
             {
@@ -402,10 +401,10 @@ namespace Mozzi.Game.Farm
                 dropped++;
             }
 
-            _produceAcc[species.id] = acc;
+            _produceAcc[species.Id] = acc;
             if (dropped > 0)
             {
-                _piles[species.ingredientId] = PileOf(species.ingredientId) + dropped;
+                _piles[species.IngredientId] = PileOf(species.IngredientId) + dropped;
             }
 
             return dropped;
@@ -422,9 +421,9 @@ namespace Mozzi.Game.Farm
 
             double clock = _breedClock[speciesId] + deltaTime;
             FarmMozzi born = null;
-            if (clock >= _row.breedPeriodSec)
+            if (clock >= _row.BreedPeriodSec)
             {
-                clock -= _row.breedPeriodSec;
+                clock -= _row.BreedPeriodSec;
                 born = AddMozzi(speciesId);
             }
 
@@ -465,7 +464,7 @@ namespace Mozzi.Game.Farm
                     int dropped = StepProduce(species, step);
                     if (dropped > 0)
                     {
-                        AddCount(producedSum, producedOrder, species.ingredientId, dropped);
+                        AddCount(producedSum, producedOrder, species.IngredientId, dropped);
                     }
                 }
 
@@ -519,7 +518,7 @@ namespace Mozzi.Game.Farm
                     continue;
                 }
 
-                next = Math.Min(next, _row.breedPeriodSec - _breedClock[id]);
+                next = Math.Min(next, _row.BreedPeriodSec - _breedClock[id]);
             }
 
             return Math.Max(next, OfflineMinStepSec);

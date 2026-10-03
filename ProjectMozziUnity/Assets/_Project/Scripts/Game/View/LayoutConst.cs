@@ -2,20 +2,25 @@ using UnityEngine;
 
 namespace Mozzi.Game.View
 {
-    // 세로조각1판설계 3-2 의 px 자리를 월드 단위로 옮긴 상수. 기준 360×640 · 32px = 1 유닛 · 카메라 size 10.
+    // 세로조각1판설계 3-2 의 px 자리를 월드 단위로 옮긴 상수. 32px = 1 유닛.
+    // 월드 기준은 540×960 (반복 01 피드백 8 로 360×640 의 1.5배). UI 캔버스는 그대로 360×640 이라
+    // 바·띠 자리는 UI px × UiToWorldPx 로 옮긴다. 카메라 size 는 FarmViewManager 가 HalfHeight(15) 로 맞춘다.
     public static class LayoutConst
     {
         public const float PixelsPerUnit = 32f;
-        public const float ScreenWidthPx = 360f;
-        public const float ScreenHeightPx = 640f;
+        public const float ScreenWidthPx = 540f;
+        public const float ScreenHeightPx = 960f;
 
-        public const float ResourceBarBottomPx = 56f;
-        public const float BuildingStripBottomPx = 136f;
-        public const float FarmBottomPx = 552f;
+        // UI px → 월드 px. 960 / 640.
+        public const float UiToWorldPx = ScreenHeightPx / Ui.LayoutConstUi.ReferenceHeight;
 
-        // 농장 바닥 타일 칸 수. 세로 13칸 × 32 = 416 이라 136~552 에 딱 떨어진다.
-        public const int FarmTileCols = 12;
-        public const int FarmTileRows = 13;
+        public const float ResourceBarBottomPx = Ui.LayoutConstUi.ResourceBarHeight * UiToWorldPx;
+        public const float BuildingStripBottomPx = (Ui.LayoutConstUi.ResourceBarHeight + Ui.LayoutConstUi.BuildingStripHeight) * UiToWorldPx;
+
+        // 농장 바닥 타일 칸 수. 세로 20칸 × 32 = 640 이라 204~844 다 (아래 띠 위끝 840 에 4px 숨는다).
+        public const int FarmTileCols = 17;
+        public const int FarmTileRows = 20;
+        public const float FarmBottomPx = BuildingStripBottomPx + FarmTileRows * PixelsPerUnit;
 
         // 담장 두께 (유닛). 타일 한 칸이다.
         public const float FenceUnits = 1f;
@@ -49,28 +54,36 @@ namespace Mozzi.Game.View
         public const bool MozziShinyBorderVisible = false;
 
         // 찹쌀이 뜀 높이 (px). 뜨는 것은 Visual 자식뿐이라 콜라이더·담장 판정은 그대로다.
-        public const float MozziHopHeightPx = 12f;
+        public const float MozziHopHeightPx = 24f;
 
         // 찹쌀이 정렬 기준. 아래쪽 마리가 앞에 오게 y 를 빼서 쓴다.
         public const int MozziSortBase = 300;
+
+        // 들고 있는 찹쌀이. 앞 담장(600)보다 앞에 두고 Visual 을 이만큼 띄운다.
+        public const int MozziDragSortOrder = 700;
+        public const float MozziDragLiftPx = 20f;
+
+        // 탭·드래그로 바뀐 표정이 기본으로 돌아가기까지 (초).
+        public const float FaceHoldSec = 1.5f;
 
         public const float PilePx = 28f;
 
         // 수량 글자를 더미 한가운데에서 이만큼 아래로 내린다 (px). 그림 절반 14 + 사이 6 이다.
         public const float PileLabelBelowPx = 20f;
 
-        public const float BuildingWidthPx = 140f;
-        public const float BuildingHeightPx = 64f;
+        // 건물은 UI 띠 안의 버튼 구실이라 UI 와 같은 화면 크기를 지킨다 (UI px × UiToWorldPx).
+        public const float BuildingWidthPx = 140f * UiToWorldPx;
+        public const float BuildingHeightPx = 64f * UiToWorldPx;
 
         // 건물 알림 점 크기 (px).
-        public const float BadgePx = 14f;
+        public const float BadgePx = 14f * UiToWorldPx;
 
         // 건물 그림은 아래 18px 을 이름 띠로 비워 놨다 (그림 위끝에서 y 46~64, 가운데 y≈55).
         // 건물 한가운데에서 이만큼 아래로 내리면 띠 가운데다.
-        public const float BuildingLabelBelowPx = 23f;
+        public const float BuildingLabelBelowPx = 23f * UiToWorldPx;
 
         // 이름 글자 크기 (px). 18px 띠 안에 들어가야 한다.
-        public const float BuildingLabelPx = 12f;
+        public const float BuildingLabelPx = 12f * UiToWorldPx;
 
         public static float HalfWidth
         {

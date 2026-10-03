@@ -1,0 +1,3 @@
+[
+{"id":"default","fence_max":20,"produce_period_sec":15,"tier_mult1":1,"tier_mult2":1.5,"tier_mult3":2,"breed_period_sec":90,"storage_sell_price":20,"storage_max":0,"start_species_id":"grass1","start_count":2}
+]

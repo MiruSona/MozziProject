@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Mozzi.Data.Rows;
 
 namespace Mozzi.Data
 {
@@ -16,7 +15,7 @@ namespace Mozzi.Data
             IReadOnlyList<GrowthRow> rows = table.All;
             for (int i = 0; i < rows.Count; i++)
             {
-                if (rows[i].kind == kind && rows[i].level == level)
+                if (rows[i].Kind == kind && rows[i].Level == level)
                 {
                     return rows[i];
                 }
@@ -32,9 +31,9 @@ namespace Mozzi.Data
             IReadOnlyList<GrowthRow> rows = table.All;
             for (int i = 0; i < rows.Count; i++)
             {
-                if (rows[i].kind == kind && rows[i].level > max)
+                if (rows[i].Kind == kind && rows[i].Level > max)
                 {
-                    max = rows[i].level;
+                    max = rows[i].Level;
                 }
             }
 

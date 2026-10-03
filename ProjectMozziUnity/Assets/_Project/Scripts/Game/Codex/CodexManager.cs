@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Mozzi.Core;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Events;
 using Mozzi.Game.Storage;
 using Mozzi.Game.Wallet;
@@ -49,7 +48,7 @@ namespace Mozzi.Game.Codex
             _storage = InGameHub.Get<IStorageHub>();
 
             _save.Register(this);
-            OpenQuietly(_data.Farms.Get(FarmRowId).startSpeciesId);
+            OpenQuietly(_data.Farms.Get(FarmRowId).StartSpeciesId);
             Debug.Log("[Codex] 찹쌀이 " + _openSpecies.Count + "/" + _data.Species.Count
                 + " · 레시피 " + _openRecipes.Count + "/" + _data.Recipes.Count);
         }
@@ -67,7 +66,7 @@ namespace Mozzi.Game.Codex
         {
             for (int i = 0; i < _openSpecies.Count; i++)
             {
-                if (_data.Species.Get(_openSpecies[i]).family == family)
+                if (_data.Species.Get(_openSpecies[i]).Family == family)
                 {
                     return true;
                 }
@@ -122,18 +121,18 @@ namespace Mozzi.Game.Codex
             }
 
             MozziSpeciesRow species = _data.Species.Get(speciesId);
-            if (species.isShiny || species.tier >= 3)
+            if (species.IsShiny || species.Tier >= 3)
             {
                 return -1;
             }
 
-            GrowthRow growth = GrowthUtil.Find(_data.Growths, GrowthUtil.KindPair, species.tier);
+            GrowthRow growth = GrowthUtil.Find(_data.Growths, GrowthUtil.KindPair, species.Tier);
             if (growth == null)
             {
                 return -1;
             }
 
-            return growth.price;
+            return growth.Price;
         }
 
         public bool BuyPair(string speciesId)
@@ -181,7 +180,7 @@ namespace Mozzi.Game.Codex
                 RecipeRow row;
                 if (_data.Recipes.TryGet(state.openRecipes[i], out row))
                 {
-                    _openRecipes.Add(row.id);
+                    _openRecipes.Add(row.Id);
                 }
             }
 

@@ -245,8 +245,13 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            _mozziPopup.Show(mozziId, _data.Species.Get(speciesId).name);
+            _mozziPopup.Show(mozziId, _data.Species.Get(speciesId).Name);
             KeepTopmost();
+        }
+
+        public bool IsOverStorageDrop(Vector2 screen)
+        {
+            return _farmScreen.IsOverStorageButton(screen);
         }
 
         private string FindFarmSpecies(int mozziId)
@@ -360,7 +365,7 @@ namespace Mozzi.Game.Ui
             IReadOnlyList<string> ids = _inventory.IngredientIds;
             for (int i = 0; i < ids.Count; i++)
             {
-                string key = _data.Ingredients.Get(ids[i]).spriteKey;
+                string key = _data.Ingredients.Get(ids[i]).SpriteKey;
                 _farmScreen.SetIngredientIcon(ids[i], _resource.GetSprite(key));
             }
         }
@@ -380,7 +385,7 @@ namespace Mozzi.Game.Ui
 
         private void RefreshIngredient(string ingredientId, bool bump)
         {
-            string label = _data.Ingredients.Get(ingredientId).name;
+            string label = _data.Ingredients.Get(ingredientId).Name;
             _farmScreen.SetIngredient(ingredientId, label, _inventory.Count(ingredientId), _inventory.Cap(ingredientId), bump);
         }
 

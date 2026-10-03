@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 
 namespace Mozzi.Game.Stall
 {
@@ -23,7 +22,7 @@ namespace Mozzi.Game.Stall
             IReadOnlyList<RecipeRow> rows = recipes.All;
             for (int i = 0; i < rows.Count; i++)
             {
-                if (ComboKey(rows[i].ingredientIds) == key)
+                if (ComboKey(rows[i].IngredientIds) == key)
                 {
                     return rows[i];
                 }

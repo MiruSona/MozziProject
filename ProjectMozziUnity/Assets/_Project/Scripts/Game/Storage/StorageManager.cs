@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Mozzi.Core;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Events;
 using Mozzi.Game.Farm;
 using Mozzi.Game.Wallet;
@@ -54,7 +53,7 @@ namespace Mozzi.Game.Storage
 
         public int SellPrice
         {
-            get { return _row.storageSellPrice; }
+            get { return _row.StorageSellPrice; }
         }
 
         public void Init()
@@ -157,7 +156,7 @@ namespace Mozzi.Game.Storage
                 return false;
             }
 
-            _wallet.Earn(_row.storageSellPrice);
+            _wallet.Earn(_row.StorageSellPrice);
             return true;
         }
 
@@ -172,7 +171,7 @@ namespace Mozzi.Game.Storage
             _counts[speciesId] = 0;
             RebuildEntries();
             EventBus.Publish(new StorageChangedEvent(speciesId, 0, -count));
-            _wallet.Earn(_row.storageSellPrice * count);
+            _wallet.Earn(_row.StorageSellPrice * count);
             return count;
         }
 

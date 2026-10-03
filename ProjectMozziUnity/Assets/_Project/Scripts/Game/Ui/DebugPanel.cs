@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Mozzi.Core;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Game.Farm;
 using Mozzi.Game.Stall;
 using Mozzi.Game.Synthesis;
@@ -98,7 +97,7 @@ namespace Mozzi.Game.Ui
             while (_farm.MozziCount < _farm.FenceMax)
             {
                 MozziSpeciesRow row = rows[UnityEngine.Random.Range(0, rows.Count)];
-                if (_farm.Place(row.id) == false)
+                if (_farm.Place(row.Id) == false)
                 {
                     break;
                 }

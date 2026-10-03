@@ -1,0 +1,8 @@
+[
+{"id":"redbean","name":"팥","tier":1,"value":10,"cap":100,"color_hex":"#8B2C2C","sprite_key":"Ingredient/redbean"},
+{"id":"bean","name":"콩","tier":1,"value":10,"cap":100,"color_hex":"#E0C060","sprite_key":"Ingredient/bean"},
+{"id":"mugwort","name":"쑥","tier":1,"value":10,"cap":100,"color_hex":"#5A8A3A","sprite_key":"Ingredient/mugwort"},
+{"id":"sesame","name":"깨","tier":2,"value":30,"cap":100,"color_hex":"#D9C9A0","sprite_key":"Ingredient/sesame"},
+{"id":"pinenut","name":"잣","tier":2,"value":30,"cap":100,"color_hex":"#F0E6C8","sprite_key":"Ingredient/pinenut"},
+{"id":"jujube","name":"대추","tier":2,"value":30,"cap":100,"color_hex":"#A0402A","sprite_key":"Ingredient/jujube"}
+]

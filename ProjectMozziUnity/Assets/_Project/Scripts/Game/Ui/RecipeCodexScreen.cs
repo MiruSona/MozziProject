@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Game.Codex;
 using Mozzi.Game.Stall;
 using Mozzi.Game.Wallet;
@@ -53,7 +52,7 @@ namespace Mozzi.Game.Ui
             IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
             for (int i = 0; i < rows.Count; i++)
             {
-                string cellName = UiNames.RecipeCodexCellPrefix + rows[i].id;
+                string cellName = UiNames.RecipeCodexCellPrefix + rows[i].Id;
                 Transform cellRoot;
                 if (UiBindUtil.TryFind<Transform>(transform, cellName, out cellRoot) == false)
                 {
@@ -62,8 +61,8 @@ namespace Mozzi.Game.Ui
                 }
 
                 RecipeCellView cell = new RecipeCellView(cellRoot, PrefabName);
-                _cells[rows[i].id] = cell;
-                SetCellIcon(cell, resource.GetSprite(rows[i].spriteKey));
+                _cells[rows[i].Id] = cell;
+                SetCellIcon(cell, resource.GetSprite(rows[i].SpriteKey));
             }
         }
 
@@ -121,7 +120,7 @@ namespace Mozzi.Game.Ui
             foreach (KeyValuePair<string, RecipeCellView> pair in _cells)
             {
                 RecipeRow row = _data.Recipes.Get(pair.Key);
-                bool open = _codex.IsRecipeOpen(row.id);
+                bool open = _codex.IsRecipeOpen(row.Id);
                 if (open)
                 {
                     openCount++;
@@ -154,24 +153,24 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            UiBindUtil.SetText(cell.NameText, row.name);
-            UiBindUtil.SetText(cell.IngredientText, IngredientNames(row.ingredientIds));
-            UiBindUtil.SetText(cell.PriceText, _stall.PreviewPrice(row.ingredientIds) + "G");
+            UiBindUtil.SetText(cell.NameText, row.Name);
+            UiBindUtil.SetText(cell.IngredientText, IngredientNames(row.IngredientIds));
+            UiBindUtil.SetText(cell.PriceText, _stall.PreviewPrice(row.IngredientIds) + "G");
         }
 
         // 재료 수만큼 ? 를 놓고, 미리 공개 재료가 있으면 맨 뒤 하나를 이름으로 바꾼다.
         private string HiddenIngredients(RecipeRow row)
         {
             List<string> parts = new List<string>();
-            for (int i = 0; i < row.ingredientIds.Count; i++)
+            for (int i = 0; i < row.IngredientIds.Length; i++)
             {
                 parts.Add(Hidden);
             }
 
             IngredientRow reveal;
-            if (parts.Count > 0 && _data.Ingredients.TryGet(row.revealIngredientId, out reveal))
+            if (parts.Count > 0 && _data.Ingredients.TryGet(row.RevealIngredientId, out reveal))
             {
-                parts[parts.Count - 1] = reveal.name;
+                parts[parts.Count - 1] = reveal.Name;
             }
 
             return string.Join(Joiner, parts);
@@ -182,7 +181,7 @@ namespace Mozzi.Game.Ui
             List<string> parts = new List<string>();
             for (int i = 0; i < ingredientIds.Count; i++)
             {
-                parts.Add(_data.Ingredients.Get(ingredientIds[i]).name);
+                parts.Add(_data.Ingredients.Get(ingredientIds[i]).Name);
             }
 
             return string.Join(Joiner, parts);

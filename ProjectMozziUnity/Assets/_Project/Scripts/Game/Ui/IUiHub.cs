@@ -19,5 +19,8 @@ namespace Mozzi.Game.Ui
 
         // 농장 찹쌀이를 탭했을 때. 종 이름과 「보관함으로」 를 보여 준다.
         void OpenMozziPopup(int mozziId);
+
+        // 화면 좌표가 아래 띠의 보관함 버튼 위인가. 찹쌀이를 끌어다 놓을 자리 판정이다.
+        bool IsOverStorageDrop(UnityEngine.Vector2 screen);
     }
 }

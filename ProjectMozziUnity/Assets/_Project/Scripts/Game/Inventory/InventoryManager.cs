@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Mozzi.Core;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Events;
 using Mozzi.Save;
 using UnityEngine;
@@ -42,8 +41,8 @@ namespace Mozzi.Game.Inventory
             IReadOnlyList<IngredientRow> rows = _data.Ingredients.All;
             for (int i = 0; i < rows.Count; i++)
             {
-                _ids.Add(rows[i].id);
-                _counts[rows[i].id] = 0;
+                _ids.Add(rows[i].Id);
+                _counts[rows[i].Id] = 0;
             }
 
             _save.Register(this);
@@ -70,7 +69,7 @@ namespace Mozzi.Game.Inventory
                 return 0;
             }
 
-            return row.cap;
+            return row.Cap;
         }
 
         public bool IsFull(string ingredientId)

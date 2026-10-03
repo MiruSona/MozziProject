@@ -35,3 +35,6 @@
 
 Memory/store/**/*.md      text eol=lf
 Memory/archive/*.jsonl.gz binary
+
+# 구운 게임 데이터 (datatool export). 줄끝 바꾸기가 닿으면 깨진다
+*.bytes binary

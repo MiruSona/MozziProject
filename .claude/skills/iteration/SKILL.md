@@ -8,7 +8,8 @@ description: Use when the user has played the game and gives feedback, or types 
 9단계 뒤의 일하는 방식이다. 왜 이렇게 하나는 `Docs/Todo/진행상황.md` 「지금 일하는 방식 — 반복」 절에 있다.
 이 스킬은 **순서만** 고정한다. 판단(무엇을 고칠지)은 사용자가 한다.
 
-**한 바퀴 = 사용자가 놀기 → 피드백 → 고치기 → 새 WebGL 판 → 기록.** 판 번호(v12, v13…)가 반복 번호다.
+**한 바퀴 = 사용자가 놀기 → 피드백 → 고치기 → 새 APK 판 → 기록.** 판 번호(v12, v13…)가 반복 번호다.
+목표 플랫폼은 PC(Windows) + 안드로이드다. 2026-10-03 까지는 WebGL zip 이었다 — 옛 절차는 git 이력.
 
 ## 순서
 
@@ -19,8 +20,8 @@ description: Use when the user has played the game and gives feedback, or types 
 | 3 | 기록 파일 만들기 (피드백·결정까지) | AI |
 | 4 | 갈래별로 고치기 (병렬) | 서브에이전트 |
 | 5 | 검토 · 컴파일 0 · lint 0 | AI (메인) |
-| 6 | WebGL 빌드 → zip | 서브에이전트 |
-| 7 | itch.io 에 zip 교체 | **사용자** |
+| 6 | 안드로이드 APK 빌드 | 서브에이전트 |
+| 7 | APK 올리기 또는 폰에 설치 | **사용자** |
 | 8 | 기록 파일 마무리 · 색인 · mem · 커밋 승인 | AI |
 
 ### 1. 피드백 받아 적기
@@ -62,39 +63,23 @@ description: Use when the user has played the game and gives feedback, or types 
 - 갈래를 다 받으면 「넘긴 것」을 코드 갈래(또는 메인)가 합친다.
 - 컴파일 에러 0 · `Tools/GamedesignTool/bin/stage.exe lint <고친 파일…>` 종료 0 을 메인이 직접 확인한다.
 - 그림이 바뀌었으면 Play 모드 화면을 한 번 찍어 본다 (`capture_game_view --source screen`, 결과는 `Assets/Temp` 에 떨어지니 지운다).
+- 표 데이터를 고쳤을 때 : `ProjectMozziUnity/GameData/*.json` 을 고치면 `Tools/DataTool/bin/datatool.exe` 의 validate → export → gen (또는 Unity 메뉴 `Mozzi/Data/Validate+Export+Gen`) 을 돌린다.
 
-### 6. WebGL 빌드 → zip
+### 6. 안드로이드 APK 빌드
 
-서브에이전트에게 맡긴다. 눈금은 **서브 7분 + 검토 3분** (실측 09-22).
+서브에이전트에게 맡긴다. 눈금은 **서브 10분 + 검토 3분** (2026-10-03 실측 — 빌드 404초).
 
 1. Play 모드를 끈다. 다른 세션이 같은 에디터를 쓰고 있으면 먼저 알린다 — 빌드 중 다른 Unity 명령은 전부 시간 초과다.
-2. `unity command eval_file --detach` 로 한 줄짜리 .cs 를 넘긴다 : `Mozzi.Editor.WebGlBuild.Build();`
-3. 끝은 `Editor.log` 의 `[WebGlBuild] 결과` 줄로 본다. 5~11분. Succeeded · 오류 0 을 확인한다.
-4. 산출물은 저장소 뿌리 `Build/WebGL/` (gitignore). 뿌리에 `index.html` · `Build/` · `TemplateData/` 가 있어야 한다.
-5. zip 은 `Build/itch/ProjectMozzi-webgl-vNN.zip`. **`Compress-Archive` 를 쓰지 않는다** — 항목 이름이 역슬래시라 itch.io 가 폴더로 못 푼다 (mem `20260922-b778cbce`). python `zipfile` 로 만든다 :
+2. 판을 올릴 때는 `Scripts/Editor/AndroidBuild.cs` 의 `Version` 상수를 먼저 고친다.
+3. `unity command eval_file --detach` 로 한 줄짜리 .cs 를 넘긴다 : `Mozzi.Editor.AndroidBuild.Build();`
+4. 끝은 `Editor.log` 의 `[AndroidBuild] 결과` 줄로 본다. Succeeded · 오류 0 을 확인한다.
+5. 산출물은 `Build/itch/ProjectMozzi-android-vNN.apk` (gitignore). **zip 은 안 만든다.**
+6. 바이트 수를 기록 파일 머리 표에 적는다. `ProjectSettings` 가 더러워지지 않았는지 `git status` 로 본다.
 
-```bash
-cd /c/Mirusona/Project/ClaudeProject/ProjectMozzi2 && python - <<'EOF'
-import zipfile, os
-src, out = 'Build/WebGL', 'Build/itch/ProjectMozzi-webgl-vNN.zip'
-with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
-    for root, _, files in os.walk(src):
-        for f in files:
-            p = os.path.join(root, f)
-            z.write(p, os.path.relpath(p, src).replace(os.sep, '/'))
-with zipfile.ZipFile(out) as z:
-    names = z.namelist()
-    assert not any('\\' in n for n in names) and z.testzip() is None
-    print(len(names), '항목', os.path.getsize(out), '바이트')
-EOF
-```
+### 7. APK 올리기 또는 설치 (사용자)
 
-6. 항목 수와 바이트를 기록 파일 머리 표에 적는다. `ProjectSettings` 가 더러워지지 않았는지 `git status` 로 본다.
-
-### 7. itch.io 교체 (사용자)
-
-- 같은 프로젝트의 **Uploads 에서 zip 만 바꾼다.** 비밀 링크는 그대로다.
-- 사용자에게 zip 경로와 판 번호를 알리고 멈춘다. AI 는 itch.io 에 못 올린다.
+- 사용자가 APK 를 itch.io 에 올리거나 폰에 직접 옮겨 설치한다.
+- AI 는 APK 경로와 판 번호를 알리고 멈춘다. AI 는 itch.io 에 못 올린다.
 
 ### 8. 마무리
 
@@ -116,5 +101,5 @@ EOF
 | 소단계 | 눈금 | 근거 |
 | --- | --- | --- |
 | 지목된 고침 4건 + 빌드 + 게시 | 서브 14분 + 메인 5분 | 09-21 실측 (mem `20260921-4794a351`) |
-| 빌드 + zip | 서브 7분 + 검토 3분 | 09-22 실측 (mem `20260922-259ee136`) |
+| APK 빌드 | 서브 10분 + 검토 3분 | 2026-10-03 실측 — 빌드 404초 |
 | 그림 한 벌 (PixelLab 또는 PIL) | 사람이 봐야 끝 — 눈금 없음 | 그림은 판정이 사용자 몫 |

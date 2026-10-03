@@ -28,6 +28,7 @@ namespace Mozzi.Game.Ui
         private Image _nightCover;
         private TMP_Text _nightText;
         private GameObject _nextDayButton;
+        private RectTransform _storageButtonRect;
         private float _nightAlpha;
         private float _dawnTime;
         private bool _dawning;
@@ -61,7 +62,7 @@ namespace Mozzi.Game.Ui
             }
 
             UiBindUtil.BindButton(transform, UiNames.FarmCodexButton, PrefabName, ui.OpenMozziCodex);
-            UiBindUtil.BindButton(transform, UiNames.FarmStorageButton, PrefabName, ui.OpenStorage);
+            _storageButtonRect = UiBindUtil.BindButton(transform, UiNames.FarmStorageButton, PrefabName, ui.OpenStorage).transform as RectTransform;
             UiBindUtil.BindButton(transform, UiNames.FarmRecipeCodexButton, PrefabName, ui.OpenRecipeCodex);
             _nextDayButton = UiBindUtil.BindButton(transform, UiNames.FarmNextDayButton, PrefabName, onNextDay).gameObject;
 
@@ -85,7 +86,19 @@ namespace Mozzi.Game.Ui
             _bumpDone.Clear();
             _dawning = false;
             _nextDayButton = null;
+            _storageButtonRect = null;
             _bound = false;
+        }
+
+        // 보관함 버튼 위인가. Overlay 캔버스라 카메라 없이 잰다.
+        public bool IsOverStorageButton(Vector2 screen)
+        {
+            if (_storageButtonRect == null)
+            {
+                return false;
+            }
+
+            return RectTransformUtility.RectangleContainsScreenPoint(_storageButtonRect, screen);
         }
 
         public void SetGold(int gold, bool bump)

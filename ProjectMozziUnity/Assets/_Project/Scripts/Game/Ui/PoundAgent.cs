@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Mozzi.Core;
-using Mozzi.Data.Rows;
+using Mozzi.Data;
 
 namespace Mozzi.Game.Ui
 {
@@ -19,14 +19,14 @@ namespace Mozzi.Game.Ui
 
         public PoundAgent(StallScreen owner, StallRow row) : base(owner)
         {
-            _totalTaps = row.poundTaps;
+            _totalTaps = row.PoundTaps;
             if (_totalTaps < 1)
             {
                 _totalTaps = 1;
             }
 
-            _gapSec = row.poundGapMs / 1000f;
-            _doubleTapSec = row.doubleTapMs / 1000f;
+            _gapSec = row.PoundGapMs / 1000f;
+            _doubleTapSec = row.DoubleTapMs / 1000f;
         }
 
         public bool IsRunning

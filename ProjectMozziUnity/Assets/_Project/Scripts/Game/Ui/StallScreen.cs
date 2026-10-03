@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Game.Clock;
 using Mozzi.Game.Codex;
 using Mozzi.Game.Inventory;
@@ -125,7 +124,7 @@ namespace Mozzi.Game.Ui
                 Button toggle = UiBindUtil.BindButton(transform, UiNames.StallExpTogglePrefix + id, PrefabName,
                     delegate { OnToggle(id); });
                 _expToggles[id] = toggle;
-                SetToggleIcon(toggle, id, _resource.GetSprite(_data.Ingredients.Get(id).spriteKey));
+                SetToggleIcon(toggle, id, _resource.GetSprite(_data.Ingredients.Get(id).SpriteKey));
             }
 
             _expInfo = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallExpInfoText, PrefabName);
@@ -346,9 +345,9 @@ namespace Mozzi.Game.Ui
             for (int i = 0; i < rows.Count; i++)
             {
                 int count;
-                if (counts.TryGetValue(rows[i].id, out count))
+                if (counts.TryGetValue(rows[i].Id, out count))
                 {
-                    parts.Add(rows[i].name + "×" + count);
+                    parts.Add(rows[i].Name + "×" + count);
                 }
             }
 
@@ -374,12 +373,12 @@ namespace Mozzi.Game.Ui
             for (int i = 0; i < rows.Count; i++)
             {
                 int count;
-                if (counts.TryGetValue(rows[i].id, out count) == false)
+                if (counts.TryGetValue(rows[i].Id, out count) == false)
                 {
                     continue;
                 }
 
-                cellIndex = FillCells(cellIndex, _resource.GetSprite(rows[i].spriteKey), count, unit);
+                cellIndex = FillCells(cellIndex, _resource.GetSprite(rows[i].SpriteKey), count, unit);
             }
 
             if (plain > 0)
@@ -448,7 +447,7 @@ namespace Mozzi.Game.Ui
             Sprite sprite = null;
             if (customer.HasOrder && _codex.IsRecipeOpen(customer.orderRecipeId))
             {
-                sprite = _resource.GetSprite(_data.Recipes.Get(customer.orderRecipeId).spriteKey);
+                sprite = _resource.GetSprite(_data.Recipes.Get(customer.orderRecipeId).SpriteKey);
             }
 
             CustomerCellView view = _queueCustomers[index];
@@ -467,7 +466,7 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            UiBindUtil.SetLabel(_queueCells[index], _data.Recipes.Get(customer.orderRecipeId).name);
+            UiBindUtil.SetLabel(_queueCells[index], _data.Recipes.Get(customer.orderRecipeId).Name);
         }
 
         // 주문 떡이 진열대에 있으면 웃고, 없으면 시무룩. 아무거나 사는 손님은 기본 얼굴이다.
@@ -499,15 +498,15 @@ namespace Mozzi.Game.Ui
             }
 
             RecipeRow recipe = _data.Recipes.Get(customer.orderRecipeId);
-            if (_codex.IsRecipeOpen(recipe.id))
+            if (_codex.IsRecipeOpen(recipe.Id))
             {
-                return recipe.name;
+                return recipe.Name;
             }
 
             List<string> names = new List<string>();
-            for (int i = 0; i < recipe.ingredientIds.Count; i++)
+            for (int i = 0; i < recipe.IngredientIds.Length; i++)
             {
-                names.Add(_data.Ingredients.Get(recipe.ingredientIds[i]).name);
+                names.Add(_data.Ingredients.Get(recipe.IngredientIds[i]).Name);
             }
 
             return "? " + string.Join("+", names);
@@ -549,15 +548,15 @@ namespace Mozzi.Game.Ui
             }
 
             RecipeRow recipe = _data.Recipes.Get(customer.orderRecipeId);
-            if (_codex.IsRecipeOpen(recipe.id))
+            if (_codex.IsRecipeOpen(recipe.Id))
             {
-                return "손님\n" + recipe.name;
+                return "손님\n" + recipe.Name;
             }
 
             List<string> names = new List<string>();
-            for (int i = 0; i < recipe.ingredientIds.Count; i++)
+            for (int i = 0; i < recipe.IngredientIds.Length; i++)
             {
-                names.Add(_data.Ingredients.Get(recipe.ingredientIds[i]).name);
+                names.Add(_data.Ingredients.Get(recipe.IngredientIds[i]).Name);
             }
 
             return "손님\n? " + string.Join("+", names);
@@ -570,7 +569,7 @@ namespace Mozzi.Game.Ui
             IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
             for (int i = 0; i < rows.Count; i++)
             {
-                if (_codex.IsRecipeOpen(rows[i].id))
+                if (_codex.IsRecipeOpen(rows[i].Id))
                 {
                     open.Add(rows[i]);
                 }
@@ -587,10 +586,10 @@ namespace Mozzi.Game.Ui
                 }
 
                 RecipeRow recipe = open[i];
-                _makeRowRecipes[i] = recipe.id;
-                SetMakeRowIcon(i, _resource.GetSprite(recipe.spriteKey));
-                UiBindUtil.SetLabel(_makeRows[i], recipe.name + " " + _stall.PreviewPrice(recipe.ingredientIds) + "G");
-                _makeRows[i].interactable = _stall.CanMake(recipe.ingredientIds);
+                _makeRowRecipes[i] = recipe.Id;
+                SetMakeRowIcon(i, _resource.GetSprite(recipe.SpriteKey));
+                UiBindUtil.SetLabel(_makeRows[i], recipe.Name + " " + _stall.PreviewPrice(recipe.IngredientIds) + "G");
+                _makeRows[i].interactable = _stall.CanMake(recipe.IngredientIds);
             }
         }
 
@@ -638,7 +637,7 @@ namespace Mozzi.Game.Ui
                 pair.Value.interactable = on || (count > 0 && full == false);
 
                 // 아이콘이 켜져 있으면 이름은 그림이 대신하므로 숫자만 쓴다.
-                string head = _data.Ingredients.Get(id).name + " ";
+                string head = _data.Ingredients.Get(id).Name + " ";
                 if (HasToggleIcon(id))
                 {
                     head = "";
@@ -661,14 +660,14 @@ namespace Mozzi.Game.Ui
             List<string> names = new List<string>();
             for (int i = 0; i < _selected.Count; i++)
             {
-                names.Add(_data.Ingredients.Get(_selected[i]).name);
+                names.Add(_data.Ingredients.Get(_selected[i]).Name);
             }
 
             string head = string.Join("+", names);
             RecipeRow recipe = RecipeMatchUtil.FindRecipe(_data.Recipes, _selected);
-            if (recipe != null && _codex.IsRecipeOpen(recipe.id))
+            if (recipe != null && _codex.IsRecipeOpen(recipe.Id))
             {
-                return head + " → " + recipe.name + " (찾음)";
+                return head + " → " + recipe.Name + " (찾음)";
             }
 
             if (_codex.HasTriedCombo(RecipeMatchUtil.ComboKey(_selected)))
@@ -722,7 +721,7 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            _stall.Make(_data.Recipes.Get(recipeId).ingredientIds);
+            _stall.Make(_data.Recipes.Get(recipeId).IngredientIds);
             Refresh();
         }
 
@@ -800,8 +799,8 @@ namespace Mozzi.Game.Ui
             if (made.IsPlain == false)
             {
                 RecipeRow recipe = _data.Recipes.Get(made.RecipeId);
-                name = recipe.name;
-                spriteKey = recipe.spriteKey;
+                name = recipe.Name;
+                spriteKey = recipe.SpriteKey;
             }
 
             SetMadeIcon(_resource.GetSprite(spriteKey));

@@ -3,26 +3,28 @@ using System.Collections.Generic;
 
 namespace Mozzi.Data
 {
-    // 표 하나. id 로 행을 찾기만 하고 값 해석은 안 한다.
-    public sealed class DataTable<TRow> where TRow : class, IDataRow
+    // 표 하나. 구운 데이터(GameDataTables)의 행 목록과 id 사전을 감싸 id 로 찾기만 한다.
+    public sealed class DataTable<TRow> where TRow : class
     {
-        private readonly Dictionary<string, TRow> _byId = new Dictionary<string, TRow>();
-        private readonly List<TRow> _all = new List<TRow>();
+        private readonly IReadOnlyDictionary<string, TRow> _byId;
+        private readonly IReadOnlyList<TRow> _all;
         private readonly string _name;
 
-        public DataTable(string name, IReadOnlyList<TRow> rows)
+        public DataTable(string name, IReadOnlyList<TRow> rows, IReadOnlyDictionary<string, TRow> byId)
         {
             if (rows == null)
             {
                 throw new ArgumentNullException(nameof(rows));
             }
 
-            _name = name;
-
-            for (int i = 0; i < rows.Count; i++)
+            if (byId == null)
             {
-                AddRow(rows[i]);
+                throw new ArgumentNullException(nameof(byId));
             }
+
+            _name = name;
+            _all = rows;
+            _byId = byId;
         }
 
         public string Name
@@ -60,23 +62,6 @@ namespace Mozzi.Data
             }
 
             return _byId.TryGetValue(id, out row);
-        }
-
-        // id 가 비었거나 겹치면 JSON 이 잘못된 것이니 바로 알린다.
-        private void AddRow(TRow row)
-        {
-            if (row == null || string.IsNullOrEmpty(row.Id))
-            {
-                throw new InvalidOperationException(_name + " 표에 id 가 빈 행이 있다");
-            }
-
-            if (_byId.ContainsKey(row.Id))
-            {
-                throw new InvalidOperationException(_name + " 표에 id '" + row.Id + "' 가 두 번 있다");
-            }
-
-            _byId[row.Id] = row;
-            _all.Add(row);
         }
     }
 }

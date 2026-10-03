@@ -1,5 +1,5 @@
 using Mozzi.Core;
-using Mozzi.Data.Rows;
+using Mozzi.Data;
 using TMPro;
 using UnityEngine;
 
@@ -59,13 +59,13 @@ namespace Mozzi.Game.View
         // sprite 가 null 이면 예전처럼 재료 색 흰 네모다. 그림 묶음을 찾아 주는 것은 Manager 몫이다.
         public void Setup(IngredientRow ingredient, Sprite sprite, Vector2 position)
         {
-            IngredientId = ingredient.id;
+            IngredientId = ingredient.Id;
             _basePosition = new Vector3(position.x, position.y, 0f);
             transform.position = _basePosition;
-            gameObject.name = "Pile_" + ingredient.id;
+            gameObject.name = "Pile_" + ingredient.Id;
 
             _renderer.sprite = sprite;
-            _renderer.color = SpriteUtil.ParseHex(ingredient.colorHex, Color.gray);
+            _renderer.color = SpriteUtil.ParseHex(ingredient.ColorHex, Color.gray);
             if (sprite == null)
             {
                 _renderer.sprite = SpriteUtil.White;

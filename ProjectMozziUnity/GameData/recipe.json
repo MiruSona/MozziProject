@@ -1,0 +1,12 @@
+[
+{"id":"redbean_cake","name":"팥떡","ingredient_ids":["redbean"],"reveal_ingredient_id":"","sprite_key":"Cake/redbean_cake"},
+{"id":"bean_cake","name":"콩떡","ingredient_ids":["bean"],"reveal_ingredient_id":"","sprite_key":"Cake/bean_cake"},
+{"id":"mugwort_cake","name":"쑥떡","ingredient_ids":["mugwort"],"reveal_ingredient_id":"","sprite_key":"Cake/mugwort_cake"},
+{"id":"sesame_cake","name":"깨떡","ingredient_ids":["sesame"],"reveal_ingredient_id":"","sprite_key":"Cake/sesame_cake"},
+{"id":"pinenut_cake","name":"잣떡","ingredient_ids":["pinenut"],"reveal_ingredient_id":"","sprite_key":"Cake/pinenut_cake"},
+{"id":"jujube_cake","name":"대추떡","ingredient_ids":["jujube"],"reveal_ingredient_id":"","sprite_key":"Cake/jujube_cake"},
+{"id":"redbean_bean_cake","name":"팥콩떡","ingredient_ids":["redbean","bean"],"reveal_ingredient_id":"","sprite_key":"Cake/redbean_bean_cake"},
+{"id":"mugwort_sesame_cake","name":"쑥깨떡","ingredient_ids":["mugwort","sesame"],"reveal_ingredient_id":"","sprite_key":"Cake/mugwort_sesame_cake"},
+{"id":"pinenut_jujube_cake","name":"잣대추떡","ingredient_ids":["pinenut","jujube"],"reveal_ingredient_id":"","sprite_key":"Cake/pinenut_jujube_cake"},
+{"id":"redbean_mugwort_sesame_cake","name":"팥쑥깨떡","ingredient_ids":["redbean","mugwort","sesame"],"reveal_ingredient_id":"redbean","sprite_key":"Cake/redbean_mugwort_sesame_cake"}
+]

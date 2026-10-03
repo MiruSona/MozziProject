@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Mozzi.Core;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Events;
 using Mozzi.Game.Clock;
 using Mozzi.Game.Codex;
@@ -76,7 +75,7 @@ namespace Mozzi.Game.Synthesis
                     return -1;
                 }
 
-                return row.price;
+                return row.Price;
             }
         }
 
@@ -90,7 +89,7 @@ namespace Mozzi.Game.Synthesis
                     return -1;
                 }
 
-                return row.price;
+                return row.Price;
             }
         }
 
@@ -193,29 +192,29 @@ namespace Mozzi.Game.Synthesis
             _candidateIds.Clear();
             for (int i = 0; i < _candidates.Count; i++)
             {
-                _candidateIds.Add(_candidates[i].id);
+                _candidateIds.Add(_candidates[i].Id);
             }
 
             string fixedId = null;
             float pFixed = 0f;
-            float pOther = rule.pOtherFamilyTop;
-            float pShiny = rule.pShinyTop;
+            float pOther = rule.POtherFamilyTop;
+            float pShiny = rule.PShinyTop;
             if (fixedRow != null)
             {
-                fixedId = fixedRow.id;
-                pFixed = rule.pFixed;
-                pOther = rule.pOtherFamily;
-                pShiny = rule.pShiny;
+                fixedId = fixedRow.Id;
+                pFixed = rule.PFixed;
+                pOther = rule.POtherFamily;
+                pShiny = rule.PShiny;
             }
 
             string shinyId = null;
             if (shinyRow != null)
             {
-                shinyId = shinyRow.id;
+                shinyId = shinyRow.Id;
             }
 
             return new SynthesisPreview(fixedId, new List<string>(_candidateIds), shinyId,
-                pFixed, pOther, pShiny, rule.gold, rule.waitSec * ShortcutRate);
+                pFixed, pOther, pShiny, rule.Gold, rule.WaitSec * ShortcutRate);
         }
 
         public bool Start(int slotIndex, string speciesA, string speciesB)
@@ -239,7 +238,7 @@ namespace Mozzi.Game.Synthesis
             }
 
             SynthesisRuleRow rule = RuleOf(a, b);
-            if (_wallet.Pay(rule.gold) == false)
+            if (_wallet.Pay(rule.Gold) == false)
             {
                 return false;
             }
@@ -250,8 +249,8 @@ namespace Mozzi.Game.Synthesis
             slot.status = SynthesisSlotStatus.Running;
             slot.speciesA = speciesA;
             slot.speciesB = speciesB;
-            slot.resultSpeciesId = Roll(rule, a, b).id;
-            slot.remainingSec = rule.waitSec * ShortcutRate;
+            slot.resultSpeciesId = Roll(rule, a, b).Id;
+            slot.remainingSec = rule.WaitSec * ShortcutRate;
 
             EventBus.Publish(new SynthesisStartedEvent(slotIndex, slot.remainingSec));
             return true;
@@ -418,7 +417,7 @@ namespace Mozzi.Game.Synthesis
             IReadOnlyList<SynthesisRuleRow> rows = _data.SynthesisRules.All;
             for (int i = 0; i < rows.Count; i++)
             {
-                if (rows[i].tier == tier)
+                if (rows[i].Tier == tier)
                 {
                     return rows[i];
                 }
@@ -440,7 +439,7 @@ namespace Mozzi.Game.Synthesis
                 return RateOf(level - 1);
             }
 
-            return row.rate;
+            return row.Rate;
         }
 
         // ③ 변종은 ①과 같은 종. ①이 없으면(3단계 2마리) 첫 슬롯 종의 변종이다 — 「변종 뽑기」.
@@ -449,7 +448,7 @@ namespace Mozzi.Game.Synthesis
             MozziSpeciesRow target = fixedRow;
             if (target == null)
             {
-                target = SynthesisRollUtil.FindBase(_data.Species, a.family, a.tier);
+                target = SynthesisRollUtil.FindBase(_data.Species, a.Family, a.Tier);
             }
 
             if (target == null)
@@ -457,7 +456,7 @@ namespace Mozzi.Game.Synthesis
                 return null;
             }
 
-            MozziSpeciesRow shiny = SynthesisRollUtil.FindShiny(_data.Species, target.family, target.tier);
+            MozziSpeciesRow shiny = SynthesisRollUtil.FindShiny(_data.Species, target.Family, target.Tier);
             if (shiny == null)
             {
                 return target;
@@ -503,7 +502,7 @@ namespace Mozzi.Game.Synthesis
                 return fixedRow;
             }
 
-            throw new InvalidOperationException("합성 결과를 정할 수 없다 : " + a.id + " + " + b.id);
+            throw new InvalidOperationException("합성 결과를 정할 수 없다 : " + a.Id + " + " + b.Id);
         }
 
         private string Describe()

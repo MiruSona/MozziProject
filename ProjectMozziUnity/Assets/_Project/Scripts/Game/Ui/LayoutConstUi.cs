@@ -10,6 +10,9 @@ namespace Mozzi.Game.Ui
         public const float BuildingStripHeight = 80f;
         public const float BottomBarHeight = 80f;
 
+        // 누른 채 이만큼(UI px) 움직이면 탭이 아니라 드래그다. 실제 화면 px 로는 Screen.height / ReferenceHeight 를 곱한다.
+        public const float DragThresholdPx = 8f;
+
         // 부재료 그림 칸 (px). 아이콘을 켜면 글씨를 그만큼 오른쪽으로 민다.
         public const float IngredientIconSize = 18f;
         public const float IngredientIconLeft = 2f;

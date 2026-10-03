@@ -619,3 +619,39 @@
 - 들어옴 20261003-f2c611c6 `9단계 뒤는 놀기-피드백-고치기 반복으로 간다` (mem/0.3.0)
 - 거절 tag-standard secret-entropy `9단계 뒤 반복 방식을 문서·스킬에 반영했다`
 - 들어옴 20261003-7d0ac19c `9단계 뒤 반복 방식을 문서·스킬에 반영했다` (mem/0.3.0)
+- 거절 summary-len title-shape tag-count tag-standard tag-shape body-thin `서비스 코드 조사 — 뼈대는 있고 빈 칸은 소리·VFX·세이브 판 올리기·컷씬 넷`
+- 거절 summary-len title-shape body-thin `서비스 코드 조사 — 뼈대는 있고 빈 칸은 소리·VFX·세이브 판 올리기·컷씬 넷`
+- 들어옴 20261003-45d41800 `서비스 코드 조사 — 빈 칸은 소리·VFX·세이브 판·컷씬` (mem/0.3.0)
+- 거절 summary-len title-shape tag-standard body-thin duplicate-soft `pixflux 실내 장면은 low top-down 이면 아이소메트릭이 나온다`
+- 거절 summary-len tag-standard body-thin `찹쌀이 기본형은 흰색·왕관 없음, 왕관은 다른 종류의 악세 겹`
+- 거절 summary-len title-shape body-thin duplicate-soft `pixflux 실내 장면은 low top-down 이면 아이소메트릭이 나온다`
+- 거절 summary-len `찹쌀이 기본형은 흰색·왕관 없음, 왕관은 다른 종류의 악세 겹`
+- 거절 summary-len title-shape duplicate-soft `pixflux 실내 장면은 low top-down 이면 아이소메트릭 방이 나온다`
+- 들어옴 20261003-5e323d0f `찹쌀이 기본형은 흰색·왕관 없음, 왕관은 다른 종류의 악세 겹` (mem/0.3.0)
+- 거절 title-shape `pixflux 실내 장면은 low top-down 이면 아이소메트릭 방이 나온다`
+- 들어옴 20261003-6384c6bd `pixflux 실내는 low top-down 이면 아이소메트릭` (mem/0.3.0) --new
+- 거절 summary-len title-shape tag-standard tag-shape sources-shape body-thin `기준 해상도는 UI 캔버스 360×640 그대로 두고 월드만 540×960 으로 키운다`
+- 거절 summary-len title-shape tag-count tag-standard tag-shape sources-shape body-thin `찹쌀이 탭·드래그는 MozziDragAgent 하나가 포인터를 매 프레임 직접 읽어 판정한다`
+- 거절 summary-len title-shape tag-standard tag-shape sources-shape body-thin `찹쌀이 악세사리는 MozziSpecies.json 의 accessoryId 열이 종마다 정한다`
+- 거절 summary-len title-shape tag-standard tag-shape severity sources-shape body-thin `에디터에서 Pointer.press.wasPressedThisFrame 은 Process 가 못 볼 수 있다 — isPressed 가장자리를 직접 잡는다`
+- 들어옴 20261003-1e2259a1 `해상도는 월드만 540×960 으로 키운다` (mem/0.3.0)
+- 거절 decision-gate `찹쌀이 탭·드래그는 폴링 에이전트 하나로`
+- 들어옴 20261003-f9e1a9ef `악세사리는 종 표의 accessoryId 가 정한다` (mem/0.3.0)
+- 들어옴 20261003-f0ecf59e `에디터에서 wasPressedThisFrame 을 믿지 않는다` (mem/0.3.0)
+- 들어옴 20261003-ecc11f76 `찹쌀이 탭·드래그는 폴링 에이전트 하나로` (mem/0.3.0) --new
+- 거절 summary-len duplicate-soft `게임 데이터 표를 DataTool 방식으로 갈아탐`
+- 들어옴 20261003-e25fe8cf `게임 데이터 표를 DataTool 방식으로 갈아탐` (mem/0.3.0)
+- 덮음 20260918-7fb3582e → 20261003-e25fe8cf
+- 들어옴 20261003-dfbb1891 `schema.json 을 고치면 export 와 gen 둘 다` (mem/0.3.0)
+- 거절 summary-len sources-shape body-thin `안드로이드 APK 빌드 스크립트 AndroidBuild`
+- 들어옴 20261003-c595a2f3 `안드로이드 APK 빌드 스크립트 AndroidBuild` (mem/0.3.0) --new
+- 들어옴 20261003-9714aa85 `안드로이드 빌드 뒤 에디터 플랫폼이 남는다` (mem/0.3.0) --new
+- 들어옴 20261003-2e0fec3b `반복 01 — v12 APK 로 한 바퀴` (mem/0.3.0)
+- 들어옴 20261003-fb2dbb61 `목표 플랫폼은 PC 와 안드로이드` (mem/0.3.0)
+- 덮음 20260922-d84efaaa → 20261003-fb2dbb61
+- 들어옴 20261003-3db70abb `컷씬 틀과 서비스 코드 네 가지 답` (mem/0.3.0)
+- 거절 tag-standard `트윈 라이브러리 라이선스 조사 결과`
+- 들어옴 20261003-ff8c07c8 `트윈 라이브러리 라이선스 조사 결과` (mem/0.3.0)
+- 들어옴 20261003-bc2835d6 `컷씬 틀과 트윈 LitMotion 등 네 답` (mem/0.3.0)
+- 덮음 20261003-3db70abb → 20261003-bc2835d6
+- 들어옴 20261003-4b344756 `트윈 라이브러리는 LitMotion v2.0.2` (mem/0.3.0) --new

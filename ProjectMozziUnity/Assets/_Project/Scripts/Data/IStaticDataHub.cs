@@ -1,5 +1,3 @@
-using Mozzi.Data.Rows;
-
 namespace Mozzi.Data
 {
     // 화면·Manager 가 표를 꺼내 보는 창구. 표 7개를 그대로 내준다.

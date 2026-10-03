@@ -40,6 +40,14 @@ namespace Mozzi.Game.View
             IsMoving = false;
         }
 
+        // 드래그로 옮겨진 뒤. 목표를 지금 자리로 바꾸고 잠깐 쉰다 — 안 그러면 옛 목표로 미끄러진다.
+        public void Relocate(Vector2 position)
+        {
+            _target = position;
+            _rest = Random.Range(RestMin, RestMax);
+            IsMoving = false;
+        }
+
         public Vector2 Step(Vector2 position, float deltaTime)
         {
             if (_rest > 0f)

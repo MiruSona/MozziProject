@@ -1,5 +1,5 @@
 using System;
-using Mozzi.Data.Rows;
+using Mozzi.Data;
 using Mozzi.Resource;
 using UnityEngine;
 
@@ -47,7 +47,7 @@ namespace Mozzi.Game.View
             set.BodyHops = new Sprite[MozziArtKeys.BodyHopCount];
             for (int i = 0; i < set.BodyHops.Length; i++)
             {
-                set.BodyHops[i] = resource.GetSprite(MozziArtKeys.BodyHop(species.spriteKey, i));
+                set.BodyHops[i] = resource.GetSprite(MozziArtKeys.BodyHop(species.SpriteKey, i));
             }
 
             set.Cheek = resource.GetSprite(MozziArtKeys.Cheek);
@@ -58,8 +58,9 @@ namespace Mozzi.Game.View
                 set.Faces[i] = resource.GetSprite(MozziArtKeys.Face(i + 1));
             }
 
-            // 지금 있는 악세사리는 왕관 하나다. 누가 쓰나는 배선(MozziObject) 에서 정한다.
-            set.Accessory = resource.GetSprite(MozziArtKeys.Accessory(MozziArtKeys.CrownId));
+            // 종마다 표의 accessoryId 를 쓴다 (반복 01 피드백 3 — 기본형은 왕관 없이). 비어 있으면 안 씌운다.
+            string accessoryId = string.IsNullOrEmpty(species.AccessoryId) ? MozziArtKeys.NoneId : species.AccessoryId;
+            set.Accessory = resource.GetSprite(MozziArtKeys.Accessory(accessoryId));
 
             return set;
         }

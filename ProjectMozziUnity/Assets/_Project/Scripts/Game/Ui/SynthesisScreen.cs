@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Game.Codex;
 using Mozzi.Game.Farm;
 using Mozzi.Game.Storage;
@@ -181,8 +180,8 @@ namespace Mozzi.Game.Ui
         public void PlayResult(string speciesId, bool isNew)
         {
             MozziSpeciesRow species = _data.Species.Get(speciesId);
-            _resultBoxImage.color = View.SpriteUtil.ParseHex(species.colorHex, Color.white);
-            UiBindUtil.SetText(_resultName, species.name);
+            _resultBoxImage.color = View.SpriteUtil.ParseHex(species.ColorHex, Color.white);
+            UiBindUtil.SetText(_resultName, species.Name);
             UiBindUtil.SetActive(_resultNew, isNew);
             _resultBox.localScale = new Vector3(0.3f, 0.3f, 1f);
             _resultTime = 0f;
@@ -282,7 +281,7 @@ namespace Mozzi.Game.Ui
                 return "고르기";
             }
 
-            return _data.Species.Get(speciesId).name;
+            return _data.Species.Get(speciesId).Name;
         }
 
         private string PreviewText(SynthesisPreview preview)
@@ -320,7 +319,7 @@ namespace Mozzi.Game.Ui
                 return Unknown;
             }
 
-            return _data.Species.Get(speciesId).name;
+            return _data.Species.Get(speciesId).Name;
         }
 
         // 보관함 + 농장을 합쳐 재료가 되는지.
@@ -528,7 +527,7 @@ namespace Mozzi.Game.Ui
 
                 string id = ids[i];
                 _pickRowSpecies[i] = id;
-                UiBindUtil.SetLabel(_pickRows[i], _data.Species.Get(id).name
+                UiBindUtil.SetLabel(_pickRows[i], _data.Species.Get(id).Name
                     + " · 보관함 " + _storage.Count(id) + " · 농장 " + _farm.CountOf(id));
             }
         }

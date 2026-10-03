@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Game.Farm;
 using Mozzi.Game.Stall;
 using Mozzi.Save;
@@ -92,7 +91,7 @@ namespace Mozzi.Game.Ui
             IngredientRow row;
             if (data.Ingredients.TryGet(id, out row))
             {
-                return row.name;
+                return row.Name;
             }
 
             return id;
@@ -103,7 +102,7 @@ namespace Mozzi.Game.Ui
             MozziSpeciesRow row;
             if (data.Species.TryGet(id, out row))
             {
-                return row.name;
+                return row.Name;
             }
 
             return id;

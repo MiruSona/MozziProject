@@ -1,6 +1,6 @@
 using System;
 using Mozzi.Core;
-using Mozzi.Data.Rows;
+using Mozzi.Data;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -8,6 +8,7 @@ namespace Mozzi.Game.View
 {
     // 농장의 찹쌀이 한 마리. 루트는 자리와 탭 판정(BoxCollider2D)만 갖고 그림은 자식 Visual 이 레이어로 그린다.
     // 걷기는 WanderAgent · 뜀은 MozziHopAgent 가 맡는다. 뜀은 Visual 만 올리니 판정이 안 흔들린다.
+    // 들려 있는 동안(IsDragging)은 걷기·뜀을 멈추고 FarmViewManager 가 DragTo 로 자리를 준다.
     public sealed class MozziObject : ObjectBase
     {
         private const string WhiteSpeciesId = "grass1";
@@ -16,7 +17,13 @@ namespace Mozzi.Game.View
         private SortingGroup _sorting;
         private WanderAgent _wander;
         private MozziHopAgent _hop;
+        private MozziSpriteSet _set;
         private Rect _area;
+
+        // 지금 표정과 기본으로 돌아가기까지 남은 시간. 드래그 중은 무한대라 안 돌아간다.
+        private int _faceIndex = MozziArtKeys.BaseFaceIndex;
+        private float _faceHoldSec;
+        private bool _dragging;
 
         public int MozziId { get; private set; }
 
@@ -24,6 +31,16 @@ namespace Mozzi.Game.View
 
         // 겹침 밀어내기에 쓰는 반지름 (유닛).
         public float Radius { get; private set; }
+
+        public bool IsDragging
+        {
+            get { return _dragging; }
+        }
+
+        public int FaceIndex
+        {
+            get { return _faceIndex; }
+        }
 
         private void Awake()
         {
@@ -53,10 +70,14 @@ namespace Mozzi.Game.View
         public void Setup(int mozziId, MozziSpeciesRow species, MozziSpriteSet set, Rect area, Vector2 start)
         {
             MozziId = mozziId;
-            SpeciesId = species.id;
+            SpeciesId = species.Id;
+            _set = set;
             _area = area;
+            _dragging = false;
+            _faceIndex = MozziArtKeys.BaseFaceIndex;
+            _faceHoldSec = 0f;
 
-            float sizePx = SizePxOf(species.tier);
+            float sizePx = SizePxOf(species.Tier);
             float size = LayoutConst.ToUnits(sizePx);
             Radius = size * 0.5f;
 
@@ -64,12 +85,12 @@ namespace Mozzi.Game.View
             float scale = size / divisor;
             transform.localScale = new Vector3(scale, scale, 1f);
             transform.position = new Vector3(start.x, start.y, 0f);
-            gameObject.name = "Mozzi_" + mozziId + "_" + species.id;
+            gameObject.name = "Mozzi_" + mozziId + "_" + species.Id;
 
-            _visual.Apply(set, ColorOf(species), MozziArtKeys.FaceIndexOf(mozziId));
+            _visual.Apply(set, ColorOf(species), MozziArtKeys.BaseFaceIndex);
             _visual.SetAnchors();
             // 변종 네모 배경은 지금 꺼 둔다. Border 자식과 SetShiny 는 남겨 다음 표시 방법에 다시 쓴다.
-            bool shiny = LayoutConst.MozziShinyBorderVisible && species.isShiny;
+            bool shiny = LayoutConst.MozziShinyBorderVisible && species.IsShiny;
             _visual.SetShiny(shiny, LayoutConst.ShinyBorderScale * divisor);
             _visual.SetLift(0f);
             _visual.PlayIdle(0f);
@@ -86,6 +107,14 @@ namespace Mozzi.Game.View
 
         public void Step(float deltaTime)
         {
+            StepFace(deltaTime);
+            _visual.StepBlink(deltaTime);
+
+            if (_dragging)
+            {
+                return;
+            }
+
             Vector2 next = _wander.Step(transform.position, deltaTime);
             transform.position = new Vector3(next.x, next.y, 0f);
 
@@ -100,7 +129,45 @@ namespace Mozzi.Game.View
                 _visual.PlayIdle(0f);
             }
 
-            _visual.StepBlink(deltaTime);
+            ApplySort();
+        }
+
+        // 탭·드래그 때. holdSec 뒤 기본 표정으로 돌아간다. 드래그는 무한대를 줘 놓을 때까지 유지한다.
+        public void ShowRandomFace(float holdSec)
+        {
+            SetFace(MozziArtKeys.RandomFaceIndex(_faceIndex));
+            _faceHoldSec = holdSec;
+        }
+
+        // 들어 올린다. 표정이 바뀌고 앞 담장보다 앞에 그린다. 자리는 DragTo 가 준다.
+        public void BeginDrag()
+        {
+            _dragging = true;
+            ShowRandomFace(float.PositiveInfinity);
+            _hop.Reset();
+            _visual.SetLift(LayoutConst.ToUnits(LayoutConst.MozziDragLiftPx));
+            _visual.PlayIdle(0f);
+            _sorting.sortingOrder = LayoutConst.MozziDragSortOrder;
+        }
+
+        // 담장 밖(아래 띠의 보관함 버튼까지)으로도 끌 수 있어 여기서는 안 가둔다.
+        public void DragTo(Vector2 world)
+        {
+            transform.position = new Vector3(world.x, world.y, 0f);
+        }
+
+        // 놓는다. 담장 안으로 되돌리고 그 자리에서 다시 걷기 시작한다.
+        public void EndDrag()
+        {
+            _dragging = false;
+            Vector2 pos = transform.position;
+            pos.x = Mathf.Clamp(pos.x, _area.xMin, _area.xMax);
+            pos.y = Mathf.Clamp(pos.y, _area.yMin, _area.yMax);
+            transform.position = new Vector3(pos.x, pos.y, 0f);
+
+            _wander.Relocate(pos);
+            _visual.SetLift(0f);
+            _faceHoldSec = LayoutConst.FaceHoldSec;
             ApplySort();
         }
 
@@ -124,8 +191,38 @@ namespace Mozzi.Game.View
             base.OnReturn();
             _visual.ResetState();
             _hop.Reset();
+            _dragging = false;
+            _set = null;
             MozziId = 0;
             SpeciesId = null;
+        }
+
+        private void StepFace(float deltaTime)
+        {
+            if (_faceIndex == MozziArtKeys.BaseFaceIndex)
+            {
+                return;
+            }
+
+            if (float.IsPositiveInfinity(_faceHoldSec))
+            {
+                return;
+            }
+
+            _faceHoldSec -= deltaTime;
+            if (_faceHoldSec <= 0f)
+            {
+                SetFace(MozziArtKeys.BaseFaceIndex);
+            }
+        }
+
+        private void SetFace(int index)
+        {
+            _faceIndex = index;
+            if (_set != null)
+            {
+                _visual.SetFace(_set.FaceOf(index));
+            }
         }
 
         // 아래쪽 마리가 앞에 오게 발 자리(루트 y) 를 빼서 쓴다. 뜀 높이는 Visual 만 올라가니 안 섞인다.
@@ -171,12 +268,12 @@ namespace Mozzi.Game.View
         // 계열 색 · 단계 밝기는 표의 colorHex 가 정본이다. 흰찹쌀이만 흰색이라 그림 색이 그대로 나온다.
         private static Color ColorOf(MozziSpeciesRow species)
         {
-            if (species.id == WhiteSpeciesId)
+            if (species.Id == WhiteSpeciesId)
             {
                 return Color.white;
             }
 
-            return SpriteUtil.ParseHex(species.colorHex, Color.gray);
+            return SpriteUtil.ParseHex(species.ColorHex, Color.gray);
         }
     }
 }

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using Mozzi.Core;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Events;
 using Mozzi.Game.Clock;
 using Mozzi.Game.Farm;
 using Mozzi.Game.Stall;
+using Mozzi.Game.Storage;
 using Mozzi.Game.Synthesis;
 using Mozzi.Game.Ui;
 using Mozzi.Hubs;
@@ -18,9 +18,12 @@ namespace Mozzi.Game.View
 {
     // 농장 화면의 월드 쪽. IFarmHub 의 찹쌀이 · 더미를 Object 와 맞추고 건물 둘을 놓고 탭을 받는다.
     // 찹쌀이 · 더미는 매 프레임 목록 대조로 Rent · Return 하고, 건물 알림 점만 이벤트로 갱신한다.
-    public sealed class FarmViewManager : IManager, IProcess
+    // 찹쌀이 탭·드래그 판정은 MozziDragAgent 가 하고, 놓았을 때 할 일(보관함 넣기 · 농장에 놓기)은 여기서 한다.
+    public sealed class FarmViewManager : IManager, IProcess, IFarmViewHub
     {
         private const int GridColumns = 5;
+        // 보관함에서 끌어낸 임시 마리의 id. 농장 id 는 1부터라 안 겹친다.
+        private const int GhostMozziId = -1;
         private const float GridJitter = 0.35f;
         // 더미 줄이 담장 안쪽 바닥에서 뜨는 높이. 그림 아래 수량 글자가 앞 담장에 안 걸리게 잡았다.
         private const float PileRowUnits = 1.8f;
@@ -45,9 +48,16 @@ namespace Mozzi.Game.View
         private IUiHub _ui;
         private ISynthesisHub _synthesis;
         private IStallHub _stall;
+        private IStorageHub _storage;
 
         private Transform _root;
         private Camera _camera;
+        private MozziDragAgent _drag;
+        private bool _pressWasDown;
+        private MozziObject _ghost;
+        // 다음에 새로 놓이는 마리가 설 자리. 드래그로 놓은 것이 그 자리에 나오게.
+        private bool _hasPendingStart;
+        private Vector2 _pendingStart;
         private IFarmGroundPainter _groundPainter;
         private BuildingObject _synthesisBuilding;
         private BuildingObject _stallBuilding;
@@ -57,7 +67,10 @@ namespace Mozzi.Game.View
         {
             _root = new GameObject("FarmView").transform;
             _camera = Camera.main;
+            // 월드 기준 540×960 을 다 보이게. 씬 값에 기대지 않고 코드가 맞춘다.
+            _camera.orthographicSize = LayoutConst.HalfHeight;
             _resource = GlobalHub.Get<IResourceHub>();
+            _drag = new MozziDragAgent(this, _camera);
 
             _groundPainter = new TilemapFarmGroundPainter();
             _groundPainter.Paint(_root, _resource);
@@ -70,6 +83,7 @@ namespace Mozzi.Game.View
             _ui = InGameHub.Get<IUiHub>();
             _synthesis = InGameHub.Get<ISynthesisHub>();
             _stall = InGameHub.Get<IStallHub>();
+            _storage = InGameHub.Get<IStorageHub>();
 
             LayoutPileSpots();
             PlaceBuildings();
@@ -103,7 +117,14 @@ namespace Mozzi.Game.View
                 pile.Step(deltaTime);
             }
 
-            ReadTap();
+            if (_drag.IsActive)
+            {
+                _drag.Step();
+            }
+            else
+            {
+                ReadTap();
+            }
         }
 
         // 플레이를 멈출 때는 Unity 가 먼저 부수므로 이미 없는 것은 반납하지 않는다.
@@ -115,6 +136,14 @@ namespace Mozzi.Game.View
             }
 
             _subscriptions.Clear();
+
+            if (_drag != null)
+            {
+                _drag.Cancel();
+            }
+
+            ReturnIfAlive(_ghost);
+            _ghost = null;
 
             foreach (MozziObject mozzi in _mozziObjects.Values)
             {
@@ -230,7 +259,7 @@ namespace Mozzi.Game.View
             for (int i = 0; i < rows.Count; i++)
             {
                 float x = area.xMin + step * (i + 1);
-                _pileSpots[rows[i].id] = new Vector2(x, y);
+                _pileSpots[rows[i].Id] = new Vector2(x, y);
             }
         }
 
@@ -247,7 +276,7 @@ namespace Mozzi.Game.View
 
                 MozziSpeciesRow species = _data.Species.Get(mozzi.SpeciesId);
                 MozziObject obj = _resource.Rent<MozziObject>(PrefabKeys.Mozzi, _root);
-                obj.Setup(mozzi.Id, species, SpriteSetOf(species), WanderRect(), NextStart());
+                obj.Setup(mozzi.Id, species, SpriteSetOf(species), WanderRect(), TakeStart());
                 _mozziObjects[mozzi.Id] = obj;
                 _mozziList.Add(obj);
             }
@@ -278,13 +307,13 @@ namespace Mozzi.Game.View
         private MozziSpriteSet SpriteSetOf(MozziSpeciesRow species)
         {
             MozziSpriteSet set;
-            if (_spriteSets.TryGetValue(species.id, out set))
+            if (_spriteSets.TryGetValue(species.Id, out set))
             {
                 return set;
             }
 
             set = MozziSpriteSet.Load(_resource, species);
-            _spriteSets[species.id] = set;
+            _spriteSets[species.Id] = set;
             return set;
         }
 
@@ -312,6 +341,18 @@ namespace Mozzi.Game.View
                 area.yMin + LayoutConst.FenceUnits + 1.3f,
                 area.xMax - side,
                 area.yMax - top);
+        }
+
+        // 드래그로 놓은 자리가 있으면 그것을 한 번 쓰고, 없으면 격자 자리다.
+        private Vector2 TakeStart()
+        {
+            if (_hasPendingStart == false)
+            {
+                return NextStart();
+            }
+
+            _hasPendingStart = false;
+            return _pendingStart;
         }
 
         // 격자 + 흔들림. 20마리가 처음부터 겹치지 않게 놓는다.
@@ -345,7 +386,7 @@ namespace Mozzi.Game.View
                 {
                     IngredientRow row = _data.Ingredients.Get(pair.Key);
                     pile = _resource.Rent<PileObject>(PrefabKeys.IngredientPile, _root);
-                    pile.Setup(row, _resource.GetSprite(row.spriteKey), _pileSpots[pair.Key]);
+                    pile.Setup(row, _resource.GetSprite(row.SpriteKey), _pileSpots[pair.Key]);
                     _pileObjects[pair.Key] = pile;
                 }
 
@@ -377,6 +418,11 @@ namespace Mozzi.Game.View
                 {
                     MozziObject a = _mozziList[i];
                     MozziObject b = _mozziList[j];
+                    if (a.IsDragging || b.IsDragging)
+                    {
+                        continue;
+                    }
+
                     Vector2 diff = (Vector2)b.transform.position - (Vector2)a.transform.position;
                     float minDist = (a.Radius + b.Radius) * SeparateMargin;
                     float dist = diff.magnitude;
@@ -403,10 +449,20 @@ namespace Mozzi.Game.View
         }
 
         // 마우스 · 터치 둘 다 Pointer 로 받는다. UI 위 탭은 EventSystem 이 먹는다.
+        // 누름 가장자리는 isPressed 를 지난 프레임과 견줘 직접 잡는다 — wasPressedThisFrame 은 에디터에서 입력 갱신이
+        // 한 프레임에 두 번 돌면(파이프라인 simulate_pointer 등) Process 가 보기 전에 꺼진다.
         private void ReadTap()
         {
             Pointer pointer = Pointer.current;
-            if (pointer == null || pointer.press.wasPressedThisFrame == false)
+            if (pointer == null)
+            {
+                return;
+            }
+
+            bool down = pointer.press.isPressed;
+            bool justPressed = down && _pressWasDown == false;
+            _pressWasDown = down;
+            if (justPressed == false)
             {
                 return;
             }
@@ -452,8 +508,97 @@ namespace Mozzi.Game.View
             MozziObject mozzi = hit.GetComponent<MozziObject>();
             if (mozzi != null)
             {
-                _ui.OpenMozziPopup(mozzi.MozziId);
+                _drag.Press(mozzi, _camera.WorldToScreenPoint(new Vector3(world.x, world.y, 0f)));
             }
+        }
+
+        // 누르고 안 움직이고 뗐다. 표정이 잠깐 바뀌고 팝업이 뜬다 (피드백 5 · 팝업은 그대로).
+        public void OnMozziTapped(MozziObject mozzi)
+        {
+            if (mozzi == null || mozzi.IsDead)
+            {
+                return;
+            }
+
+            mozzi.ShowRandomFace(LayoutConst.FaceHoldSec);
+            _ui.OpenMozziPopup(mozzi.MozziId);
+        }
+
+        // 농장 찹쌀이를 놓았다. 보관함 버튼 위면 넣고, 아니면 담장 안 그 자리에 둔다 (피드백 6·7).
+        public void OnFarmMozziDropped(MozziObject mozzi, Vector2 screen)
+        {
+            if (mozzi == null || mozzi.IsDead)
+            {
+                return;
+            }
+
+            mozzi.EndDrag();
+            if (_ui.IsOverStorageDrop(screen))
+            {
+                _storage.TakeFromFarm(mozzi.MozziId);
+            }
+        }
+
+        // 보관함에서 끌어낸 임시 마리를 놓았다. 담장 안이면 그 자리에 진짜 마리가 놓이고, 밖이면 보관함 화면으로 돌아간다.
+        public void OnPlaceGhostDropped(MozziObject ghost, string speciesId, Vector2 world)
+        {
+            ReturnGhost(ghost);
+
+            bool placed = false;
+            if (WanderRect().Contains(world))
+            {
+                _hasPendingStart = true;
+                _pendingStart = world;
+                placed = _storage.PlaceToFarm(speciesId);
+                _hasPendingStart = false;
+            }
+
+            if (placed)
+            {
+                SyncMozzis();
+                return;
+            }
+
+            _ui.OpenStorage();
+        }
+
+        public void OnPlaceGhostCancelled(MozziObject ghost, string speciesId)
+        {
+            ReturnGhost(ghost);
+            _ui.OpenStorage();
+        }
+
+        // IFarmViewHub. 보관함 화면이 자기를 닫은 뒤 부른다. 포인터 자리에 임시 마리를 띄워 바로 든다.
+        public void BeginPlaceDrag(string speciesId)
+        {
+            if (_drag.IsActive || _ghost != null)
+            {
+                return;
+            }
+
+            Pointer pointer = Pointer.current;
+            if (pointer == null)
+            {
+                return;
+            }
+
+            Vector2 screen = pointer.position.ReadValue();
+            Vector3 world = _camera.ScreenToWorldPoint(new Vector3(screen.x, screen.y, 0f));
+
+            MozziSpeciesRow species = _data.Species.Get(speciesId);
+            _ghost = _resource.Rent<MozziObject>(PrefabKeys.Mozzi, _root);
+            _ghost.Setup(GhostMozziId, species, SpriteSetOf(species), WanderRect(), new Vector2(world.x, world.y));
+            _drag.BeginPlace(_ghost, speciesId);
+        }
+
+        private void ReturnGhost(MozziObject ghost)
+        {
+            if (ghost != null && ghost.IsDead == false)
+            {
+                _resource.Return(ghost);
+            }
+
+            _ghost = null;
         }
 
         // 건물마다 제 화면을 연다.

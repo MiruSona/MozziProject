@@ -1,0 +1,5 @@
+[
+{"id":"tier1","tier":1,"gold":100,"wait_sec":150,"p_fixed":0.65,"p_other_family":0.2,"p_shiny":0.15,"p_other_family_top":0.6,"p_shiny_top":0.4},
+{"id":"tier2","tier":2,"gold":500,"wait_sec":900,"p_fixed":0.65,"p_other_family":0.2,"p_shiny":0.15,"p_other_family_top":0.6,"p_shiny_top":0.4},
+{"id":"tier3","tier":3,"gold":2000,"wait_sec":3600,"p_fixed":0.65,"p_other_family":0.2,"p_shiny":0.15,"p_other_family_top":0.6,"p_shiny_top":0.4}
+]

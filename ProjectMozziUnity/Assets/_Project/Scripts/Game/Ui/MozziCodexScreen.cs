@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 using Mozzi.Game.Codex;
 using Mozzi.Game.Wallet;
 using TMPro;
@@ -46,11 +45,11 @@ namespace Mozzi.Game.Ui
                 Transform cellRoot;
                 if (UiBindUtil.TryFind<Transform>(transform, CellNameOf(row), out cellRoot) == false)
                 {
-                    Debug.LogWarning("[Codex] 프리팹에 칸 " + CellNameOf(row) + " 이 없다 (" + row.id + ")");
+                    Debug.LogWarning("[Codex] 프리팹에 칸 " + CellNameOf(row) + " 이 없다 (" + row.Id + ")");
                     continue;
                 }
 
-                string speciesId = row.id;
+                string speciesId = row.Id;
                 _cells[speciesId] = new CodexCellView(cellRoot, PrefabName, delegate { OnBuyPair(speciesId); });
             }
         }
@@ -76,7 +75,7 @@ namespace Mozzi.Game.Ui
 
         private void RefreshCell(MozziSpeciesRow species, CodexCellView cell)
         {
-            bool open = _codex.IsOpen(species.id);
+            bool open = _codex.IsOpen(species.Id);
             if (open == false)
             {
                 cell.ColorBox.color = new Color(0.25f, 0.25f, 0.3f, 1f);
@@ -86,11 +85,11 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            cell.ColorBox.color = View.SpriteUtil.ParseHex(species.colorHex, Color.white);
-            UiBindUtil.SetText(cell.NameText, species.name);
+            cell.ColorBox.color = View.SpriteUtil.ParseHex(species.ColorHex, Color.white);
+            UiBindUtil.SetText(cell.NameText, species.Name);
             UiBindUtil.SetText(cell.IngredientText, IngredientLabel(species));
 
-            int price = _codex.PairPrice(species.id);
+            int price = _codex.PairPrice(species.Id);
             if (price < 0)
             {
                 UiBindUtil.SetActive(cell.PairButton.gameObject, false);
@@ -105,12 +104,12 @@ namespace Mozzi.Game.Ui
         private string IngredientLabel(MozziSpeciesRow species)
         {
             IngredientRow ingredient;
-            if (_data.Ingredients.TryGet(species.ingredientId, out ingredient) == false)
+            if (_data.Ingredients.TryGet(species.IngredientId, out ingredient) == false)
             {
                 return "-";
             }
 
-            return ingredient.name;
+            return ingredient.Name;
         }
 
         private void OnBuyPair(string speciesId)
@@ -121,8 +120,8 @@ namespace Mozzi.Game.Ui
 
         private static string CellNameOf(MozziSpeciesRow row)
         {
-            string name = UiNames.CodexCellPrefix + row.family + "_" + row.tier;
-            if (row.isShiny)
+            string name = UiNames.CodexCellPrefix + row.Family + "_" + row.Tier;
+            if (row.IsShiny)
             {
                 name += UiNames.CodexCellShinySuffix;
             }

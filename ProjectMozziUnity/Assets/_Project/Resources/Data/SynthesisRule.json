@@ -1,7 +1,0 @@
-{
-  "rows": [
-    { "id": "tier1", "tier": 1, "gold": 100, "waitSec": 300, "pFixed": 0.65, "pOtherFamily": 0.20, "pShiny": 0.15, "pOtherFamilyTop": 0.60, "pShinyTop": 0.40 },
-    { "id": "tier2", "tier": 2, "gold": 500, "waitSec": 1800, "pFixed": 0.65, "pOtherFamily": 0.20, "pShiny": 0.15, "pOtherFamilyTop": 0.60, "pShinyTop": 0.40 },
-    { "id": "tier3", "tier": 3, "gold": 2000, "waitSec": 7200, "pFixed": 0.65, "pOtherFamily": 0.20, "pShiny": 0.15, "pOtherFamilyTop": 0.60, "pShinyTop": 0.40 }
-  ]
-}

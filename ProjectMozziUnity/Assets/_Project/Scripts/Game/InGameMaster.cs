@@ -75,6 +75,7 @@ namespace Mozzi.Game
             InGameHub.Register<ICodexHub>(_codex, this);
             InGameHub.Register<ISynthesisHub>(_synthesis, this);
             InGameHub.Register<IStallHub>(_stall, this);
+            InGameHub.Register<IFarmViewHub>(_farmView, this);
             InGameHub.Register<IUiHub>(_ui, this);
         }
 

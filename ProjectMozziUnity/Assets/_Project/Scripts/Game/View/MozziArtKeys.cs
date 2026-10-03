@@ -3,16 +3,18 @@ using UnityEngine;
 namespace Mozzi.Game.View
 {
     // 찹쌀이 레이어 그림의 스프라이트 키. 앞자리 "Art/" 는 스프라이트 원천이 붙여 준다.
-    // 몸만 종마다 다르고 (표의 spriteKey 가 기준 키) 볼·표정·악세사리는 전 종 공용이다.
+    // 몸(표의 spriteKey)과 악세사리(표의 accessoryId)는 종마다 고르고, 볼·표정은 전 종 공용이다.
     public static class MozziArtKeys
     {
         public const int BodyHopCount = 4;
         public const int FaceCount = 10;
 
-        // 확인용 — 표정 규칙이 기획에서 정해지면 끈다. 꺼지면 모두 face_01 이다.
-        public const bool DebugRandomFace = true;
+        // 평소 표정. 탭·드래그 때만 다른 표정이 잠깐 나온다 (반복 01 피드백 5).
+        public const int BaseFaceIndex = 1;
 
+        // 악세사리 id. 어느 종이 무엇을 쓰나는 표(MozziSpecies.AccessoryId)가 정한다. none 은 투명 그림이다.
         public const string CrownId = "crown";
+        public const string NoneId = "none";
         public const string Cheek = Folder + "cheek";
 
         private const string Folder = "Mozzi/";
@@ -34,15 +36,21 @@ namespace Mozzi.Game.View
             return Folder + "acc_" + id;
         }
 
-        // 같은 마리는 늘 같은 표정이 나오게 id 로 고른다.
-        public static int FaceIndexOf(int mozziId)
+        // 지금 표정(except)을 뺀 나머지에서 하나 고른다. 같은 표정이 다시 나오면 바뀐 티가 안 난다.
+        public static int RandomFaceIndex(int except)
         {
-            if (DebugRandomFace == false)
+            if (FaceCount <= 1)
             {
-                return 1;
+                return BaseFaceIndex;
             }
 
-            return Mathf.Abs(mozziId) % FaceCount + 1;
+            int pick = Random.Range(1, FaceCount);
+            if (pick >= except)
+            {
+                pick++;
+            }
+
+            return pick;
         }
     }
 }

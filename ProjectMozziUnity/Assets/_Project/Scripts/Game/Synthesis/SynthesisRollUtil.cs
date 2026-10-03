@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Mozzi.Data;
-using Mozzi.Data.Rows;
 
 namespace Mozzi.Game.Synthesis
 {
@@ -15,23 +14,23 @@ namespace Mozzi.Game.Synthesis
         // 비용·대기 단계는 재료 단계 중 높은 쪽이다.
         public static int MaterialTier(MozziSpeciesRow a, MozziSpeciesRow b)
         {
-            if (a.tier >= b.tier)
+            if (a.Tier >= b.Tier)
             {
-                return a.tier;
+                return a.Tier;
             }
 
-            return b.tier;
+            return b.Tier;
         }
 
         public static bool IsSwampCross(MozziSpeciesRow a, MozziSpeciesRow b)
         {
-            if (a.tier < 2 || b.tier < 2)
+            if (a.Tier < 2 || b.Tier < 2)
             {
                 return false;
             }
 
-            bool grassWater = a.family == FamilyGrass && b.family == FamilyWater;
-            bool waterGrass = a.family == FamilyWater && b.family == FamilyGrass;
+            bool grassWater = a.Family == FamilyGrass && b.Family == FamilyWater;
+            bool waterGrass = a.Family == FamilyWater && b.Family == FamilyGrass;
             return grassWater || waterGrass;
         }
 
@@ -43,7 +42,7 @@ namespace Mozzi.Game.Synthesis
                 return FindBase(species, FamilySwamp, 1);
             }
 
-            return FindBase(species, a.family, a.tier + 1);
+            return FindBase(species, a.Family, a.Tier + 1);
         }
 
         public static MozziSpeciesRow FindBase(DataTable<MozziSpeciesRow> species, string family, int tier)
@@ -65,17 +64,17 @@ namespace Mozzi.Game.Synthesis
             for (int i = 0; i < rows.Count; i++)
             {
                 MozziSpeciesRow row = rows[i];
-                if (row.tier != 1 || row.isShiny)
+                if (row.Tier != 1 || row.IsShiny)
                 {
                     continue;
                 }
 
-                if (row.family == a.family || row.family == b.family)
+                if (row.Family == a.Family || row.Family == b.Family)
                 {
                     continue;
                 }
 
-                if (row.family == FamilySwamp && swampOpen == false)
+                if (row.Family == FamilySwamp && swampOpen == false)
                 {
                     continue;
                 }
@@ -89,7 +88,7 @@ namespace Mozzi.Game.Synthesis
         {
             if (hasFixed == false)
             {
-                if (roll < rule.pOtherFamilyTop)
+                if (roll < rule.POtherFamilyTop)
                 {
                     return SynthesisBranch.OtherFamily;
                 }
@@ -97,12 +96,12 @@ namespace Mozzi.Game.Synthesis
                 return SynthesisBranch.Shiny;
             }
 
-            if (roll < rule.pFixed)
+            if (roll < rule.PFixed)
             {
                 return SynthesisBranch.Fixed;
             }
 
-            if (roll < rule.pFixed + rule.pOtherFamily)
+            if (roll < rule.PFixed + rule.POtherFamily)
             {
                 return SynthesisBranch.OtherFamily;
             }
@@ -116,7 +115,7 @@ namespace Mozzi.Game.Synthesis
             for (int i = 0; i < rows.Count; i++)
             {
                 MozziSpeciesRow row = rows[i];
-                if (row.family == family && row.tier == tier && row.isShiny == shiny)
+                if (row.Family == family && row.Tier == tier && row.IsShiny == shiny)
                 {
                     return row;
                 }

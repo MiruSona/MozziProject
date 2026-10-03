@@ -1,4 +1,4 @@
-using Mozzi.Data.Rows;
+using Mozzi.Data;
 using UnityEngine;
 
 namespace Mozzi.Game.Stall
@@ -12,7 +12,7 @@ namespace Mozzi.Game.Stall
         {
             if (isRecipe == false)
             {
-                return RoundHalfUp(valueSum * stall.plainRate);
+                return RoundHalfUp(valueSum * stall.PlainRate);
             }
 
             return RoundHalfUp(valueSum * CountMult(ingredientCount, stall));
@@ -21,7 +21,7 @@ namespace Mozzi.Game.Stall
         // 주문이 맞으면 × orderMult.
         public static int OrderPrice(int basePrice, StallRow stall)
         {
-            return RoundHalfUp(basePrice * stall.orderMult);
+            return RoundHalfUp(basePrice * stall.OrderMult);
         }
 
         public static int RoundHalfUp(float value)
@@ -34,15 +34,15 @@ namespace Mozzi.Game.Stall
         {
             if (ingredientCount <= 1)
             {
-                return stall.countMult1;
+                return stall.CountMult1;
             }
 
             if (ingredientCount == 2)
             {
-                return stall.countMult2;
+                return stall.CountMult2;
             }
 
-            return stall.countMult3;
+            return stall.CountMult3;
         }
     }
 }

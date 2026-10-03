@@ -1,14 +1,16 @@
 using System;
+using System.Collections.Generic;
 using Mozzi.Core;
-using Mozzi.Data.Rows;
 using UnityEngine;
 
 namespace Mozzi.Data
 {
-    // Resources/Data/*.json 을 읽어 표 7개를 채운다. 키로 행 찾기만 하고 값 해석은 안 한다.
+    // Resources/Data/gamedata.bytes(datatool export 산출물)를 읽어 표 7개를 채운다. 키로 행 찾기만 하고 값 해석은 안 한다.
+    // 원본은 ProjectMozziUnity/GameData/*.json 이다 (Docs/Guide/개발환경.md).
     public sealed class StaticDataManager : IManager, IStaticDataHub
     {
-        private const string DataFolder = "Data/";
+        // Resources.Load 는 확장자(.bytes)를 뺀 자리를 받는다.
+        public const string BakedPath = "Data/gamedata";
 
         public DataTable<MozziSpeciesRow> Species { get; private set; }
 
@@ -26,13 +28,14 @@ namespace Mozzi.Data
 
         public void Init()
         {
-            Species = LoadTable<MozziSpeciesRow>("MozziSpecies");
-            Ingredients = LoadTable<IngredientRow>("Ingredient");
-            Recipes = LoadTable<RecipeRow>("Recipe");
-            SynthesisRules = LoadTable<SynthesisRuleRow>("SynthesisRule");
-            Growths = LoadTable<GrowthRow>("Growth");
-            Stalls = LoadTable<StallRow>("Stall");
-            Farms = LoadTable<FarmRow>("Farm");
+            GameDataTables tables = LoadBaked();
+            Species = MakeTable("MozziSpecies", tables.MozziSpeciesRows, tables.MozziSpecies);
+            Ingredients = MakeTable("Ingredient", tables.IngredientRows, tables.Ingredient);
+            Recipes = MakeTable("Recipe", tables.RecipeRows, tables.Recipe);
+            SynthesisRules = MakeTable("SynthesisRule", tables.SynthesisRuleRows, tables.SynthesisRule);
+            Growths = MakeTable("Growth", tables.GrowthRows, tables.Growth);
+            Stalls = MakeTable("Stall", tables.StallRows, tables.Stall);
+            Farms = MakeTable("Farm", tables.FarmRows, tables.Farm);
         }
 
         public void PostInit()
@@ -43,23 +46,29 @@ namespace Mozzi.Data
         {
         }
 
-        // 파일이 없거나 행이 0개면 JSON 이 잘못 놓인 것이니 바로 던진다.
-        private static DataTable<TRow> LoadTable<TRow>(string tableName) where TRow : class, IDataRow
+        // 안드로이드·WebGL 에서도 되게 StreamingAssets 가 아니라 Resources 의 TextAsset 바이트를 동기로 읽는다.
+        // 스키마만 고치고 안 구웠으면 GameDataLoader 가 GameDataException 을 던진다.
+        public static GameDataTables LoadBaked()
         {
-            string path = DataFolder + tableName;
-            TextAsset asset = Resources.Load<TextAsset>(path);
+            TextAsset asset = Resources.Load<TextAsset>(BakedPath);
             if (asset == null)
             {
-                throw new InvalidOperationException("Resources 에 " + path + ".json 이 없다");
+                throw new InvalidOperationException("Resources 에 " + BakedPath + ".bytes 가 없다 — datatool export 를 돌려라");
             }
 
-            DataTableJson<TRow> json = JsonUtility.FromJson<DataTableJson<TRow>>(asset.text);
-            if (json == null || json.rows == null || json.rows.Count == 0)
+            return GameDataLoader.Load(asset.bytes);
+        }
+
+        // 행이 0개면 원본이 잘못 놓인 것이니 바로 던진다.
+        private static DataTable<TRow> MakeTable<TRow>(string tableName, IReadOnlyList<TRow> rows,
+            IReadOnlyDictionary<string, TRow> byId) where TRow : class
+        {
+            if (rows.Count == 0)
             {
-                throw new InvalidOperationException(path + ".json 에 rows 가 비었다");
+                throw new InvalidOperationException(tableName + " 표에 행이 없다");
             }
 
-            DataTable<TRow> table = new DataTable<TRow>(tableName, json.rows);
+            DataTable<TRow> table = new DataTable<TRow>(tableName, rows, byId);
             Debug.Log("[StaticData] " + tableName + " " + table.Count + "행");
             return table;
         }
