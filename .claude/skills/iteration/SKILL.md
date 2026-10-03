@@ -73,7 +73,7 @@ description: Use when the user has played the game and gives feedback, or types 
 2. 판을 올릴 때는 `Scripts/Editor/AndroidBuild.cs` 의 `Version` 상수를 먼저 고친다.
 3. `unity command eval_file --detach` 로 한 줄짜리 .cs 를 넘긴다 : `Mozzi.Editor.AndroidBuild.Build();`
 4. 끝은 `Editor.log` 의 `[AndroidBuild] 결과` 줄로 본다. Succeeded · 오류 0 을 확인한다.
-5. 산출물은 `Build/itch/ProjectMozzi-android-vNN.apk` (gitignore). **zip 은 안 만든다.**
+5. 산출물은 `Build/android/ProjectMozzi-android-vNN.apk` (gitignore). **zip 은 안 만든다.**
 6. 바이트 수를 기록 파일 머리 표에 적는다. `ProjectSettings` 가 더러워지지 않았는지 `git status` 로 본다.
 
 ### 7. APK 올리기 또는 설치 (사용자)

@@ -1,7 +1,9 @@
 {
   "version": 1,
   "namespace": "Mozzi.Data",
-  "enums": {},
+  "enums": {
+    "DecorLayer": ["back", "front"]
+  },
   "tables": [
     { "name": "mozzi_species", "columns": [
       { "name": "id",              "type": "string" },
@@ -72,6 +74,13 @@
       { "name": "storage_sell_price", "type": "int",   "min": 0 },
       { "name": "storage_max",        "type": "int",   "min": 0, "desc": "0 은 상한 없음" },
       { "name": "start_species_id",   "type": "ref",   "ref": "mozzi_species" },
-      { "name": "start_count",        "type": "int",   "min": 0 } ] }
+      { "name": "start_count",        "type": "int",   "min": 0 } ] },
+    { "name": "farm_decor", "columns": [
+      { "name": "id",         "type": "string" },
+      { "name": "sprite_key", "type": "string", "desc": "Art/ 뒤에 붙는 그림 자리 (Farm/decor_00 ~ 10)" },
+      { "name": "col",        "type": "int",    "min": 0, "desc": "울타리 안 32 칸 가로 번호. 0 = 왼쪽" },
+      { "name": "row",        "type": "int",    "min": 0, "desc": "울타리 안 32 칸 세로 번호. 0 = 아래" },
+      { "name": "flip_x",     "type": "bool",   "default": false },
+      { "name": "layer",      "type": "enum",   "enum": "DecorLayer", "default": "back", "desc": "back 은 찹쌀이 발밑, front 는 찹쌀이와 y 로 앞뒤를 가린다" } ] }
   ]
 }

@@ -75,8 +75,7 @@ namespace Mozzi.Game.View
             _faceIndex = MozziArtKeys.BaseFaceIndex;
             _faceHoldSec = 0f;
 
-            float sizePx = SizePxOf(species.Tier);
-            float size = LayoutConst.ToUnits(sizePx);
+            float size = LayoutConst.ToUnits(LayoutConst.MozziSizePx);
             Radius = size * 0.5f;
 
             float divisor = DivisorOf(set);
@@ -149,7 +148,7 @@ namespace Mozzi.Game.View
             _sorting.sortingOrder = LayoutConst.MozziDragSortOrder;
         }
 
-        // 담장 밖(아래 띠의 보관함 버튼까지)으로도 끌 수 있어 여기서는 안 가둔다.
+        // 담장 밖(길 위 보관함 궤짝까지)으로도 끌 수 있어 여기서는 안 가둔다.
         public void DragTo(Vector2 world)
         {
             transform.position = new Vector3(world.x, world.y, 0f);
@@ -248,21 +247,6 @@ namespace Mozzi.Game.View
             }
 
             return height * (LayoutConst.MozziBodyHeightPx / LayoutConst.MozziCanvasPx);
-        }
-
-        private static float SizePxOf(int tier)
-        {
-            if (tier >= 3)
-            {
-                return LayoutConst.MozziTier3Px;
-            }
-
-            if (tier == 2)
-            {
-                return LayoutConst.MozziTier2Px;
-            }
-
-            return LayoutConst.MozziTier1Px;
         }
     }
 }

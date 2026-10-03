@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Mozzi.Data
 {
-    // Resources/Data/gamedata.bytes(datatool export 산출물)를 읽어 표 7개를 채운다. 키로 행 찾기만 하고 값 해석은 안 한다.
+    // Resources/Data/gamedata.bytes(datatool export 산출물)를 읽어 표 8개를 채운다. 키로 행 찾기만 하고 값 해석은 안 한다.
     // 원본은 ProjectMozziUnity/GameData/*.json 이다 (Docs/Guide/개발환경.md).
     public sealed class StaticDataManager : IManager, IStaticDataHub
     {
@@ -26,6 +26,8 @@ namespace Mozzi.Data
 
         public DataTable<FarmRow> Farms { get; private set; }
 
+        public DataTable<FarmDecorRow> FarmDecors { get; private set; }
+
         public void Init()
         {
             GameDataTables tables = LoadBaked();
@@ -36,6 +38,7 @@ namespace Mozzi.Data
             Growths = MakeTable("Growth", tables.GrowthRows, tables.Growth);
             Stalls = MakeTable("Stall", tables.StallRows, tables.Stall);
             Farms = MakeTable("Farm", tables.FarmRows, tables.Farm);
+            FarmDecors = MakeTable("FarmDecor", tables.FarmDecorRows, tables.FarmDecor);
         }
 
         public void PostInit()

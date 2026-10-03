@@ -144,7 +144,8 @@ namespace Mozzi.Editor
             scene.anchorMax = new Vector2(0.5f, LayoutConstUi.SceneAnchorY);
             scene.pivot = new Vector2(0.5f, LayoutConstUi.SceneAnchorY);
             scene.anchoredPosition = Vector2.zero;
-            scene.sizeDelta = new Vector2(LayoutConstUi.ReferenceWidth, LayoutConstUi.ReferenceHeight);
+            // 가판대 · 합성소 프리팹은 아직 Legacy360 껍데기 안이라 옛 기준 크기다.
+            scene.sizeDelta = new Vector2(LayoutConstUi.LegacyReferenceWidth, LayoutConstUi.LegacyReferenceHeight);
             scene.SetSiblingIndex(2);
 
             // 스프라이트는 화면 코드가 SpriteKeys 로 끼운다. 여기서는 자리만 잡는다.

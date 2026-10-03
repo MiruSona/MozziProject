@@ -8,16 +8,16 @@ using UnityEngine;
 
 namespace Mozzi.Editor
 {
-    // 원격 테스트용 안드로이드 APK 빌드. 저장소 뿌리 Build/itch 에 낸다 (gitignore).
+    // 원격 테스트용 안드로이드 APK 빌드. 저장소 뿌리 Build/android 에 낸다 (gitignore).
     // 부르는 법 : unity command eval_file 에 `Mozzi.Editor.AndroidBuild.SwitchPlatform();` 을 먼저 한 번,
     // 전환이 끝난 뒤 `Mozzi.Editor.AndroidBuild.Build();` 한 줄. 판을 올릴 때는 Version 만 고친다.
     public static class AndroidBuild
     {
-        private const int Version = 14;
+        private const int Version = 15;
         private const string PackageName = "com.mirusona.projectmozzi";
         private const string DebugDefine = "MOZZI_DEBUG";
         private const string ScenePath = "Assets/_Project/Scenes/Farm.unity";
-        private const string OutputFolderRelative = "../../Build/itch";
+        private const string OutputFolderRelative = "../../Build/android";
         private const string ApkNameFormat = "ProjectMozzi-android-v{0}.apk";
 
         // 플랫폼을 안드로이드로 바꾼다. 전체 재임포트와 스크립트 다시 컴파일이 따라온다.

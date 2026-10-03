@@ -6,9 +6,13 @@ namespace Mozzi.Game.Ui
     {
         public const string CanvasRoot = "UiCanvas";
 
-        // 코드가 Canvas 밑에 만드는 내용 칸 (안전 영역 안 360 폭). 화면 프리팹은 이 밑에 붙는다.
+        // 코드가 Canvas 밑에 만드는 내용 칸 (안전 영역 안 540 폭). 화면 프리팹은 이 밑에 붙는다.
         public const string ContentRoot = "ContentRoot";
         public const string DebugRoot = "DebugRoot";
+
+        // 옛 360 기준 프리팹을 ×1.5 로 감싸는 껍데기 (UiManager 가 만든다). 내용 칸 밑 · 캔버스 밑(팝업) 둘이다.
+        public const string Legacy360Root = "Legacy360";
+        public const string Legacy360PopupRoot = "Legacy360Popup";
 
         // 농장 화면의 띠 뒤판 · 띠를 화면 끝까지 잇는 덧띠. FarmScreen 이 코드로 만든다.
         public const string FarmBarBack = "BarBack";
@@ -49,10 +53,25 @@ namespace Mozzi.Game.Ui
         public const string FarmDayText = "DayText";
         public const string FarmFenceText = "FenceText";
         public const string FarmIngredientRow = "IngredientRow";
+
+        // 옛 아래 띠. FarmScreenSetup 이 걷어 낼 때 찾는 이름이다 (코드는 더 안 쓴다).
         public const string FarmBottomBar = "BottomBar";
+
+        // 오른쪽 아래 메뉴 아이콘 셋 (도감 · 강화 · ☰).
         public const string FarmCodexButton = "CodexButton";
+        public const string FarmUpgradeButton = "UpgradeButton";
+        public const string FarmMenuButton = "MenuButton";
+
+        // 아이콘을 누르면 뜨는 작은 판 둘. 판 뒤 가림막(Blocker)을 누르면 닫힌다.
+        // 강화 판 : 농장 강화 목록 (지금은 담장 한 줄). ☰ 판 : 레시피 도감 (설정 화면이 생기면 줄을 더한다).
+        public const string FarmUpgradePanel = "UpgradePanel";
+        public const string FarmMenuPanel = "MenuPanel";
+        public const string FarmPanelBlocker = "Blocker";
+        public const string FarmPanelBox = "Box";
+        public const string FarmPanelTitle = "PanelTitle";
+        public const string FarmUpgradeFenceText = "UpgradeFenceText";
+        public const string FarmUpgradeFenceButton = "UpgradeFenceButton";
         public const string FarmRecipeCodexButton = "RecipeCodexButton";
-        public const string FarmStorageButton = "StorageButton";
 
         // 부재료 칸은 "Ingredient_" + 부재료 id (예 Ingredient_redbean).
         public const string FarmIngredientPrefix = "Ingredient_";
@@ -64,7 +83,7 @@ namespace Mozzi.Game.Ui
         // 한 칸 안에 재료 그림과 떡 그림을 같이 넣지 않는다 — 이름이 같아 FindDeep 가 먼저 만난 쪽을 집는다.
         public const string CakeIcon = "Icon";
 
-        // 밤 덮개(농장 자리만) · 아래 띠의 「다음날로」. 낮에는 둘 다 꺼 둔다.
+        // 밤 덮개(자원바 아래 전부) · 화면 가운데 「다음날로」. 낮에는 둘 다 꺼 둔다.
         public const string FarmNightCover = "NightCover";
         public const string FarmNightText = "NightText";
         public const string FarmNextDayButton = "NextDayButton";

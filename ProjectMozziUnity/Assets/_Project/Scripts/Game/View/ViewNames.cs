@@ -24,5 +24,16 @@ namespace Mozzi.Game.View
         // Mozzi.controller 의 상태 이름. 파라미터·전이는 없고 코드가 Play 로 직접 고른다.
         public const string AnimIdle = "Idle";
         public const string AnimHop = "Hop";
+
+        // 메인 화면 하늘 (SkyView 가 코드로 만든다).
+        public const string SkyRoot = "Sky";
+        public const string SkyArt = "SkyArt";
+
+        // 메인 화면 땅 (SpriteFarmGroundPainter 가 코드로 만든다).
+        public const string GroundRoot = "FarmGround";
+        public const string GroundGrass = "Grass";
+        public const string GroundPath = "Path";
+        public const string GroundFence = "Fence";
+        public const string GroundDecor = "Decor";
     }
 }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace Mozzi.Game.View
 {
-    // 합성소 · 가판대. 건물 그림(없으면 색 네모) + 이름 + 오른쪽 위 알림 점. 탭은 FarmViewManager 가 받아 화면을 연다.
-    // 점은 프리팹 자식 "Badge" 이고 켜고 끄기만 한다 (합성 완료 · 손님 줄).
+    // 메인 화면 건물 하나 (합성 기계 · 가게 · 보관함 궤짝). 그림(없으면 색 네모) + 이름표 + 알림 점.
+    // 자리는 BuildingLayout 이 정본이다. 탭 · 끌어다 놓기 판정은 FarmViewManager 가 받는다.
     public sealed class BuildingObject : ObjectBase
     {
         private const string BadgeName = "Badge";
@@ -13,10 +13,13 @@ namespace Mozzi.Game.View
         // TMP 는 월드에서 fontSize 10 이 1유닛이다. px 로 잡은 글자 크기를 이 값으로 바꿔 준다.
         private const float TmpPointsPerUnit = 10f;
 
+        private static readonly Color LabelColor = new Color(0.29f, 0.18f, 0.13f, 1f);
+
         private SpriteRenderer _renderer;
         private TMP_Text _label;
         private GameObject _badge;
         private BoxCollider2D _collider;
+        private Rect _hitWorld;
 
         public BuildingKind Kind { get; private set; }
 
@@ -43,33 +46,24 @@ namespace Mozzi.Game.View
             }
         }
 
-        // sprite 가 null 이면 예전처럼 건물 색 네모다. 그림을 찾아 주는 것은 Manager 몫이다.
-        public void Setup(BuildingKind kind, Sprite sprite, Vector2 position)
+        // sprite 가 null 이면 누르는 네모 크기의 색 네모다. 그림을 찾아 주는 것은 Manager 몫이다.
+        public void Setup(BuildingKind kind, Sprite sprite, string label)
         {
             Kind = kind;
-            transform.position = new Vector3(position.x, position.y, 0f);
             gameObject.name = "Building_" + kind;
 
-            // 몸은 어느 쪽이든 월드에서 140×64px 이다.
-            float w = LayoutConst.ToUnits(LayoutConst.BuildingWidthPx);
-            float h = LayoutConst.ToUnits(LayoutConst.BuildingHeightPx);
+            BuildingLayout layout = BuildingLayout.For(kind);
+            _hitWorld = layout.HitWorld;
 
-            // 그림은 PPU 32 라 그것만으로 이미 4.375×2.0 유닛이다. 흰 네모는 1×1 이라 그만큼 늘린다.
-            float scaleX = 1f;
-            float scaleY = 1f;
+            // 그림은 피벗이 아래 가운데라 발끝에 둔다. 흰 네모(1×1, 가운데 피벗)는 네모 가운데에 두고 늘린다.
+            Vector2 rootPos = layout.FootWorld;
+            Vector2 scale = Vector2.one;
             if (sprite == null)
             {
                 _renderer.sprite = SpriteUtil.White;
-                scaleX = w;
-                scaleY = h;
-                if (kind == BuildingKind.Synthesis)
-                {
-                    _renderer.color = new Color(0.55f, 0.45f, 0.75f);
-                }
-                else
-                {
-                    _renderer.color = new Color(0.8f, 0.6f, 0.35f);
-                }
+                _renderer.color = FallbackColor(kind);
+                rootPos = _hitWorld.center;
+                scale = _hitWorld.size;
             }
             else
             {
@@ -77,41 +71,30 @@ namespace Mozzi.Game.View
                 _renderer.color = Color.white;
             }
 
-            transform.localScale = new Vector3(scaleX, scaleY, 1f);
+            transform.position = new Vector3(rootPos.x, rootPos.y, 0f);
+            transform.localScale = new Vector3(scale.x, scale.y, 1f);
 
-            // 자식과 콜라이더는 부모 scale 을 타므로 몸 크기를 local 단위로 바꿔 쓴다.
-            float localW = w / scaleX;
-            float localH = h / scaleY;
-
+            // 자식 · 콜라이더는 부모 scale 을 타므로 월드 값을 local 로 바꿔 쓴다.
             if (_collider != null)
             {
-                _collider.size = new Vector2(localW, localH);
+                _collider.size = Divide(_hitWorld.size, scale);
+                _collider.offset = Divide(_hitWorld.center - rootPos, scale);
             }
 
             if (_label != null)
             {
-                _label.text = NameOf(kind);
-                // 부모 scale 이 글자를 늘리니 되돌린다.
-                _label.transform.localScale = new Vector3(1f / scaleX, 1f / scaleY, 1f);
-
-                // 그림에는 아래쪽에 이름 띠가 있다. 네모일 때는 예전처럼 한가운데 둔다.
-                float below = 0f;
-                if (sprite != null)
-                {
-                    below = LayoutConst.ToUnits(LayoutConst.BuildingLabelBelowPx) / scaleY;
-                    _label.fontSize = LayoutConst.ToUnits(LayoutConst.BuildingLabelPx) * TmpPointsPerUnit;
-                }
-
-                _label.transform.localPosition = new Vector3(0f, -below, 0f);
+                _label.text = label;
+                _label.color = LabelColor;
+                _label.fontSize = LayoutConst.ToUnits(LayoutConst.BuildingLabelPx) * TmpPointsPerUnit;
+                _label.transform.localScale = new Vector3(1f / scale.x, 1f / scale.y, 1f);
+                _label.transform.localPosition = Divide(layout.LabelWorld - rootPos, scale);
             }
 
             if (_badge != null)
             {
-                // 점도 부모 scale 을 되돌려 14px 로 두고 오른쪽 위 구석에 붙인다.
-                float badgeW = LayoutConst.ToUnits(LayoutConst.BadgePx) / scaleX;
-                float badgeH = LayoutConst.ToUnits(LayoutConst.BadgePx) / scaleY;
-                _badge.transform.localScale = new Vector3(badgeW, badgeH, 1f);
-                _badge.transform.localPosition = new Vector3((localW - badgeW) * 0.5f, (localH - badgeH) * 0.5f, 0f);
+                float badge = LayoutConst.ToUnits(LayoutConst.BadgePx);
+                _badge.transform.localScale = new Vector3(badge / scale.x, badge / scale.y, 1f);
+                _badge.transform.localPosition = Divide(layout.BadgeWorld - rootPos, scale);
             }
 
             SetBadge(false);
@@ -125,14 +108,30 @@ namespace Mozzi.Game.View
             }
         }
 
-        private static string NameOf(BuildingKind kind)
+        // 월드 점이 누르는 네모 안인가. 찹쌀이를 끌어다 놓을 자리 판정이다.
+        public bool ContainsWorld(Vector2 world)
+        {
+            return _hitWorld.Contains(world);
+        }
+
+        private static Vector3 Divide(Vector2 value, Vector2 scale)
+        {
+            return new Vector3(value.x / scale.x, value.y / scale.y, 0f);
+        }
+
+        private static Color FallbackColor(BuildingKind kind)
         {
             if (kind == BuildingKind.Synthesis)
             {
-                return "합성소";
+                return new Color(0.55f, 0.45f, 0.75f);
             }
 
-            return "가판대";
+            if (kind == BuildingKind.Stall)
+            {
+                return new Color(0.8f, 0.6f, 0.35f);
+            }
+
+            return new Color(0.6f, 0.42f, 0.3f);
         }
     }
 }

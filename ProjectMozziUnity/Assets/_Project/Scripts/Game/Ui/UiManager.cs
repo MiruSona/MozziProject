@@ -20,7 +20,8 @@ namespace Mozzi.Game.Ui
 {
     // Canvas 를 코드로 만들고 화면 프리팹을 빌려 붙인다. Manager → 화면은 EventBus 로 받는다.
     // 농장 화면이 바탕, 덮개는 한 번에 하나, 팝업 · 디버그 패널이 맨 위다 (세로조각1판설계 3절).
-    // 화면·디버그 패널은 내용 칸(안전 영역 안 360 폭)에 붙이고, 팝업의 어두운 막은 화면 끝까지 덮는다.
+    // 화면·디버그 패널은 내용 칸(안전 영역 안 540 폭)에 붙이고, 팝업의 어두운 막은 화면 끝까지 덮는다.
+    // 옛 360 기준 프리팹은 Legacy360 껍데기(×1.5) 안에 붙여 겉보기를 지킨다 — 540 으로 옮긴 화면(농장)은 껍데기 밖 내용 칸에 바로 붙인다.
     public sealed class UiManager : IManager, IProcess, IUiHub
     {
         // 이보다 짧게 비웠으면 팝업을 안 띄운다.
@@ -44,6 +45,9 @@ namespace Mozzi.Game.Ui
         private CanvasScaler _scaler;
         // 내용 칸. 화면 크기 · 안전 영역이 바뀌면 FitToScreen 이 다시 맞춘다.
         private RectTransform _contentRoot;
+        // 옛 360 기준 화면 · 팝업을 ×1.5 로 감싸는 껍데기. 크기는 FitToScreen 이 부모 크기 ÷ 1.5 로 맞춘다.
+        private RectTransform _legacyContent;
+        private RectTransform _legacyPopup;
         private int _fitWidth;
         private int _fitHeight;
         private Rect _fitSafeArea;
@@ -60,6 +64,7 @@ namespace Mozzi.Game.Ui
         private DebugPanel _debugPanel;
         // 팝업보다 위에 두는 두 번째 내용 칸. 디버그 패널이 팝업에 안 가리게.
         private RectTransform _debugRoot;
+        private RectTransform _legacyDebug;
 #endif
 
         public bool IsAnyOpen
@@ -73,6 +78,8 @@ namespace Mozzi.Game.Ui
             _canvas = CreateCanvas();
             _scaler = _canvas.GetComponent<CanvasScaler>();
             _contentRoot = CreateContentRoot(UiNames.ContentRoot);
+            _legacyContent = CreateLegacyRoot(_contentRoot, UiNames.Legacy360Root);
+            _legacyPopup = CreateLegacyRoot(_canvas.transform as RectTransform, UiNames.Legacy360PopupRoot);
             FitToScreen();
         }
 
@@ -88,9 +95,11 @@ namespace Mozzi.Game.Ui
             _save = InGameHub.Get<ISaveHub>();
             _storage = InGameHub.Get<IStorageHub>();
 
+            // 농장 화면은 540 기준이라 껍데기 밖 내용 칸에 바로 붙인다. 덮개(껍데기 안)보다 뒤에 오게 맨 앞 형제로 둔다.
             _farmScreen = _resource.Rent<FarmScreen>(PrefabKeys.UiFarmScreen, _contentRoot);
             StretchToParent(_farmScreen.transform as RectTransform);
-            _farmScreen.Bind(_inventory.IngredientIds, this, _clock.AdvanceDay);
+            _farmScreen.transform.SetAsFirstSibling();
+            _farmScreen.Bind(_inventory.IngredientIds, this, _clock.AdvanceDay, OnBuyFence);
             BindIngredientIcons();
 
             _synthesisScreen = RentOverlay<SynthesisScreen>(PrefabKeys.UiSynthesisScreen);
@@ -99,20 +108,21 @@ namespace Mozzi.Game.Ui
             _stallScreen = RentOverlay<StallScreen>(PrefabKeys.UiStallScreen);
             _recipeCodexScreen = RentOverlay<RecipeCodexScreen>(PrefabKeys.UiRecipeCodexScreen);
 
-            _offlinePopup = _resource.Rent<OfflinePopup>(PrefabKeys.UiOfflinePopup, _canvas.transform);
+            _offlinePopup = _resource.Rent<OfflinePopup>(PrefabKeys.UiOfflinePopup, _legacyPopup);
             StretchToParent(_offlinePopup.transform as RectTransform);
             _offlinePopup.Bind(_offlinePopup.Hide);
             _offlinePopup.Hide();
 
-            _mozziPopup = _resource.Rent<MozziPopup>(PrefabKeys.UiMozziPopup, _canvas.transform);
+            _mozziPopup = _resource.Rent<MozziPopup>(PrefabKeys.UiMozziPopup, _legacyPopup);
             StretchToParent(_mozziPopup.transform as RectTransform);
             _mozziPopup.Bind(OnMozziPopupStore, _mozziPopup.Hide);
             _mozziPopup.Hide();
 
 #if UNITY_EDITOR || MOZZI_DEBUG
             _debugRoot = CreateContentRoot(UiNames.DebugRoot);
-            FitRoot(_debugRoot);
-            _debugPanel = _resource.Rent<DebugPanel>(PrefabKeys.UiDebugPanel, _debugRoot);
+            _legacyDebug = CreateLegacyRoot(_debugRoot, UiNames.Legacy360Root);
+            FitToScreen();
+            _debugPanel = _resource.Rent<DebugPanel>(PrefabKeys.UiDebugPanel, _legacyDebug);
             StretchToParent(_debugPanel.transform as RectTransform);
             _debugPanel.Bind(OnDebugSkipped);
 #endif
@@ -268,11 +278,6 @@ namespace Mozzi.Game.Ui
             KeepTopmost();
         }
 
-        public bool IsOverStorageDrop(Vector2 screen)
-        {
-            return _farmScreen.IsOverStorageButton(screen);
-        }
-
         private string FindFarmSpecies(int mozziId)
         {
             IReadOnlyList<FarmMozzi> mozzis = _farm.Mozzis;
@@ -285,6 +290,19 @@ namespace Mozzi.Game.Ui
             }
 
             return null;
+        }
+
+        // 메인 화면 강화 판의 「담장 늘리기」. 값이 바뀌면 FenceUpgradedEvent · GoldChangedEvent 가 판을 되읽는다.
+        private void OnBuyFence()
+        {
+            _farm.BuyFence();
+            RefreshUpgrade();
+        }
+
+        private void RefreshUpgrade()
+        {
+            int price = _farm.NextFencePrice;
+            _farmScreen.SetUpgradeFence(_farm.MozziCount, _farm.FenceMax, price, price >= 0 && _wallet.CanPay(price));
         }
 
         // 「보관함으로」. 옮기고 나면 팝업을 닫는다 — 농장 Object 는 FarmViewManager 가 목록 대조로 거둔다.
@@ -312,6 +330,7 @@ namespace Mozzi.Game.Ui
         // 팝업 · 디버그 패널은 어느 덮개보다 위에 둔다.
         private void KeepTopmost()
         {
+            _legacyPopup.SetAsLastSibling();
             _offlinePopup.transform.SetAsLastSibling();
             _mozziPopup.transform.SetAsLastSibling();
 #if UNITY_EDITOR || MOZZI_DEBUG
@@ -339,7 +358,7 @@ namespace Mozzi.Game.Ui
         // 덮개는 빌려서 내용 칸 밑에 두고 처음엔 꺼 둔다.
         private T RentOverlay<T>(string key) where T : OverlayScreen
         {
-            T screen = _resource.Rent<T>(key, _contentRoot);
+            T screen = _resource.Rent<T>(key, _legacyContent);
             StretchToParent(screen.transform as RectTransform);
             screen.Bind(this);
             screen.gameObject.SetActive(false);
@@ -369,7 +388,16 @@ namespace Mozzi.Game.Ui
             return rect;
         }
 
-        // 기준 360×640 이 안전 영역에 통째로 들어가는 배율을 넣고, 내용 칸을 그 자리에 맞춘다.
+        // 옛 360 기준 프리팹을 받는 껍데기. 자식은 부모 크기의 2/3 짜리 칸에 붙고 ×1.5 로 커져 부모를 꼭 채운다.
+        private static RectTransform CreateLegacyRoot(RectTransform parent, string name)
+        {
+            GameObject go = new GameObject(name, typeof(RectTransform));
+            RectTransform rect = go.transform as RectTransform;
+            rect.SetParent(parent, false);
+            return rect;
+        }
+
+        // 기준 540×960 이 안전 영역에 통째로 들어가는 배율을 넣고, 내용 칸 · 껍데기를 그 자리에 맞춘다.
         private void FitToScreen()
         {
             _fitWidth = Screen.width;
@@ -378,12 +406,29 @@ namespace Mozzi.Game.Ui
 
             _scaler.scaleFactor = ScreenFitUtil.CanvasScale();
             FitRoot(_contentRoot);
+            FitLegacy(_legacyContent, ScreenFitUtil.ContentUiSize());
+            // 팝업 껍데기는 캔버스 전체(어두운 막이 덮는 자리)에 맞춘다.
+            FitLegacy(_legacyPopup, new Vector2(Screen.width, Screen.height) / ScreenFitUtil.CanvasScale());
 #if UNITY_EDITOR || MOZZI_DEBUG
             if (_debugRoot != null)
             {
                 FitRoot(_debugRoot);
+                FitLegacy(_legacyDebug, ScreenFitUtil.ContentUiSize());
             }
 #endif
+        }
+
+        // 부모(UI px 크기 parentSize) 가운데에 parentSize ÷ 1.5 칸을 두고 ×1.5 로 키운다.
+        // 껍데기 안에서는 9:16 일 때 360×640, 길쭉한 폰이면 세로만 더 긴 옛 기준 칸이 된다.
+        private static void FitLegacy(RectTransform rect, Vector2 parentSize)
+        {
+            float scale = LayoutConstUi.Legacy360Scale;
+            rect.anchorMin = new Vector2(0.5f, 0.5f);
+            rect.anchorMax = new Vector2(0.5f, 0.5f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = Vector2.zero;
+            rect.sizeDelta = parentSize / scale;
+            rect.localScale = new Vector3(scale, scale, 1f);
         }
 
         // 앵커를 화면 비율로 주면 캔버스 배율과 상관없이 내용 칸 자리에 붙는다.
@@ -427,6 +472,7 @@ namespace Mozzi.Game.Ui
             _farmScreen.SetGold(_wallet.Gold, false);
             _farmScreen.SetDay(_clock.Day, _clock.IsNight);
             _farmScreen.SetFence(_farm.MozziCount, _farm.FenceMax);
+            RefreshUpgrade();
 
             IReadOnlyList<string> ids = _inventory.IngredientIds;
             for (int i = 0; i < ids.Count; i++)
@@ -452,6 +498,7 @@ namespace Mozzi.Game.Ui
         private void OnGoldChanged(GoldChangedEvent evt)
         {
             _farmScreen.SetGold(evt.Gold, true);
+            RefreshUpgrade();
             RefreshOpen();
         }
 
@@ -463,21 +510,25 @@ namespace Mozzi.Game.Ui
         private void OnMozziBorn(MozziBornEvent evt)
         {
             _farmScreen.SetFence(evt.FarmCount, _farm.FenceMax);
+            RefreshUpgrade();
         }
 
         private void OnMozziPlaced(MozziPlacedEvent evt)
         {
             _farmScreen.SetFence(evt.FarmCount, _farm.FenceMax);
+            RefreshUpgrade();
         }
 
         private void OnMozziRemoved(MozziRemovedEvent evt)
         {
             _farmScreen.SetFence(evt.FarmCount, _farm.FenceMax);
+            RefreshUpgrade();
         }
 
         private void OnFenceUpgraded(FenceUpgradedEvent evt)
         {
             _farmScreen.SetFence(_farm.MozziCount, evt.FenceMax);
+            RefreshUpgrade();
         }
 
         private void OnDayStarted(DayStartedEvent evt)

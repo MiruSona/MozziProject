@@ -740,3 +740,53 @@
 - 들어옴 20261003-7158a6fd `가판대 v5 구도와 보관함 후보 3 의 정식 그림 일감 셋` (mem/0.3.0) --new
 - 덮음 20261003-a07bc816 → 20261003-650ffef1
 - 들어옴 20261003-936ee22a `반복 03 이번 세션 — 그림 시안 확정까지` (mem/0.3.0) --new
+- 거절 duplicate-soft decision-gate `전용 화면 도트 굵기 1px 통일`
+- 들어옴 20261003-a76e9de2 `전용 화면 도트 굵기 1px 통일` (mem/0.3.0) --new
+- 들어옴 20261003-e7d936f2 `가판대 v6 손님 옆모습 견주기 시안` (mem/0.3.0)
+- 거절 tag-standard `v15 메인 화면 정식 그림 건물·하늘·아이콘`
+- 거절 decision-gate `잔디는 바탕 한 장과 장식 조각`
+- 거절 tag-standard duplicate-soft `pro_flash 버튼 투명 배경이 종이 면을 뚫음`
+- 들어옴 20261003-144477f6 `잔디는 바탕 한 장과 장식 조각` (mem/0.3.0)
+- 덮음 20260920-5a744d35 → 20261003-144477f6
+- 들어옴 20261003-8e7b2e28 `v15 메인 화면 정식 그림 건물·하늘·아이콘` (mem/0.3.0)
+- 들어옴 20261003-39d2c79f `pro_flash 버튼 투명 배경이 종이 면을 뚫음` (mem/0.3.0)
+- 들어옴 20261003-0aa3f850 `가판대 손님은 옆모습으로 주인을 본다` (mem/0.3.0)
+- 거절 duplicate-soft decision-gate `UI 기준 540 과 Legacy360 껍데기`
+- 들어옴 20261003-a6b95888 `메인 카메라는 월드 아래끝을 붙인다` (mem/0.3.0)
+- 덮음 20261003-1747743d → 20261003-a6b95888
+- 들어옴 20261003-666fbfaf `강화는 화면마다 따로 둔다` (mem/0.3.0)
+- 거절 duplicate-soft decision-gate `찹쌀이 크기를 모든 단계 같게`
+- 들어옴 20261003-e3497171 `찹쌀이 크기를 모든 단계 같게` (mem/0.3.0) --new
+- 들어옴 20261003-bf54c8fc `UI 기준 540 과 Legacy360 껍데기` (mem/0.3.0)
+- 덮음 20261003-1e2259a1 → 20261003-bf54c8fc
+- 들어옴 20261003-d8a81eab `Game 뷰 해상도 바꿔 4판 캡처` (mem/0.3.0)
+- 들어옴 20261003-2e0dec52 `v15 코드 1판 — 540 기준·하늘·피벗` (mem/0.3.0)
+- 들어옴 20261003-4169f028 `v15 농장 정식 그림 갈래 기록` (mem/0.3.0)
+
+## 2026-10-04
+- 거절 summary-len tag-standard body-thin no-value duplicate-soft `메인 땅은 SpriteRenderer 판 · 농장 16×15 칸`
+- 거절 severity body-thin `DataTool enum 값은 소문자만`
+- 거절 summary-len duplicate-soft `메인 땅은 SpriteRenderer 판 · 농장 16×15 칸`
+- 들어옴 20261004-c7f20a01 `DataTool enum 값은 소문자만` (mem/0.3.0)
+- 들어옴 20261004-aa4eaa2c `메인 땅은 SpriteRenderer 판 · 농장 16×15 칸` (mem/0.3.0)
+- 거절 title-shape sources-required duplicate-soft `v15 코드 2a 판 — 정식 그림·하늘·잔디 Painter·장식 표·크기 통일`
+- 거절 title-shape sources-required duplicate-soft `v15 코드 2a 판 — 정식 그림·하늘·잔디 Painter·장식 표·크기 통일`
+- 들어옴 20261004-671a3660 `v15 코드 2a 판 — 하늘·잔디 판·장식 표·크기 통일` (mem/0.3.0)
+- 거절 summary-len tag-standard body-thin decision-gate `메인 화면 건물 셋 · 메뉴 아이콘 셋 · 농장 화면 540`
+- 거절 summary-len title-shape tag-standard severity body-thin duplicate-soft `simulate_pointer move 는 누름을 푼다 · capture_game_view 는 Assets 로 간다`
+- 들어옴 20261004-53fe3f34 `메인 화면 건물 셋 · 메뉴 아이콘 · 농장 화면 540` (mem/0.3.0) --new
+- 거절 title-shape severity duplicate-soft `simulate_pointer move 는 누름을 푼다 · capture_game_view 는 Assets 로 간다`
+- 거절 summary-len title-shape tag-standard tag-shape severity sources-shape body-thin duplicate-soft `PixelLab workbench 결과 id 는 inpaint source_image_id 로 못 쓴다`
+- 거절 tag-shape sources-required body-thin `잔디 바탕 밝게 후보 b1~b3`
+- 들어옴 20261004-f3c0c34d `workbench 결과 id 는 inpaint 에 못 넣는다` (mem/0.3.0)
+- 들어옴 20261004-3e460fd9 `잔디 바탕 밝게 후보 b1~b3` (mem/0.3.0)
+- 거절 tag-standard body-thin `잔디 바탕 b1 확정`
+- 들어옴 20261004-910fd40c `잔디 바탕 b1 확정` (mem/0.3.0)
+- 들어옴 20261004-7fbb7f24 `안드로이드 APK v15 — 잔디 b1` (mem/0.3.0)
+- 거절 tag-standard body-thin duplicate-soft decision-gate `안드로이드 APK 는 Build/android 에 낸다`
+- 들어옴 20261004-2600e737 `안드로이드 APK 는 Build/android 에 낸다` (mem/0.3.0) --new
+- 들어옴 20261004-e14195c0 `반복 03 닫음 — v15 메인 화면 새 그림` (mem/0.3.0)
+- 들어옴 20261004-af69d9c5 `재료는 발밑에 떨구고 눌러·훑어 줍는다` (mem/0.3.0)
+- 들어옴 20261004-7735ed05 `농장 강화 후보와 순서 · 새 기능 셋` (mem/0.3.0)
+- 들어옴 20261004-e88df9c0 `v15 피드백 2·3·4와 보관함 담장 버튼` (mem/0.3.0)
+- 들어옴 20261004-6bc23c58 `전용 화면 버튼은 아래쪽 정렬` (mem/0.3.0)

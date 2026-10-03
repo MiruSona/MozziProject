@@ -7,15 +7,18 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 농장 화면(자원바 · 아래 띠 · 밤 덮개). 프리팹은 모양만 갖고 여기서 UiNames 로 자식을 찾아 값을 넣는다.
+    // 농장 화면(자원바 · 오른쪽 아래 메뉴 아이콘 셋과 작은 판 · 밤 덮개). 540 기준 프리팹이고 모양만 갖는다.
     // 값이 바뀔 때 숫자가 커졌다 돌아오는 튐 1종과, 아침에 덮개가 걷히는 밝아짐 1종을 돈다.
-    // 위아래 띠는 안전 영역 안에 있고, 그 바깥(카메라 구멍 쪽)은 같은 색 덧띠를 코드로 이어 붙인다.
+    // 자원바는 안전 영역 안에 있고, 그 바깥(카메라 구멍 쪽)은 같은 색 덧띠를 코드로 이어 붙인다.
     public sealed class FarmScreen : ObjectBase
     {
         private const string PrefabName = "FarmScreen";
         private const float BumpDuration = 0.25f;
         private const float BumpScale = 1.5f;
         private const float DawnDuration = 0.5f;
+
+        // 띠 뒤판 색. 반투명한 띠 밑에 비치는 색이다. 카메라 배경색은 하늘색(LayoutConst.SkyTopColor)이라 따로 둔다.
+        private static readonly Color BarBackColor = new Color(0.19215687f, 0.3019608f, 0.4745098f);
 
         private readonly Dictionary<string, TMP_Text> _ingredientTexts = new Dictionary<string, TMP_Text>();
         private readonly Dictionary<string, Image> _ingredientIcons = new Dictionary<string, Image>();
@@ -29,14 +32,18 @@ namespace Mozzi.Game.Ui
         private Image _nightCover;
         private TMP_Text _nightText;
         private GameObject _nextDayButton;
-        private RectTransform _storageButtonRect;
+        private IUiHub _ui;
+        private GameObject _upgradePanel;
+        private GameObject _menuPanel;
+        private TMP_Text _upgradeFenceText;
+        private Button _upgradeFenceButton;
         private float _nightAlpha;
         private float _dawnTime;
         private bool _dawning;
         private bool _bound;
 
-        // 아래 띠의 도감 둘 · 보관함 버튼은 IUiHub 로 열고, 「다음날로」는 넘겨받은 onNextDay 를 부른다.
-        public void Bind(IReadOnlyList<string> ingredientIds, IUiHub ui, UnityAction onNextDay)
+        // 도감 아이콘 · ☰ 판의 레시피 도감은 IUiHub 로 열고, 「다음날로」 · 담장 늘리기는 넘겨받은 콜백을 부른다.
+        public void Bind(IReadOnlyList<string> ingredientIds, IUiHub ui, UnityAction onNextDay, UnityAction onBuyFence)
         {
             if (_bound)
             {
@@ -62,24 +69,76 @@ namespace Mozzi.Game.Ui
                 }
             }
 
-            UiBindUtil.BindButton(transform, UiNames.FarmCodexButton, PrefabName, ui.OpenMozziCodex);
-            _storageButtonRect = UiBindUtil.BindButton(transform, UiNames.FarmStorageButton, PrefabName, ui.OpenStorage).transform as RectTransform;
-            UiBindUtil.BindButton(transform, UiNames.FarmRecipeCodexButton, PrefabName, ui.OpenRecipeCodex);
+            _ui = ui;
+            _upgradePanel = UiBindUtil.FindObject(transform, UiNames.FarmUpgradePanel, PrefabName);
+            _menuPanel = UiBindUtil.FindObject(transform, UiNames.FarmMenuPanel, PrefabName);
+            _upgradeFenceText = UiBindUtil.Find<TMP_Text>(_upgradePanel.transform, UiNames.FarmUpgradeFenceText, PrefabName);
+            UiBindUtil.SetText(UiBindUtil.Find<TMP_Text>(_upgradePanel.transform, UiNames.FarmPanelTitle, PrefabName), "농장 강화");
+            UiBindUtil.SetText(UiBindUtil.Find<TMP_Text>(_menuPanel.transform, UiNames.FarmPanelTitle, PrefabName), "메뉴");
+
+            UiBindUtil.BindButton(transform, UiNames.FarmCodexButton, PrefabName, OnCodex);
+            UiBindUtil.BindButton(transform, UiNames.FarmUpgradeButton, PrefabName, delegate { TogglePanel(_upgradePanel); });
+            UiBindUtil.BindButton(transform, UiNames.FarmMenuButton, PrefabName, delegate { TogglePanel(_menuPanel); });
+            UiBindUtil.BindButton(_upgradePanel.transform, UiNames.FarmPanelBlocker, PrefabName, ClosePanels);
+            UiBindUtil.BindButton(_menuPanel.transform, UiNames.FarmPanelBlocker, PrefabName, ClosePanels);
+            _upgradeFenceButton = UiBindUtil.BindButton(_upgradePanel.transform, UiNames.FarmUpgradeFenceButton, PrefabName, onBuyFence);
+            UiBindUtil.BindButton(_menuPanel.transform, UiNames.FarmRecipeCodexButton, PrefabName, OnRecipeCodex);
             _nextDayButton = UiBindUtil.BindButton(transform, UiNames.FarmNextDayButton, PrefabName, onNextDay).gameObject;
+            ClosePanels();
 
             _nightCover = UiBindUtil.Find<Image>(transform, UiNames.FarmNightCover, PrefabName);
             _nightAlpha = _nightCover.color.a;
             _nightText = UiBindUtil.Find<TMP_Text>(_nightCover.transform, UiNames.FarmNightText, PrefabName);
-            UiBindUtil.SetText(_nightText, "밤이 됐어요\n아래 「다음날로」를 눌러요");
+            UiBindUtil.SetText(_nightText, "밤이 됐어요");
 
             UiBindUtil.SetText(_title, "농장");
 
             ExtendBar(UiNames.FarmResourceBar, true);
-            ExtendBar(UiNames.FarmBottomBar, false);
             _bound = true;
         }
 
-        // 띠를 화면 끝까지 잇는다. 뒤판은 카메라 배경색으로 띠 밑을 막아 월드(풀밭)가 비치지 않게 하고,
+        private void OnCodex()
+        {
+            ClosePanels();
+            _ui.OpenMozziCodex();
+        }
+
+        private void OnRecipeCodex()
+        {
+            ClosePanels();
+            _ui.OpenRecipeCodex();
+        }
+
+        // 판은 한 번에 하나만. 같은 아이콘을 다시 누르면 닫힌다.
+        private void TogglePanel(GameObject panel)
+        {
+            bool open = panel.activeSelf == false;
+            ClosePanels();
+            UiBindUtil.SetActive(panel, open);
+        }
+
+        private void ClosePanels()
+        {
+            UiBindUtil.SetActive(_upgradePanel, false);
+            UiBindUtil.SetActive(_menuPanel, false);
+        }
+
+        // 강화 판의 담장 줄. price 가 음수면 최대 단계라 잠근다.
+        public void SetUpgradeFence(int count, int max, int price, bool canPay)
+        {
+            UiBindUtil.SetText(_upgradeFenceText, "담장 " + count + "/" + max);
+            if (price < 0)
+            {
+                UiBindUtil.SetLabel(_upgradeFenceButton, "담장 최대");
+                _upgradeFenceButton.interactable = false;
+                return;
+            }
+
+            UiBindUtil.SetLabel(_upgradeFenceButton, "늘리기 " + price + "G");
+            _upgradeFenceButton.interactable = canPay;
+        }
+
+        // 띠를 화면 끝까지 잇는다. 뒤판은 옛 카메라 배경색(BarBackColor)으로 띠 밑을 막아 월드(풀밭)가 비치지 않게 하고,
         // 덧띠는 띠와 같은 색으로 안전 영역 밖을 채운다. 풀에서 다시 나와도 한 번만 만든다.
         private void ExtendBar(string barName, bool upward)
         {
@@ -89,14 +148,7 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            Color backColor = Color.black;
-            if (Camera.main != null)
-            {
-                backColor = Camera.main.backgroundColor;
-                backColor.a = 1f;
-            }
-
-            RectTransform back = AddBarPiece(bar.transform.parent, UiNames.FarmBarBack, backColor);
+            RectTransform back = AddBarPiece(bar.transform.parent, UiNames.FarmBarBack, BarBackColor);
             back.SetSiblingIndex(0);
             RectTransform barRect = bar.rectTransform;
             back.anchorMin = barRect.anchorMin;
@@ -149,19 +201,12 @@ namespace Mozzi.Game.Ui
             _bumpDone.Clear();
             _dawning = false;
             _nextDayButton = null;
-            _storageButtonRect = null;
+            _ui = null;
+            _upgradePanel = null;
+            _menuPanel = null;
+            _upgradeFenceText = null;
+            _upgradeFenceButton = null;
             _bound = false;
-        }
-
-        // 보관함 버튼 위인가. Overlay 캔버스라 카메라 없이 잰다.
-        public bool IsOverStorageButton(Vector2 screen)
-        {
-            if (_storageButtonRect == null)
-            {
-                return false;
-            }
-
-            return RectTransformUtility.RectangleContainsScreenPoint(_storageButtonRect, screen);
         }
 
         public void SetGold(int gold, bool bump)

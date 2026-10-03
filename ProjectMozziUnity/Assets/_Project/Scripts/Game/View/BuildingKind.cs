@@ -1,9 +1,10 @@
 namespace Mozzi.Game.View
 {
-    // 농장 위 건물 둘. 화면은 4·5단계에서 붙는다.
+    // 메인 화면 건물 셋. 누르면 제 화면(합성소 · 가판대 · 보관함)이 열린다.
     public enum BuildingKind
     {
         Synthesis,
-        Stall
+        Stall,
+        Storage
     }
 }

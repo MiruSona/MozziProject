@@ -49,6 +49,7 @@ namespace Mozzi.EditorTools
                 + " · Growth " + tables.GrowthRows.Count
                 + " · Stall " + tables.StallRows.Count
                 + " · Farm " + tables.FarmRows.Count
+                + " · FarmDecor " + tables.FarmDecorRows.Count
                 + " (구운 시각 " + tables.BuiltAt + ")";
         }
 

@@ -5,7 +5,7 @@ namespace Mozzi.Game.View
     {
         None,
         Pressed,
-        // 농장 찹쌀이를 들고 옮기는 중. 보관함 버튼에 놓으면 넣는다.
+        // 농장 찹쌀이를 들고 옮기는 중. 보관함 궤짝에 놓으면 넣는다.
         DragFarm,
         // 보관함 줄에서 끌어낸 임시 마리를 들고 있는 중. 담장 안에 놓으면 농장에 놓인다.
         DragPlace,

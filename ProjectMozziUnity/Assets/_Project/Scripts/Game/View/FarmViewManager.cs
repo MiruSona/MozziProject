@@ -16,7 +16,7 @@ using UnityEngine.InputSystem;
 
 namespace Mozzi.Game.View
 {
-    // 농장 화면의 월드 쪽. IFarmHub 의 찹쌀이 · 더미를 Object 와 맞추고 건물 둘을 놓고 탭을 받는다.
+    // 농장 화면의 월드 쪽. IFarmHub 의 찹쌀이 · 더미를 Object 와 맞추고 건물 셋을 놓고 탭을 받는다.
     // 찹쌀이 · 더미는 매 프레임 목록 대조로 Rent · Return 하고, 건물 알림 점만 이벤트로 갱신한다.
     // 찹쌀이 탭·드래그 판정은 MozziDragAgent 가 하고, 놓았을 때 할 일(보관함 넣기 · 농장에 놓기)은 여기서 한다.
     public sealed class FarmViewManager : IManager, IProcess, IFarmViewHub
@@ -25,8 +25,12 @@ namespace Mozzi.Game.View
         // 보관함에서 끌어낸 임시 마리의 id. 농장 id 는 1부터라 안 겹친다.
         private const int GhostMozziId = -1;
         private const float GridJitter = 0.35f;
-        // 더미 줄이 담장 안쪽 바닥에서 뜨는 높이. 그림 아래 수량 글자가 앞 담장에 안 걸리게 잡았다.
-        private const float PileRowUnits = 1.8f;
+        // 더미 줄이 울타리 안쪽 바닥에서 뜨는 높이. 그림 아래 수량 글자가 앞 울타리에 안 걸리게 잡았다.
+        private const float PileRowUnits = 1.2f;
+        // 찹쌀이가 걷는 자리를 울타리 안쪽에서 이만큼 줄인다 (유닛). 아래는 더미 줄 위, 옆은 앞 울타리에 반쯤 걸치게.
+        private const float WanderBottomUnits = 1.7f;
+        private const float WanderSideUnits = 0.3f;
+        private const float WanderTopUnits = 0.1f;
         // 변종 테두리(1.2배)까지 안 겹치게 반지름 합에 이만큼 곱한다.
         private const float SeparateMargin = LayoutConst.ShinyBorderScale;
 
@@ -62,8 +66,11 @@ namespace Mozzi.Game.View
         private bool _hasPendingStart;
         private Vector2 _pendingStart;
         private IFarmGroundPainter _groundPainter;
+        private FarmDecorView _decor;
+        private SkyView _sky;
         private BuildingObject _synthesisBuilding;
         private BuildingObject _stallBuilding;
+        private BuildingObject _storageBuilding;
         private int _placedCount;
 
         public void Init()
@@ -74,8 +81,11 @@ namespace Mozzi.Game.View
             _resource = GlobalHub.Get<IResourceHub>();
             _drag = new MozziDragAgent(this, _camera);
 
-            _groundPainter = new TilemapFarmGroundPainter();
+            _groundPainter = new SpriteFarmGroundPainter();
             _groundPainter.Paint(_root, _resource);
+
+            _sky = new SkyView();
+            _sky.Build(_root, _resource, _camera);
         }
 
         public void PostInit()
@@ -86,6 +96,10 @@ namespace Mozzi.Game.View
             _synthesis = InGameHub.Get<ISynthesisHub>();
             _stall = InGameHub.Get<IStallHub>();
             _storage = InGameHub.Get<IStorageHub>();
+
+            // 장식은 표가 있어야 놓을 수 있어 땅(Init)과 달리 여기서 깐다.
+            _decor = new FarmDecorView();
+            _decor.Build(_root, _resource, _data.FarmDecors.All);
 
             LayoutPileSpots();
             PlaceBuildings();
@@ -169,10 +183,21 @@ namespace Mozzi.Game.View
 
             ReturnIfAlive(_synthesisBuilding);
             ReturnIfAlive(_stallBuilding);
+            ReturnIfAlive(_storageBuilding);
 
             if (_groundPainter != null)
             {
                 _groundPainter.Clear();
+            }
+
+            if (_decor != null)
+            {
+                _decor.Clear();
+            }
+
+            if (_sky != null)
+            {
+                _sky.Clear();
             }
 
             if (_root != null)
@@ -181,8 +206,9 @@ namespace Mozzi.Game.View
             }
         }
 
-        // 카메라를 캔버스와 같은 배율로 맞춘다. 월드 540 폭이 내용 칸 폭과 같고, 월드 위끝이 내용 칸 위끝에 온다.
-        // 그래서 자원바 · 건물 띠 · 농장이 위에서부터 붙고, 길쭉한 폰에서 남는 자리는 농장 아래로 간다.
+        // 카메라를 캔버스와 같은 배율로 맞춘다. 월드 540 폭이 내용 칸 폭과 같고, 월드 아래끝이 내용 칸 아래끝에 온다.
+        // 그래서 농장 · 길 · 건물이 아래에서부터 붙고, 길쭉한 폰에서 남는 자리는 월드 위(하늘, SkyView)로 간다.
+        // 9:16 에서는 내용 칸 높이가 월드 960 과 같아 위끝 맞춤과 똑같다.
         private void FitCamera()
         {
             _fitWidth = Screen.width;
@@ -196,7 +222,7 @@ namespace Mozzi.Game.View
             _camera.orthographicSize = Screen.height * unitsPerPx * 0.5f;
 
             float x = (Screen.width * 0.5f - content.center.x) * unitsPerPx;
-            float y = LayoutConst.HalfHeight - (content.yMax - Screen.height * 0.5f) * unitsPerPx;
+            float y = -LayoutConst.HalfHeight + (Screen.height * 0.5f - content.yMin) * unitsPerPx;
             _camera.transform.position = new Vector3(x, y, _camera.transform.position.z);
         }
 
@@ -210,16 +236,19 @@ namespace Mozzi.Game.View
             _resource.Return(obj);
         }
 
+        // 건물 셋은 BuildingLayout 의 자리에 선다.
         private void PlaceBuildings()
         {
-            float x = LayoutConst.BuildingCenterX;
-            float y = LayoutConst.BuildingCenterY;
+            _synthesisBuilding = RentBuilding(BuildingKind.Synthesis, SpriteKeys.BuildingSynthesis, "합성소");
+            _stallBuilding = RentBuilding(BuildingKind.Stall, SpriteKeys.BuildingStall, "가판대");
+            _storageBuilding = RentBuilding(BuildingKind.Storage, SpriteKeys.BuildingStorage, "보관함");
+        }
 
-            _synthesisBuilding = _resource.Rent<BuildingObject>(PrefabKeys.Building, _root);
-            _synthesisBuilding.Setup(BuildingKind.Synthesis, _resource.GetSprite(SpriteKeys.BuildingSynthesis), new Vector2(-x, y));
-
-            _stallBuilding = _resource.Rent<BuildingObject>(PrefabKeys.Building, _root);
-            _stallBuilding.Setup(BuildingKind.Stall, _resource.GetSprite(SpriteKeys.BuildingStall), new Vector2(x, y));
+        private BuildingObject RentBuilding(BuildingKind kind, string spriteKey, string label)
+        {
+            BuildingObject building = _resource.Rent<BuildingObject>(PrefabKeys.Building, _root);
+            building.Setup(kind, _resource.GetSprite(spriteKey), label);
+            return building;
         }
 
         // 합성소는 Done 칸이 하나라도 있으면, 가판대는 열려 있고 줄이 있으면 점을 켠다.
@@ -356,17 +385,15 @@ namespace Mozzi.Game.View
             return false;
         }
 
-        // 담장 안에서 담장 두께와 더미 줄을 뺀 자리다. 옆 담장은 찹쌀이 앞이라 좌우를 더 뺀다.
+        // 울타리 안쪽에서 더미 줄을 뺀 자리다. 보관함에서 끌어 놓을 때도 이 안이어야 놓인다.
         private static Rect WanderRect()
         {
             Rect area = LayoutConst.FarmRect;
-            float side = LayoutConst.FenceUnits * 0.75f;
-            float top = LayoutConst.FenceUnits * 0.5f;
             return Rect.MinMaxRect(
-                area.xMin + side,
-                area.yMin + LayoutConst.FenceUnits + 1.3f,
-                area.xMax - side,
-                area.yMax - top);
+                area.xMin + WanderSideUnits,
+                area.yMin + WanderBottomUnits,
+                area.xMax - WanderSideUnits,
+                area.yMax - WanderTopUnits);
         }
 
         // 드래그로 놓은 자리가 있으면 그것을 한 번 쓰고, 없으면 격자 자리다.
@@ -550,7 +577,8 @@ namespace Mozzi.Game.View
             _ui.OpenMozziPopup(mozzi.MozziId);
         }
 
-        // 농장 찹쌀이를 놓았다. 보관함 버튼 위면 넣고, 아니면 담장 안 그 자리에 둔다 (피드백 6·7).
+        // 농장 찹쌀이를 놓았다. 보관함 궤짝 위면 넣고, 아니면 담장 안 가장 가까운 자리에 둔다 (피드백 6·7).
+        // 합성 기계 · 가게 위에 놓는 판정은 아직 없다 — 그 자리도 담장 안으로 돌아온다.
         public void OnFarmMozziDropped(MozziObject mozzi, Vector2 screen)
         {
             if (mozzi == null || mozzi.IsDead)
@@ -559,7 +587,8 @@ namespace Mozzi.Game.View
             }
 
             mozzi.EndDrag();
-            if (_ui.IsOverStorageDrop(screen))
+            Vector3 world = _camera.ScreenToWorldPoint(new Vector3(screen.x, screen.y, 0f));
+            if (_storageBuilding.ContainsWorld(new Vector2(world.x, world.y)))
             {
                 _storage.TakeFromFarm(mozzi.MozziId);
             }
@@ -633,6 +662,12 @@ namespace Mozzi.Game.View
             if (building.Kind == BuildingKind.Synthesis)
             {
                 _ui.OpenSynthesis();
+                return;
+            }
+
+            if (building.Kind == BuildingKind.Storage)
+            {
+                _ui.OpenStorage();
                 return;
             }
 

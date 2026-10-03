@@ -13,8 +13,8 @@ namespace Mozzi.Editor
         private const string FarmScreenPath = "Assets/_Project/Resources/Prefabs/UI/FarmScreen.prefab";
         private const string StallScreenPath = "Assets/_Project/Resources/Prefabs/UI/StallScreen.prefab";
 
-        // 「대추 100/100」이 옆 칸에 붙던 것을 글씨 크기로 푼다 (11 → 9 면 58px 칸에 들어간다).
-        private const float IngredientFontSize = 9f;
+        // 「대추 100/100」이 옆 칸에 붙던 것을 글씨 크기로 푼다. 농장 화면이 540 기준이라 옛 9 의 1.5배다 (칸 87px).
+        private const float IngredientFontSize = 13.5f;
 
         private static readonly string[] IngredientIds =
         {
