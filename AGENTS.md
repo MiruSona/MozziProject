@@ -123,30 +123,32 @@
 
 - **흐름 배선은 코드에 둔다.** 「어느 버튼이 어느 Manager 를 부르나」「누가 누구를 참조하나」 같은 연결은 코드에 있어야 diff 로 읽고 검토할 수 있다. 프리팹·씬에 Manager 참조나 UnityEvent(OnClick 인스펙터 연결)를 넣지 않는다.
 - **모양은 프리팹에 둬도 된다.** 레이아웃 · 위치 · 크기 · 색 · 자식 이름 같은 것이다. 코드는 자식 이름 상수(`UiNames`)로 찾아 배선한다.
-- 씬·프리팹의 값은 AI 도 Unity CLI(`unity command get_component_properties` 등)로 읽고 쓸 수 있다. 「AI 는 인스펙터를 못 본다」는 옛 전제(2026-08-20 조사)는 2026-09-18 에 사용자가 거뒀다.
+- 씬·프리팹의 값은 AI 도 Unity CLI(`unity command get_component_properties` 등)로 읽고 쓴다.
 - ScriptableObject 는 **수치 데이터 통**으로만 쓴다. 이벤트 배선 도구로 쓰지 않는다.
-- 근거 : `Tools/CodeTool/Docs/Research/2026-08-20-Unity프로젝트구조조사.md` (인스펙터 전제만 낡았다 — CodeTool 쪽 갱신은 그 툴 `Docs/Todo/` 에 남긴다)
+- 근거 : `Tools/CodeTool/Docs/Research/2026-08-20-Unity프로젝트구조조사.md` (그 문서의 「AI 는 인스펙터를 못 본다」 전제는 이 저장소에서는 쓰지 않는다)
 - Unity 프로젝트 파일은 `ProjectMozziUnity/` 안에만 둔다. 저장소 뿌리에 흩지 않는다.
 
 ## 11. 툴 서브모듈 규칙
 
-- 여덟 툴은 `Tools/<툴>/` 아래 **git 서브모듈**이다. 다른 저장소에서 만든 것을 가져다 쓰는 자리다.
+- 툴은 `Tools/<툴>/` 아래 **git 서브모듈**이다 (목록은 `.gitmodules`). 다른 저장소에서 만든 것을 가져다 쓰는 자리다.
 - **툴 안의 코드·문서를 여기서 고치지 않는 것이 기본이다.** 게임 쪽 사정으로 툴을 고쳐야 하면
   그 서브모듈 저장소에서 정식으로 고친다.
 - **툴을 고쳤으면 커밋이 두 번이다.** ① `Tools/<툴>/` 안에서 커밋·푸시,
   ② 이 저장소에서 `git add Tools/<툴>` 로 가리키는 커밋을 갱신.
   **②를 잊는 것이 가장 흔한 실수다** — ①만 하면 다른 사람이 받을 때 옛 커밋이 딸려 온다.
 - **툴 개선 요청·버그는 그 툴 저장소의 `Docs/Todo/` 에 남긴다.** 이 저장소 문서에 적지 않는다.
-- **툴을 쓰고 나면 피드백을 그 서브모듈에 남긴다.** 막힌 것 · 헷갈린 것 · 잘 된 것을 `Tools/<툴>/Docs/Todo/` 에 적는다 (사용자 지시 2026-09-18). 이 저장소 문서나 mem 에는 안 적는다 — 툴 이야기는 툴 저장소 몫이다.
+- **툴을 쓰고 나면 피드백을 그 서브모듈에 남긴다.** 막힌 것 · 헷갈린 것 · 잘 된 것을 `Tools/<툴>/Docs/Todo/` 에 적는다. 이 저장소 문서나 mem 에는 안 적는다 — 툴 이야기는 툴 저장소 몫이다.
 - 처음 받을 때는 `git clone --recurse-submodules`, 이미 받았으면 `git submodule update --init --recursive`.
 - **갱신한 뒤에는 `powershell -File Tools\setup.ps1`** 로 실행 파일을 다시 만든다. exe 와 `.venv` 는 git 에 안 올라가서 그냥 두면 옛 판이 남는다. 낡았는지만 보려면 `-Check`.
-  **툴 서브모듈이 2026-09-21 이후 커밋이어야 `build.ps1`·`setup.ps1` 이 들어 있다** — 「스크립트 없음」이 뜨면 서브모듈 갱신이 먼저다.
+  `build.ps1` 은 실행 파일을 굽는 Go 툴(AIMemoryTool · DataTool · EffortTool · GamedesignTool)에만 있다.
+  **그 툴에서 「스크립트 없음」이 뜨면 서브모듈 갱신이 먼저다.**
 
 <!-- >>> mem >>> -->
 ## 기억 저장소 (mem)
 
 - 지난 결정·기록·할 일·조사 결과는 `mem` 에 있다. 세션을 열면 훅이 요약을 밀어 넣는다.
-- 찾을 때 `mem search <낱말> <낱말>`, 남길 때 `mem add --type … --title … --tags … --sources …`.
+- 찾을 때 `mem search <낱말> <낱말>`, 남길 때 `mem add --type … --title … --summary … --tags … --scope …`
+  (decision · issue · caution · fact 는 `--sources` 도). 언제 무엇을 남기나는 `mem-usage` 스킬.
 - **팀이 나눠 볼 결정·기록·조사 결과는 `mem` 에 남긴다. 개인 취향·말투는 Claude 내장 기억에 둔다.**
 - 결정을 뒤집을 때는 새로 쓰지 말고 `mem set <옛id> --by-new` 로 덮는다.
 - 확신 없이 자동으로 남기는 기억은 `mem add --hold` 로 보류한다. 사람이 보기 전엔 검색에 안 뜬다.
