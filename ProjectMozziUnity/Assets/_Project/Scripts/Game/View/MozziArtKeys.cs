@@ -9,8 +9,11 @@ namespace Mozzi.Game.View
         public const int BodyHopCount = 4;
         public const int FaceCount = 10;
 
-        // 평소 표정. 탭·드래그 때만 다른 표정이 잠깐 나온다 (반복 01 피드백 5).
+        // 평소 표정. 탭하면 다른 표정이 잠깐 나온다.
         public const int BaseFaceIndex = 1;
+
+        // 들려 있는 동안 고정하는 놀란 표정 (동그란 눈 둘 + 동그란 입, face_05).
+        public const int DragFaceIndex = 5;
 
         // 악세사리 id. 어느 종이 무엇을 쓰나는 표(MozziSpecies.AccessoryId)가 정한다. none 은 투명 그림이다.
         public const string CrownId = "crown";

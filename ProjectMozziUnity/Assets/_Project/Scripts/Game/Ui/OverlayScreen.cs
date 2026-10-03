@@ -33,6 +33,7 @@ namespace Mozzi.Game.Ui
             _gold = UiBindUtil.Find<TMP_Text>(transform, UiNames.GoldText, PrefabName);
             UiBindUtil.BindButton(transform, UiNames.CloseButton, PrefabName, ui.CloseAll);
             UiBindUtil.SetText(_title, Title);
+            EnsureBackdrop();
 
             BindChildren();
             _bound = true;
@@ -52,6 +53,33 @@ namespace Mozzi.Game.Ui
             _title = null;
             _gold = null;
             _bound = false;
+        }
+
+        // 뿌리 뒤에 같은 색 바탕을 한 장 더 깐다. 내용 칸 옆(넓적한 화면)과 안전 영역 밖까지 덮어 농장이 안 비친다.
+        // 한 번만 만든다 — 풀에서 다시 빌려 와도 이름으로 찾아 그대로 쓴다.
+        private void EnsureBackdrop()
+        {
+            if (transform.Find(UiNames.OverlayBackdrop) != null)
+            {
+                return;
+            }
+
+            GameObject go = new GameObject(UiNames.OverlayBackdrop, typeof(RectTransform));
+            RectTransform rect = go.transform as RectTransform;
+            rect.SetParent(transform, false);
+            rect.SetAsFirstSibling();
+            rect.anchorMin = Vector2.zero;
+            rect.anchorMax = Vector2.one;
+            rect.offsetMin = new Vector2(-LayoutConstUi.BarBleedLength, -LayoutConstUi.BarBleedLength);
+            rect.offsetMax = new Vector2(LayoutConstUi.BarBleedLength, LayoutConstUi.BarBleedLength);
+
+            Image image = go.AddComponent<Image>();
+            image.color = Color.black;
+            Image rootImage = GetComponent<Image>();
+            if (rootImage != null)
+            {
+                image.color = rootImage.color;
+            }
         }
 
         // 화면마다 자식을 찾아 버튼을 거는 자리.

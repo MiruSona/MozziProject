@@ -2,6 +2,7 @@
     "name": "Mozzi.Runtime",
     "rootNamespace": "Mozzi",
     "references": [
+        "LitMotion",
         "Mozzi.Data",
         "Unity.InputSystem",
         "Unity.TextMeshPro",

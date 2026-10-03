@@ -13,7 +13,8 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 가판대 화면 (세로조각1판설계 3-4). 머리 · 진열대 · 손님 줄 · 만들기 · 실험 · 버튼 띠, 위에 떡메 덮개와 발견 연출.
+    // 가판대 화면 (세로조각1판설계 3-4). 가게 그림 위에 칠판 메뉴 · 유리 진열장 · 손님 줄이 놓이고,
+    // 아래 판에 진열 목록 · 만들기 · 실험 · 버튼이 모인다. 위에 떡메 덮개와 발견 연출.
     // 찾은 레시피 · 해 본 조합은 탭 한 번에 Make, 처음 보는 조합만 PoundAgent 가 3탭을 돌린 뒤 Make 를 부른다.
     public sealed class StallScreen : OverlayScreen
     {
@@ -25,15 +26,16 @@ namespace Mozzi.Game.Ui
 
         private static readonly Color ToggleOff = new Color(0.35f, 0.38f, 0.55f, 1f);
         private static readonly Color ToggleOn = new Color(0.9f, 0.7f, 0.25f, 1f);
-        private static readonly Color CellEmpty = new Color(0.2f, 0.2f, 0.26f, 1f);
-        private static readonly Color CellCustomer = new Color(0.55f, 0.45f, 0.35f, 1f);
-        private static readonly Color CellHint = new Color(0.35f, 0.55f, 0.65f, 1f);
+        // 주문 말풍선 색. 힌트 손님(못 찾은 떡을 찾는 손님)은 하늘색이다.
+        private static readonly Color BubbleCustomer = new Color(1f, 0.98f, 0.92f, 1f);
+        private static readonly Color BubbleHint = new Color(0.72f, 0.89f, 0.97f, 1f);
 
         private readonly List<Button> _queueCells = new List<Button>();
         private readonly List<Button> _makeRows = new List<Button>();
         private readonly List<string> _makeRowRecipes = new List<string>();
         private readonly List<Image> _makeRowIcons = new List<Image>();
         private readonly List<Image> _queueIcons = new List<Image>();
+        private readonly List<OrderBubbleView> _queueBubbles = new List<OrderBubbleView>();
         private readonly List<CustomerCellView> _queueCustomers = new List<CustomerCellView>();
         private readonly List<ShelfCellView> _shelfCells = new List<ShelfCellView>();
         private readonly Dictionary<string, Button> _expToggles = new Dictionary<string, Button>();
@@ -51,6 +53,7 @@ namespace Mozzi.Game.Ui
 
         private TMP_Text _status;
         private TMP_Text _shelf;
+        private TMP_Text _menuBody;
         private TMP_Text _expInfo;
         private Button _expMake;
         private Button _openButton;
@@ -93,6 +96,10 @@ namespace Mozzi.Game.Ui
             _resource = GlobalHub.Get<IResourceHub>();
             _pound = new PoundAgent(this, _data.Stalls.Get(StallRowId));
 
+            UiBindUtil.Find<Image>(transform, UiNames.SceneBg, PrefabName).sprite = _resource.GetSprite(SpriteKeys.ScreenStallBg);
+            UiBindUtil.SetText(UiBindUtil.Find<TMP_Text>(transform, UiNames.StallMenuTitleText, PrefabName), UiText.StallMenuTitle);
+            _menuBody = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallMenuBodyText, PrefabName);
+
             _status = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallStatusText, PrefabName);
             _shelf = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallShelfText, PrefabName);
             BindShelfCells();
@@ -104,6 +111,7 @@ namespace Mozzi.Game.Ui
                     delegate { OnServe(index); });
                 _queueCells.Add(cell);
                 _queueIcons.Add(IconOf(cell.transform));
+                _queueBubbles.Add(new OrderBubbleView(cell.transform, PrefabName));
                 _queueCustomers.Add(new CustomerCellView(cell.transform));
             }
 
@@ -155,7 +163,7 @@ namespace Mozzi.Game.Ui
             UiBindUtil.SetActive(_madePanel, false);
         }
 
-        // 진열대 묶음 칸 24개. 하나도 없는 옛 프리팹이면 비워 두고 ShelfText 글자판으로 돌아간다.
+        // 유리 진열장 안 묶음 칸 여섯. 전체 목록은 늘 ShelfText 한 줄로 같이 보여 준다.
         private void BindShelfCells()
         {
             for (int i = 0; i < UiNames.StallShelfCellCount; i++)
@@ -174,8 +182,6 @@ namespace Mozzi.Game.Ui
 
                 _shelfCells.Add(view);
             }
-
-            UiBindUtil.SetActive(_shelf.gameObject, _shelfCells.Count == 0);
         }
 
         // 칸 안의 떡 그림 자식. 프리팹에 없으면 null 이고, 그때는 예전처럼 글자만 나온다.
@@ -229,6 +235,7 @@ namespace Mozzi.Game.Ui
         {
             _queueCells.Clear();
             _queueIcons.Clear();
+            _queueBubbles.Clear();
             _queueCustomers.Clear();
             _shelfCells.Clear();
             _expIcons.Clear();
@@ -256,6 +263,7 @@ namespace Mozzi.Game.Ui
             SetGold(_wallet.Gold);
             RefreshStatus();
             RefreshShelf();
+            RefreshMenuBoard();
             RefreshQueue();
             RefreshMakeRows();
             RefreshExperiment();
@@ -315,7 +323,7 @@ namespace Mozzi.Game.Ui
             return (shelfMax + 5) / 6;
         }
 
-        // 종류별 수를 표 순서대로, 평범한 떡은 맨 뒤에 묶는다. 칸이 있으면 묶음 칸으로, 없으면 옛 글자판으로.
+        // 종류별 수를 표 순서대로, 평범한 떡은 맨 뒤에 묶는다. 진열장 칸에는 앞에서부터 그림으로, 아래 판에는 전체를 글자 한 줄로.
         private void RefreshShelf()
         {
             IReadOnlyList<ShelfItem> shelf = _stall.Shelf;
@@ -335,11 +343,7 @@ namespace Mozzi.Game.Ui
             }
 
             IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
-            if (_shelfCells.Count > 0)
-            {
-                RefreshShelfCells(rows, counts, plain);
-                return;
-            }
+            RefreshShelfCells(rows, counts, plain);
 
             List<string> parts = new List<string>();
             for (int i = 0; i < rows.Count; i++)
@@ -362,7 +366,28 @@ namespace Mozzi.Game.Ui
                 body = string.Join("  ", parts);
             }
 
-            UiBindUtil.SetText(_shelf, "진열대 " + shelf.Count + "/" + _stall.ShelfMax + "\n" + body);
+            UiBindUtil.SetText(_shelf, "진열 " + shelf.Count + "/" + _stall.ShelfMax + " · " + body);
+        }
+
+        // 칠판 메뉴. 찾은 레시피 이름을 표 순서로 몇 줄, 하나도 없으면 기본 메뉴 한 줄.
+        private void RefreshMenuBoard()
+        {
+            List<string> lines = new List<string>();
+            IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
+            for (int i = 0; i < rows.Count && lines.Count < LayoutConstUi.StallMenuLineMax; i++)
+            {
+                if (_codex.IsRecipeOpen(rows[i].Id))
+                {
+                    lines.Add(rows[i].Name);
+                }
+            }
+
+            if (lines.Count == 0)
+            {
+                lines.Add(UiText.StallMenuDefault);
+            }
+
+            UiBindUtil.SetText(_menuBody, string.Join("\n", lines));
         }
 
         // 레시피표 순서로 묶음 칸을 펼치고 평범한 떡은 맨 뒤. 남은 칸은 끈다.
@@ -392,7 +417,7 @@ namespace Mozzi.Game.Ui
             }
         }
 
-        // 한 종류 count 개를 unit 씩 칸에 나눠 담고 다음 칸 번호를 돌려준다. 칸이 모자라면 경고만 남기고 멈춘다.
+        // 한 종류 count 개를 unit 씩 칸에 나눠 담고 다음 칸 번호를 돌려준다. 진열장 칸이 다 차면 거기서 멈춘다 (나머지는 글자 목록으로 본다).
         private int FillCells(int cellIndex, Sprite sprite, int count, int unit)
         {
             int left = count;
@@ -400,7 +425,6 @@ namespace Mozzi.Game.Ui
             {
                 if (cellIndex >= _shelfCells.Count)
                 {
-                    Debug.LogWarning("[StallScreen] 진열대 칸 " + _shelfCells.Count + " 을 넘겼다 — 남은 떡 " + left);
                     return cellIndex;
                 }
 
@@ -419,21 +443,23 @@ namespace Mozzi.Game.Ui
             for (int i = 0; i < _queueCells.Count; i++)
             {
                 Button cell = _queueCells[i];
+                OrderBubbleView bubble = _queueBubbles[i];
                 if (i >= queue.Count)
                 {
-                    cell.image.color = CellEmpty;
                     cell.interactable = false;
                     _queueCustomers[i].Hide();
                     SetQueueIcon(i, null);
                     UiBindUtil.SetLabel(cell, "");
+                    bubble.SetActive(false);
                     continue;
                 }
 
                 StallCustomer customer = queue[i];
-                cell.image.color = CellCustomer;
+                bubble.SetActive(true);
+                bubble.SetColor(BubbleCustomer);
                 if (customer.isHint)
                 {
-                    cell.image.color = CellHint;
+                    bubble.SetColor(BubbleHint);
                 }
 
                 cell.interactable = _stall.Shelf.Count > 0;
@@ -441,7 +467,7 @@ namespace Mozzi.Game.Ui
             }
         }
 
-        // 손님 그림을 겹으로 깔고 주문 떡은 오른쪽 위 구석에. 겹 자리가 없는 프리팹은 예전 글자판 그대로다.
+        // 손님 그림을 겹으로 세우고 주문은 머리 위 말풍선에. 찾은 떡은 그림만, 아무거나 · 못 찾은 떡은 글자로.
         private void SetQueueCell(int index, StallCustomer customer)
         {
             Sprite sprite = null;
@@ -453,20 +479,15 @@ namespace Mozzi.Game.Ui
             CustomerCellView view = _queueCustomers[index];
             view.Apply(_resource, CustomerLook.FromSeed(customer.lookSeed), FaceOf(customer));
             SetQueueIcon(index, sprite);
+            _queueBubbles[index].SetWide(sprite == null);
 
-            if (view.IsShowing)
+            if (sprite != null)
             {
-                UiBindUtil.SetLabel(_queueCells[index], OrderLine(customer));
+                UiBindUtil.SetLabel(_queueCells[index], "");
                 return;
             }
 
-            if (sprite == null)
-            {
-                UiBindUtil.SetLabel(_queueCells[index], OrderLabel(customer));
-                return;
-            }
-
-            UiBindUtil.SetLabel(_queueCells[index], _data.Recipes.Get(customer.orderRecipeId).Name);
+            UiBindUtil.SetLabel(_queueCells[index], OrderLine(customer));
         }
 
         // 주문 떡이 진열대에 있으면 웃고, 없으면 시무룩. 아무거나 사는 손님은 기본 얼굴이다.
@@ -489,7 +510,7 @@ namespace Mozzi.Game.Ui
             return CustomerFace.Sad;
         }
 
-        // 손님 그림이 「손님」 글자를 대신하므로 주문만 한 줄로 쓴다.
+        // 떡 그림이 없는 주문을 글자 한 줄로. 못 찾은 떡은 「? 팥+콩」처럼 재료 이름만 보인다.
         private string OrderLine(StallCustomer customer)
         {
             if (customer.HasOrder == false)
@@ -512,7 +533,7 @@ namespace Mozzi.Game.Ui
             return "? " + string.Join("+", names);
         }
 
-        // 그림이 켜지면 글자를 그 아래로 민다. 손님 겹이 있으면 떡 그림과 상관없이 늘 민다.
+        // 말풍선 안 떡 그림.
         private void SetQueueIcon(int index, Sprite sprite)
         {
             Image icon = _queueIcons[index];
@@ -523,43 +544,6 @@ namespace Mozzi.Game.Ui
 
             icon.sprite = sprite;
             UiBindUtil.SetActive(icon.gameObject, sprite != null);
-
-            TMP_Text label = UiBindUtil.LabelOf(_queueCells[index]);
-            if (label == null)
-            {
-                return;
-            }
-
-            float top = 0f;
-            if (sprite != null || _queueCustomers[index].IsShowing)
-            {
-                top = LayoutConstUi.QueueTextTopMargin;
-            }
-
-            label.margin = new Vector4(0f, top, 0f, 0f);
-        }
-
-        // 못 찾은 떡 주문은 「? 팥+콩」처럼 재료 이름만 보인다.
-        private string OrderLabel(StallCustomer customer)
-        {
-            if (customer.HasOrder == false)
-            {
-                return "손님\n아무거나";
-            }
-
-            RecipeRow recipe = _data.Recipes.Get(customer.orderRecipeId);
-            if (_codex.IsRecipeOpen(recipe.Id))
-            {
-                return "손님\n" + recipe.Name;
-            }
-
-            List<string> names = new List<string>();
-            for (int i = 0; i < recipe.IngredientIds.Length; i++)
-            {
-                names.Add(_data.Ingredients.Get(recipe.IngredientIds[i]).Name);
-            }
-
-            return "손님\n? " + string.Join("+", names);
         }
 
         // 찾은 레시피만 표 순서대로 한 줄씩. 재료가 있으면 밝게.

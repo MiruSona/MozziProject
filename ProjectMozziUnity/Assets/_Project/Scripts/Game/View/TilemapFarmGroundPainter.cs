@@ -162,6 +162,17 @@ namespace Mozzi.Game.View
                     map.SetTile(new Vector3Int(col, row, 0), variants[variant]);
                 }
             }
+
+            // 담장 밖 아래쪽 풀밭. 기준 화면(9:16)에서는 아래 띠에 가려 안 보이고 길쭉한 폰에서만 드러난다.
+            // 담장 안을 다 깐 뒤에 뽑아서 안쪽 무늬는 예전과 같다.
+            for (int row = -1; row >= -LayoutConst.FarmFillRowsBelow; row--)
+            {
+                for (int col = 0; col < LayoutConst.FarmTileCols; col++)
+                {
+                    int variant = GroundVariantOf(rng.NextDouble());
+                    map.SetTile(new Vector3Int(col, row, 0), variants[variant]);
+                }
+            }
         }
 
         // 위 가로 담장만 뒤 층이고 나머지는 앞 층이다. 오른쪽 끝 칸은 왼쪽 그림을 뒤집어 쓴다.

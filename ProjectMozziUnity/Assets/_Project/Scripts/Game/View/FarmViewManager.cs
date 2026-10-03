@@ -52,6 +52,9 @@ namespace Mozzi.Game.View
 
         private Transform _root;
         private Camera _camera;
+        private int _fitWidth;
+        private int _fitHeight;
+        private Rect _fitSafeArea;
         private MozziDragAgent _drag;
         private bool _pressWasDown;
         private MozziObject _ghost;
@@ -67,8 +70,7 @@ namespace Mozzi.Game.View
         {
             _root = new GameObject("FarmView").transform;
             _camera = Camera.main;
-            // 월드 기준 540×960 을 다 보이게. 씬 값에 기대지 않고 코드가 맞춘다.
-            _camera.orthographicSize = LayoutConst.HalfHeight;
+            FitCamera();
             _resource = GlobalHub.Get<IResourceHub>();
             _drag = new MozziDragAgent(this, _camera);
 
@@ -102,6 +104,11 @@ namespace Mozzi.Game.View
 
         public void Process(float deltaTime)
         {
+            if (Screen.width != _fitWidth || Screen.height != _fitHeight || ScreenFitUtil.SafeArea() != _fitSafeArea)
+            {
+                FitCamera();
+            }
+
             SyncMozzis();
             SyncPiles();
 
@@ -172,6 +179,25 @@ namespace Mozzi.Game.View
             {
                 Object.Destroy(_root.gameObject);
             }
+        }
+
+        // 카메라를 캔버스와 같은 배율로 맞춘다. 월드 540 폭이 내용 칸 폭과 같고, 월드 위끝이 내용 칸 위끝에 온다.
+        // 그래서 자원바 · 건물 띠 · 농장이 위에서부터 붙고, 길쭉한 폰에서 남는 자리는 농장 아래로 간다.
+        private void FitCamera()
+        {
+            _fitWidth = Screen.width;
+            _fitHeight = Screen.height;
+            _fitSafeArea = ScreenFitUtil.SafeArea();
+
+            // 화면 px 하나의 월드 길이 (유닛).
+            float unitsPerPx = LayoutConst.UiToWorldPx / (ScreenFitUtil.CanvasScale() * LayoutConst.PixelsPerUnit);
+            Rect content = ScreenFitUtil.ContentScreenRect();
+
+            _camera.orthographicSize = Screen.height * unitsPerPx * 0.5f;
+
+            float x = (Screen.width * 0.5f - content.center.x) * unitsPerPx;
+            float y = LayoutConst.HalfHeight - (content.yMax - Screen.height * 0.5f) * unitsPerPx;
+            _camera.transform.position = new Vector3(x, y, _camera.transform.position.z);
         }
 
         private void ReturnIfAlive<T>(T obj) where T : Component

@@ -20,6 +20,7 @@ namespace Mozzi.Game.Ui
 {
     // Canvas 를 코드로 만들고 화면 프리팹을 빌려 붙인다. Manager → 화면은 EventBus 로 받는다.
     // 농장 화면이 바탕, 덮개는 한 번에 하나, 팝업 · 디버그 패널이 맨 위다 (세로조각1판설계 3절).
+    // 화면·디버그 패널은 내용 칸(안전 영역 안 360 폭)에 붙이고, 팝업의 어두운 막은 화면 끝까지 덮는다.
     public sealed class UiManager : IManager, IProcess, IUiHub
     {
         // 이보다 짧게 비웠으면 팝업을 안 띄운다.
@@ -40,6 +41,12 @@ namespace Mozzi.Game.Ui
         private IStorageHub _storage;
 
         private Canvas _canvas;
+        private CanvasScaler _scaler;
+        // 내용 칸. 화면 크기 · 안전 영역이 바뀌면 FitToScreen 이 다시 맞춘다.
+        private RectTransform _contentRoot;
+        private int _fitWidth;
+        private int _fitHeight;
+        private Rect _fitSafeArea;
         private FarmScreen _farmScreen;
         private SynthesisScreen _synthesisScreen;
         private MozziCodexScreen _codexScreen;
@@ -51,6 +58,8 @@ namespace Mozzi.Game.Ui
         private MozziPopup _mozziPopup;
 #if UNITY_EDITOR || MOZZI_DEBUG
         private DebugPanel _debugPanel;
+        // 팝업보다 위에 두는 두 번째 내용 칸. 디버그 패널이 팝업에 안 가리게.
+        private RectTransform _debugRoot;
 #endif
 
         public bool IsAnyOpen
@@ -62,6 +71,9 @@ namespace Mozzi.Game.Ui
         {
             _resource = GlobalHub.Get<IResourceHub>();
             _canvas = CreateCanvas();
+            _scaler = _canvas.GetComponent<CanvasScaler>();
+            _contentRoot = CreateContentRoot(UiNames.ContentRoot);
+            FitToScreen();
         }
 
         public void PostInit()
@@ -76,7 +88,7 @@ namespace Mozzi.Game.Ui
             _save = InGameHub.Get<ISaveHub>();
             _storage = InGameHub.Get<IStorageHub>();
 
-            _farmScreen = _resource.Rent<FarmScreen>(PrefabKeys.UiFarmScreen, _canvas.transform);
+            _farmScreen = _resource.Rent<FarmScreen>(PrefabKeys.UiFarmScreen, _contentRoot);
             StretchToParent(_farmScreen.transform as RectTransform);
             _farmScreen.Bind(_inventory.IngredientIds, this, _clock.AdvanceDay);
             BindIngredientIcons();
@@ -98,7 +110,9 @@ namespace Mozzi.Game.Ui
             _mozziPopup.Hide();
 
 #if UNITY_EDITOR || MOZZI_DEBUG
-            _debugPanel = _resource.Rent<DebugPanel>(PrefabKeys.UiDebugPanel, _canvas.transform);
+            _debugRoot = CreateContentRoot(UiNames.DebugRoot);
+            FitRoot(_debugRoot);
+            _debugPanel = _resource.Rent<DebugPanel>(PrefabKeys.UiDebugPanel, _debugRoot);
             StretchToParent(_debugPanel.transform as RectTransform);
             _debugPanel.Bind(OnDebugSkipped);
 #endif
@@ -134,6 +148,11 @@ namespace Mozzi.Game.Ui
 
         public void Process(float deltaTime)
         {
+            if (Screen.width != _fitWidth || Screen.height != _fitHeight || ScreenFitUtil.SafeArea() != _fitSafeArea)
+            {
+                FitToScreen();
+            }
+
             _farmScreen.Process(deltaTime);
             if (_open != null)
             {
@@ -296,7 +315,7 @@ namespace Mozzi.Game.Ui
             _offlinePopup.transform.SetAsLastSibling();
             _mozziPopup.transform.SetAsLastSibling();
 #if UNITY_EDITOR || MOZZI_DEBUG
-            _debugPanel.transform.SetAsLastSibling();
+            _debugRoot.SetAsLastSibling();
 #endif
         }
 
@@ -317,10 +336,10 @@ namespace Mozzi.Game.Ui
         }
 #endif
 
-        // 덮개는 빌려서 Canvas 밑에 두고 처음엔 꺼 둔다.
+        // 덮개는 빌려서 내용 칸 밑에 두고 처음엔 꺼 둔다.
         private T RentOverlay<T>(string key) where T : OverlayScreen
         {
-            T screen = _resource.Rent<T>(key, _canvas.transform);
+            T screen = _resource.Rent<T>(key, _contentRoot);
             StretchToParent(screen.transform as RectTransform);
             screen.Bind(this);
             screen.gameObject.SetActive(false);
@@ -328,7 +347,7 @@ namespace Mozzi.Game.Ui
             return screen;
         }
 
-        // 기준 360×640 · 세로 기준으로 맞춘다 (아트규칙 4번).
+        // 배율은 CanvasScaler 의 자동 맞춤 대신 FitToScreen 이 직접 넣는다 — 안전 영역 기준이라야 해서다.
         private static Canvas CreateCanvas()
         {
             GameObject go = new GameObject(UiNames.CanvasRoot);
@@ -336,13 +355,46 @@ namespace Mozzi.Game.Ui
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
             CanvasScaler scaler = go.AddComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(LayoutConstUi.ReferenceWidth, LayoutConstUi.ReferenceHeight);
-            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            scaler.matchWidthOrHeight = 1f;
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
 
             go.AddComponent<GraphicRaycaster>();
             return canvas;
+        }
+
+        private RectTransform CreateContentRoot(string name)
+        {
+            GameObject go = new GameObject(name, typeof(RectTransform));
+            RectTransform rect = go.transform as RectTransform;
+            rect.SetParent(_canvas.transform, false);
+            return rect;
+        }
+
+        // 기준 360×640 이 안전 영역에 통째로 들어가는 배율을 넣고, 내용 칸을 그 자리에 맞춘다.
+        private void FitToScreen()
+        {
+            _fitWidth = Screen.width;
+            _fitHeight = Screen.height;
+            _fitSafeArea = ScreenFitUtil.SafeArea();
+
+            _scaler.scaleFactor = ScreenFitUtil.CanvasScale();
+            FitRoot(_contentRoot);
+#if UNITY_EDITOR || MOZZI_DEBUG
+            if (_debugRoot != null)
+            {
+                FitRoot(_debugRoot);
+            }
+#endif
+        }
+
+        // 앵커를 화면 비율로 주면 캔버스 배율과 상관없이 내용 칸 자리에 붙는다.
+        private static void FitRoot(RectTransform rect)
+        {
+            Rect content = ScreenFitUtil.ContentScreenRect();
+            rect.anchorMin = new Vector2(content.xMin / Screen.width, content.yMin / Screen.height);
+            rect.anchorMax = new Vector2(content.xMax / Screen.width, content.yMax / Screen.height);
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+            rect.localScale = Vector3.one;
         }
 
         private static void StretchToParent(RectTransform rect)

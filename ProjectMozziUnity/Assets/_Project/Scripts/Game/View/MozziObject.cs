@@ -20,7 +20,7 @@ namespace Mozzi.Game.View
         private MozziSpriteSet _set;
         private Rect _area;
 
-        // 지금 표정과 기본으로 돌아가기까지 남은 시간. 드래그 중은 무한대라 안 돌아간다.
+        // 지금 표정과 기본으로 돌아가기까지 남은 시간. 들려 있는 동안은 무한대라 안 돌아간다.
         private int _faceIndex = MozziArtKeys.BaseFaceIndex;
         private float _faceHoldSec;
         private bool _dragging;
@@ -132,18 +132,19 @@ namespace Mozzi.Game.View
             ApplySort();
         }
 
-        // 탭·드래그 때. holdSec 뒤 기본 표정으로 돌아간다. 드래그는 무한대를 줘 놓을 때까지 유지한다.
+        // 탭했을 때. holdSec 뒤 기본 표정으로 돌아간다.
         public void ShowRandomFace(float holdSec)
         {
             SetFace(MozziArtKeys.RandomFaceIndex(_faceIndex));
             _faceHoldSec = holdSec;
         }
 
-        // 들어 올린다. 표정이 바뀌고 앞 담장보다 앞에 그린다. 자리는 DragTo 가 준다.
+        // 들어 올린다. 놀란 표정으로 고정하고 앞 담장보다 앞에 그린다. 자리는 DragTo 가 준다.
         public void BeginDrag()
         {
             _dragging = true;
-            ShowRandomFace(float.PositiveInfinity);
+            SetFace(MozziArtKeys.DragFaceIndex);
+            _faceHoldSec = float.PositiveInfinity;
             _hop.Reset();
             _visual.SetLift(LayoutConst.ToUnits(LayoutConst.MozziDragLiftPx));
             _visual.PlayIdle(0f);
@@ -156,7 +157,7 @@ namespace Mozzi.Game.View
             transform.position = new Vector3(world.x, world.y, 0f);
         }
 
-        // 놓는다. 담장 안으로 되돌리고 그 자리에서 다시 걷기 시작한다.
+        // 놓는다. 담장 안으로 되돌리고 표정을 바로 기본으로 돌린 뒤 그 자리에서 다시 걷기 시작한다.
         public void EndDrag()
         {
             _dragging = false;
@@ -167,7 +168,8 @@ namespace Mozzi.Game.View
 
             _wander.Relocate(pos);
             _visual.SetLift(0f);
-            _faceHoldSec = LayoutConst.FaceHoldSec;
+            SetFace(MozziArtKeys.BaseFaceIndex);
+            _faceHoldSec = 0f;
             ApplySort();
         }
 

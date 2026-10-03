@@ -8,6 +8,9 @@ namespace Mozzi.Save
 
         bool HasSaveFile { get; }
 
+        // 설정 구역 (볼륨). 받은 객체의 값을 고치면 다음 저장에 실린다.
+        SaveSettings Settings { get; }
+
         void Register(ISavable savable);
 
         void SaveNow();

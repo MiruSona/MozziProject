@@ -18,6 +18,14 @@ namespace Mozzi.Resource
         public const string BuildingSynthesis = "Building/synthesis";
         public const string BuildingStall = "Building/stall";
 
+        // 정식 화면 배경 (360×800) · 합성 기계 · 합성 연출 조각. 표가 없어 코드 상수로 둔다.
+        public const string ScreenStallBg = "Screen/stall_bg";
+        public const string ScreenSynthesisBg = "Screen/synthesis_bg";
+        public const string ScreenSynthesisMachine = "Screen/synthesis_machine";
+        public const string FxYinYangHalf = "Fx/fx_yinyang_half";
+        public const string FxMergeFlash = "Fx/fx_merge_flash";
+        public const string FxSparkle = "Fx/fx_sparkle";
+
         // 평범한 떡. Recipe 표에 줄이 없어 건물과 같이 코드 상수로 둔다.
         public const string CakePlain = "Cake/plain_cake";
     }

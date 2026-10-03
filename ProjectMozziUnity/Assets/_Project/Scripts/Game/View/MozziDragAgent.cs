@@ -144,10 +144,10 @@ namespace Mozzi.Game.View
             return new Vector2(world.x, world.y);
         }
 
-        // UI px 기준 문턱을 실제 화면 px 로. 캔버스가 세로 기준(match 1)이라 높이 비로 맞춘다.
+        // UI px 기준 문턱을 실제 화면 px 로. 캔버스와 같은 배율을 곱한다.
         private static float ThresholdScreenPx()
         {
-            return LayoutConstUi.DragThresholdPx * Screen.height / LayoutConstUi.ReferenceHeight;
+            return LayoutConstUi.DragThresholdPx * ScreenFitUtil.CanvasScale();
         }
     }
 }

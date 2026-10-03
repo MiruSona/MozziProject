@@ -13,7 +13,7 @@ namespace Mozzi.Editor
     // 전환이 끝난 뒤 `Mozzi.Editor.AndroidBuild.Build();` 한 줄. 판을 올릴 때는 Version 만 고친다.
     public static class AndroidBuild
     {
-        private const int Version = 12;
+        private const int Version = 13;
         private const string PackageName = "com.mirusona.projectmozzi";
         private const string DebugDefine = "MOZZI_DEBUG";
         private const string ScenePath = "Assets/_Project/Scenes/Farm.unity";

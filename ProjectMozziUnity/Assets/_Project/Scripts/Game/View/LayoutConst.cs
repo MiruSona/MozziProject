@@ -3,15 +3,15 @@ using UnityEngine;
 namespace Mozzi.Game.View
 {
     // 세로조각1판설계 3-2 의 px 자리를 월드 단위로 옮긴 상수. 32px = 1 유닛.
-    // 월드 기준은 540×960 (반복 01 피드백 8 로 360×640 의 1.5배). UI 캔버스는 그대로 360×640 이라
-    // 바·띠 자리는 UI px × UiToWorldPx 로 옮긴다. 카메라 size 는 FarmViewManager 가 HalfHeight(15) 로 맞춘다.
+    // 월드 기준은 540×960 (UI 기준 360×640 의 1.5배) 이라 바·띠 자리는 UI px × UiToWorldPx 로 옮긴다.
+    // 화면이 기준보다 길쭉하거나 넓적해도 이 배율은 그대로다 — FarmViewManager 가 카메라를 캔버스 배율에 맞춘다.
     public static class LayoutConst
     {
         public const float PixelsPerUnit = 32f;
         public const float ScreenWidthPx = 540f;
         public const float ScreenHeightPx = 960f;
 
-        // UI px → 월드 px. 960 / 640.
+        // UI px → 월드 px. 960 / 640. 어느 화면 비율에서도 같다.
         public const float UiToWorldPx = ScreenHeightPx / Ui.LayoutConstUi.ReferenceHeight;
 
         public const float ResourceBarBottomPx = Ui.LayoutConstUi.ResourceBarHeight * UiToWorldPx;
@@ -21,6 +21,9 @@ namespace Mozzi.Game.View
         public const int FarmTileCols = 17;
         public const int FarmTileRows = 20;
         public const float FarmBottomPx = BuildingStripBottomPx + FarmTileRows * PixelsPerUnit;
+
+        // 길쭉한 폰에서 농장 아래로 남는 자리를 채우는 풀밭 줄 수. 24줄이면 9:28 화면까지 덮는다.
+        public const int FarmFillRowsBelow = 24;
 
         // 담장 두께 (유닛). 타일 한 칸이다.
         public const float FenceUnits = 1f;
@@ -63,7 +66,7 @@ namespace Mozzi.Game.View
         public const int MozziDragSortOrder = 700;
         public const float MozziDragLiftPx = 20f;
 
-        // 탭·드래그로 바뀐 표정이 기본으로 돌아가기까지 (초).
+        // 탭으로 바뀐 표정이 기본으로 돌아가기까지 (초).
         public const float FaceHoldSec = 1.5f;
 
         public const float PilePx = 28f;

@@ -655,3 +655,39 @@
 - 들어옴 20261003-bc2835d6 `컷씬 틀과 트윈 LitMotion 등 네 답` (mem/0.3.0)
 - 덮음 20261003-3db70abb → 20261003-bc2835d6
 - 들어옴 20261003-4b344756 `트윈 라이브러리는 LitMotion v2.0.2` (mem/0.3.0) --new
+- 거절 summary-len tag-standard tag-shape body-thin howto-numbered duplicate-soft `PixelLab 실내 정면 배경 뽑는 글과 손질`
+- 거절 tag-standard tag-shape body-thin `pixflux no_background 가 불투명으로 올 수 있다`
+- 거절 summary-len tag-standard tag-shape sources-required body-thin `반복 02 그림 갈래 — 가판대·합성소 정식 배경과 음양 연출 재료`
+- 거절 title-shape `PixelLab 로 실내 정면 화면 배경을 뽑고 360x800 으로 늘리는 차례`
+- 거절 title-shape `pixflux no_background 가 불투명 흰 배경으로 올 수 있다`
+- 들어옴 20261003-69baa2f9 `반복 02 그림 갈래 — 가판대·합성소 정식 배경과 음양 연출 재료` (mem/0.3.0)
+- 들어옴 20261003-46829744 `PixelLab 실내 정면 배경 뽑고 800 으로 늘리기` (mem/0.3.0)
+- 들어옴 20261003-950d0086 `pixflux no_background 가 불투명으로 온다` (mem/0.3.0)
+- 거절 summary-len tag-standard tag-shape body-thin howto-numbered duplicate-soft `가판대 주인 시안 — 특징표와 PixelLab 뽑는 법`
+- 들어옴 20261003-27273223 `가판대 주인 시안 — 특징표와 PixelLab 뽑는 법` (mem/0.3.0)
+- 거절 tag-standard decision-gate `화면 맞춤은 안전 영역 안 360×640 내용 칸`
+- 거절 summary-len tag-standard `세이브 판 번호와 판 올리기 단계 규칙`
+- 거절 tag-standard `덮개 화면은 길쭉한 폰에서 아래가 빈다`
+- 들어옴 20261003-1747743d `화면 맞춤은 안전 영역 안 360×640 내용 칸` (mem/0.3.0) --new
+- 거절 summary-len `세이브 판 번호와 판 올리기 단계 규칙`
+- 들어옴 20261003-fd4b027f `덮개 화면은 길쭉한 폰에서 아래가 빈다` (mem/0.3.0)
+- 들어옴 20261003-874e941b `세이브 판 번호와 판 올리기 단계 규칙` (mem/0.3.0)
+- 들어옴 20261003-06df1eb3 `화면 연출은 VfxManager 의 실시간 스케줄러로 돌린다` (mem/0.3.0) --new
+- 들어옴 20261003-b53a8f6e `가판대·합성소는 배경 그림 + 장면 칸 + 아래 판 뼈대다` (mem/0.3.0) --new
+- 거절 severity duplicate-soft `옛 프리팹 손질기 셋을 돌리면 정식 화면 배치가 깨진다`
+- 들어옴 20261003-c89810c1 `옛 프리팹 손질기 셋을 돌리면 정식 화면 배치가 깨진다` (mem/0.3.0) --new
+- 들어옴 20261003-384516e9 `정식 화면은 장면을 위끝에 붙이고 아래 판은 고정 높이다` (mem/0.3.0) --new
+- 덮음 20261003-b53a8f6e → 20261003-384516e9
+- 덮음 20261003-c89810c1 → 20261003-384516e9
+- 들어옴 20261003-a3d75be5 `반복 02 — v13 APK 로 한 바퀴` (mem/0.3.0)
+- 거절 duplicate-hard `서브에이전트 한 판 공수 눈금 (10-03 고침)`
+- 거절 summary-len title-shape tag-count tag-standard tag-shape body-thin howto-numbered duplicate-soft `PixelLab 로 캐릭터 파츠 겹 나누기 — 기본체 + inpaint 마스크 + diff`
+- 거절 summary-len title-shape tag-standard tag-shape body-thin `PixelLab inpaint 파츠 — 네모 마스크 선에서 잘리고 기본체 윤곽을 깎는다`
+- 거절 summary-len tag-shape body-thin duplicate-soft `반복 02 — 손님 새 화풍 파츠 세트 초안 (64x80 · 겹 46장)`
+- 거절 summary-len title-shape tag-shape body-thin `손님 새 화풍 — 사용자 판정 뒤 게임 배선 · 파마 머리 다시 뽑기 · 소품`
+- 거절 howto-numbered duplicate-soft `PixelLab 파츠 겹 나누기 — 기본체 inpaint diff`
+- 들어옴 20261003-8d3fdc69 `PixelLab inpaint 파츠는 마스크 선에서 잘린다` (mem/0.3.0)
+- 들어옴 20261003-789f0eeb `반복 02 손님 새 화풍 파츠 초안 (64x80 겹 46장)` (mem/0.3.0)
+- 들어옴 20261003-ab0fb948 `손님 새 화풍 — 판정 뒤 배선·파마 다시 뽑기` (mem/0.3.0)
+- 거절 howto-numbered duplicate-soft `PixelLab 파츠 겹 나누기 — 기본체 inpaint diff`
+- 들어옴 20261003-f411335c `PixelLab 파츠 겹 나누기 — 기본체 inpaint diff` (mem/0.3.0)

@@ -9,6 +9,7 @@ namespace Mozzi.Game.Ui
 {
     // 농장 화면(자원바 · 아래 띠 · 밤 덮개). 프리팹은 모양만 갖고 여기서 UiNames 로 자식을 찾아 값을 넣는다.
     // 값이 바뀔 때 숫자가 커졌다 돌아오는 튐 1종과, 아침에 덮개가 걷히는 밝아짐 1종을 돈다.
+    // 위아래 띠는 안전 영역 안에 있고, 그 바깥(카메라 구멍 쪽)은 같은 색 덧띠를 코드로 이어 붙인다.
     public sealed class FarmScreen : ObjectBase
     {
         private const string PrefabName = "FarmScreen";
@@ -72,7 +73,69 @@ namespace Mozzi.Game.Ui
             UiBindUtil.SetText(_nightText, "밤이 됐어요\n아래 「다음날로」를 눌러요");
 
             UiBindUtil.SetText(_title, "농장");
+
+            ExtendBar(UiNames.FarmResourceBar, true);
+            ExtendBar(UiNames.FarmBottomBar, false);
             _bound = true;
+        }
+
+        // 띠를 화면 끝까지 잇는다. 뒤판은 카메라 배경색으로 띠 밑을 막아 월드(풀밭)가 비치지 않게 하고,
+        // 덧띠는 띠와 같은 색으로 안전 영역 밖을 채운다. 풀에서 다시 나와도 한 번만 만든다.
+        private void ExtendBar(string barName, bool upward)
+        {
+            Image bar = UiBindUtil.Find<Image>(transform, barName, PrefabName);
+            if (bar.transform.Find(UiNames.FarmBarBleed) != null)
+            {
+                return;
+            }
+
+            Color backColor = Color.black;
+            if (Camera.main != null)
+            {
+                backColor = Camera.main.backgroundColor;
+                backColor.a = 1f;
+            }
+
+            RectTransform back = AddBarPiece(bar.transform.parent, UiNames.FarmBarBack, backColor);
+            back.SetSiblingIndex(0);
+            RectTransform barRect = bar.rectTransform;
+            back.anchorMin = barRect.anchorMin;
+            back.anchorMax = barRect.anchorMax;
+            back.pivot = barRect.pivot;
+            back.anchoredPosition = barRect.anchoredPosition;
+            back.sizeDelta = barRect.sizeDelta;
+            // 넓적한 화면에서 내용 칸 옆으로 비어져 나온 풀밭 끝도 가린다 (바탕색이라 티가 안 난다).
+            back.offsetMin = new Vector2(-LayoutConstUi.BarBleedLength, back.offsetMin.y);
+            back.offsetMax = new Vector2(LayoutConstUi.BarBleedLength, back.offsetMax.y);
+
+            RectTransform bleed = AddBarPiece(bar.transform, UiNames.FarmBarBleed, bar.color);
+            bleed.SetSiblingIndex(0);
+            bleed.sizeDelta = new Vector2(0f, LayoutConstUi.BarBleedLength);
+            bleed.anchoredPosition = Vector2.zero;
+
+            if (upward)
+            {
+                bleed.anchorMin = new Vector2(0f, 1f);
+                bleed.anchorMax = new Vector2(1f, 1f);
+                bleed.pivot = new Vector2(0.5f, 0f);
+                back.offsetMax = new Vector2(back.offsetMax.x, back.offsetMax.y + LayoutConstUi.BarBleedLength);
+                return;
+            }
+
+            bleed.anchorMin = new Vector2(0f, 0f);
+            bleed.anchorMax = new Vector2(1f, 0f);
+            bleed.pivot = new Vector2(0.5f, 1f);
+            back.offsetMin = new Vector2(back.offsetMin.x, back.offsetMin.y - LayoutConstUi.BarBleedLength);
+        }
+
+        private static RectTransform AddBarPiece(Transform parent, string name, Color color)
+        {
+            GameObject go = new GameObject(name, typeof(RectTransform));
+            RectTransform rect = go.transform as RectTransform;
+            rect.SetParent(parent, false);
+            Image image = go.AddComponent<Image>();
+            image.color = color;
+            return rect;
         }
 
         // 풀로 돌아갈 때 배선을 푼다. 씬을 다시 열면 같은 인스턴스가 새 UiManager 로 다시 Bind 된다.
