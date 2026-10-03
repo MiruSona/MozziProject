@@ -9,5 +9,8 @@ namespace Mozzi.Game.Ui
         // 가판대 칠판. 찾은 레시피가 없으면 기본 메뉴 한 줄을 쓴다.
         public const string StallMenuTitle = "오늘의 떡";
         public const string StallMenuDefault = "찹쌀떡";
+
+        // 가판대 「만들기」 자리. 찾은 레시피가 하나도 없을 때만 보인다.
+        public const string StallMakeEmpty = "아직 찾은 레시피가 없어요. 아래에서 실험해 보세요";
     }
 }

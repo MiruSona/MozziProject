@@ -85,7 +85,7 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            cell.ColorBox.color = View.SpriteUtil.ParseHex(species.ColorHex, Color.white);
+            cell.ColorBox.color = View.MozziArtKeys.BodyColorOf(species);
             UiBindUtil.SetText(cell.NameText, species.Name);
             UiBindUtil.SetText(cell.IngredientText, IngredientLabel(species));
 

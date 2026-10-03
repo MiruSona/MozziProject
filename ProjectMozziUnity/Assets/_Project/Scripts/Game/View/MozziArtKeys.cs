@@ -1,3 +1,4 @@
+using Mozzi.Data;
 using UnityEngine;
 
 namespace Mozzi.Game.View
@@ -37,6 +38,12 @@ namespace Mozzi.Game.View
         public static string Accessory(string id)
         {
             return Folder + "acc_" + id;
+        }
+
+        // 종의 몸 색. 표의 colorHex 가 정본이다 — 농장 · UI 어디서든 이 함수로 고른다.
+        public static Color BodyColorOf(MozziSpeciesRow species)
+        {
+            return SpriteUtil.ParseHex(species.ColorHex, Color.gray);
         }
 
         // 지금 표정(except)을 뺀 나머지에서 하나 고른다. 같은 표정이 다시 나오면 바뀐 티가 안 난다.

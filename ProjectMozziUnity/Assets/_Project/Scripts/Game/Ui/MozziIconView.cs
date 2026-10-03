@@ -28,15 +28,10 @@ namespace Mozzi.Game.Ui
             _acc = UiBindUtil.Find<Image>(root, UiNames.MozziIconAcc, prefabName);
         }
 
-        public static Color BodyColorOf(MozziSpeciesRow species)
-        {
-            return SpriteUtil.ParseHex(species.ColorHex, Color.white);
-        }
-
         // 종 그림을 끼우고 켠다. 표정은 평소 표정이다.
         public void Show(IResourceHub resource, MozziSpeciesRow species)
         {
-            SetLayer(_body, resource.GetSprite(MozziArtKeys.BodyHop(species.SpriteKey, 0)), BodyColorOf(species));
+            SetLayer(_body, resource.GetSprite(MozziArtKeys.BodyHop(species.SpriteKey, 0)), MozziArtKeys.BodyColorOf(species));
             SetLayer(_cheekL, resource.GetSprite(MozziArtKeys.Cheek), Color.white);
             SetLayer(_cheekR, resource.GetSprite(MozziArtKeys.Cheek), Color.white);
             SetLayer(_face, resource.GetSprite(MozziArtKeys.Face(MozziArtKeys.BaseFaceIndex)), Color.white);

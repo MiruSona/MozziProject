@@ -1,5 +1,5 @@
 [
-{"id":"grass1","name":"흰찹쌀이","family":"grass","tier":1,"is_shiny":false,"ingredient_id":"redbean","next_species_id":"grass2","color_hex":"#7BC96F","sprite_key":"Mozzi/body","accessory_id":"none"},
+{"id":"grass1","name":"흰찹쌀이","family":"grass","tier":1,"is_shiny":false,"ingredient_id":"redbean","next_species_id":"grass2","color_hex":"#FFFFFF","sprite_key":"Mozzi/body","accessory_id":"none"},
 {"id":"grass2","name":"풀찹쌀이","family":"grass","tier":2,"is_shiny":false,"ingredient_id":"sesame","next_species_id":"grass3","color_hex":"#4FA84A","sprite_key":"Mozzi/body","accessory_id":"crown"},
 {"id":"grass3","name":"나무찹쌀이","family":"grass","tier":3,"is_shiny":false,"ingredient_id":"sesame","next_species_id":"","color_hex":"#2E7D32","sprite_key":"Mozzi/body","accessory_id":"crown"},
 {"id":"water1","name":"물찹쌀이","family":"water","tier":1,"is_shiny":false,"ingredient_id":"bean","next_species_id":"water2","color_hex":"#7FC8F8","sprite_key":"Mozzi/body","accessory_id":"crown"},

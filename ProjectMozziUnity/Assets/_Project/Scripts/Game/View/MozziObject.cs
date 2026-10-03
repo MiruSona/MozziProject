@@ -11,8 +11,6 @@ namespace Mozzi.Game.View
     // 들려 있는 동안(IsDragging)은 걷기·뜀을 멈추고 FarmViewManager 가 DragTo 로 자리를 준다.
     public sealed class MozziObject : ObjectBase
     {
-        private const string WhiteSpeciesId = "grass1";
-
         private MozziVisual _visual;
         private SortingGroup _sorting;
         private WanderAgent _wander;
@@ -87,7 +85,7 @@ namespace Mozzi.Game.View
             transform.position = new Vector3(start.x, start.y, 0f);
             gameObject.name = "Mozzi_" + mozziId + "_" + species.Id;
 
-            _visual.Apply(set, ColorOf(species), MozziArtKeys.BaseFaceIndex);
+            _visual.Apply(set, MozziArtKeys.BodyColorOf(species), MozziArtKeys.BaseFaceIndex);
             _visual.SetAnchors();
             // 변종 네모 배경은 지금 꺼 둔다. Border 자식과 SetShiny 는 남겨 다음 표시 방법에 다시 쓴다.
             bool shiny = LayoutConst.MozziShinyBorderVisible && species.IsShiny;
@@ -265,17 +263,6 @@ namespace Mozzi.Game.View
             }
 
             return LayoutConst.MozziTier1Px;
-        }
-
-        // 계열 색 · 단계 밝기는 표의 colorHex 가 정본이다. 흰찹쌀이만 흰색이라 그림 색이 그대로 나온다.
-        private static Color ColorOf(MozziSpeciesRow species)
-        {
-            if (species.Id == WhiteSpeciesId)
-            {
-                return Color.white;
-            }
-
-            return SpriteUtil.ParseHex(species.ColorHex, Color.gray);
         }
     }
 }

@@ -29,6 +29,9 @@ namespace Mozzi.Game.Ui
 
         private readonly List<SynthesisSlotView> _slots = new List<SynthesisSlotView>();
         private readonly List<Button> _tabs = new List<Button>();
+        private readonly List<TMP_Text> _tabLabels = new List<TMP_Text>();
+        // 칸마다 마지막으로 적은 남은 초. 초가 바뀔 때만 글자를 고친다.
+        private readonly List<int> _shownSec = new List<int>();
         private readonly List<string> _pickA = new List<string>();
         private readonly List<string> _pickB = new List<string>();
         private readonly List<Button> _pickRows = new List<Button>();
@@ -45,6 +48,12 @@ namespace Mozzi.Game.Ui
         private SynthesisMachineView _machine;
         // 기계와 아래 판이 보여 주는 칸.
         private int _viewSlot;
+
+        // 기계 입구 누름 칸 둘과 빈 입구 표시(+).
+        private Button _inletA;
+        private Button _inletB;
+        private GameObject _inletPlusA;
+        private GameObject _inletPlusB;
 
         private TMP_Text _shortcutText;
         private Button _shortcutBuyButton;
@@ -86,6 +95,11 @@ namespace Mozzi.Game.Ui
             _machine = new SynthesisMachineView(scene, PrefabName, _resource, InGameHub.Get<IVfxHub>());
             _viewSlot = 0;
 
+            _inletA = UiBindUtil.BindButton(scene, UiNames.SynthesisInletAButton, PrefabName, delegate { OnInlet(true); });
+            _inletB = UiBindUtil.BindButton(scene, UiNames.SynthesisInletBButton, PrefabName, delegate { OnInlet(false); });
+            _inletPlusA = UiBindUtil.FindObject(_inletA.transform, UiNames.SynthesisInletPlus, PrefabName);
+            _inletPlusB = UiBindUtil.FindObject(_inletB.transform, UiNames.SynthesisInletPlus, PrefabName);
+
             _shortcutText = UiBindUtil.Find<TMP_Text>(transform, UiNames.SynthesisShortcutText, PrefabName);
             _shortcutBuyButton = UiBindUtil.BindButton(transform, UiNames.SynthesisShortcutBuyButton, PrefabName, OnBuyShortcut);
 
@@ -99,8 +113,11 @@ namespace Mozzi.Game.Ui
                     delegate { OpenPick(index, false); },
                     delegate { OnStart(index); },
                     delegate { OnTake(index); }));
-                _tabs.Add(UiBindUtil.BindButton(transform, UiNames.SynthesisSlotTabPrefix + i, PrefabName,
-                    delegate { SelectSlot(index); }));
+                Button tab = UiBindUtil.BindButton(transform, UiNames.SynthesisSlotTabPrefix + i, PrefabName,
+                    delegate { SelectSlot(index); });
+                _tabs.Add(tab);
+                _tabLabels.Add(UiBindUtil.Find<TMP_Text>(tab.transform, UiNames.ButtonLabel, PrefabName));
+                _shownSec.Add(-1);
                 _pickA.Add(null);
                 _pickB.Add(null);
             }
@@ -135,6 +152,12 @@ namespace Mozzi.Game.Ui
             _machine = null;
             _slots.Clear();
             _tabs.Clear();
+            _tabLabels.Clear();
+            _shownSec.Clear();
+            _inletA = null;
+            _inletB = null;
+            _inletPlusA = null;
+            _inletPlusB = null;
             _pickA.Clear();
             _pickB.Clear();
             _pickRows.Clear();
@@ -163,6 +186,7 @@ namespace Mozzi.Game.Ui
             }
 
             RefreshMachine();
+            RefreshInlets();
 
             if (_pickPanel.activeSelf)
             {
@@ -175,11 +199,20 @@ namespace Mozzi.Game.Ui
             for (int i = 0; i < _slots.Count; i++)
             {
                 SynthesisSlot slot = _synthesis.GetSlot(i);
-                if (slot.status == SynthesisSlotStatus.Running)
+                if (slot.status != SynthesisSlotStatus.Running)
                 {
-                    UiBindUtil.SetText(_slots[i].RemainText, "남은 시간 " + FormatSec(slot.remainingSec));
-                    RefreshTab(i);
+                    continue;
                 }
+
+                int sec = CeilSec(slot.remainingSec);
+                if (sec == _shownSec[i])
+                {
+                    continue;
+                }
+
+                _shownSec[i] = sec;
+                UiBindUtil.SetText(_slots[i].RemainText, "남은 시간 " + FormatSec(slot.remainingSec));
+                RefreshTab(i);
             }
 
             if (_resultPlaying == false)
@@ -211,7 +244,7 @@ namespace Mozzi.Game.Ui
         public void PlayResult(string speciesId, bool isNew)
         {
             MozziSpeciesRow species = _data.Species.Get(speciesId);
-            _resultBoxImage.color = View.SpriteUtil.ParseHex(species.ColorHex, Color.white);
+            _resultBoxImage.color = View.MozziArtKeys.BodyColorOf(species);
             UiBindUtil.SetText(_resultName, species.Name);
             UiBindUtil.SetActive(_resultNew, isNew);
             _resultBox.localScale = new Vector3(0.3f, 0.3f, 1f);
@@ -263,7 +296,7 @@ namespace Mozzi.Game.Ui
                 state = "다 됨!";
             }
 
-            UiBindUtil.SetLabel(_tabs[index], (index + 1) + " · " + state);
+            UiBindUtil.SetText(_tabLabels[index], (index + 1) + " · " + state);
 
             Color color = TabOff;
             if (index == _viewSlot)
@@ -298,6 +331,27 @@ namespace Mozzi.Game.Ui
             }
 
             _machine.ShowIdle(_viewSlot, SpeciesOrNull(_pickA[_viewSlot]), SpeciesOrNull(_pickB[_viewSlot]));
+        }
+
+        // 입구 누름 칸은 재료를 고를 수 있는 빈 칸에서만 켠다. 아직 안 고른 쪽에는 + 를 띄운다.
+        private void RefreshInlets()
+        {
+            bool empty = _synthesis.GetSlot(_viewSlot).status == SynthesisSlotStatus.Empty;
+            UiBindUtil.SetActive(_inletA.gameObject, empty);
+            UiBindUtil.SetActive(_inletB.gameObject, empty);
+            UiBindUtil.SetActive(_inletPlusA, _pickA[_viewSlot] == null);
+            UiBindUtil.SetActive(_inletPlusB, _pickB[_viewSlot] == null);
+        }
+
+        // 기계 입구를 눌렀을 때. 아래 판의 재료 버튼과 같은 일을 보고 있는 칸에 한다.
+        private void OnInlet(bool first)
+        {
+            if (_synthesis.GetSlot(_viewSlot).status != SynthesisSlotStatus.Empty)
+            {
+                return;
+            }
+
+            OpenPick(_viewSlot, first);
         }
 
         private MozziSpeciesRow SpeciesOrNull(string speciesId)
@@ -675,9 +729,14 @@ namespace Mozzi.Game.Ui
             return Mathf.RoundToInt(rate * 100f) + "%";
         }
 
+        private static int CeilSec(double seconds)
+        {
+            return (int)System.Math.Ceiling(seconds);
+        }
+
         private static string FormatSec(double seconds)
         {
-            int total = (int)System.Math.Ceiling(seconds);
+            int total = CeilSec(seconds);
             int min = total / 60;
             int sec = total % 60;
             return min + ":" + sec.ToString("00");

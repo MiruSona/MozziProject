@@ -22,7 +22,7 @@ namespace Mozzi.Game.View
         public const int FarmTileRows = 20;
         public const float FarmBottomPx = BuildingStripBottomPx + FarmTileRows * PixelsPerUnit;
 
-        // 길쭉한 폰에서 농장 아래로 남는 자리를 채우는 풀밭 줄 수. 24줄이면 9:28 화면까지 덮는다.
+        // 길쭉한 폰에서 농장 아래로 남는 자리를 채우는 풀밭 줄 수. 24줄(768px)이면 세로 1612px, 곧 9:26.8 화면까지 덮는다.
         public const int FarmFillRowsBelow = 24;
 
         // 담장 두께 (유닛). 타일 한 칸이다.

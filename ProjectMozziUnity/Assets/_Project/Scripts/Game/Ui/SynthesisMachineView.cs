@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using LitMotion;
 using Mozzi.Data;
 using Mozzi.Game.Vfx;
+using Mozzi.Game.View;
 using Mozzi.Resource;
 using UnityEngine;
 using UnityEngine.UI;
@@ -359,8 +360,8 @@ namespace Mozzi.Game.Ui
 
         private void SetHalfColors(MozziSpeciesRow a, MozziSpeciesRow b)
         {
-            Color colorA = MozziIconView.BodyColorOf(a);
-            Color colorB = MozziIconView.BodyColorOf(b);
+            Color colorA = MozziArtKeys.BodyColorOf(a);
+            Color colorB = MozziArtKeys.BodyColorOf(b);
             float gap = Mathf.Abs(colorA.r - colorB.r) + Mathf.Abs(colorA.g - colorB.g) + Mathf.Abs(colorA.b - colorB.b);
             if (gap < SameColorThreshold)
             {

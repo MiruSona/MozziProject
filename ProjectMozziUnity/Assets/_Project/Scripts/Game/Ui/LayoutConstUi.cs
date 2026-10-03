@@ -104,6 +104,10 @@ namespace Mozzi.Game.Ui
         public const float SynthesisInletAX = 138f;
         public const float SynthesisInletBX = 223f;
         public const float SynthesisInletY = 194f;
+        // 투입구 누름 칸 한 변. 두 투입구 사이가 85 라 서로 안 겹친다.
+        public const float SynthesisInletTouchSize = 80f;
+        // 빈 입구 표시(+)를 누름 칸 가운데에서 이만큼 내려 깔때기 안 어두운 자리에 둔다.
+        public const float SynthesisInletPlusDrop = 17f;
         public const float SynthesisOutletX = 180f;
         public const float SynthesisOutletY = 407f;
         public const float SynthesisFlashSize = 64f;

@@ -691,3 +691,25 @@
 - 들어옴 20261003-ab0fb948 `손님 새 화풍 — 판정 뒤 배선·파마 다시 뽑기` (mem/0.3.0)
 - 거절 howto-numbered duplicate-soft `PixelLab 파츠 겹 나누기 — 기본체 inpaint diff`
 - 들어옴 20261003-f411335c `PixelLab 파츠 겹 나누기 — 기본체 inpaint diff` (mem/0.3.0)
+- 거절 tag-standard tag-shape severity sources-shape body-thin `도트 강좌 조사 — X 는 못 읽고 유튜브 목차까지만`
+- 거절 severity sources-shape body-thin `도트 강좌 조사 — X 는 못 읽고 유튜브 목차까지만`
+- 들어옴 20261003-84097890 `도트 강좌 조사 — X 는 못 읽고 유튜브 목차까지만` (mem/0.3.0)
+- 들어옴 20261003-2109f4d5 `그림풍 레퍼런스 조사 문서 냄` (mem/0.3.0)
+- 거절 tag-standard body-thin `찹쌀이 몸 색은 종 표가 정본`
+- 거절 summary-len tag-standard body-thin duplicate-soft `정식 화면 색·알파는 FormalScreenSetup 이 굽는다`
+- 거절 summary-len tag-standard body-thin `세이브는 임시 파일 바꿔치기 · 뒤로 갈 때 저장 · 새 판은 안 덮는다`
+- 거절 tag-standard body-thin `세이브 바꿔치기·뒤로 갈 때 저장을 안드로이드 실기에서 확인`
+- 들어옴 20261003-bb7891fc `찹쌀이 몸 색은 종 표가 정본` (mem/0.3.0)
+- 거절 summary-len duplicate-soft `정식 화면 색·알파는 FormalScreenSetup 이 굽는다`
+- 거절 summary-len `세이브는 임시 파일 바꿔치기 · 뒤로 갈 때 저장 · 새 판은 안 덮는다`
+- 들어옴 20261003-f9f9812c `세이브 바꿔치기·뒤로 갈 때 저장을 안드로이드 실기에서 확인` (mem/0.3.0)
+- 들어옴 20261003-96e946e5 `정식 화면 색·알파는 FormalScreenSetup 이 굽는다` (mem/0.3.0)
+- 들어옴 20261003-924c47e2 `세이브는 임시 파일 바꿔치기 · 뒤로 갈 때 저장 · 새 판은 안 덮는다` (mem/0.3.0)
+- 들어옴 20261003-83b852e7 `그림 기준 540 통일 · 종이나무 UI · 둥근 글꼴` (mem/0.3.0)
+- 들어옴 20261003-0246caad `PixelLab 로 건물·UI 조각 뽑는 눈금` (mem/0.3.0)
+- 거절 summary-len title-shape tag-shape severity sources-shape body-thin `가판대 주인 7차 1번의 개구쟁이 인상은 눈썹이 아니라 속눈썹 띠와 앞머리 선`
+- 거절 summary-len title-shape tag-shape severity sources-shape body-thin `가판대 주인 7차 1번의 개구쟁이 인상은 눈썹이 아니라 속눈썹 띠와 앞머리 선`
+- 들어옴 20261003-4885c194 `주인 7차 1번 개구쟁이 인상은 속눈썹 띠와 앞머리 선` (mem/0.3.0)
+- 거절 tag-shape body-thin `메인 화면 「나」·메뉴·찹쌀이 외곽선 확정`
+- 들어옴 20261003-ff9379c2 `메인 화면 「나」·메뉴·찹쌀이 외곽선 확정` (mem/0.3.0)
+- 들어옴 20261003-a07bc816 `주인 눈 위 ＼／ 는 앞머리 가닥 테두리 선이다` (mem/0.3.0)

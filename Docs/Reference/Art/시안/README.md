@@ -173,6 +173,123 @@
 - 프롬프트 나 : 가 에서 옷 대목만 `bare skin shoulders clearly visible, black see-through mesh on upper chest from the choker down to a white strapless bustier top with scalloped edge, dark charcoal jacket slipped off the shoulders down to the elbows with white cuffs and pale pink lining` 로 바꾸고 `hair falling over her shoulders` 를 뺐다.
 - 원본 크기 투명 PNG 는 세션 임시 폴더 `mozzi-owner-02/v4/` 의 `pick1~3.png` (후보 14장도 같은 곳).
 
+### 가판대 주인 v5 — 해상도·세부 올리기 (후보 3장)
+
+- **왜** : 사용자가 v4 후보 1번 방향을 골랐지만 「해상도가 너무 낮아 보인다 · 맨 처음 그림이 퀄이 제일 좋다」고 했다.
+- **v4 가 낮아 보인 까닭** : 캔버스는 1차 B안과 같은 64×80 인데 **세부가 적었다.** 색 수는 53 대 46 으로 비슷하지만, v4 는 머리 하이라이트 줄 · 눈 반짝임이 약하고 옷이 어두운 한 덩어리라 프릴·앞치마 같은 잔무늬가 없다.
+- 파일 : `2026-10-03-가판대주인-v5-후보.png` (후보 3 + 견줄 것 둘 · 윗줄 같은 높이, 아랫줄 1:1 배율) · `2026-10-03-가판대주인-v5-화면비교.png` (가판대 A 위 · 원본 크기 판과 64×80 으로 줄인 판).
+- 15장을 뽑아 다 보고 3장을 골랐다. 손으로 칠한 곳은 없다 (PIL 은 자르기·확대·합성만).
+
+| 번호 | 도구 · 크기 · 씨앗 | 좋은 점 | 아쉬운 점 |
+| --- | --- | --- | --- |
+| 1 | `create_image_pro_flash` 128×160 (몸 78×125) · 7104 · 프롬프트 나 | **옷이 다 나왔다** — 벚꽃 두 송이 베레 · 눈 밑 다이아 · 초커 · 검은 시스루 가슴 · 드러난 어깨 · 흰 뷔스티에 · 흰 끝단 소매 · 짝짝이 부츠. 머리 결·눈 세부가 가장 풍부 | 머리가 연어빛보다 조금 주황 쪽. 손님(48×64)보다 픽셀이 잘다 |
+| 2 | `create_image_pro` 96×120 (몸 43×77) · 7101 · 프롬프트 다 · 화풍 그림 = 1차 B안 → `edit_image_pro_flash` 로 베레 더함 · 7105 | **몸 크기가 지금 64×80 과 같아 픽셀 굵기가 손님·배경과 맞는다.** 다이아 · 시스루 · 어깨 · 짝짝이 부츠 · 연어빛 머리 | 작아서 「해상도 올리기」 답은 아니다. 얼굴이 1번보다 단순 |
+| 3 | `create_image_pixflux` 128×160 · 5202 · 프롬프트 가 · detailed shading · highly detailed | 얼굴이 가장 귀엽고 1차 B안 느낌에 가깝다. 값이 싸다 (1회) | 시스루·다이아·짝짝이 부츠 없음. 머리가 분홍 쪽. 꽃이 한 덩이 |
+
+- **화면에 세워 본 것** : 128×160 을 원본 크기로 세우면 주인이 손님의 두 배 키가 되고 진열장을 가린다. ½(64×80)로 줄이면 크기는 맞지만 세부가 뭉개져 v4 와 비슷해진다.
+  그래서 큰 그림을 쓰려면 **주인만 더 잔 픽셀로 그리는 것을 받아들이거나**(1.5배쯤 크게 세우기), 2번처럼 **같은 픽셀 굵기에서 세부만 올린 것**을 쓴다.
+- 떨어뜨린 것 : pixflux 96×120 셋(줄이 지저분하거나 꽃 하나) · pixflux 128×160 4201·6301(6301 은 시스루가 나왔지만 겉옷이 연보라) · pro 나머지 셋(메뉴판을 들거나 윙크) · pro_flash 96×120 둘(3.5등신이거나 살빛이 어둡다).
+- **원작 그림은 넣지 못했다.** 사용자는 넣어도 된다고 했지만, 그림을 올리려고 변환하는 명령이 Claude Code 권한 검사(밖으로 자료 보내기)에서 막혔다. 그래서 전부 글 프롬프트이고, 2번의 화풍 그림은 우리가 만든 1차 B안이다.
+- 프롬프트 가 (pixflux) : `cute chibi girl shop owner standing, full body, facing front, 2.5 heads tall chibi, big sparkling purple eyes with white highlights, small red diamond mark on her cheek under one eye, long dusty salmon coral-pink hair reaching her waist with glossy highlight streaks (muted salmon pink, not hot pink, not magenta), side-swept bangs, hair falling over her shoulders, dark navy beret with two small pale pink cherry blossoms on the front, black choker with a small pink flower, bare shoulders, sheer black mesh covering her chest up to the choker, white bustier corset top with scalloped neckline, off-shoulder jacket hanging at her elbows with dark charcoal sleeves and white cuffs and pale pink lining, dark charcoal short pleated skirt, pale lavender boots one short and one tall, thick dark outline, rich multi-tone shading, pixel art game sprite`
+- 프롬프트 나 (pro_flash) : `super-deformed chibi girl cafe shop owner, very big head and tiny body, only 2.5 heads tall, short stubby legs, standing, full body, facing front. Big sparkling purple eyes with white highlights, a small red diamond mark on her cheek under one eye, long dusty salmon coral-pink hair reaching her waist with glossy highlight streaks, side-swept bangs, dark navy beret with two small pale pink cherry blossoms on the front, black choker with a small pink flower, bare shoulders, sheer black see-through mesh covering her upper chest up to the choker, white bustier corset top with scalloped neckline, off-shoulder jacket hanging at her elbows with dark charcoal sleeves, white cuffs and pale pink lining, dark charcoal short pleated skirt, mismatched pale lavender boots (one ankle boot, one knee-high boot), thick dark outline, cute pixel art game sprite`
+- 프롬프트 다 (pro) : `cute chibi girl cafe shop owner standing, full body, facing front, 2.5 heads tall super-deformed chibi, big sparkling purple eyes with white highlights, a small red diamond mark on her cheek under one eye, long dusty salmon coral-pink hair reaching her waist with glossy highlight streaks (muted salmon pink, not hot pink), side-swept bangs, dark navy beret with two small pale pink cherry blossoms on the front, black choker with a small pink flower, bare shoulders, sheer black see-through mesh covering her upper chest up to the choker, white bustier corset top with scalloped neckline, off-shoulder jacket hanging at her elbows with dark charcoal sleeves, white cuffs and pale pink lining, dark charcoal short pleated skirt, mismatched pale lavender boots (one ankle boot, one knee-high boot), thick dark outline, pixel art game sprite` · style_copy = outline · detail · shading (색은 안 따옴)
+- 베레 edit 글 : `add a dark navy beret on her head with two small pale pink cherry blossoms on its front; keep everything else the same`
+- 원본 크기 투명 PNG 는 세션 임시 폴더 `mozzi-owner-02/v5/` 의 `pick1~3.png` (후보 15장 · 합성 스크립트 `build5.py` 도 같은 곳).
+
+### 가판대 주인 v6 — v5 3번 얼굴에 원작 옷 (방향 확인용 3장)
+
+- **왜** : 사용자가 「주인은 v5 3번이 맘에 드는데 원본과 다른 게 문제」라고 했다. 3번의 얼굴·그림체를 지키면서 옷과 표식을 원작에 맞춘다.
+  최종 그림은 레퍼런스 조사로 화풍 기준이 정해진 뒤 다시 뽑는다 — 이번은 방향 확인용이다.
+- 파일 : `2026-10-03-가판대주인-v6-후보.png` (후보 3 + 견줄 것 셋 : 1차 B안 · v5 1번 · v5 3번. 윗줄 같은 높이, 아랫줄 1:1 배율).
+- 6장을 뽑아 3장을 골랐다. 손으로 칠한 곳은 없다.
+
+| 번호 | 도구 · 크기 · 씨앗 | 맞춘 것 | 못 맞춘 것 |
+| --- | --- | --- | --- |
+| 1 | `edit_image_pro_flash` (글 편집) · 바탕 v5 3번 · 128×160 · 8202 | 얼굴·그림체 그대로. 벚꽃 두 송이 · 볼 붉은 표식 · 검은 시스루 가슴 · 초커 꽃 · 드러난 어깨 · 흰 끝단 소매 · 짝짝이 부츠 · **머리가 연어빛** | 다이아가 눈 바로 밑이 아니라 볼 쪽 점이다 |
+| 2 | 같은 도구 · 8201 | 1번과 같은 옷. 벚꽃 두 송이가 더 또렷하다 | 머리가 분홍 그대로 · 다이아 없음 (볼 홍조뿐) |
+| 3 | `create_image_pro` · 원작 그림 참고 + 화풍 그림 v5 3번 · 128×160 · 8101 | 연분홍 안감이 보이는 흘러내린 겉옷 · 가슴 위 시스루 비슷한 것 | 화풍 그림을 거의 그대로 따라 자세만 바뀌었다. 꽃 한 덩이 · 다이아 없음 · 부츠 짝이 같음 |
+
+- **알게 된 것** : 옷만 바꾸려면 **고른 그림을 글로 편집하는 쪽**이 가장 잘 듣는다 (한 장 6회). `create_image_pro` 에 원작 참고와 화풍 그림을 같이 주면 화풍 그림 쪽이 이겨서 원작 옷이 거의 안 들어온다 (25회에 넉 장).
+- 원작 그림은 원본을 건드리지 않고 임시 폴더에 160×179 로 줄인 사본을 만들어 `reference_images` 로 넣었다 (사용자 승인).
+- 작은 판(몸 43×77)은 새로 뽑지 않았다 — 크레딧을 아끼려고. 그 굵기의 본보기는 v5 2번이다.
+- 편집 글 (1·2번) : `Keep the same face, pose, proportions and art style. Change only these: the beret has two small pale pink cherry blossoms side by side instead of the flower cluster; add a small red diamond mark under her left eye; hair colour becomes dusty salmon pink (#DC949F, highlights #F8BBC0); black choker with a small pink flower; her upper chest between choker and white bustier is covered by sheer black see-through mesh; bare shoulders; off-shoulder dark charcoal sleeves with a white hem; mismatched pale lavender boots, one short ankle boot and one tall knee-high boot.`
+- 프롬프트 (3번) : `super-deformed chibi girl cafe shop owner, big head and tiny body, 2.5 heads tall, standing still, full body from beret to boots, facing front, arms down, cute round face. She is the character in the reference image redrawn as a new chibi game sprite: she WEARS A DARK NAVY BERET with two small pale pink cherry blossoms on its front, big sparkling purple eyes with white highlights, a small red diamond mark under one eye, long dusty salmon-pink hair (#DC949F mid tone, #F8BBC0 highlights) reaching her waist with glossy highlight streaks, black choker with a small pink flower, bare shoulders, sheer black see-through mesh over her upper chest, white bustier top with scalloped neckline, off-shoulder dark charcoal sleeves with white hem and pale pink lining, dark charcoal short skirt, mismatched pale lavender boots (one ankle boot, one knee-high boot). Thick dark outline, pixel art game sprite` · 참고 그림 쓰임 글 : `outfit, hat, face mark and colours of the character; redraw her as a full-body chibi, do not copy the pose or crop` · style_copy = outline · detail · shading
+- 원본 크기 투명 PNG 는 세션 임시 폴더 `mozzi-owner-02/v6/` 의 `pick1~3.png`.
+
+### 가판대 주인 v7 — 다이아·입·베레 장식 (모양 확정용 5장)
+
+- **왜** : 사용자가 v6 3번이 맞다고 했다 (「옷은 이제야 맞게 나온듯」). 남은 주문은 넷 — 다이아 무늬는 시그니처라 빠지면 안 된다 · 베레 장식 뺀 판도 · 입 모양을 여럿 · 립스틱 빼기.
+  다이아 자리는 원작대로 **보는 사람 기준 왼쪽 눈 바로 밑 볼**, 색 `#FA6270`.
+- 파일 : `2026-10-03-가판대주인-v7-후보.png` (후보 5 + 견줄 것 v6 3번 · 윗줄 같은 높이, 아랫줄 얼굴만 7배).
+- 바탕은 v6 3번. `edit_image_pro_flash` 글 편집으로 바뀔 것만 말했다. 옷·자세·머리는 다섯 장 모두 그대로다.
+
+| 번호 | 입 | 베레 | 다이아 | 씨앗 |
+| --- | --- | --- | --- | --- |
+| 1 | 닫힌 미소 (한 줄) | 벚꽃 둘 | **또렷** (PixelLab) — 볼 홍조가 양쪽 다 없어졌다 | 9101 → 9106 (편집 두 번) |
+| 2 | 고양이 입 | 벚꽃 둘 | 흐림 (PixelLab) — 홍조 위에 얹혀 잘 안 보인다 | 9103 |
+| 3 | 벌린 웃는 입 | 벚꽃 둘 | 흐림 (PixelLab) | 9102 |
+| 4 | 고양이 입 | 장식 없음 | 흐림 (PixelLab) | 9104 |
+| 5 | 벌린 웃는 입 | 장식 없음 | **직접 찍은 것** — PixelLab 이 안 그려 PIL 로 4×4 마름모 12픽셀만 찍었다. 다른 픽셀은 그대로 | 9105 |
+
+- **알게 된 것** : 다이아 자리에 볼 홍조가 있으면 붉은 표식이 묻힌다. 「그 볼의 홍조를 지우고 그 자리에 다이아」 라고 말해야 또렷하게 나온다 (1번). 「닫힌 미소」 는 한 번에는 고양이 입 그대로였고, `single simple upward-curved closed smile line` 이라고 따로 말해야 바뀌었다 (그래서 4번은 주문은 닫힌 미소였지만 고양이 입이다).
+- 립스틱 : 다섯 장 모두 붉은 입술은 없다. 3·5번의 입 안 분홍은 혀다.
+- 떨어뜨린 것 : 9101 (다이아가 아예 없어 1번의 바탕으로만 썼다).
+- 최종 그림은 화풍 기준이 선 뒤 다시 뽑는다. 이번은 모양을 정하는 판이다.
+- 편집 글 뼈대 : `Keep the same outfit, pose, hair, face and art style. Change only these: add a small red diamond (rhombus) mark (#FA6270) on her cheek directly under the eye on the left side of the image; remove the lipstick so the lips are not red, <입>; <베레>.`
+  - 입 : `the mouth is a small closed gentle smile drawn as a thin dark line on skin colour` · `the mouth is a small open happy smile with no red lips` · `keep the small cat-like w-shaped mouth drawn as a thin dark line on skin colour`
+  - 베레 : `the beret decoration becomes two small pale pink cherry blossoms side by side` · `remove the flower decoration from the beret so the beret is plain dark navy with no ornament`
+- 1번의 두 번째 편집 글 : `Keep everything the same. Change only the face: remove the round pink blush on the cheek on the left side of the image and put there, directly under that eye, one clear solid red diamond (rhombus) mark, taller than wide, about 4 pixels tall, colour #FA6270, on plain skin. Change the mouth from the w-shaped cat mouth to a single simple upward-curved closed smile line.`
+- 원본 크기 투명 PNG 는 세션 임시 폴더 `mozzi-owner-02/v7/` 의 `pick1~5.png` (합성·다이아 찍기 스크립트 `build7.py` 도 같은 곳).
+
+### 가판대 주인 v8 — 눈매·볼 다이아 손 수정 (후보 4장)
+
+- **왜** : 사용자가 7차 1번을 골랐고, 남은 주문은 둘이다 — 「눈썹 때문에 개구쟁이처럼 보인다, 차분하게」 · 「다이아가 찌그러져 보인다, 직접 그려라」.
+- **이번만 손 수정이다.** PixelLab 생성을 쓰지 않고 PIL 로 픽셀을 직접 찍었다 (사용자가 이 그림에 한해 허락). 안 되면 다시 PixelLab 으로 간다.
+- 파일 : `2026-10-03-가판대주인-v8-후보.png` (맨 왼쪽 7차 1번 + 후보 4 · 윗줄 4배, 아랫줄 얼굴만 8배).
+- **알게 된 것** : 7차 1번에는 눈썹이 따로 없다. 개구쟁이 인상은 셋에서 나왔다 — ① 두 눈 사이로 비스듬히 내려오는 **앞머리 테두리의 어두운 선**(찌푸린 눈썹처럼 읽힌다) ② 코 쪽으로 처진 **속눈썹 띠의 안쪽 꼬리** ③ 바깥 위로 **치켜 올라간 속눈썹 끝**. 그래서 이 셋을 고쳤다.
+
+| 번호 | 눈매 | 다이아 | 바뀐 픽셀 |
+| --- | --- | --- | --- |
+| 1 | 끝만 다듬음 (가·나) | 5×5 마름모 13픽셀 · 가운데 (49,65) | 44 |
+| **2 (추천)** | 평평하게 (가·나·다) | 5×5 마름모 13픽셀 · 가운데 (49,65) | 61 |
+| 3 | 평평하게 (가·나·다) | 3×3 십자 5픽셀 · 가운데 (49,64) | 60 |
+| 4 | 평평하게 + 옅은 눈썹 (가·나·다·라) | 3×5 길쭉 11픽셀 · 가운데 (49,65) | 69 |
+
+- 고친 자리 (좌표는 128×160 그림의 x,y · 왼쪽 위가 0,0).
+  - **가. 앞머리 테두리 선 10픽셀** → 머리 중간 그늘 `#B35B66` : (55,49) (56,50) (56,51) (57,51) (59,50) (60,51) (61,52) (62,52) (63,53) (64,53).
+  - **나. 속눈썹 끝 10픽셀** : 왼눈 안쪽 꼬리 (53,53) (53,54) (54,54) (53,55) 와 위로 선 (44,49) → 피부 `#F9EBDC` · 오른눈 안쪽 꼬리 (66,53) → 흰자 그늘 `#C7B6BD` · 오른눈 바깥 위 (77,47) → `#AF5562`, (77,48) (78,48) → `#B35B66` · 날개 끝 (82,50) (82,51) → 머리 `#EF9599`.
+  - **다. 속눈썹 띠 윗줄 걷기 17픽셀** (띠를 3줄 → 2줄) : 왼눈 y=50 의 x43~48 → 피부, x49~50 → 머리 · 오른눈 y=49 의 x71~76 → 피부, x77~79 → `#B35B66`.
+  - **라. 옅은 눈썹 10픽셀** `#B35B66`, 바깥 끝이 1픽셀 내려간다 : 왼쪽 (44,49) (45,48)~(48,48) · 오른쪽 (72,47)~(75,47) (76,48).
+  - **다이아** : 옛 다이아 22픽셀(`#F66574`, x46~50 · y62~67)을 피부색으로 지우고 새로 찍었다. 색은 원작 `#FA6270`. 눈 아랫선(y=61)과 1픽셀 띄웠다 (3×3 은 2픽셀).
+- 새로 들어간 색은 다이아 `#FA6270` 하나다 (옛 다이아 색 `#F66574` 는 없어졌다). 나머지는 그림에 있던 색만 썼다. 고친 범위는 x43~82 · y47~67 안이고 옷·머리 모양·입·베레는 그대로다.
+- **본 것** : 2번이 가장 차분하다. 1번은 띠 굵기가 남아 아직 눈매가 또렷하다. 4번의 눈썹 선은 앞머리 결과 섞여 잘 안 읽힌다. 다이아는 5×5 가 가장 마름모로 읽히고, 3×3 은 더하기표처럼, 3×5 는 알약처럼 보인다. 원작처럼 세로로 긴 마름모(5×7)는 눈과 턱 사이에 자리가 없어 뺐다.
+- 볼 홍조 : 7차 1번에는 이미 양쪽 다 없어서 손대지 않았다.
+- 원본 크기 투명 PNG 는 세션 임시 폴더 `mozzi-owner-02/v8/` 의 `pick1~4.png` (찍는 스크립트 `edit8.py` · `build8.py` 도 같은 곳).
+
+### 가판대 주인 v9 — 눈 위 「＼ ／」 선 지우기 (후보 3장)
+
+- **왜** : 사용자가 8차를 보고 「1이 낫다. 내가 말한 눈썹은 ＼ ／ 꼴로 된 부분이다. 그걸 지워 보자」 고 했다. 바탕은 8차 1번 (속눈썹 굵기 그대로 · 다이아 5×5).
+- 손 수정이다 (PIL 로 픽셀만 찍음 · 생성 도구 안 씀). 새 색은 없다. 다이아·입·옷·머리 모양은 그대로다.
+- 파일 : `2026-10-03-가판대주인-v9-후보.png` (왼쪽부터 7차 1번 · 8차 1번 · 후보 A·B·C · 윗줄 4배, 아랫줄 얼굴만 8배).
+- **「＼ ／」 로 본 것** : 두 눈 사이로 내려오는 **앞머리 가닥의 어두운 테두리 선**이다. 왼눈 위에서 코 쪽으로 내려가는 선이 「＼」, 오른눈 위에서 코 쪽으로 내려가는 선이 「／」 라서 둘이 모이면 찌푸린 눈썹 꼴이 된다. 8차에서는 이 가운데 일부를 옅게만 해서 선이 남아 있었다.
+
+| 번호 | 무엇을 | 8차 1번에서 바뀐 픽셀 |
+| --- | --- | --- |
+| **A (추천)** | 「＼ ／」 선 21픽셀을 머리색으로 지움 · 사이 세로 선 5픽셀은 옅게 | 26 |
+| B | A + 속눈썹 띠 윗변의 계단 5픽셀을 메워 평평하게 (굵기 그대로) | 31 |
+| C | A + 이마 쪽으로 이어진 세로 선 15픽셀을 옅게 · 사이 세로 선은 아예 지움 | 41 |
+
+- 고친 자리 (x,y · 왼쪽 위가 0,0).
+  - **왼눈 위 「＼」 8픽셀** → 머리 `#EF9599` : (53,45) (53,46) (54,47) (54,48) (55,49) (56,50) (56,51) (57,51).
+  - **가운데 앞머리 끝의 「＼」 6픽셀** → 머리색 : (59,50) (60,51) (61,52) (62,52) (63,53) (64,53).
+  - **오른눈 위 「／」 7픽셀** → 머리색 : (66,46) (66,47) (66,48) (66,49) (65,50) (65,51) (65,52).
+  - **사이 세로 선 5픽셀** (57,46)~(57,50) : A·B 는 머리 중간 그늘 `#B35B66`, C 는 머리색.
+  - **B 의 속눈썹 계단 5픽셀** → 속눈썹 검정 `#151313` : 왼눈 (49,50) (50,50) (51,51) · 오른눈 (69,49) (70,49).
+  - **C 의 위쪽 세로 선 15픽셀** → `#B35B66` : (52,38)~(52,44) · (67,38)~(67,45).
+- **본 것** : A 만으로 눈 사이의 어두운 선이 없어져 찌푸린 느낌이 빠진다. B 는 속눈썹이 조금 더 반듯해지지만 차이가 작다. C 는 이마 쪽 선까지 옅어져 가장 순하지만 앞머리 가닥 구분이 흐려진다.
+- 못 정한 것 : 사용자가 말한 「＼ ／」 가 이 선이 맞는지는 사용자가 봐야 안다. 이마의 살색 세모(앞머리 틈) 테두리를 말한 것이라면 C 쪽을 더 밀어야 한다.
+- 원본 크기 투명 PNG 는 세션 임시 폴더 `mozzi-owner-02/v9/` 의 `pick1~3.png` (A·B·C 순 · 스크립트 `edit9.py` · `build9.py`).
+
 ## 2026-10-03 반복 02 — 손님 새 화풍 (시안만 · 게임에 안 넣음)
 
 > 주인(64×80 · 2.5등신)을 세우니 지금 손님(48×64)이 너무 단순해 보여서, **주인과 같은 화풍·등신으로 손님을 다시 그리고 파츠로 나눴다.**
@@ -189,3 +306,56 @@
 - 새 손님은 키가 주인과 같다(같은 등신). 손님 칸은 지금 68×96 에서 **68×112** 쯤으로 커져야 한다 (말풍선 28 + 틈 4 + 손님 80).
 - 파츠 원본 · 굽는 스크립트 · 프롬프트 · 씨앗 · 깨끗하지 않은 곳 : `Docs/Reference/Art/손님/v2-새화풍/README.md`.
 - 안 만든 것 : 소품(모자·안경), 체형·얼굴이 다른 기본체. 파마 머리 옆이 어깨 줄에서 일자로 끝나는 것은 다시 뽑을 거리다.
+
+## 2026-10-03 반복 03 — 메인 화면 목업 (시안만 · 게임에 안 넣음)
+
+> 피드백 5·6·7번(정식 UI · 하늘-건물-농장 배치 · 그림체 통일)을 눈으로 보려는 판정용이다. **기준 540×960** 픽셀로 짜고 ×2 로 키워 저장했다.
+> 하늘·건물·상자·UI 조각은 PixelLab 으로 새로 뽑았고, 찹쌀이·풀밭·담장·재료 아이콘·손님은 지금 게임 그림 그대로다. PIL 은 자르기·배경 지우기·배치·확대·글자에만 썼다.
+
+| 파일 | 무엇이 어디 있나 |
+| --- | --- |
+| `2026-10-03-메인화면-가.png` | **가 — 한 화면 고정.** 왼쪽 9:16(540×960) · 오른쪽 9:20(540×1200). 위에서부터 하늘 → 먼 숲 띠 → 건물 줄(합성소 · 가판대 · 창고 상자, 3/4 시점) → 농장 17칸×17줄. 오른쪽 아래에 메뉴 버튼 3개 + 햄버거, 왼쪽 위에 재화 캡슐 둘과 종이 알림 한 줄 |
+| `2026-10-03-메인화면-나.png` | **나 — 건물 크게 + 길.** 같은 두 비율. 하늘 → 먼 숲 → 큰 건물 줄(가판대는 정면 가게, 합성소는 좁고 높은 정면) → 손님 셋이 지나는 길 60 → 농장 17칸×15줄. 오른쪽 아래 햄버거 하나, 눌러 펼친 목록(종이 패널 + 리본 제목)을 열어 둠 |
+| `2026-10-03-메인화면-부품표.png` | 새로 뽑은 부품 18개를 이름·크기와 함께 모은 장 (×2) |
+
+- **긴 폰(9:20)은 같은 그림의 위쪽이 240px 더 보이는 것이다.** 땅·건물·메뉴는 아래에 붙어 그대로고, 남는 세로는 하늘과 구름이 받는다. 재화 캡슐만 화면 위끝에 붙는다.
+- 이번에 잡은 값 (540 기준)
+
+| 무엇 | 가 | 나 |
+| --- | --- | --- |
+| 농장 | 544 (17줄) | 480 (15줄) |
+| 길 | 없음 | 60 |
+| 건물 줄 (지평선 ~ 농장·길 위끝) | 172 | 112 (건물이 지평선 위로 솟는다) |
+| 먼 숲 띠 | 69 | 69 |
+| 하늘 (960 일 때 / 1200 일 때) | 175 / 415 | 239 / 479 |
+| 건물 그림 | 합성소 176×170 · 가판대 144×146 · 상자 78×56 | 합성소 147×217 · 가판대 201×173 · 상자 78×56 |
+| 메뉴 버튼 | 48×48 · 틈 6 · 오른쪽 여백 6 · 아래 여백 28 | 햄버거 48×50 하나 · 펼친 목록 172×236 |
+| 재화 캡슐 | 106×29 · 위·왼쪽 여백 8 | 같음 |
+| 글꼴 | `ONEMobilePOP.ttf` (게임이 쓰는 둥근 글꼴) — 버튼 이름 9 · 건물 이름 11 · 알림 12 · 재화 13 · 목록 14 px(540 기준) | 같음 |
+
+- 버튼·목록 이름(도감 · 상점 · 임무 · 설정)은 **자리표시**다. 늘 보일 메뉴가 무엇인지는 안 정했다.
+- 부품 원본 · 프롬프트 · 씨앗 · 굽는 스크립트 · 깨끗하지 않은 곳 : `Docs/Reference/Art/메인화면/v1/README.md`.
+
+### 만든 법 (메인 화면 목업)
+
+- 건물·상자·버튼·아이콘 : `create_image_pro_flash` (투명 바탕). 208×224 는 한 장 9회, 64×64 아래는 5회였다.
+- 숲·구름·길 : `create_image_pixflux` (한 장 1회). 400 폭이 한계라 **원본 + 좌우 뒤집은 것을 이어** 540 을 채웠다.
+- 패널 : `create_ui_asset` 384×384 한 판 40회. 부품 일곱을 주문했는데 **넷만** 나왔고, 버튼에 「Button」 글자와 물약 아이콘이 구워져 와서 패널·작은 판만 썼다.
+- **종이 면이 바탕색과 같으면 배경 지우기가 면까지 뚫는다** (빈 버튼 1판). 청록 바탕을 깔게 하고 `no_background=false` 로 뽑아 PIL 로 바탕만 지웠다.
+- 건물은 「top-down 3/4 view」로 쓰면 모서리에서 본 비스듬한 집이 나온다. 정면은 「straight-on front view facade (flat elevation, no perspective)」가 한 번에 들었다.
+
+### v2 — 「나」를 새 화풍으로 (2026-10-03)
+
+> 사용자가 「나」를 골랐고, 글꼴은 그대로 두고, 찹쌀이·타일·농장을 건물 화풍에 맞춰 다시 그려 보라고 했다. **시안만이다.**
+
+| 파일 | 무엇 |
+| --- | --- |
+| `2026-10-03-메인화면-나-v2.png` | 「나」 v2. 왼쪽 9:16 · 오른쪽 9:20. 찹쌀이(회색 선 + 명암에 종 색 곱하기) · 풀 · 울타리 · 재료 더미 · 밝은 종이 패널 · 새 손님(64×80) |
+| `2026-10-03-메인화면-나-v1v2비교.png` | 왼쪽 v1 「나」, 오른쪽 v2 「나」 (둘 다 9:16) |
+| `2026-10-03-찹쌀이-새화풍.png` | 찹쌀이 몸 다섯 줄(지금 · 글로 고침 둘 · 새로 뽑음 · 기계적 외곽선) × 여섯 종. 종 색을 실제로 곱한 결과 (×3) |
+
+- **메뉴는 확정이다** (사용자, 2026-10-03) : 오른쪽 아래 세로 줄에 늘 보이는 「도감」「강화」 + 햄버거. 햄버거를 누르면 「레시피 도감」「설정」. 가판대 · 합성소 · 보관함은 건물을 눌러 연다.
+- **찹쌀이는 겹 구조(흰 몸 × 종 색)를 그대로 두고 외곽선을 넣을 수 있다.** 지금 몸을 PixelLab 글 고침으로 바꾼 판이 윤곽을 그대로 지켜 볼 · 얼굴 · 왕관이 그대로 맞는다. 흰 찹쌀이만 선이 회색으로 남는다.
+- 배치 값은 v1 「나」와 같다 (농장 480 · 길 60 · 건물 줄 112 · 숲 69). 바뀐 값 : 펼친 목록 196×132 · 늘 보이는 버튼 48×48 둘(틈 6).
+- 합성소 그림은 **「떡 방앗간」으로는 읽히지만 「기계」로는 약하다** — 절구와 시루 김이 보이고 톱니·손잡이 같은 기계 표시가 없다. v1 그림을 그대로 썼다.
+- 부품 · 씨앗 · 깨끗하지 않은 곳 · 스크립트 : `Docs/Reference/Art/메인화면/v2/README.md`.

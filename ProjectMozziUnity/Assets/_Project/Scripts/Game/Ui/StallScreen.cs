@@ -53,6 +53,7 @@ namespace Mozzi.Game.Ui
 
         private TMP_Text _status;
         private TMP_Text _shelf;
+        private GameObject _makeEmpty;
         private TMP_Text _menuBody;
         private TMP_Text _expInfo;
         private Button _expMake;
@@ -114,6 +115,9 @@ namespace Mozzi.Game.Ui
                 _queueBubbles.Add(new OrderBubbleView(cell.transform, PrefabName));
                 _queueCustomers.Add(new CustomerCellView(cell.transform));
             }
+
+            _makeEmpty = UiBindUtil.FindObject(transform, UiNames.StallMakeEmptyText, PrefabName);
+            UiBindUtil.SetText(_makeEmpty.GetComponent<TMP_Text>(), UiText.StallMakeEmpty);
 
             for (int i = 0; i < UiNames.StallMakeRowCount; i++)
             {
@@ -247,6 +251,7 @@ namespace Mozzi.Game.Ui
             _flashing = false;
             _pound = null;
             _madeIcon = null;
+            _makeEmpty = null;
 
             _resource = null;
             _stall = null;
@@ -558,6 +563,8 @@ namespace Mozzi.Game.Ui
                     open.Add(rows[i]);
                 }
             }
+
+            UiBindUtil.SetActive(_makeEmpty, open.Count == 0);
 
             for (int i = 0; i < _makeRows.Count; i++)
             {

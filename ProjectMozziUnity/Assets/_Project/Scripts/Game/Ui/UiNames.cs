@@ -92,6 +92,10 @@ namespace Mozzi.Game.Ui
         public const string SynthesisMachine = "Machine";
         public const string SynthesisInletA = "InletA";
         public const string SynthesisInletB = "InletB";
+        // 투입구 위의 보이지 않는 누름 칸. 빈 입구에는 그 안의 Plus 글자가 켜진다.
+        public const string SynthesisInletAButton = "InletAButton";
+        public const string SynthesisInletBButton = "InletBButton";
+        public const string SynthesisInletPlus = "Plus";
         public const string SynthesisWindowFx = "WindowFx";
         public const string SynthesisYinRoot = "YinRoot";
         public const string SynthesisYinHalfA = "YinHalfA";
@@ -149,6 +153,8 @@ namespace Mozzi.Game.Ui
         public const string StallQueueCellPrefix = "QueueCell_";
         public const string StallMakeRowPrefix = "MakeRow_";
         public const int StallMakeRowCount = 10;
+        // 찾은 레시피가 없을 때 「만들기」 줄 자리에 뜨는 안내 글자.
+        public const string StallMakeEmptyText = "MakeEmptyText";
         public const string StallExpTogglePrefix = "ExpToggle_";
         public const string StallExpInfoText = "ExpInfoText";
         public const string StallExpMakeButton = "ExpMakeButton";

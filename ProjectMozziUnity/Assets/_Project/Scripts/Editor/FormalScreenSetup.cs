@@ -30,9 +30,10 @@ namespace Mozzi.Editor
         private const float TabPitch = 87f;
 
         private static readonly Color Clear = new Color(1f, 1f, 1f, 0f);
-        private static readonly Color PanelCream = new Color(1f, 0.965f, 0.9f, 0.95f);
+        private static readonly Color PanelCream = new Color(1f, 0.965f, 0.9f, 1f);
         private static readonly Color TextDark = new Color(0.29f, 0.18f, 0.13f, 1f);
-        private static readonly Color TopBarColor = new Color(0f, 0f, 0f, 0.5f);
+        // 합성소 배경 위끝색(SynthesisFillTop)을 반쯤 어둡게 한 갈색. 불투명이라 뒤 그림이 안 비친다.
+        private static readonly Color TopBarColor = new Color32(0x1C, 0x12, 0x10, 0xFF);
         private static readonly Color StripColor = new Color(0f, 0f, 0f, 0.08f);
         private static readonly Color BoardColor = new Color32(0x22, 0x20, 0x24, 0xFF);
         private static readonly Color BoardText = new Color(0.98f, 0.96f, 0.88f, 1f);
@@ -85,7 +86,7 @@ namespace Mozzi.Editor
             MakeMenuBoard(scene, sample);
             PlaceGlassCells(t, scene);
             PlaceQueueCells(t, scene);
-            PlaceStallPanel(t, panel);
+            PlaceStallPanel(t, panel, sample);
 
             panel.SetAsLastSibling();
             Find(t, UiNames.PoundPanel).SetAsLastSibling();
@@ -367,7 +368,7 @@ namespace Mozzi.Editor
         }
 
         // 위쪽 묶음(진열 목록 · 만들기)은 판 위 끝에, 아래쪽 묶음(실험 · 버튼)은 판 바닥에 붙인다.
-        private static void PlaceStallPanel(Transform root, RectTransform panel)
+        private static void PlaceStallPanel(Transform root, RectTransform panel, TMP_Text sample)
         {
             TMP_Text shelf = MoveText(root, panel, UiNames.StallShelfText);
             shelf.gameObject.SetActive(true);
@@ -396,6 +397,13 @@ namespace Mozzi.Editor
                 icon.anchoredPosition = new Vector2(LayoutConstUi.CakeIconMakeRowLeft, 0f);
                 icon.sizeDelta = new Vector2(LayoutConstUi.CakeIconMakeRowSize, LayoutConstUi.CakeIconMakeRowSize);
             }
+
+            // 찾은 레시피가 없을 때 만들기 줄 자리에 뜨는 안내. 켜고 끄기는 화면 코드가 한다.
+            TMP_Text makeEmpty = EnsureText(panel, UiNames.StallMakeEmptyText, sample);
+            TopLeft(makeEmpty.rectTransform, 8f, 28f, 344f, MakeRowPitchY * 2f);
+            StyleText(makeEmpty, 9f, TextDark, TextAlignmentOptions.Center);
+            makeEmpty.text = UiText.StallMakeEmpty;
+            makeEmpty.gameObject.SetActive(false);
 
             RectTransform strip = Find(root, "ButtonStrip") as RectTransform;
             strip.SetParent(panel, false);
@@ -440,6 +448,9 @@ namespace Mozzi.Editor
             MakeMozziIcon(scene, UiNames.SynthesisInletA, LayoutConstUi.SynthesisInletAX, LayoutConstUi.SynthesisInletY);
             MakeMozziIcon(scene, UiNames.SynthesisInletB, LayoutConstUi.SynthesisInletBX, LayoutConstUi.SynthesisInletY);
 
+            MakeInletButton(scene, UiNames.SynthesisInletAButton, LayoutConstUi.SynthesisInletAX, sample);
+            MakeInletButton(scene, UiNames.SynthesisInletBButton, LayoutConstUi.SynthesisInletBX, sample);
+
             RectTransform window = Ensure(scene, UiNames.SynthesisWindowFx);
             Centered(window, LayoutConstUi.SynthesisWindowCenterX, LayoutConstUi.SynthesisWindowCenterY,
                 LayoutConstUi.SynthesisWindowSize, LayoutConstUi.SynthesisWindowSize);
@@ -475,6 +486,28 @@ namespace Mozzi.Editor
             StyleText(mark, 22f, BoardText, TextAlignmentOptions.Center);
             mark.text = "?";
             mark.transform.SetAsLastSibling();
+        }
+
+        // 투입구 위의 보이지 않는 누름 칸과 빈 입구 표시 「+」. onClick 과 켜고 끄기는 화면 코드가 한다.
+        private static void MakeInletButton(RectTransform scene, string name, float centerX, TMP_Text sample)
+        {
+            RectTransform rect = Ensure(scene, name);
+            Centered(rect, centerX, LayoutConstUi.SynthesisInletY,
+                LayoutConstUi.SynthesisInletTouchSize, LayoutConstUi.SynthesisInletTouchSize);
+            SetImage(rect, Clear, true);
+
+            Button button = rect.GetComponent<Button>();
+            if (button == null)
+            {
+                button = rect.gameObject.AddComponent<Button>();
+            }
+
+            button.transition = Selectable.Transition.None;
+
+            TMP_Text plus = EnsureText(rect, UiNames.SynthesisInletPlus, sample);
+            Middle(plus.rectTransform, 0f, -LayoutConstUi.SynthesisInletPlusDrop, LayoutConstUi.SynthesisInletTouchSize);
+            StyleText(plus, 22f, BoardText, TextAlignmentOptions.Center);
+            plus.text = "+";
         }
 
         // 찹쌀이 겹 다섯 (몸 · 볼 둘 · 표정 · 악세사리). 그림은 코드가 끼우므로 꺼 둔다.

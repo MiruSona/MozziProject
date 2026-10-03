@@ -1,3 +1,4 @@
+using Mozzi.Events;
 using UnityEngine;
 
 namespace Mozzi.Core
@@ -8,6 +9,9 @@ namespace Mozzi.Core
     {
         private readonly ProcessList<IService> _services = new ProcessList<IService>();
         private readonly ProcessList<MasterBase> _masters = new ProcessList<MasterBase>();
+
+        // 멈춤과 포커스 잃음이 잇달아 와도 한 번만 알린다.
+        private bool _inBackground;
 
         public void AddService(IService service)
         {
@@ -49,6 +53,31 @@ namespace Mozzi.Core
             _services.LateProcessAll(dt);
             _masters.LateProcessAll(dt);
             GameMaster.FlushSceneRequest();
+        }
+
+        // 안드로이드는 홈으로 나가면 quitting 없이 죽을 수 있다. 뒤로 가는 순간을 AppBackgroundEvent 로 알린다.
+        private void OnApplicationPause(bool paused)
+        {
+            SetBackground(paused);
+        }
+
+        private void OnApplicationFocus(bool focused)
+        {
+            SetBackground(focused == false);
+        }
+
+        private void SetBackground(bool background)
+        {
+            if (background == _inBackground)
+            {
+                return;
+            }
+
+            _inBackground = background;
+            if (background)
+            {
+                EventBus.Publish(new AppBackgroundEvent());
+            }
         }
     }
 }
