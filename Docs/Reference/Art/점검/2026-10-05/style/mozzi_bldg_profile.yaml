@@ -1,0 +1,14 @@
+# arttool style extract 가 뽑은 조각 — 보고 고쳐서 프로필에 붙인다. 자동으로 안 붙는다
+# 기준 그림 22장 — 도트 22장 (스프라이트 22 · 배경 0) · 도트 아님 0장
+palette:
+  ramp_len: 6   # 팔레트 파일과 짝
+  outline: null   # 외곽선 selout — 따로 쓰는 외곽선 색이 없다
+  ramps_file: "palettes/mozzi_bldg.json"   # 팔레트를 그 자리로 옮긴 뒤
+style:
+  # light : 정하지 못함 (top 12 · unknown 10) — 프로필 값 그대로
+  # style.scale : 1 — 프로필과 같아 뺐다 (22장 중 22장 (100%))
+  outline: selout   # 22장 중 18장 (82%)
+check:
+  warn:
+    color_cap:
+      table: { 256: 57 }   # 크기 칸마다 5장 이상일 때만, p90 올림

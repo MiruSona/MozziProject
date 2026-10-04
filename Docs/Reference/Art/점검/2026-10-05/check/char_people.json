@@ -1,0 +1,188 @@
+{
+  "version": 1,
+  "profile": "default",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 17
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift",
+    "ramp_colors"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 48가지를 넘은 그림 0개",
+      "items": [
+        {
+          "where": "body.png",
+          "colors": 37
+        },
+        {
+          "where": "face_01.png",
+          "colors": 15
+        },
+        {
+          "where": "face_02.png",
+          "colors": 15
+        },
+        {
+          "where": "face_03.png",
+          "colors": 17
+        },
+        {
+          "where": "hair_01_black.png",
+          "colors": 5
+        },
+        {
+          "where": "hair_01_brown.png",
+          "colors": 5
+        },
+        {
+          "where": "hair_01_orange.png",
+          "colors": 5
+        },
+        {
+          "where": "hair_01_purple.png",
+          "colors": 5
+        },
+        {
+          "where": "hair_02_black.png",
+          "colors": 4
+        },
+        {
+          "where": "hair_02_brown.png",
+          "colors": 4
+        },
+        {
+          "where": "hair_02_orange.png",
+          "colors": 4
+        },
+        {
+          "where": "hair_02_purple.png",
+          "colors": 4
+        },
+        {
+          "where": "shirt_blue.png",
+          "colors": 4
+        },
+        {
+          "where": "shirt_green.png",
+          "colors": 4
+        },
+        {
+          "where": "shirt_red.png",
+          "colors": 4
+        },
+        {
+          "where": "shirt_yellow.png",
+          "colors": 4
+        },
+        {
+          "where": "stall_owner.png",
+          "colors": 38
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [],
+  "info": [
+    {
+      "rule": "outline",
+      "detail": "style.outline 이 unset 이라 판정만 적는다",
+      "items": [
+        {
+          "where": "body.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "face_01.png",
+          "verdict": "black"
+        },
+        {
+          "where": "face_02.png",
+          "verdict": "black"
+        },
+        {
+          "where": "face_03.png",
+          "verdict": "black"
+        },
+        {
+          "where": "hair_01_black.png",
+          "verdict": "black"
+        },
+        {
+          "where": "hair_01_brown.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "hair_01_orange.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "hair_01_purple.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "hair_02_black.png",
+          "verdict": "black"
+        },
+        {
+          "where": "hair_02_brown.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "hair_02_orange.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "hair_02_purple.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "shirt_blue.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "shirt_green.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "shirt_red.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "shirt_yellow.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "stall_owner.png",
+          "verdict": "black"
+        }
+      ]
+    }
+  ]
+}

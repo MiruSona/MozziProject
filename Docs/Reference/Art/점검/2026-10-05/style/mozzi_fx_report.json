@@ -1,0 +1,184 @@
+{
+  "version": 1,
+  "status": "warn",
+  "name": "mozzi_fx",
+  "summary": {
+    "images": 3,
+    "pixel": 3,
+    "not_pixel": 0,
+    "sprites": 3,
+    "backgrounds": 0
+  },
+  "outline": {
+    "table": {
+      "none": 3
+    },
+    "pick": "none"
+  },
+  "light": {
+    "table": {
+      "unknown": 3
+    },
+    "pick": "unknown"
+  },
+  "scale": {
+    "table": {},
+    "pick": null
+  },
+  "held": "도트 그림이 3장뿐이다 (< 5)",
+  "size_bins": [
+    {
+      "bin": "16",
+      "images": 1,
+      "colors_p50": 1.0,
+      "colors_p90": 1.0,
+      "cap": 8
+    },
+    {
+      "bin": "48",
+      "images": 2,
+      "colors_p50": 1.0,
+      "colors_p90": 1.0,
+      "cap": 44
+    }
+  ],
+  "stats": {
+    "isolated": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "n": 3
+    },
+    "near_pairs": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "n": 3
+    },
+    "outline_share": {
+      "p50": 0.1635,
+      "p95": 0.3044,
+      "n": 3
+    },
+    "smooth": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "n": 3
+    }
+  },
+  "palette": {
+    "usage": {
+      "#FFFFFF": 1.0
+    },
+    "hue_step": null,
+    "noise_merged": 0,
+    "merged": [],
+    "merge_table": {},
+    "padded": [
+      {
+        "ramp": "gray",
+        "cells": 5
+      }
+    ],
+    "singles": [
+      "gray"
+    ],
+    "dropped": [],
+    "dropped_count": 0,
+    "removed_ramps": [],
+    "removed_colors": 0,
+    "colors": 1,
+    "background_colors": [],
+    "sources": 3,
+    "sampled": 0,
+    "ramps": [
+      {
+        "name": "gray",
+        "colors": [
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF"
+        ],
+        "padded": 5,
+        "usage": 1.0
+      }
+    ],
+    "outline": null,
+    "outline_candidate": null,
+    "ramp_len": 6
+  },
+  "images": [
+    {
+      "file": "fx/fx_merge_flash.png",
+      "background": false,
+      "size": 48,
+      "pixel": true,
+      "colors": 1,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "none",
+      "outline_share": 0.1469,
+      "black_ratio": 0.0,
+      "edge_color": "#FFFFFF",
+      "edge_color_count": 104,
+      "light": "unknown"
+    },
+    {
+      "file": "fx/fx_sparkle.png",
+      "background": false,
+      "size": 11,
+      "pixel": true,
+      "colors": 1,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "none",
+      "outline_share": 0.32,
+      "black_ratio": 0.0,
+      "edge_color": "#FFFFFF",
+      "edge_color_count": 8,
+      "light": "unknown"
+    },
+    {
+      "file": "fx/fx_yinyang_half.png",
+      "background": false,
+      "size": 48,
+      "pixel": true,
+      "colors": 1,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "none",
+      "outline_share": 0.1635,
+      "black_ratio": 0.0,
+      "edge_color": "#FFFFFF",
+      "edge_color_count": 139,
+      "light": "unknown"
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "few_images",
+      "ok": false,
+      "detail": "기준 그림이 적다 — 도트 그림 3장 < 5. check.warn 제안은 안 낸다",
+      "items": []
+    }
+  ],
+  "out": {
+    "palette": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_fx_palette.json",
+    "swatch": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_fx_swatch.png",
+    "profile": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_fx_profile.yaml",
+    "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_fx_report.json"
+  }
+}

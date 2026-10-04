@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "name": "mozzi_fx",
+  "ramp_len": 6,
+  "outline": null,
+  "ramps": {
+    "gray": [
+      "#FFFFFF",
+      "#FFFFFF",
+      "#FFFFFF",
+      "#FFFFFF",
+      "#FFFFFF",
+      "#FFFFFF"
+    ]
+  },
+  "comment": "arttool style extract 가 기준 그림 3장에서 뽑았다. 맞닿은 색끼리 묶은 램프다 — 보고 고쳐서 palettes/ 나 게임 저장소로 옮긴다",
+  "usage": {
+    "#FFFFFF": 1.0
+  },
+  "hue_step": null,
+  "singles": [
+    "gray"
+  ]
+}

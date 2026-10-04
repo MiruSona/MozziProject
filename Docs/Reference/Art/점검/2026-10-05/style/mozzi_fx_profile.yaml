@@ -1,0 +1,11 @@
+# arttool style extract 가 뽑은 조각 — 보고 고쳐서 프로필에 붙인다. 자동으로 안 붙는다
+# 기준 그림 3장 — 도트 3장 (스프라이트 3 · 배경 0) · 도트 아님 0장
+palette:
+  # 한 색짜리 램프 1개 : gray — 그늘 칸을 채우거나 뺀다
+  ramp_len: 6   # 팔레트 파일과 짝
+  outline: null   # 외곽선 none — 따로 쓰는 외곽선 색이 없다
+  ramps_file: "palettes/mozzi_fx.json"   # 팔레트를 그 자리로 옮긴 뒤
+style:
+  # light : 정하지 못함 (unknown 3) — 프로필 값 그대로
+  outline: "none"   # 3장 중 3장 (100%)
+# check.warn : 판정 보류 — 도트 그림이 3장뿐이다 (< 5). 문턱 제안을 안 낸다

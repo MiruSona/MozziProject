@@ -1,0 +1,923 @@
+{
+  "version": 1,
+  "status": "warn",
+  "name": "mozzi_tile",
+  "summary": {
+    "images": 15,
+    "pixel": 15,
+    "not_pixel": 0,
+    "sprites": 14,
+    "backgrounds": 1
+  },
+  "outline": {
+    "table": {
+      "selout": 9,
+      "solid": 4,
+      "selout+light": 1
+    },
+    "pick": "selout"
+  },
+  "light": {
+    "table": {
+      "unknown": 8,
+      "top_left": 3,
+      "top": 3
+    },
+    "pick": null
+  },
+  "scale": {
+    "table": {
+      "1": 15
+    },
+    "pick": 1
+  },
+  "held": "light 표가 갈렸다 — 종류가 섞인 무리로 보인다",
+  "size_bins": [
+    {
+      "bin": "32",
+      "images": 12,
+      "colors_p50": 12.5,
+      "colors_p90": 27.6,
+      "cap": 16
+    },
+    {
+      "bin": "48",
+      "images": 2,
+      "colors_p50": 28.5,
+      "colors_p90": 28.9,
+      "cap": 44
+    }
+  ],
+  "stats": {
+    "isolated": {
+      "p50": 0.1629,
+      "p95": 0.2643,
+      "n": 15
+    },
+    "near_pairs": {
+      "p50": 0.0,
+      "p95": 9.1,
+      "n": 15
+    },
+    "outline_share": {
+      "p50": 0.2322,
+      "p95": 0.3192,
+      "n": 14
+    },
+    "smooth": {
+      "p50": 0.1153,
+      "p95": 0.1792,
+      "n": 15
+    }
+  },
+  "palette": {
+    "usage": {
+      "#8E8B88": 0.1131,
+      "#364935": 0.0907,
+      "#799274": 0.0857,
+      "#C0CF7D": 0.0636,
+      "#BCB9B5": 0.0565,
+      "#454140": 0.055,
+      "#688065": 0.0489,
+      "#7E533F": 0.0366,
+      "#AABE96": 0.0346,
+      "#F8F8F8": 0.0341,
+      "#95AD88": 0.0339,
+      "#AA6345": 0.031,
+      "#DCB6A8": 0.0267,
+      "#DFD4CA": 0.0248,
+      "#566A54": 0.0233,
+      "#452A25": 0.0199,
+      "#5A5653": 0.0173,
+      "#714C3B": 0.0172,
+      "#674638": 0.0171,
+      "#4A5D49": 0.017,
+      "#C38C83": 0.0137,
+      "#2A2522": 0.0122,
+      "#8E5E44": 0.0122,
+      "#AE7251": 0.0097,
+      "#9A6447": 0.0093,
+      "#C99167": 0.0093,
+      "#DDB692": 0.009,
+      "#332B26": 0.0084,
+      "#C2865E": 0.0078,
+      "#D7AB84": 0.0077,
+      "#B87B57": 0.0074,
+      "#3D3129": 0.0069,
+      "#573E33": 0.0068,
+      "#49382F": 0.0063,
+      "#D19E73": 0.0062,
+      "#71453B": 0.006,
+      "#25211E": 0.005,
+      "#A26C4E": 0.0034,
+      "#F2D39C": 0.0022
+    },
+    "hue_step": 0.9,
+    "noise_merged": 17,
+    "merged": [
+      {
+        "from": "#2D2925",
+        "to": "#2A2522",
+        "why": "noise"
+      },
+      {
+        "from": "#595652",
+        "to": "#5A5653",
+        "why": "noise"
+      },
+      {
+        "from": "#7E7C79",
+        "to": "#8E8B88",
+        "why": "noise"
+      },
+      {
+        "from": "#815641",
+        "to": "#7E533F",
+        "why": "noise"
+      },
+      {
+        "from": "#916045",
+        "to": "#8E5E44",
+        "why": "noise"
+      },
+      {
+        "from": "#966246",
+        "to": "#9A6447",
+        "why": "noise"
+      },
+      {
+        "from": "#BDCB7B",
+        "to": "#C0CF7D",
+        "why": "noise"
+      },
+      {
+        "from": "#BECE7B",
+        "to": "#C0CF7D",
+        "why": "noise"
+      },
+      {
+        "from": "#BFCE7C",
+        "to": "#C0CF7D",
+        "why": "noise"
+      },
+      {
+        "from": "#C1D27E",
+        "to": "#C0CF7D",
+        "why": "noise"
+      },
+      {
+        "from": "#C2CF7B",
+        "to": "#C0CF7D",
+        "why": "noise"
+      },
+      {
+        "from": "#2E3E2D",
+        "to": "#364935",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#3F533D",
+        "to": "#364935",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#5F755D",
+        "to": "#688065",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#604336",
+        "to": "#674638",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#6C4A3A",
+        "to": "#714C3B",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#708A6D",
+        "to": "#799274",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#79513E",
+        "to": "#7E533F",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#7E7975",
+        "to": "#8E8B88",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#849D7C",
+        "to": "#799274",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#865842",
+        "to": "#7E533F",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#895B55",
+        "to": "#AA6345",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#A39F9B",
+        "to": "#8E8B88",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#CA8B37",
+        "to": "#C38C83",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#E8B14C",
+        "to": "#DCB6A8",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#FEFEFE",
+        "to": "#F8F8F8",
+        "why": "ramp_len"
+      }
+    ],
+    "merge_table": {
+      "#2D2925": "#2A2522",
+      "#595652": "#5A5653",
+      "#7E7C79": "#8E8B88",
+      "#815641": "#7E533F",
+      "#916045": "#8E5E44",
+      "#966246": "#9A6447",
+      "#BDCB7B": "#C0CF7D",
+      "#BECE7B": "#C0CF7D",
+      "#BFCE7C": "#C0CF7D",
+      "#C1D27E": "#C0CF7D",
+      "#C2CF7B": "#C0CF7D",
+      "#2E3E2D": "#364935",
+      "#3F533D": "#364935",
+      "#5F755D": "#688065",
+      "#604336": "#674638",
+      "#6C4A3A": "#714C3B",
+      "#708A6D": "#799274",
+      "#79513E": "#7E533F",
+      "#7E7975": "#8E8B88",
+      "#849D7C": "#799274",
+      "#865842": "#7E533F",
+      "#895B55": "#AA6345",
+      "#A39F9B": "#8E8B88",
+      "#CA8B37": "#C38C83",
+      "#E8B14C": "#DCB6A8",
+      "#FEFEFE": "#F8F8F8"
+    },
+    "padded": [
+      {
+        "ramp": "green_2",
+        "cells": 5
+      },
+      {
+        "ramp": "green_3",
+        "cells": 5
+      },
+      {
+        "ramp": "orange_2",
+        "cells": 2
+      },
+      {
+        "ramp": "orange_3",
+        "cells": 3
+      },
+      {
+        "ramp": "orange_4",
+        "cells": 4
+      },
+      {
+        "ramp": "orange_5",
+        "cells": 4
+      },
+      {
+        "ramp": "orange_6",
+        "cells": 5
+      },
+      {
+        "ramp": "orange_7",
+        "cells": 5
+      }
+    ],
+    "singles": [
+      "green_2",
+      "green_3",
+      "orange_6",
+      "orange_7"
+    ],
+    "dropped": [
+      {
+        "color": "#698F58",
+        "usage": 0.00034,
+        "images": 1
+      },
+      {
+        "color": "#A4866C",
+        "usage": 0.00028,
+        "images": 1
+      },
+      {
+        "color": "#719458",
+        "usage": 0.00027,
+        "images": 1
+      },
+      {
+        "color": "#688A5A",
+        "usage": 0.00026,
+        "images": 1
+      },
+      {
+        "color": "#7B9B60",
+        "usage": 0.00024,
+        "images": 1
+      },
+      {
+        "color": "#6E925E",
+        "usage": 0.0002,
+        "images": 1
+      },
+      {
+        "color": "#BBCC75",
+        "usage": 0.00017,
+        "images": 1
+      },
+      {
+        "color": "#638657",
+        "usage": 0.00016,
+        "images": 1
+      },
+      {
+        "color": "#5F8152",
+        "usage": 0.00016,
+        "images": 1
+      },
+      {
+        "color": "#B7CA7B",
+        "usage": 0.00015,
+        "images": 1
+      },
+      {
+        "color": "#658750",
+        "usage": 0.00014,
+        "images": 1
+      },
+      {
+        "color": "#78985B",
+        "usage": 0.00014,
+        "images": 1
+      },
+      {
+        "color": "#6C8F53",
+        "usage": 0.00011,
+        "images": 1
+      },
+      {
+        "color": "#5B7F4A",
+        "usage": 0.0001,
+        "images": 1
+      },
+      {
+        "color": "#81A062",
+        "usage": 0.0001,
+        "images": 1
+      },
+      {
+        "color": "#B2C677",
+        "usage": 0.0001,
+        "images": 1
+      },
+      {
+        "color": "#88A268",
+        "usage": 9e-05,
+        "images": 1
+      },
+      {
+        "color": "#C6D67F",
+        "usage": 8e-05,
+        "images": 1
+      },
+      {
+        "color": "#9BAB7A",
+        "usage": 6e-05,
+        "images": 1
+      },
+      {
+        "color": "#90A570",
+        "usage": 6e-05,
+        "images": 1
+      },
+      {
+        "color": "#ABC072",
+        "usage": 5e-05,
+        "images": 1
+      },
+      {
+        "color": "#54774A",
+        "usage": 3e-05,
+        "images": 1
+      }
+    ],
+    "dropped_count": 22,
+    "removed_ramps": [],
+    "removed_colors": 0,
+    "colors": 39,
+    "background_colors": [],
+    "sources": 15,
+    "sampled": 0,
+    "ramps": [
+      {
+        "name": "gray",
+        "colors": [
+          "#454140",
+          "#5A5653",
+          "#8E8B88",
+          "#BCB9B5",
+          "#DFD4CA",
+          "#F8F8F8"
+        ],
+        "padded": 0,
+        "usage": 0.3009
+      },
+      {
+        "name": "green",
+        "colors": [
+          "#364935",
+          "#4A5D49",
+          "#566A54",
+          "#688065",
+          "#799274",
+          "#95AD88"
+        ],
+        "padded": 0,
+        "usage": 0.2996
+      },
+      {
+        "name": "red",
+        "colors": [
+          "#452A25",
+          "#71453B",
+          "#AA6345",
+          "#C38C83",
+          "#DCB6A8",
+          "#F2D39C"
+        ],
+        "padded": 0,
+        "usage": 0.0995
+      },
+      {
+        "name": "orange",
+        "colors": [
+          "#573E33",
+          "#674638",
+          "#714C3B",
+          "#7E533F",
+          "#8E5E44",
+          "#9A6447"
+        ],
+        "padded": 0,
+        "usage": 0.0992
+      },
+      {
+        "name": "green_2",
+        "colors": [
+          "#C0CF7D",
+          "#C0CF7D",
+          "#C0CF7D",
+          "#C0CF7D",
+          "#C0CF7D",
+          "#C0CF7D"
+        ],
+        "padded": 5,
+        "usage": 0.0636
+      },
+      {
+        "name": "green_3",
+        "colors": [
+          "#AABE96",
+          "#AABE96",
+          "#AABE96",
+          "#AABE96",
+          "#AABE96",
+          "#AABE96"
+        ],
+        "padded": 5,
+        "usage": 0.0346
+      },
+      {
+        "name": "orange_2",
+        "colors": [
+          "#25211E",
+          "#2A2522",
+          "#332B26",
+          "#3D3129",
+          "#3D3129",
+          "#3D3129"
+        ],
+        "padded": 2,
+        "usage": 0.0325
+      },
+      {
+        "name": "orange_3",
+        "colors": [
+          "#D19E73",
+          "#D7AB84",
+          "#DDB692",
+          "#DDB692",
+          "#DDB692",
+          "#DDB692"
+        ],
+        "padded": 3,
+        "usage": 0.0229
+      },
+      {
+        "name": "orange_4",
+        "colors": [
+          "#C2865E",
+          "#C99167",
+          "#C99167",
+          "#C99167",
+          "#C99167",
+          "#C99167"
+        ],
+        "padded": 4,
+        "usage": 0.0171
+      },
+      {
+        "name": "orange_5",
+        "colors": [
+          "#A26C4E",
+          "#AE7251",
+          "#AE7251",
+          "#AE7251",
+          "#AE7251",
+          "#AE7251"
+        ],
+        "padded": 4,
+        "usage": 0.0131
+      },
+      {
+        "name": "orange_6",
+        "colors": [
+          "#B87B57",
+          "#B87B57",
+          "#B87B57",
+          "#B87B57",
+          "#B87B57",
+          "#B87B57"
+        ],
+        "padded": 5,
+        "usage": 0.0074
+      },
+      {
+        "name": "orange_7",
+        "colors": [
+          "#49382F",
+          "#49382F",
+          "#49382F",
+          "#49382F",
+          "#49382F",
+          "#49382F"
+        ],
+        "padded": 5,
+        "usage": 0.0063
+      }
+    ],
+    "outline": null,
+    "outline_candidate": null,
+    "ramp_len": 6
+  },
+  "images": [
+    {
+      "file": "tile/decor_00.png",
+      "background": false,
+      "size": 24,
+      "pixel": true,
+      "colors": 12,
+      "smooth": 0.1331,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.13,
+      "near_pairs": 0,
+      "outline": "selout",
+      "outline_share": 0.2353,
+      "black_ratio": 0.0,
+      "edge_color": "#364935",
+      "edge_color_count": 31,
+      "light": "unknown"
+    },
+    {
+      "file": "tile/decor_01.png",
+      "background": false,
+      "size": 25,
+      "pixel": true,
+      "colors": 15,
+      "smooth": 0.087,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.1629,
+      "near_pairs": 0,
+      "outline": "selout",
+      "outline_share": 0.2204,
+      "black_ratio": 0.0,
+      "edge_color": "#364935",
+      "edge_color_count": 26,
+      "light": "unknown"
+    },
+    {
+      "file": "tile/decor_02.png",
+      "background": false,
+      "size": 23,
+      "pixel": true,
+      "colors": 12,
+      "smooth": 0.1055,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.1378,
+      "near_pairs": 0,
+      "outline": "selout",
+      "outline_share": 0.2615,
+      "black_ratio": 0.0,
+      "edge_color": "#364935",
+      "edge_color_count": 27,
+      "light": "unknown"
+    },
+    {
+      "file": "tile/decor_03.png",
+      "background": false,
+      "size": 28,
+      "pixel": true,
+      "colors": 12,
+      "smooth": 0.1639,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.1641,
+      "near_pairs": 0,
+      "outline": "selout",
+      "outline_share": 0.226,
+      "black_ratio": 0.0,
+      "edge_color": "#364935",
+      "edge_color_count": 31,
+      "light": "unknown"
+    },
+    {
+      "file": "tile/decor_04.png",
+      "background": false,
+      "size": 20,
+      "pixel": true,
+      "colors": 22,
+      "smooth": 0.0135,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.2189,
+      "near_pairs": 0,
+      "outline": "selout",
+      "outline_share": 0.2318,
+      "black_ratio": 0.0,
+      "edge_color": "#7E7975",
+      "edge_color_count": 14,
+      "light": "unknown"
+    },
+    {
+      "file": "tile/decor_05.png",
+      "background": false,
+      "size": 20,
+      "pixel": true,
+      "colors": 24,
+      "smooth": 0.0248,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.2233,
+      "near_pairs": 0,
+      "outline": "selout",
+      "outline_share": 0.2326,
+      "black_ratio": 0.0,
+      "edge_color": "#7E7975",
+      "edge_color_count": 11,
+      "light": "unknown"
+    },
+    {
+      "file": "tile/decor_06.png",
+      "background": false,
+      "size": 25,
+      "pixel": true,
+      "colors": 28,
+      "smooth": 0.0259,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.2698,
+      "near_pairs": 0,
+      "outline": "selout",
+      "outline_share": 0.1906,
+      "black_ratio": 0.0,
+      "edge_color": "#2E3E2D",
+      "edge_color_count": 15,
+      "light": "unknown"
+    },
+    {
+      "file": "tile/decor_07.png",
+      "background": false,
+      "size": 19,
+      "pixel": true,
+      "colors": 7,
+      "smooth": 0.1771,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0291,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.2907,
+      "black_ratio": 0.0,
+      "edge_color": "#454140",
+      "edge_color_count": 42,
+      "light": "top_left"
+    },
+    {
+      "file": "tile/decor_08.png",
+      "background": false,
+      "size": 19,
+      "pixel": true,
+      "colors": 6,
+      "smooth": 0.1294,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0274,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.3151,
+      "black_ratio": 0.0,
+      "edge_color": "#454140",
+      "edge_color_count": 37,
+      "light": "top_left"
+    },
+    {
+      "file": "tile/decor_09.png",
+      "background": false,
+      "size": 20,
+      "pixel": true,
+      "colors": 6,
+      "smooth": 0.1842,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0458,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.3268,
+      "black_ratio": 0.0,
+      "edge_color": "#454140",
+      "edge_color_count": 43,
+      "light": "top_left"
+    },
+    {
+      "file": "tile/decor_10.png",
+      "background": false,
+      "size": 19,
+      "pixel": true,
+      "colors": 13,
+      "smooth": 0.0287,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.119,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.2905,
+      "black_ratio": 0.0,
+      "edge_color": "#452A25",
+      "edge_color_count": 58,
+      "light": "unknown"
+    },
+    {
+      "file": "tile/fence_h.png",
+      "background": false,
+      "size": 34,
+      "pixel": true,
+      "colors": 28,
+      "smooth": 0.1545,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.1944,
+      "near_pairs": 4,
+      "outline": "selout",
+      "outline_share": 0.1725,
+      "black_ratio": 0.0,
+      "edge_color": "#2D2925",
+      "edge_color_count": 29,
+      "light": "top"
+    },
+    {
+      "file": "tile/fence_post.png",
+      "background": false,
+      "size": 36,
+      "pixel": true,
+      "colors": 29,
+      "smooth": 0.1741,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.2619,
+      "near_pairs": 4,
+      "outline": "selout",
+      "outline_share": 0.1565,
+      "black_ratio": 0.0,
+      "edge_color": "#3D3129",
+      "edge_color_count": 19,
+      "light": "top"
+    },
+    {
+      "file": "tile/fence_v.png",
+      "background": false,
+      "size": 32,
+      "pixel": true,
+      "colors": 29,
+      "smooth": 0.1153,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.218,
+      "near_pairs": 4,
+      "outline": "selout+light",
+      "outline_share": 0.1719,
+      "black_ratio": 0.0,
+      "edge_color": "#2A2522",
+      "edge_color_count": 21,
+      "light": "top"
+    },
+    {
+      "file": "tile/grass_base.png",
+      "background": true,
+      "size": 256,
+      "pixel": true,
+      "colors": 33,
+      "smooth": 0.0026,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0672,
+      "near_pairs": 21
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "by_kind",
+      "ok": false,
+      "detail": "light 표가 갈렸다 — 종류가 섞인 무리로 보인다. 종류별 폴더로 나눠 폴더마다 따로 뽑는다",
+      "items": []
+    }
+  ],
+  "out": {
+    "palette": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_tile_palette.json",
+    "swatch": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_tile_swatch.png",
+    "profile": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_tile_profile.yaml",
+    "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_tile_report.json"
+  }
+}

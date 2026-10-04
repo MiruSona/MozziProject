@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "profile": "default",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 3
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift",
+    "ramp_colors"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 48가지를 넘은 그림 0개",
+      "items": [
+        {
+          "where": "fx_merge_flash.png",
+          "colors": 1
+        },
+        {
+          "where": "fx_sparkle.png",
+          "colors": 1
+        },
+        {
+          "where": "fx_yinyang_half.png",
+          "colors": 1
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [],
+  "info": [
+    {
+      "rule": "outline",
+      "detail": "style.outline 이 unset 이라 판정만 적는다",
+      "items": [
+        {
+          "where": "fx_merge_flash.png",
+          "verdict": "none"
+        },
+        {
+          "where": "fx_sparkle.png",
+          "verdict": "none"
+        },
+        {
+          "where": "fx_yinyang_half.png",
+          "verdict": "none"
+        }
+      ]
+    }
+  ]
+}

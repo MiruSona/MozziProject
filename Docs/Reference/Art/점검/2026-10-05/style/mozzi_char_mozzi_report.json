@@ -1,0 +1,806 @@
+{
+  "version": 1,
+  "status": "warn",
+  "name": "mozzi_char_mozzi",
+  "summary": {
+    "images": 16,
+    "pixel": 16,
+    "not_pixel": 0,
+    "sprites": 16,
+    "backgrounds": 0
+  },
+  "outline": {
+    "table": {
+      "mixed": 2,
+      "solid": 4,
+      "none": 2,
+      "black": 3
+    },
+    "pick": null
+  },
+  "light": {
+    "table": {
+      "top_left": 2,
+      "unknown": 13,
+      "top": 1
+    },
+    "pick": "unknown"
+  },
+  "scale": {
+    "table": {
+      "1": 6
+    },
+    "pick": 1
+  },
+  "held": "outline 표가 갈렸다 — 종류가 섞인 무리로 보인다",
+  "size_bins": [
+    {
+      "bin": "16",
+      "images": 3,
+      "colors_p50": 4.0,
+      "colors_p90": 4.0,
+      "cap": 8
+    },
+    {
+      "bin": "32",
+      "images": 8,
+      "colors_p50": 2.0,
+      "colors_p90": 2.3,
+      "cap": 16
+    },
+    {
+      "bin": "48",
+      "images": 5,
+      "colors_p50": 6.0,
+      "colors_p90": 22.8,
+      "cap": 44
+    }
+  ],
+  "stats": {
+    "isolated": {
+      "p50": 0.0,
+      "p95": 0.0426,
+      "n": 16
+    },
+    "near_pairs": {
+      "p50": 0.0,
+      "p95": 21.5,
+      "n": 16
+    },
+    "outline_share": {
+      "p50": 0.0976,
+      "p95": 0.4128,
+      "n": 16
+    },
+    "smooth": {
+      "p50": 0.0,
+      "p95": 0.0764,
+      "n": 16
+    }
+  },
+  "palette": {
+    "usage": {
+      "#12110F": 0.4565,
+      "#FDFDFD": 0.1775,
+      "#E8433F": 0.085,
+      "#FBD701": 0.0525,
+      "#EACD00": 0.0397,
+      "#F28C8C": 0.0345,
+      "#3A3A44": 0.0272,
+      "#6E6E6E": 0.0238,
+      "#5BC0EB": 0.0217,
+      "#D6D5D6": 0.0193,
+      "#DFDFDF": 0.0186,
+      "#FDE367": 0.0103,
+      "#D4B600": 0.0096,
+      "#C4C4C4": 0.0077,
+      "#C1A301": 0.0072,
+      "#FDEAA3": 0.0057,
+      "#B8B7B7": 0.001
+    },
+    "hue_step": 1.2,
+    "noise_merged": 32,
+    "merged": [
+      {
+        "from": "#B7B5B5",
+        "to": "#B8B7B7",
+        "why": "noise"
+      },
+      {
+        "from": "#BABAB9",
+        "to": "#B8B7B7",
+        "why": "noise"
+      },
+      {
+        "from": "#C0C0C0",
+        "to": "#C4C4C4",
+        "why": "noise"
+      },
+      {
+        "from": "#C5C4C4",
+        "to": "#C4C4C4",
+        "why": "noise"
+      },
+      {
+        "from": "#C7C7C7",
+        "to": "#C4C4C4",
+        "why": "noise"
+      },
+      {
+        "from": "#C8C7C8",
+        "to": "#C4C4C4",
+        "why": "noise"
+      },
+      {
+        "from": "#CACAC9",
+        "to": "#C4C4C4",
+        "why": "noise"
+      },
+      {
+        "from": "#CCCBCB",
+        "to": "#C4C4C4",
+        "why": "noise"
+      },
+      {
+        "from": "#CECDCD",
+        "to": "#C4C4C4",
+        "why": "noise"
+      },
+      {
+        "from": "#D3D3D3",
+        "to": "#D6D5D6",
+        "why": "noise"
+      },
+      {
+        "from": "#D4D4D4",
+        "to": "#D6D5D6",
+        "why": "noise"
+      },
+      {
+        "from": "#D6D6D6",
+        "to": "#D6D5D6",
+        "why": "noise"
+      },
+      {
+        "from": "#D9D8D8",
+        "to": "#D6D5D6",
+        "why": "noise"
+      },
+      {
+        "from": "#D9D9D8",
+        "to": "#D6D5D6",
+        "why": "noise"
+      },
+      {
+        "from": "#DAD9D9",
+        "to": "#D6D5D6",
+        "why": "noise"
+      },
+      {
+        "from": "#DBDBDA",
+        "to": "#DFDFDF",
+        "why": "noise"
+      },
+      {
+        "from": "#DCDCDB",
+        "to": "#DFDFDF",
+        "why": "noise"
+      },
+      {
+        "from": "#DDDDDD",
+        "to": "#DFDFDF",
+        "why": "noise"
+      },
+      {
+        "from": "#E2E2E2",
+        "to": "#DFDFDF",
+        "why": "noise"
+      },
+      {
+        "from": "#E9E9E9",
+        "to": "#DFDFDF",
+        "why": "noise"
+      },
+      {
+        "from": "#F6F5F5",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#F6F7F6",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#F7F7F7",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#F7F8F8",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#F8F8F7",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#F8F8F9",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#F8F9F8",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#F9F8F8",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#F9F9F8",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#F9F9F9",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#F9FAF9",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#FBFBFB",
+        "to": "#FDFDFD",
+        "why": "noise"
+      },
+      {
+        "from": "#CCCCCC",
+        "to": "#C4C4C4",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#DBDADA",
+        "to": "#DFDFDF",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#EBE8E5",
+        "to": "#DFDFDF",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#F8F8F8",
+        "to": "#FDFDFD",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#FCEEB9",
+        "to": "#FDEAA3",
+        "why": "ramp_len"
+      }
+    ],
+    "merge_table": {
+      "#B7B5B5": "#B8B7B7",
+      "#BABAB9": "#B8B7B7",
+      "#C0C0C0": "#C4C4C4",
+      "#C5C4C4": "#C4C4C4",
+      "#C7C7C7": "#C4C4C4",
+      "#C8C7C8": "#C4C4C4",
+      "#CACAC9": "#C4C4C4",
+      "#CCCBCB": "#C4C4C4",
+      "#CECDCD": "#C4C4C4",
+      "#D3D3D3": "#D6D5D6",
+      "#D4D4D4": "#D6D5D6",
+      "#D6D6D6": "#D6D5D6",
+      "#D9D8D8": "#D6D5D6",
+      "#D9D9D8": "#D6D5D6",
+      "#DAD9D9": "#D6D5D6",
+      "#DBDBDA": "#DFDFDF",
+      "#DCDCDB": "#DFDFDF",
+      "#DDDDDD": "#DFDFDF",
+      "#E2E2E2": "#DFDFDF",
+      "#E9E9E9": "#DFDFDF",
+      "#F6F5F5": "#FDFDFD",
+      "#F6F7F6": "#FDFDFD",
+      "#F7F7F7": "#FDFDFD",
+      "#F7F8F8": "#FDFDFD",
+      "#F8F8F7": "#FDFDFD",
+      "#F8F8F9": "#FDFDFD",
+      "#F8F9F8": "#FDFDFD",
+      "#F9F8F8": "#FDFDFD",
+      "#F9F9F8": "#FDFDFD",
+      "#F9F9F9": "#FDFDFD",
+      "#F9FAF9": "#FDFDFD",
+      "#FBFBFB": "#FDFDFD",
+      "#CCCCCC": "#C4C4C4",
+      "#DBDADA": "#DFDFDF",
+      "#EBE8E5": "#DFDFDF",
+      "#F8F8F8": "#FDFDFD",
+      "#FCEEB9": "#FDEAA3"
+    },
+    "padded": [
+      {
+        "ramp": "red",
+        "cells": 5
+      },
+      {
+        "ramp": "red_2",
+        "cells": 5
+      },
+      {
+        "ramp": "blue",
+        "cells": 5
+      },
+      {
+        "ramp": "blue_2",
+        "cells": 5
+      }
+    ],
+    "singles": [
+      "red",
+      "red_2",
+      "blue",
+      "blue_2"
+    ],
+    "dropped": [
+      {
+        "color": "#F0EEEB",
+        "usage": 0.0011,
+        "images": 1
+      },
+      {
+        "color": "#A4A4A4",
+        "usage": 0.00041,
+        "images": 1
+      },
+      {
+        "color": "#F1F1F1",
+        "usage": 0.00025,
+        "images": 1
+      },
+      {
+        "color": "#D1D0D0",
+        "usage": 0.0002,
+        "images": 1
+      },
+      {
+        "color": "#959597",
+        "usage": 5e-05,
+        "images": 1
+      },
+      {
+        "color": "#9E9EA0",
+        "usage": 5e-05,
+        "images": 1
+      }
+    ],
+    "dropped_count": 6,
+    "removed_ramps": [],
+    "removed_colors": 0,
+    "colors": 17,
+    "background_colors": [],
+    "sources": 16,
+    "sampled": 0,
+    "ramps": [
+      {
+        "name": "gray",
+        "colors": [
+          "#6E6E6E",
+          "#B8B7B7",
+          "#C4C4C4",
+          "#D6D5D6",
+          "#DFDFDF",
+          "#FDFDFD"
+        ],
+        "padded": 0,
+        "usage": 0.2479
+      },
+      {
+        "name": "yellow",
+        "colors": [
+          "#C1A301",
+          "#D4B600",
+          "#EACD00",
+          "#FBD701",
+          "#FDE367",
+          "#FDEAA3"
+        ],
+        "padded": 0,
+        "usage": 0.125
+      },
+      {
+        "name": "red",
+        "colors": [
+          "#E8433F",
+          "#E8433F",
+          "#E8433F",
+          "#E8433F",
+          "#E8433F",
+          "#E8433F"
+        ],
+        "padded": 5,
+        "usage": 0.085
+      },
+      {
+        "name": "red_2",
+        "colors": [
+          "#F28C8C",
+          "#F28C8C",
+          "#F28C8C",
+          "#F28C8C",
+          "#F28C8C",
+          "#F28C8C"
+        ],
+        "padded": 5,
+        "usage": 0.0345
+      },
+      {
+        "name": "blue",
+        "colors": [
+          "#3A3A44",
+          "#3A3A44",
+          "#3A3A44",
+          "#3A3A44",
+          "#3A3A44",
+          "#3A3A44"
+        ],
+        "padded": 5,
+        "usage": 0.0272
+      },
+      {
+        "name": "blue_2",
+        "colors": [
+          "#5BC0EB",
+          "#5BC0EB",
+          "#5BC0EB",
+          "#5BC0EB",
+          "#5BC0EB",
+          "#5BC0EB"
+        ],
+        "padded": 5,
+        "usage": 0.0217
+      }
+    ],
+    "outline": "#12110F",
+    "outline_candidate": "#12110F",
+    "ramp_len": 6
+  },
+  "images": [
+    {
+      "file": "char_mozzi/acc_crown.png",
+      "background": false,
+      "size": 14,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.1,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0096,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.375,
+      "black_ratio": 0.0,
+      "edge_color": "#C1A301",
+      "edge_color_count": 12,
+      "light": "top_left"
+    },
+    {
+      "file": "char_mozzi/body_hop0.png",
+      "background": false,
+      "size": 42,
+      "pixel": true,
+      "colors": 6,
+      "smooth": 0.0686,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0245,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0931,
+      "black_ratio": 0.0,
+      "edge_color": "#6E6E6E",
+      "edge_color_count": 114,
+      "light": "top_left"
+    },
+    {
+      "file": "char_mozzi/body_hop1.png",
+      "background": false,
+      "size": 47,
+      "pixel": true,
+      "colors": 9,
+      "smooth": 0.0099,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0273,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.1021,
+      "black_ratio": 0.0,
+      "edge_color": "#6E6E6E",
+      "edge_color_count": 116,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/body_hop2.png",
+      "background": false,
+      "size": 40,
+      "pixel": true,
+      "colors": 6,
+      "smooth": 0.0324,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0134,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0917,
+      "black_ratio": 0.0,
+      "edge_color": "#6E6E6E",
+      "edge_color_count": 116,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/body_hop3.png",
+      "background": false,
+      "size": 40,
+      "pixel": true,
+      "colors": 32,
+      "smooth": 0.0233,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0884,
+      "near_pairs": 86,
+      "outline": "solid",
+      "outline_share": 0.0925,
+      "black_ratio": 0.0,
+      "edge_color": "#6E6E6E",
+      "edge_color_count": 114,
+      "light": "top"
+    },
+    {
+      "file": "char_mozzi/cheek.png",
+      "background": false,
+      "size": 11,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "none",
+      "outline_share": 0.2936,
+      "black_ratio": 0.0,
+      "edge_color": "#FDE367",
+      "edge_color_count": 18,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/face_01.png",
+      "background": false,
+      "size": 16,
+      "pixel": true,
+      "colors": 1,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": null,
+      "outline_share": 0.0,
+      "black_ratio": null,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/face_02.png",
+      "background": false,
+      "size": 20,
+      "pixel": true,
+      "colors": 2,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "black",
+      "outline_share": 0.2632,
+      "black_ratio": 1.0,
+      "edge_color": "#12110F",
+      "edge_color_count": 10,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/face_03.png",
+      "background": false,
+      "size": 31,
+      "pixel": true,
+      "colors": 3,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.3704,
+      "black_ratio": 0.5,
+      "edge_color": "#12110F",
+      "edge_color_count": 10,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/face_04.png",
+      "background": false,
+      "size": 34,
+      "pixel": true,
+      "colors": 2,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": null,
+      "outline_share": 0.0,
+      "black_ratio": null,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/face_05.png",
+      "background": false,
+      "size": 18,
+      "pixel": true,
+      "colors": 2,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "black",
+      "outline_share": 0.25,
+      "black_ratio": 1.0,
+      "edge_color": "#12110F",
+      "edge_color_count": 8,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/face_06.png",
+      "background": false,
+      "size": 25,
+      "pixel": true,
+      "colors": 2,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": null,
+      "outline_share": 0.0,
+      "black_ratio": null,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/face_07.png",
+      "background": false,
+      "size": 20,
+      "pixel": true,
+      "colors": 2,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "none",
+      "outline_share": 0.5263,
+      "black_ratio": 0.0,
+      "edge_color": "#E8433F",
+      "edge_color_count": 20,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/face_08.png",
+      "background": false,
+      "size": 22,
+      "pixel": true,
+      "colors": 2,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": null,
+      "outline_share": 0.0,
+      "black_ratio": null,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/face_09.png",
+      "background": false,
+      "size": 18,
+      "pixel": true,
+      "colors": 1,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": null,
+      "outline_share": 0.0,
+      "black_ratio": null,
+      "light": "unknown"
+    },
+    {
+      "file": "char_mozzi/face_10.png",
+      "background": false,
+      "size": 20,
+      "pixel": true,
+      "colors": 2,
+      "smooth": 0.0,
+      "scale": null,
+      "scale_mixed": false,
+      "scales": [],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "black",
+      "outline_share": 0.2632,
+      "black_ratio": 1.0,
+      "edge_color": "#12110F",
+      "edge_color_count": 10,
+      "light": "unknown"
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "empty",
+      "ok": false,
+      "detail": "빈 그림이라 뺀 그림 1장",
+      "items": [
+        "char_mozzi/acc_none.png"
+      ]
+    },
+    {
+      "rule": "by_kind",
+      "ok": false,
+      "detail": "outline 표가 갈렸다 — 종류가 섞인 무리로 보인다. 종류별 폴더로 나눠 폴더마다 따로 뽑는다",
+      "items": []
+    }
+  ],
+  "out": {
+    "palette": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_mozzi_palette.json",
+    "swatch": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_mozzi_swatch.png",
+    "profile": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_mozzi_profile.yaml",
+    "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_mozzi_report.json"
+  }
+}

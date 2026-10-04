@@ -1,0 +1,9 @@
+﻿bg n 5 colors min/med/max 7 64 68 sat avg 0.391 val avg 0.825 ring_dark avg 0.1 ring_black avg 0.002 semi 0
+bldg n 22 colors min/med/max 16 44 60 sat avg 0.339 val avg 0.716 ring_dark avg 0.975 ring_black avg 0.0 semi 0
+char_mozzi n 16 colors min/med/max 1 2 32 sat avg 0.287 val avg 0.513 ring_dark avg 0.526 ring_black avg 0.499 semi 0
+char_people n 17 colors min/med/max 4 5 38 sat avg 0.436 val avg 0.628 ring_dark avg 0.974 ring_black avg 0.37 semi 0
+fx n 3 colors min/med/max 1 1 1 sat avg 0.0 val avg 1.0 ring_dark avg 0.0 ring_black avg 0.0 semi 0
+icon n 17 colors min/med/max 3 4 6 sat avg 0.442 val avg 0.736 ring_dark avg 0.068 ring_black avg 0.0 semi 0
+piece n 9 colors min/med/max 18 34 48 sat avg 0.42 val avg 0.668 ring_dark avg 0.79 ring_black avg 0.202 semi 0
+tile n 15 colors min/med/max 6 15 33 sat avg 0.25 val avg 0.566 ring_dark avg 0.685 ring_black avg 0.0 semi 0
+ui n 6 colors min/med/max 29 43 56 sat avg 0.391 val avg 0.744 ring_dark avg 0.998 ring_black avg 0.054 semi 0

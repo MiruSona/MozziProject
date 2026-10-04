@@ -1,0 +1,649 @@
+{
+  "version": 1,
+  "profile": "default",
+  "status": "fail",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 6
+  },
+  "failed": [
+    "max_colors"
+  ],
+  "skipped": [
+    "baseline",
+    "bbox_drift",
+    "ramp_colors"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": false,
+      "detail": "한도 48가지를 넘은 그림 1개",
+      "items": [
+        {
+          "where": "icon_codex.png",
+          "colors": 43
+        },
+        {
+          "where": "icon_menu.png",
+          "colors": 30
+        },
+        {
+          "where": "icon_upgrade.png",
+          "colors": 45
+        },
+        {
+          "where": "ui_bubble.png",
+          "colors": 29
+        },
+        {
+          "where": "ui_bubble_c.png",
+          "colors": 56
+        },
+        {
+          "where": "ui_button.png",
+          "colors": 34
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "isolated",
+      "ok": false,
+      "detail": "외톨이 픽셀이 많은 그림 1장",
+      "items": [
+        {
+          "where": "ui_bubble_c.png",
+          "why": [
+            "외톨이 픽셀 194개 · 비율 0.157 > 0.15"
+          ],
+          "ratio": 0.1567,
+          "points": [
+            [
+              11,
+              1
+            ],
+            [
+              12,
+              1
+            ],
+            [
+              17,
+              1
+            ],
+            [
+              18,
+              1
+            ],
+            [
+              23,
+              1
+            ],
+            [
+              24,
+              1
+            ],
+            [
+              27,
+              1
+            ],
+            [
+              28,
+              1
+            ],
+            [
+              32,
+              1
+            ],
+            [
+              33,
+              1
+            ],
+            [
+              34,
+              1
+            ],
+            [
+              35,
+              1
+            ],
+            [
+              7,
+              2
+            ],
+            [
+              13,
+              2
+            ],
+            [
+              15,
+              2
+            ],
+            [
+              16,
+              2
+            ],
+            [
+              17,
+              2
+            ],
+            [
+              18,
+              2
+            ],
+            [
+              19,
+              2
+            ],
+            [
+              20,
+              2
+            ],
+            [
+              21,
+              2
+            ],
+            [
+              26,
+              2
+            ],
+            [
+              43,
+              2
+            ],
+            [
+              47,
+              2
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              24,
+              3
+            ],
+            [
+              28,
+              3
+            ],
+            [
+              30,
+              3
+            ],
+            [
+              46,
+              3
+            ],
+            [
+              28,
+              4
+            ],
+            [
+              30,
+              4
+            ],
+            [
+              32,
+              4
+            ],
+            [
+              49,
+              4
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              4,
+              5
+            ],
+            [
+              18,
+              5
+            ],
+            [
+              29,
+              5
+            ],
+            [
+              32,
+              5
+            ],
+            [
+              34,
+              5
+            ],
+            [
+              43,
+              5
+            ],
+            [
+              2,
+              6
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              12,
+              6
+            ],
+            [
+              25,
+              6
+            ],
+            [
+              37,
+              6
+            ],
+            [
+              51,
+              6
+            ],
+            [
+              1,
+              7
+            ],
+            [
+              3,
+              7
+            ],
+            [
+              36,
+              7
+            ],
+            [
+              38,
+              7
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "color_cap",
+      "ok": false,
+      "detail": "권장 색 수를 넘은 그림 2장",
+      "items": [
+        {
+          "where": "icon_upgrade.png",
+          "why": [
+            "색 45가지 > 권장 44가지 (크기 48)"
+          ],
+          "size": 48,
+          "colors": 45,
+          "cap": 44
+        },
+        {
+          "where": "ui_bubble_c.png",
+          "why": [
+            "색 56가지 > 권장 48가지 (크기 54)"
+          ],
+          "size": 54,
+          "colors": 56,
+          "cap": 48
+        }
+      ]
+    },
+    {
+      "rule": "near_colors",
+      "ok": false,
+      "detail": "비슷한 색 쌍이 있는 그림 2장",
+      "items": [
+        {
+          "where": "ui_bubble_c.png",
+          "why": [
+            "비슷한 색 쌍 116개 (합치기 후보)"
+          ],
+          "count": 116,
+          "pairs": [
+            {
+              "from": "#F5E3C1",
+              "to": "#F3E1BF",
+              "from_count": 247,
+              "to_count": 286,
+              "delta": 2
+            },
+            {
+              "from": "#F5E4C1",
+              "to": "#F3E1BF",
+              "from_count": 178,
+              "to_count": 286,
+              "delta": 3
+            },
+            {
+              "from": "#F5E4C1",
+              "to": "#F5E3C1",
+              "from_count": 178,
+              "to_count": 247,
+              "delta": 1
+            },
+            {
+              "from": "#F5E2BF",
+              "to": "#F3E1BF",
+              "from_count": 141,
+              "to_count": 286,
+              "delta": 2
+            },
+            {
+              "from": "#F5E2BF",
+              "to": "#F5E3C1",
+              "from_count": 141,
+              "to_count": 247,
+              "delta": 2
+            },
+            {
+              "from": "#F5E2BF",
+              "to": "#F5E4C1",
+              "from_count": 141,
+              "to_count": 178,
+              "delta": 2
+            },
+            {
+              "from": "#F3E2C1",
+              "to": "#F3E1BF",
+              "from_count": 80,
+              "to_count": 286,
+              "delta": 2
+            },
+            {
+              "from": "#F3E2C1",
+              "to": "#F5E2BF",
+              "from_count": 80,
+              "to_count": 141,
+              "delta": 2
+            },
+            {
+              "from": "#F3E2C1",
+              "to": "#F5E3C1",
+              "from_count": 80,
+              "to_count": 247,
+              "delta": 2
+            },
+            {
+              "from": "#F3E2C1",
+              "to": "#F5E4C1",
+              "from_count": 80,
+              "to_count": 178,
+              "delta": 2
+            },
+            {
+              "from": "#F2DFBD",
+              "to": "#F3E1BF",
+              "from_count": 35,
+              "to_count": 286,
+              "delta": 2
+            },
+            {
+              "from": "#F2DFBD",
+              "to": "#F3E2C1",
+              "from_count": 35,
+              "to_count": 80,
+              "delta": 4
+            },
+            {
+              "from": "#F2DFBD",
+              "to": "#F5E2BF",
+              "from_count": 35,
+              "to_count": 141,
+              "delta": 3
+            },
+            {
+              "from": "#F2DFBD",
+              "to": "#F5E3C1",
+              "from_count": 35,
+              "to_count": 247,
+              "delta": 4
+            },
+            {
+              "from": "#211A15",
+              "to": "#211D16",
+              "from_count": 18,
+              "to_count": 20,
+              "delta": 3
+            },
+            {
+              "from": "#1E1614",
+              "to": "#211A15",
+              "from_count": 15,
+              "to_count": 18,
+              "delta": 4
+            },
+            {
+              "from": "#222019",
+              "to": "#211D16",
+              "from_count": 15,
+              "to_count": 20,
+              "delta": 3
+            },
+            {
+              "from": "#222019",
+              "to": "#26211A",
+              "from_count": 15,
+              "to_count": 19,
+              "delta": 4
+            },
+            {
+              "from": "#1E1914",
+              "to": "#1E1614",
+              "from_count": 12,
+              "to_count": 15,
+              "delta": 3
+            },
+            {
+              "from": "#1E1914",
+              "to": "#211A15",
+              "from_count": 12,
+              "to_count": 18,
+              "delta": 3
+            }
+          ]
+        },
+        {
+          "where": "ui_button.png",
+          "why": [
+            "비슷한 색 쌍 31개 (합치기 후보)"
+          ],
+          "count": 31,
+          "pairs": [
+            {
+              "from": "#FBECCF",
+              "to": "#FBECD0",
+              "from_count": 151,
+              "to_count": 455,
+              "delta": 1
+            },
+            {
+              "from": "#FAEBCE",
+              "to": "#FBECCF",
+              "from_count": 86,
+              "to_count": 151,
+              "delta": 1
+            },
+            {
+              "from": "#FAEBCE",
+              "to": "#FBECD0",
+              "from_count": 86,
+              "to_count": 455,
+              "delta": 2
+            },
+            {
+              "from": "#FAEBD0",
+              "to": "#FAEBCE",
+              "from_count": 85,
+              "to_count": 86,
+              "delta": 2
+            },
+            {
+              "from": "#FAEBD0",
+              "to": "#FBECCF",
+              "from_count": 85,
+              "to_count": 151,
+              "delta": 1
+            },
+            {
+              "from": "#FAEBD0",
+              "to": "#FBECD0",
+              "from_count": 85,
+              "to_count": 455,
+              "delta": 1
+            },
+            {
+              "from": "#FCEDD0",
+              "to": "#FAEBCE",
+              "from_count": 82,
+              "to_count": 86,
+              "delta": 2
+            },
+            {
+              "from": "#FCEDD0",
+              "to": "#FAEBD0",
+              "from_count": 82,
+              "to_count": 85,
+              "delta": 2
+            },
+            {
+              "from": "#FCEDD0",
+              "to": "#FBECCF",
+              "from_count": 82,
+              "to_count": 151,
+              "delta": 1
+            },
+            {
+              "from": "#FCEDD0",
+              "to": "#FBECD0",
+              "from_count": 82,
+              "to_count": 455,
+              "delta": 1
+            },
+            {
+              "from": "#4A2622",
+              "to": "#4D2822",
+              "from_count": 33,
+              "to_count": 36,
+              "delta": 3
+            },
+            {
+              "from": "#4D2721",
+              "to": "#4A2622",
+              "from_count": 29,
+              "to_count": 33,
+              "delta": 3
+            },
+            {
+              "from": "#4D2721",
+              "to": "#4D2822",
+              "from_count": 29,
+              "to_count": 36,
+              "delta": 1
+            },
+            {
+              "from": "#CD7F46",
+              "to": "#CE8249",
+              "from_count": 26,
+              "to_count": 40,
+              "delta": 3
+            },
+            {
+              "from": "#4B2823",
+              "to": "#4A2622",
+              "from_count": 25,
+              "to_count": 33,
+              "delta": 2
+            },
+            {
+              "from": "#4B2823",
+              "to": "#4D2721",
+              "from_count": 25,
+              "to_count": 29,
+              "delta": 2
+            },
+            {
+              "from": "#4B2823",
+              "to": "#4D2822",
+              "from_count": 25,
+              "to_count": 36,
+              "delta": 2
+            },
+            {
+              "from": "#CD8046",
+              "to": "#CD7F46",
+              "from_count": 20,
+              "to_count": 26,
+              "delta": 1
+            },
+            {
+              "from": "#CD8046",
+              "to": "#CE8249",
+              "from_count": 20,
+              "to_count": 40,
+              "delta": 3
+            },
+            {
+              "from": "#4E2A25",
+              "to": "#4A2622",
+              "from_count": 19,
+              "to_count": 33,
+              "delta": 4
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "info": [
+    {
+      "rule": "outline",
+      "detail": "style.outline 이 unset 이라 판정만 적는다",
+      "items": [
+        {
+          "where": "icon_codex.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "icon_menu.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "icon_upgrade.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "ui_bubble.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "ui_bubble_c.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "ui_button.png",
+          "verdict": "selout"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "version": 1,
+  "profile": "default",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 17
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift",
+    "ramp_colors"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 48가지를 넘은 그림 0개",
+      "items": [
+        {
+          "where": "bean.png",
+          "colors": 4
+        },
+        {
+          "where": "bean_cake.png",
+          "colors": 4
+        },
+        {
+          "where": "jujube.png",
+          "colors": 5
+        },
+        {
+          "where": "jujube_cake.png",
+          "colors": 3
+        },
+        {
+          "where": "mugwort.png",
+          "colors": 4
+        },
+        {
+          "where": "mugwort_cake.png",
+          "colors": 3
+        },
+        {
+          "where": "mugwort_sesame_cake.png",
+          "colors": 4
+        },
+        {
+          "where": "pinenut.png",
+          "colors": 4
+        },
+        {
+          "where": "pinenut_cake.png",
+          "colors": 6
+        },
+        {
+          "where": "pinenut_jujube_cake.png",
+          "colors": 6
+        },
+        {
+          "where": "plain_cake.png",
+          "colors": 3
+        },
+        {
+          "where": "redbean.png",
+          "colors": 4
+        },
+        {
+          "where": "redbean_bean_cake.png",
+          "colors": 6
+        },
+        {
+          "where": "redbean_cake.png",
+          "colors": 5
+        },
+        {
+          "where": "redbean_mugwort_sesame_cake.png",
+          "colors": 6
+        },
+        {
+          "where": "sesame.png",
+          "colors": 3
+        },
+        {
+          "where": "sesame_cake.png",
+          "colors": 4
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [],
+  "info": [
+    {
+      "rule": "outline",
+      "detail": "style.outline 이 unset 이라 판정만 적는다",
+      "items": [
+        {
+          "where": "bean.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "bean_cake.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "jujube.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "jujube_cake.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "mugwort.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "mugwort_cake.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "mugwort_sesame_cake.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "pinenut.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "pinenut_cake.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "pinenut_jujube_cake.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "plain_cake.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "redbean.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "redbean_bean_cake.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "redbean_cake.png",
+          "verdict": "none"
+        },
+        {
+          "where": "redbean_mugwort_sesame_cake.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "sesame.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "sesame_cake.png",
+          "verdict": "mixed"
+        }
+      ]
+    }
+  ]
+}

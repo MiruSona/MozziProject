@@ -1,0 +1,290 @@
+{
+  "version": 1,
+  "status": "warn",
+  "name": "mozzi",
+  "kinds": [
+    {
+      "kind": "bg",
+      "status": "ok",
+      "images": 5,
+      "pixel": 5,
+      "not_pixel": 0,
+      "sprites": 1,
+      "backgrounds": 4,
+      "outline": "none",
+      "outline_table": {
+        "none": 1
+      },
+      "light": "unknown",
+      "light_table": {
+        "unknown": 1
+      },
+      "scale": 1,
+      "ramps": 17,
+      "singles": 4,
+      "colors": 52,
+      "removed_ramps": 0,
+      "hue_step": 5.8,
+      "held": null,
+      "warnings": [],
+      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_bg_report.json"
+    },
+    {
+      "kind": "bldg",
+      "status": "warn",
+      "images": 22,
+      "pixel": 22,
+      "not_pixel": 0,
+      "sprites": 22,
+      "backgrounds": 0,
+      "outline": "selout",
+      "outline_table": {
+        "selout": 18,
+        "solid": 4
+      },
+      "light": null,
+      "light_table": {
+        "top": 12,
+        "unknown": 10
+      },
+      "scale": 1,
+      "ramps": 11,
+      "singles": 0,
+      "colors": 61,
+      "removed_ramps": 14,
+      "hue_step": 5.0,
+      "held": null,
+      "warnings": [
+        "palette_cap"
+      ],
+      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_bldg_report.json"
+    },
+    {
+      "kind": "char_mozzi",
+      "status": "warn",
+      "images": 16,
+      "pixel": 16,
+      "not_pixel": 0,
+      "sprites": 16,
+      "backgrounds": 0,
+      "outline": null,
+      "outline_table": {
+        "mixed": 2,
+        "solid": 4,
+        "none": 2,
+        "black": 3
+      },
+      "light": "unknown",
+      "light_table": {
+        "top_left": 2,
+        "unknown": 13,
+        "top": 1
+      },
+      "scale": 1,
+      "ramps": 6,
+      "singles": 4,
+      "colors": 17,
+      "removed_ramps": 0,
+      "hue_step": 1.2,
+      "held": "outline 표가 갈렸다 — 종류가 섞인 무리로 보인다",
+      "warnings": [
+        "empty",
+        "by_kind"
+      ],
+      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_mozzi_report.json"
+    },
+    {
+      "kind": "char_people",
+      "status": "warn",
+      "images": 17,
+      "pixel": 17,
+      "not_pixel": 0,
+      "sprites": 17,
+      "backgrounds": 0,
+      "outline": null,
+      "outline_table": {
+        "mixed": 1,
+        "black": 6,
+        "solid": 10
+      },
+      "light": "top",
+      "light_table": {
+        "unknown": 6,
+        "top": 11
+      },
+      "scale": 1,
+      "ramps": 16,
+      "singles": 5,
+      "colors": 50,
+      "removed_ramps": 0,
+      "hue_step": 0.4,
+      "held": "outline 표가 갈렸다 — 종류가 섞인 무리로 보인다",
+      "warnings": [
+        "by_kind"
+      ],
+      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_people_report.json"
+    },
+    {
+      "kind": "fx",
+      "status": "warn",
+      "images": 3,
+      "pixel": 3,
+      "not_pixel": 0,
+      "sprites": 3,
+      "backgrounds": 0,
+      "outline": "none",
+      "outline_table": {
+        "none": 3
+      },
+      "light": "unknown",
+      "light_table": {
+        "unknown": 3
+      },
+      "scale": null,
+      "ramps": 1,
+      "singles": 1,
+      "colors": 1,
+      "removed_ramps": 0,
+      "hue_step": null,
+      "held": "도트 그림이 3장뿐이다 (< 5)",
+      "warnings": [
+        "few_images"
+      ],
+      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_fx_report.json"
+    },
+    {
+      "kind": "icon",
+      "status": "warn",
+      "images": 17,
+      "pixel": 17,
+      "not_pixel": 0,
+      "sprites": 17,
+      "backgrounds": 0,
+      "outline": "mixed",
+      "outline_table": {
+        "mixed": 11,
+        "solid": 4,
+        "selout": 1,
+        "none": 1
+      },
+      "light": null,
+      "light_table": {
+        "top_left": 3,
+        "top_right": 2,
+        "bottom": 8,
+        "top": 2,
+        "unknown": 2
+      },
+      "scale": 1,
+      "ramps": 11,
+      "singles": 1,
+      "colors": 32,
+      "removed_ramps": 0,
+      "hue_step": 1.2,
+      "held": "light 표가 갈렸다 — 종류가 섞인 무리로 보인다",
+      "warnings": [
+        "by_kind"
+      ],
+      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_icon_report.json"
+    },
+    {
+      "kind": "piece",
+      "status": "warn",
+      "images": 9,
+      "pixel": 9,
+      "not_pixel": 0,
+      "sprites": 9,
+      "backgrounds": 0,
+      "outline": null,
+      "outline_table": {
+        "selout": 5,
+        "solid": 1,
+        "mixed": 2,
+        "black": 1
+      },
+      "light": null,
+      "light_table": {
+        "top": 2,
+        "unknown": 5,
+        "top_right": 1,
+        "bottom": 1
+      },
+      "scale": 1,
+      "ramps": 15,
+      "singles": 3,
+      "colors": 63,
+      "removed_ramps": 9,
+      "hue_step": 3.1,
+      "held": "outline · light 표가 갈렸다 — 종류가 섞인 무리로 보인다",
+      "warnings": [
+        "palette_cap",
+        "by_kind"
+      ],
+      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_piece_report.json"
+    },
+    {
+      "kind": "tile",
+      "status": "warn",
+      "images": 15,
+      "pixel": 15,
+      "not_pixel": 0,
+      "sprites": 14,
+      "backgrounds": 1,
+      "outline": "selout",
+      "outline_table": {
+        "selout": 9,
+        "solid": 4,
+        "selout+light": 1
+      },
+      "light": null,
+      "light_table": {
+        "unknown": 8,
+        "top_left": 3,
+        "top": 3
+      },
+      "scale": 1,
+      "ramps": 12,
+      "singles": 4,
+      "colors": 39,
+      "removed_ramps": 0,
+      "hue_step": 0.9,
+      "held": "light 표가 갈렸다 — 종류가 섞인 무리로 보인다",
+      "warnings": [
+        "by_kind"
+      ],
+      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_tile_report.json"
+    },
+    {
+      "kind": "ui",
+      "status": "ok",
+      "images": 6,
+      "pixel": 6,
+      "not_pixel": 0,
+      "sprites": 6,
+      "backgrounds": 0,
+      "outline": "selout",
+      "outline_table": {
+        "selout": 5,
+        "mixed": 1
+      },
+      "light": "unknown",
+      "light_table": {
+        "unknown": 5,
+        "top": 1
+      },
+      "scale": 1,
+      "ramps": 12,
+      "singles": 2,
+      "colors": 48,
+      "removed_ramps": 0,
+      "hue_step": 1.6,
+      "held": null,
+      "warnings": [],
+      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_ui_report.json"
+    }
+  ],
+  "warnings": [],
+  "out": {
+    "kinds": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_kinds.json"
+  }
+}

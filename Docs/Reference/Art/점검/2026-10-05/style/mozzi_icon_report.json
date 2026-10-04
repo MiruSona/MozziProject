@@ -1,0 +1,723 @@
+{
+  "version": 1,
+  "status": "warn",
+  "name": "mozzi_icon",
+  "summary": {
+    "images": 17,
+    "pixel": 17,
+    "not_pixel": 0,
+    "sprites": 17,
+    "backgrounds": 0
+  },
+  "outline": {
+    "table": {
+      "mixed": 11,
+      "solid": 4,
+      "selout": 1,
+      "none": 1
+    },
+    "pick": "mixed"
+  },
+  "light": {
+    "table": {
+      "top_left": 3,
+      "top_right": 2,
+      "bottom": 8,
+      "top": 2,
+      "unknown": 2
+    },
+    "pick": null
+  },
+  "scale": {
+    "table": {
+      "1": 17
+    },
+    "pick": 1
+  },
+  "held": "light 표가 갈렸다 — 종류가 섞인 무리로 보인다",
+  "size_bins": [
+    {
+      "bin": "32",
+      "images": 17,
+      "colors_p50": 4.0,
+      "colors_p90": 6.0,
+      "cap": 16
+    }
+  ],
+  "stats": {
+    "isolated": {
+      "p50": 0.0107,
+      "p95": 0.0229,
+      "n": 17
+    },
+    "near_pairs": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "n": 17
+    },
+    "outline_share": {
+      "p50": 0.1867,
+      "p95": 0.3192,
+      "n": 17
+    },
+    "smooth": {
+      "p50": 0.0,
+      "p95": 0.0,
+      "n": 17
+    }
+  },
+  "palette": {
+    "usage": {
+      "#C9BCA6": 0.1195,
+      "#4C7433": 0.0872,
+      "#FFFBF2": 0.0776,
+      "#8E3B26": 0.0602,
+      "#BE9840": 0.059,
+      "#E6C868": 0.058,
+      "#C9DCB4": 0.0447,
+      "#5F9440": 0.0423,
+      "#D6B06A": 0.0408,
+      "#F4EACC": 0.0396,
+      "#F2E9DC": 0.0391,
+      "#B0482E": 0.0373,
+      "#9A3232": 0.0358,
+      "#6E9B4A": 0.0284,
+      "#7A2A2A": 0.0273,
+      "#E8C4B2": 0.0259,
+      "#BF6448": 0.0256,
+      "#DEC27E": 0.0198,
+      "#742424": 0.0181,
+      "#B08A48": 0.0166,
+      "#C2A048": 0.0165,
+      "#863220": 0.0156,
+      "#D6C49A": 0.0152,
+      "#3F6A2A": 0.0087,
+      "#A84848": 0.008,
+      "#47752F": 0.0074,
+      "#8A5A2C": 0.0058,
+      "#F7E6A8": 0.0043,
+      "#8E3622": 0.0029,
+      "#F2E4D4": 0.0028,
+      "#C45A58": 0.0022,
+      "#FFFFFF": 0.002
+    },
+    "hue_step": 1.2,
+    "noise_merged": 1,
+    "merged": [
+      {
+        "from": "#F8E8A8",
+        "to": "#F7E6A8",
+        "why": "noise"
+      },
+      {
+        "from": "#A9743E",
+        "to": "#BF6448",
+        "why": "ramp_len"
+      }
+    ],
+    "merge_table": {
+      "#F8E8A8": "#F7E6A8",
+      "#A9743E": "#BF6448"
+    },
+    "padded": [
+      {
+        "ramp": "green",
+        "cells": 3
+      },
+      {
+        "ramp": "yellow",
+        "cells": 2
+      },
+      {
+        "ramp": "orange_2",
+        "cells": 4
+      },
+      {
+        "ramp": "gray",
+        "cells": 4
+      },
+      {
+        "ramp": "red",
+        "cells": 2
+      },
+      {
+        "ramp": "green_2",
+        "cells": 3
+      },
+      {
+        "ramp": "orange_3",
+        "cells": 4
+      },
+      {
+        "ramp": "red_2",
+        "cells": 3
+      },
+      {
+        "ramp": "red_3",
+        "cells": 4
+      },
+      {
+        "ramp": "gray_2",
+        "cells": 5
+      }
+    ],
+    "singles": [
+      "gray_2"
+    ],
+    "dropped": [
+      {
+        "color": "#6A4A28",
+        "usage": 0.00191,
+        "images": 1
+      },
+      {
+        "color": "#F0D8A0",
+        "usage": 0.00144,
+        "images": 1
+      },
+      {
+        "color": "#DC7A58",
+        "usage": 0.00104,
+        "images": 1
+      },
+      {
+        "color": "#8A6430",
+        "usage": 0.00092,
+        "images": 1
+      },
+      {
+        "color": "#86B860",
+        "usage": 0.00047,
+        "images": 1
+      }
+    ],
+    "dropped_count": 5,
+    "removed_ramps": [],
+    "removed_colors": 0,
+    "colors": 32,
+    "background_colors": [],
+    "sources": 17,
+    "sampled": 0,
+    "ramps": [
+      {
+        "name": "orange",
+        "colors": [
+          "#8E3B26",
+          "#BF6448",
+          "#DEC27E",
+          "#D6C49A",
+          "#E8C4B2",
+          "#F4EACC"
+        ],
+        "padded": 0,
+        "usage": 0.1862
+      },
+      {
+        "name": "green",
+        "colors": [
+          "#4C7433",
+          "#6E9B4A",
+          "#C9DCB4",
+          "#C9DCB4",
+          "#C9DCB4",
+          "#C9DCB4"
+        ],
+        "padded": 3,
+        "usage": 0.1603
+      },
+      {
+        "name": "yellow",
+        "colors": [
+          "#BE9840",
+          "#C2A048",
+          "#E6C868",
+          "#F7E6A8",
+          "#F7E6A8",
+          "#F7E6A8"
+        ],
+        "padded": 2,
+        "usage": 0.1379
+      },
+      {
+        "name": "orange_2",
+        "colors": [
+          "#8A5A2C",
+          "#C9BCA6",
+          "#C9BCA6",
+          "#C9BCA6",
+          "#C9BCA6",
+          "#C9BCA6"
+        ],
+        "padded": 4,
+        "usage": 0.1253
+      },
+      {
+        "name": "gray",
+        "colors": [
+          "#F2E9DC",
+          "#FFFBF2",
+          "#FFFBF2",
+          "#FFFBF2",
+          "#FFFBF2",
+          "#FFFBF2"
+        ],
+        "padded": 4,
+        "usage": 0.1167
+      },
+      {
+        "name": "red",
+        "colors": [
+          "#742424",
+          "#9A3232",
+          "#C45A58",
+          "#F2E4D4",
+          "#F2E4D4",
+          "#F2E4D4"
+        ],
+        "padded": 2,
+        "usage": 0.0588
+      },
+      {
+        "name": "green_2",
+        "colors": [
+          "#3F6A2A",
+          "#47752F",
+          "#5F9440",
+          "#5F9440",
+          "#5F9440",
+          "#5F9440"
+        ],
+        "padded": 3,
+        "usage": 0.0584
+      },
+      {
+        "name": "orange_3",
+        "colors": [
+          "#B08A48",
+          "#D6B06A",
+          "#D6B06A",
+          "#D6B06A",
+          "#D6B06A",
+          "#D6B06A"
+        ],
+        "padded": 4,
+        "usage": 0.0574
+      },
+      {
+        "name": "red_2",
+        "colors": [
+          "#863220",
+          "#8E3622",
+          "#B0482E",
+          "#B0482E",
+          "#B0482E",
+          "#B0482E"
+        ],
+        "padded": 3,
+        "usage": 0.0559
+      },
+      {
+        "name": "red_3",
+        "colors": [
+          "#7A2A2A",
+          "#A84848",
+          "#A84848",
+          "#A84848",
+          "#A84848",
+          "#A84848"
+        ],
+        "padded": 4,
+        "usage": 0.0353
+      },
+      {
+        "name": "gray_2",
+        "colors": [
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#FFFFFF"
+        ],
+        "padded": 5,
+        "usage": 0.002
+      }
+    ],
+    "outline": null,
+    "outline_candidate": null,
+    "ramp_len": 6
+  },
+  "images": [
+    {
+      "file": "icon/bean.png",
+      "background": false,
+      "size": 26,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.2344,
+      "black_ratio": 0.0,
+      "edge_color": "#C2A048",
+      "edge_color_count": 48,
+      "light": "top_left"
+    },
+    {
+      "file": "icon/bean_cake.png",
+      "background": false,
+      "size": 30,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0213,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.1867,
+      "black_ratio": 0.0,
+      "edge_color": "#BE9840",
+      "edge_color_count": 58,
+      "light": "top_right"
+    },
+    {
+      "file": "icon/jujube.png",
+      "background": false,
+      "size": 25,
+      "pixel": true,
+      "colors": 5,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.1829,
+      "black_ratio": 0.0,
+      "edge_color": "#863220",
+      "edge_color_count": 31,
+      "light": "top_left"
+    },
+    {
+      "file": "icon/jujube_cake.png",
+      "background": false,
+      "size": 30,
+      "pixel": true,
+      "colors": 3,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0027,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.1867,
+      "black_ratio": 0.0,
+      "edge_color": "#8E3B26",
+      "edge_color_count": 58,
+      "light": "bottom"
+    },
+    {
+      "file": "icon/mugwort.png",
+      "background": false,
+      "size": 27,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0027,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.2888,
+      "black_ratio": 0.0,
+      "edge_color": "#5F9440",
+      "edge_color_count": 63,
+      "light": "top"
+    },
+    {
+      "file": "icon/mugwort_cake.png",
+      "background": false,
+      "size": 30,
+      "pixel": true,
+      "colors": 3,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0027,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.1867,
+      "black_ratio": 0.0,
+      "edge_color": "#4C7433",
+      "edge_color_count": 58,
+      "light": "bottom"
+    },
+    {
+      "file": "icon/mugwort_sesame_cake.png",
+      "background": false,
+      "size": 30,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0107,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.1867,
+      "black_ratio": 0.0,
+      "edge_color": "#4C7433",
+      "edge_color_count": 57,
+      "light": "bottom"
+    },
+    {
+      "file": "icon/pinenut.png",
+      "background": false,
+      "size": 26,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.2557,
+      "black_ratio": 0.0,
+      "edge_color": "#D6C49A",
+      "edge_color_count": 44,
+      "light": "bottom"
+    },
+    {
+      "file": "icon/pinenut_cake.png",
+      "background": false,
+      "size": 30,
+      "pixel": true,
+      "colors": 6,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0107,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.1867,
+      "black_ratio": 0.0,
+      "edge_color": "#C9BCA6",
+      "edge_color_count": 58,
+      "light": "bottom"
+    },
+    {
+      "file": "icon/pinenut_jujube_cake.png",
+      "background": false,
+      "size": 30,
+      "pixel": true,
+      "colors": 6,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0107,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.1867,
+      "black_ratio": 0.0,
+      "edge_color": "#8E3B26",
+      "edge_color_count": 58,
+      "light": "bottom"
+    },
+    {
+      "file": "icon/plain_cake.png",
+      "background": false,
+      "size": 30,
+      "pixel": true,
+      "colors": 3,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0027,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.1867,
+      "black_ratio": 0.0,
+      "edge_color": "#C9BCA6",
+      "edge_color_count": 58,
+      "light": "bottom"
+    },
+    {
+      "file": "icon/redbean.png",
+      "background": false,
+      "size": 26,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0,
+      "near_pairs": 0,
+      "outline": "selout",
+      "outline_share": 0.2821,
+      "black_ratio": 0.0,
+      "edge_color": "#742424",
+      "edge_color_count": 46,
+      "light": "top"
+    },
+    {
+      "file": "icon/redbean_bean_cake.png",
+      "background": false,
+      "size": 30,
+      "pixel": true,
+      "colors": 6,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0293,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.1867,
+      "black_ratio": 0.0,
+      "edge_color": "#BE9840",
+      "edge_color_count": 58,
+      "light": "top_right"
+    },
+    {
+      "file": "icon/redbean_cake.png",
+      "background": false,
+      "size": 30,
+      "pixel": true,
+      "colors": 5,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0107,
+      "near_pairs": 0,
+      "outline": "none",
+      "outline_share": 0.1867,
+      "black_ratio": 0.0,
+      "edge_color": "#C9BCA6",
+      "edge_color_count": 58,
+      "light": "unknown"
+    },
+    {
+      "file": "icon/redbean_mugwort_sesame_cake.png",
+      "background": false,
+      "size": 30,
+      "pixel": true,
+      "colors": 6,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0187,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.1867,
+      "black_ratio": 0.0,
+      "edge_color": "#4C7433",
+      "edge_color_count": 57,
+      "light": "bottom"
+    },
+    {
+      "file": "icon/sesame.png",
+      "background": false,
+      "size": 25,
+      "pixel": true,
+      "colors": 3,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0163,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.4408,
+      "black_ratio": 0.0,
+      "edge_color": "#D6B06A",
+      "edge_color_count": 59,
+      "light": "top_left"
+    },
+    {
+      "file": "icon/sesame_cake.png",
+      "background": false,
+      "size": 30,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0213,
+      "near_pairs": 0,
+      "outline": "mixed",
+      "outline_share": 0.1867,
+      "black_ratio": 0.0,
+      "edge_color": "#C9BCA6",
+      "edge_color_count": 57,
+      "light": "unknown"
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "by_kind",
+      "ok": false,
+      "detail": "light 표가 갈렸다 — 종류가 섞인 무리로 보인다. 종류별 폴더로 나눠 폴더마다 따로 뽑는다",
+      "items": []
+    }
+  ],
+  "out": {
+    "palette": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_icon_palette.json",
+    "swatch": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_icon_swatch.png",
+    "profile": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_icon_profile.yaml",
+    "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_icon_report.json"
+  }
+}

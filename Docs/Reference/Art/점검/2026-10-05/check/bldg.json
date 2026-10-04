@@ -1,0 +1,230 @@
+{
+  "version": 1,
+  "profile": "default",
+  "status": "fail",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 22
+  },
+  "failed": [
+    "max_colors"
+  ],
+  "skipped": [
+    "baseline",
+    "bbox_drift",
+    "ramp_colors"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": false,
+      "detail": "한도 48가지를 넘은 그림 6개",
+      "items": [
+        {
+          "where": "kitchen_pound_0.png",
+          "colors": 44
+        },
+        {
+          "where": "kitchen_pound_1.png",
+          "colors": 55
+        },
+        {
+          "where": "kitchen_pound_2.png",
+          "colors": 53
+        },
+        {
+          "where": "kitchen_pound_3.png",
+          "colors": 58
+        },
+        {
+          "where": "kitchen_pound_4.png",
+          "colors": 57
+        },
+        {
+          "where": "kitchen_pound_5.png",
+          "colors": 60
+        },
+        {
+          "where": "kitchen_pound_6.png",
+          "colors": 54
+        },
+        {
+          "where": "stall_main.png",
+          "colors": 25
+        },
+        {
+          "where": "storage_main.png",
+          "colors": 43
+        },
+        {
+          "where": "synthesis_machine.png",
+          "colors": 36
+        },
+        {
+          "where": "synthesis_machine_done.png",
+          "colors": 17
+        },
+        {
+          "where": "synthesis_machine_run_0.png",
+          "colors": 40
+        },
+        {
+          "where": "synthesis_machine_run_1.png",
+          "colors": 44
+        },
+        {
+          "where": "synthesis_machine_run_2.png",
+          "colors": 45
+        },
+        {
+          "where": "synthesis_machine_run_3.png",
+          "colors": 46
+        },
+        {
+          "where": "synthesis_machine_run_4.png",
+          "colors": 45
+        },
+        {
+          "where": "synthesis_machine_run_5.png",
+          "colors": 44
+        },
+        {
+          "where": "synthesis_machine_run_6.png",
+          "colors": 43
+        },
+        {
+          "where": "synthesis_machine_run_7.png",
+          "colors": 44
+        },
+        {
+          "where": "synthesis_main.png",
+          "colors": 16
+        },
+        {
+          "where": "synthesis_slot_buy.png",
+          "colors": 33
+        },
+        {
+          "where": "synthesis_slot_locked.png",
+          "colors": 20
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [],
+  "info": [
+    {
+      "rule": "outline",
+      "detail": "style.outline 이 unset 이라 판정만 적는다",
+      "items": [
+        {
+          "where": "kitchen_pound_0.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "kitchen_pound_1.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "kitchen_pound_2.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "kitchen_pound_3.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "kitchen_pound_4.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "kitchen_pound_5.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "kitchen_pound_6.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "stall_main.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "storage_main.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "synthesis_machine.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "synthesis_machine_done.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "synthesis_machine_run_0.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "synthesis_machine_run_1.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "synthesis_machine_run_2.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "synthesis_machine_run_3.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "synthesis_machine_run_4.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "synthesis_machine_run_5.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "synthesis_machine_run_6.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "synthesis_machine_run_7.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "synthesis_main.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "synthesis_slot_buy.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "synthesis_slot_locked.png",
+          "verdict": "selout"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,931 @@
+{
+  "version": 1,
+  "profile": "default",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 9
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift",
+    "ramp_colors"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 48가지를 넘은 그림 0개",
+      "items": [
+        {
+          "where": "display_case.png",
+          "colors": 27
+        },
+        {
+          "where": "kitchen_plate.png",
+          "colors": 37
+        },
+        {
+          "where": "kitchen_tray.png",
+          "colors": 22
+        },
+        {
+          "where": "stall_board_topper.png",
+          "colors": 18
+        },
+        {
+          "where": "stall_counter.png",
+          "colors": 22
+        },
+        {
+          "where": "stall_prop_menu.png",
+          "colors": 48
+        },
+        {
+          "where": "stall_prop_register.png",
+          "colors": 34
+        },
+        {
+          "where": "stall_prop_vase.png",
+          "colors": 38
+        },
+        {
+          "where": "synthesis_plate.png",
+          "colors": 45
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "isolated",
+      "ok": false,
+      "detail": "외톨이 픽셀이 많은 그림 3장",
+      "items": [
+        {
+          "where": "stall_prop_menu.png",
+          "why": [
+            "외톨이 픽셀 132개 · 비율 0.203 > 0.15"
+          ],
+          "ratio": 0.2025,
+          "points": [
+            [
+              12,
+              1
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              14,
+              1
+            ],
+            [
+              12,
+              2
+            ],
+            [
+              13,
+              2
+            ],
+            [
+              14,
+              2
+            ],
+            [
+              12,
+              3
+            ],
+            [
+              13,
+              3
+            ],
+            [
+              14,
+              3
+            ],
+            [
+              5,
+              4
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              12,
+              4
+            ],
+            [
+              13,
+              4
+            ],
+            [
+              14,
+              4
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              21,
+              4
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              6,
+              5
+            ],
+            [
+              16,
+              5
+            ],
+            [
+              20,
+              5
+            ],
+            [
+              21,
+              5
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              20,
+              6
+            ],
+            [
+              7,
+              7
+            ],
+            [
+              20,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              5,
+              9
+            ],
+            [
+              6,
+              9
+            ],
+            [
+              7,
+              9
+            ],
+            [
+              8,
+              9
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              7,
+              10
+            ],
+            [
+              20,
+              10
+            ],
+            [
+              21,
+              10
+            ],
+            [
+              22,
+              10
+            ],
+            [
+              6,
+              11
+            ],
+            [
+              7,
+              11
+            ],
+            [
+              20,
+              11
+            ],
+            [
+              21,
+              11
+            ],
+            [
+              6,
+              12
+            ],
+            [
+              20,
+              12
+            ],
+            [
+              6,
+              13
+            ],
+            [
+              22,
+              13
+            ],
+            [
+              4,
+              14
+            ],
+            [
+              6,
+              14
+            ],
+            [
+              8,
+              14
+            ],
+            [
+              21,
+              14
+            ],
+            [
+              22,
+              14
+            ],
+            [
+              6,
+              15
+            ],
+            [
+              8,
+              15
+            ]
+          ]
+        },
+        {
+          "where": "stall_prop_register.png",
+          "why": [
+            "외톨이 픽셀 131개 · 비율 0.176 > 0.15"
+          ],
+          "ratio": 0.1758,
+          "points": [
+            [
+              17,
+              2
+            ],
+            [
+              13,
+              3
+            ],
+            [
+              14,
+              3
+            ],
+            [
+              10,
+              4
+            ],
+            [
+              14,
+              4
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              7,
+              5
+            ],
+            [
+              11,
+              5
+            ],
+            [
+              14,
+              5
+            ],
+            [
+              16,
+              5
+            ],
+            [
+              18,
+              5
+            ],
+            [
+              21,
+              5
+            ],
+            [
+              8,
+              6
+            ],
+            [
+              15,
+              6
+            ],
+            [
+              17,
+              6
+            ],
+            [
+              18,
+              6
+            ],
+            [
+              19,
+              6
+            ],
+            [
+              21,
+              6
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              10,
+              7
+            ],
+            [
+              18,
+              7
+            ],
+            [
+              4,
+              8
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              17,
+              8
+            ],
+            [
+              22,
+              8
+            ],
+            [
+              4,
+              9
+            ],
+            [
+              14,
+              9
+            ],
+            [
+              21,
+              9
+            ],
+            [
+              22,
+              9
+            ],
+            [
+              22,
+              10
+            ],
+            [
+              27,
+              10
+            ],
+            [
+              27,
+              11
+            ],
+            [
+              4,
+              12
+            ],
+            [
+              22,
+              12
+            ],
+            [
+              26,
+              12
+            ],
+            [
+              28,
+              12
+            ],
+            [
+              3,
+              13
+            ],
+            [
+              12,
+              13
+            ],
+            [
+              18,
+              13
+            ],
+            [
+              19,
+              13
+            ],
+            [
+              23,
+              13
+            ],
+            [
+              25,
+              13
+            ],
+            [
+              26,
+              13
+            ],
+            [
+              27,
+              13
+            ],
+            [
+              3,
+              14
+            ],
+            [
+              7,
+              14
+            ],
+            [
+              8,
+              14
+            ],
+            [
+              11,
+              14
+            ],
+            [
+              12,
+              14
+            ],
+            [
+              13,
+              14
+            ]
+          ]
+        },
+        {
+          "where": "stall_prop_vase.png",
+          "why": [
+            "외톨이 픽셀 117개 · 비율 0.194 > 0.15"
+          ],
+          "ratio": 0.1937,
+          "points": [
+            [
+              11,
+              1
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              10,
+              2
+            ],
+            [
+              11,
+              2
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              14,
+              3
+            ],
+            [
+              16,
+              3
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              8,
+              5
+            ],
+            [
+              12,
+              5
+            ],
+            [
+              13,
+              5
+            ],
+            [
+              16,
+              5
+            ],
+            [
+              9,
+              6
+            ],
+            [
+              15,
+              6
+            ],
+            [
+              4,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              13,
+              7
+            ],
+            [
+              9,
+              8
+            ],
+            [
+              12,
+              8
+            ],
+            [
+              15,
+              8
+            ],
+            [
+              19,
+              8
+            ],
+            [
+              20,
+              8
+            ],
+            [
+              8,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              12,
+              9
+            ],
+            [
+              19,
+              9
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              7,
+              10
+            ],
+            [
+              11,
+              10
+            ],
+            [
+              12,
+              10
+            ],
+            [
+              13,
+              10
+            ],
+            [
+              14,
+              10
+            ],
+            [
+              19,
+              10
+            ],
+            [
+              20,
+              10
+            ],
+            [
+              6,
+              11
+            ],
+            [
+              7,
+              11
+            ],
+            [
+              12,
+              11
+            ],
+            [
+              13,
+              11
+            ],
+            [
+              18,
+              11
+            ],
+            [
+              3,
+              12
+            ],
+            [
+              5,
+              12
+            ],
+            [
+              6,
+              12
+            ],
+            [
+              8,
+              12
+            ],
+            [
+              18,
+              12
+            ],
+            [
+              19,
+              12
+            ],
+            [
+              21,
+              12
+            ],
+            [
+              1,
+              13
+            ],
+            [
+              5,
+              13
+            ],
+            [
+              18,
+              13
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "color_cap",
+      "ok": false,
+      "detail": "권장 색 수를 넘은 그림 1장",
+      "items": [
+        {
+          "where": "stall_prop_menu.png",
+          "why": [
+            "색 48가지 > 권장 44가지 (크기 34)"
+          ],
+          "size": 34,
+          "colors": 48,
+          "cap": 44
+        }
+      ]
+    },
+    {
+      "rule": "near_colors",
+      "ok": false,
+      "detail": "비슷한 색 쌍이 있는 그림 1장",
+      "items": [
+        {
+          "where": "synthesis_plate.png",
+          "why": [
+            "비슷한 색 쌍 29개 (합치기 후보)"
+          ],
+          "count": 29,
+          "pairs": [
+            {
+              "from": "#996646",
+              "to": "#956243",
+              "from_count": 276,
+              "to_count": 351,
+              "delta": 4
+            },
+            {
+              "from": "#926142",
+              "to": "#956243",
+              "from_count": 229,
+              "to_count": 351,
+              "delta": 3
+            },
+            {
+              "from": "#966544",
+              "to": "#926142",
+              "from_count": 155,
+              "to_count": 229,
+              "delta": 4
+            },
+            {
+              "from": "#966544",
+              "to": "#956243",
+              "from_count": 155,
+              "to_count": 351,
+              "delta": 3
+            },
+            {
+              "from": "#966544",
+              "to": "#996646",
+              "from_count": 155,
+              "to_count": 276,
+              "delta": 3
+            },
+            {
+              "from": "#9A6947",
+              "to": "#966544",
+              "from_count": 153,
+              "to_count": 155,
+              "delta": 4
+            },
+            {
+              "from": "#9A6947",
+              "to": "#996646",
+              "from_count": 153,
+              "to_count": 276,
+              "delta": 3
+            },
+            {
+              "from": "#9D6A48",
+              "to": "#996646",
+              "from_count": 122,
+              "to_count": 276,
+              "delta": 4
+            },
+            {
+              "from": "#9D6A48",
+              "to": "#9A6947",
+              "from_count": 122,
+              "to_count": 153,
+              "delta": 3
+            },
+            {
+              "from": "#85533A",
+              "to": "#82513A",
+              "from_count": 113,
+              "to_count": 126,
+              "delta": 3
+            },
+            {
+              "from": "#915E40",
+              "to": "#926142",
+              "from_count": 92,
+              "to_count": 229,
+              "delta": 3
+            },
+            {
+              "from": "#915E40",
+              "to": "#956243",
+              "from_count": 92,
+              "to_count": 351,
+              "delta": 4
+            },
+            {
+              "from": "#724634",
+              "to": "#734935",
+              "from_count": 90,
+              "to_count": 114,
+              "delta": 3
+            },
+            {
+              "from": "#9E6C4A",
+              "to": "#9A6947",
+              "from_count": 83,
+              "to_count": 153,
+              "delta": 4
+            },
+            {
+              "from": "#9E6C4A",
+              "to": "#9D6A48",
+              "from_count": 83,
+              "to_count": 122,
+              "delta": 2
+            },
+            {
+              "from": "#2E281D",
+              "to": "#312A20",
+              "from_count": 80,
+              "to_count": 133,
+              "delta": 3
+            },
+            {
+              "from": "#86553B",
+              "to": "#82513A",
+              "from_count": 79,
+              "to_count": 126,
+              "delta": 4
+            },
+            {
+              "from": "#86553B",
+              "to": "#85533A",
+              "from_count": 79,
+              "to_count": 113,
+              "delta": 2
+            },
+            {
+              "from": "#A67552",
+              "to": "#AA7956",
+              "from_count": 78,
+              "to_count": 146,
+              "delta": 4
+            },
+            {
+              "from": "#7D503D",
+              "to": "#79523E",
+              "from_count": 38,
+              "to_count": 41,
+              "delta": 4
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "info": [
+    {
+      "rule": "outline",
+      "detail": "style.outline 이 unset 이라 판정만 적는다",
+      "items": [
+        {
+          "where": "display_case.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "kitchen_plate.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "kitchen_tray.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "stall_board_topper.png",
+          "verdict": "solid"
+        },
+        {
+          "where": "stall_counter.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "stall_prop_menu.png",
+          "verdict": "black"
+        },
+        {
+          "where": "stall_prop_register.png",
+          "verdict": "selout"
+        },
+        {
+          "where": "stall_prop_vase.png",
+          "verdict": "mixed"
+        },
+        {
+          "where": "synthesis_plate.png",
+          "verdict": "selout"
+        }
+      ]
+    }
+  ]
+}

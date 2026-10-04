@@ -1,0 +1,1300 @@
+{
+  "version": 1,
+  "status": "warn",
+  "name": "mozzi_char_people",
+  "summary": {
+    "images": 17,
+    "pixel": 17,
+    "not_pixel": 0,
+    "sprites": 17,
+    "backgrounds": 0
+  },
+  "outline": {
+    "table": {
+      "mixed": 1,
+      "black": 6,
+      "solid": 10
+    },
+    "pick": null
+  },
+  "light": {
+    "table": {
+      "unknown": 6,
+      "top": 11
+    },
+    "pick": "top"
+  },
+  "scale": {
+    "table": {
+      "1": 17
+    },
+    "pick": 1
+  },
+  "held": "outline 표가 갈렸다 — 종류가 섞인 무리로 보인다",
+  "size_bins": [
+    {
+      "bin": "128",
+      "images": 15,
+      "colors_p50": 4.0,
+      "colors_p90": 15.0,
+      "cap": 48
+    },
+    {
+      "bin": "256",
+      "images": 2,
+      "colors_p50": 37.5,
+      "colors_p90": 37.9,
+      "cap": 64
+    }
+  ],
+  "stats": {
+    "isolated": {
+      "p50": 0.0044,
+      "p95": 0.0521,
+      "n": 17
+    },
+    "near_pairs": {
+      "p50": 0.0,
+      "p95": 2.0,
+      "n": 17
+    },
+    "outline_share": {
+      "p50": 0.058,
+      "p95": 0.0755,
+      "n": 17
+    },
+    "smooth": {
+      "p50": 0.0432,
+      "p95": 0.0835,
+      "n": 17
+    }
+  },
+  "palette": {
+    "usage": {
+      "#FCD9CB": 0.1391,
+      "#3A3640": 0.0838,
+      "#7248A0": 0.0835,
+      "#7E5234": 0.0835,
+      "#C87A42": 0.0835,
+      "#4A7EBE": 0.0395,
+      "#5F9E58": 0.0395,
+      "#CD4A40": 0.0395,
+      "#E3BC5C": 0.0395,
+      "#FBDECE": 0.0282,
+      "#2D2A32": 0.0159,
+      "#563476": 0.0159,
+      "#623E26": 0.0159,
+      "#9C5C2E": 0.0159,
+      "#EB9395": 0.0158,
+      "#4D464C": 0.0112,
+      "#FAF9F9": 0.0109,
+      "#F4B3A3": 0.0102,
+      "#1E1028": 0.0092,
+      "#21140C": 0.0092,
+      "#341E0E": 0.0092,
+      "#356094": 0.0086,
+      "#487B42": 0.0086,
+      "#A0352C": 0.0086,
+      "#B19142": 0.0086,
+      "#625D6A": 0.0076,
+      "#9370BF": 0.0076,
+      "#9A6F52": 0.0076,
+      "#D49262": 0.0076,
+      "#101F31": 0.0075,
+      "#172915": 0.0075,
+      "#35100D": 0.0075,
+      "#3B3014": 0.0075,
+      "#171717": 0.0059,
+      "#415174": 0.0058,
+      "#F9B5A4": 0.0052,
+      "#B45C66": 0.0048,
+      "#F6E7D8": 0.0044,
+      "#224269": 0.0032,
+      "#31572D": 0.0032,
+      "#71211B": 0.0032,
+      "#7D652B": 0.0032,
+      "#EDB6A3": 0.0026,
+      "#362D33": 0.0022,
+      "#201D23": 0.0018,
+      "#3A2350": 0.0014,
+      "#452B19": 0.0014,
+      "#6E3F1D": 0.0014,
+      "#502523": 0.0008,
+      "#9B7A7A": 0.0002
+    },
+    "hue_step": 0.4,
+    "noise_merged": 24,
+    "merged": [
+      {
+        "from": "#030302",
+        "to": "#171717",
+        "why": "black"
+      },
+      {
+        "from": "#0B0A0A",
+        "to": "#171717",
+        "why": "black"
+      },
+      {
+        "from": "#0F0E11",
+        "to": "#171717",
+        "why": "black"
+      },
+      {
+        "from": "#100F0C",
+        "to": "#171717",
+        "why": "black"
+      },
+      {
+        "from": "#1C1514",
+        "to": "#171717",
+        "why": "black"
+      },
+      {
+        "from": "#1D1C1C",
+        "to": "#171717",
+        "why": "black"
+      },
+      {
+        "from": "#000000",
+        "to": "#171717",
+        "why": "noise"
+      },
+      {
+        "from": "#030403",
+        "to": "#171717",
+        "why": "noise"
+      },
+      {
+        "from": "#070504",
+        "to": "#171717",
+        "why": "noise"
+      },
+      {
+        "from": "#070606",
+        "to": "#171717",
+        "why": "noise"
+      },
+      {
+        "from": "#070706",
+        "to": "#171717",
+        "why": "noise"
+      },
+      {
+        "from": "#0D0B0C",
+        "to": "#171717",
+        "why": "noise"
+      },
+      {
+        "from": "#120D0D",
+        "to": "#171717",
+        "why": "noise"
+      },
+      {
+        "from": "#121213",
+        "to": "#171717",
+        "why": "noise"
+      },
+      {
+        "from": "#141313",
+        "to": "#171717",
+        "why": "noise"
+      },
+      {
+        "from": "#1C1D21",
+        "to": "#201D23",
+        "why": "noise"
+      },
+      {
+        "from": "#1E1919",
+        "to": "#171717",
+        "why": "noise"
+      },
+      {
+        "from": "#37353F",
+        "to": "#3A3640",
+        "why": "noise"
+      },
+      {
+        "from": "#3F4E71",
+        "to": "#415174",
+        "why": "noise"
+      },
+      {
+        "from": "#512726",
+        "to": "#502523",
+        "why": "noise"
+      },
+      {
+        "from": "#9C7E7C",
+        "to": "#9B7A7A",
+        "why": "noise"
+      },
+      {
+        "from": "#E99093",
+        "to": "#EB9395",
+        "why": "noise"
+      },
+      {
+        "from": "#F6F5F5",
+        "to": "#FAF9F9",
+        "why": "noise"
+      },
+      {
+        "from": "#F7B7A4",
+        "to": "#F4B3A3",
+        "why": "noise"
+      },
+      {
+        "from": "#F8F7F7",
+        "to": "#FAF9F9",
+        "why": "noise"
+      },
+      {
+        "from": "#FBD8C9",
+        "to": "#FCD9CB",
+        "why": "noise"
+      },
+      {
+        "from": "#FBD8CA",
+        "to": "#FCD9CB",
+        "why": "noise"
+      },
+      {
+        "from": "#FBDACD",
+        "to": "#FCD9CB",
+        "why": "noise"
+      },
+      {
+        "from": "#FBE0D0",
+        "to": "#FBDECE",
+        "why": "noise"
+      },
+      {
+        "from": "#FCFCFC",
+        "to": "#FAF9F9",
+        "why": "noise"
+      }
+    ],
+    "merge_table": {
+      "#030302": "#171717",
+      "#0B0A0A": "#171717",
+      "#0F0E11": "#171717",
+      "#100F0C": "#171717",
+      "#1C1514": "#171717",
+      "#1D1C1C": "#171717",
+      "#000000": "#171717",
+      "#030403": "#171717",
+      "#070504": "#171717",
+      "#070606": "#171717",
+      "#070706": "#171717",
+      "#0D0B0C": "#171717",
+      "#120D0D": "#171717",
+      "#121213": "#171717",
+      "#141313": "#171717",
+      "#1C1D21": "#201D23",
+      "#1E1919": "#171717",
+      "#37353F": "#3A3640",
+      "#3F4E71": "#415174",
+      "#512726": "#502523",
+      "#9C7E7C": "#9B7A7A",
+      "#E99093": "#EB9395",
+      "#F6F5F5": "#FAF9F9",
+      "#F7B7A4": "#F4B3A3",
+      "#F8F7F7": "#FAF9F9",
+      "#FBD8C9": "#FCD9CB",
+      "#FBD8CA": "#FCD9CB",
+      "#FBDACD": "#FCD9CB",
+      "#FBE0D0": "#FBDECE",
+      "#FCFCFC": "#FAF9F9"
+    },
+    "padded": [
+      {
+        "ramp": "red",
+        "cells": 2
+      },
+      {
+        "ramp": "purple",
+        "cells": 1
+      },
+      {
+        "ramp": "orange",
+        "cells": 1
+      },
+      {
+        "ramp": "orange_2",
+        "cells": 1
+      },
+      {
+        "ramp": "purple_2",
+        "cells": 2
+      },
+      {
+        "ramp": "blue",
+        "cells": 2
+      },
+      {
+        "ramp": "green",
+        "cells": 2
+      },
+      {
+        "ramp": "red_2",
+        "cells": 2
+      },
+      {
+        "ramp": "orange_3",
+        "cells": 2
+      },
+      {
+        "ramp": "orange_4",
+        "cells": 3
+      },
+      {
+        "ramp": "red_3",
+        "cells": 4
+      },
+      {
+        "ramp": "gray",
+        "cells": 5
+      },
+      {
+        "ramp": "gray_2",
+        "cells": 5
+      },
+      {
+        "ramp": "blue_2",
+        "cells": 5
+      },
+      {
+        "ramp": "orange_5",
+        "cells": 5
+      },
+      {
+        "ramp": "pink",
+        "cells": 5
+      }
+    ],
+    "singles": [
+      "gray",
+      "gray_2",
+      "blue_2",
+      "orange_5",
+      "pink"
+    ],
+    "dropped": [
+      {
+        "color": "#343959",
+        "usage": 0.00149,
+        "images": 1
+      },
+      {
+        "color": "#F9EDE8",
+        "usage": 0.00118,
+        "images": 1
+      },
+      {
+        "color": "#974D54",
+        "usage": 0.00113,
+        "images": 1
+      },
+      {
+        "color": "#927082",
+        "usage": 0.00084,
+        "images": 1
+      },
+      {
+        "color": "#3D3137",
+        "usage": 0.00079,
+        "images": 1
+      },
+      {
+        "color": "#C8C4D1",
+        "usage": 0.00078,
+        "images": 1
+      },
+      {
+        "color": "#EBB5AC",
+        "usage": 0.00076,
+        "images": 1
+      },
+      {
+        "color": "#AC5760",
+        "usage": 0.00069,
+        "images": 1
+      },
+      {
+        "color": "#394567",
+        "usage": 0.00069,
+        "images": 1
+      },
+      {
+        "color": "#F8E3E0",
+        "usage": 0.00067,
+        "images": 1
+      },
+      {
+        "color": "#B3AFC1",
+        "usage": 0.00066,
+        "images": 1
+      },
+      {
+        "color": "#F3C9B8",
+        "usage": 0.00064,
+        "images": 1
+      },
+      {
+        "color": "#2C2D46",
+        "usage": 0.00063,
+        "images": 1
+      },
+      {
+        "color": "#BD636C",
+        "usage": 0.00061,
+        "images": 1
+      },
+      {
+        "color": "#A05B56",
+        "usage": 0.0006,
+        "images": 1
+      },
+      {
+        "color": "#A59FB5",
+        "usage": 0.0006,
+        "images": 1
+      },
+      {
+        "color": "#7D4046",
+        "usage": 0.0006,
+        "images": 1
+      },
+      {
+        "color": "#DDDAE1",
+        "usage": 0.00056,
+        "images": 1
+      },
+      {
+        "color": "#894F4B",
+        "usage": 0.00056,
+        "images": 1
+      },
+      {
+        "color": "#D9A495",
+        "usage": 0.00055,
+        "images": 1
+      },
+      {
+        "color": "#E68B8F",
+        "usage": 0.00054,
+        "images": 1
+      },
+      {
+        "color": "#433B41",
+        "usage": 0.00053,
+        "images": 1
+      },
+      {
+        "color": "#EFEDF0",
+        "usage": 0.00051,
+        "images": 1
+      },
+      {
+        "color": "#CFB7BD",
+        "usage": 0.00049,
+        "images": 1
+      },
+      {
+        "color": "#EE9E9F",
+        "usage": 0.00048,
+        "images": 1
+      },
+      {
+        "color": "#CA8D80",
+        "usage": 0.00047,
+        "images": 1
+      },
+      {
+        "color": "#A05451",
+        "usage": 0.00045,
+        "images": 1
+      },
+      {
+        "color": "#E78F7F",
+        "usage": 0.00044,
+        "images": 1
+      },
+      {
+        "color": "#ECCFC7",
+        "usage": 0.00044,
+        "images": 1
+      },
+      {
+        "color": "#4C5D81",
+        "usage": 0.00042,
+        "images": 1
+      },
+      {
+        "color": "#CA7379",
+        "usage": 0.00041,
+        "images": 1
+      },
+      {
+        "color": "#834647",
+        "usage": 0.00039,
+        "images": 1
+      },
+      {
+        "color": "#AD6C69",
+        "usage": 0.00039,
+        "images": 1
+      },
+      {
+        "color": "#9A635C",
+        "usage": 0.00039,
+        "images": 1
+      },
+      {
+        "color": "#D4867D",
+        "usage": 0.00037,
+        "images": 1
+      },
+      {
+        "color": "#E99F90",
+        "usage": 0.00037,
+        "images": 1
+      },
+      {
+        "color": "#773A31",
+        "usage": 0.00035,
+        "images": 1
+      },
+      {
+        "color": "#E07E83",
+        "usage": 0.00035,
+        "images": 1
+      },
+      {
+        "color": "#1E1D2C",
+        "usage": 0.00034,
+        "images": 1
+      },
+      {
+        "color": "#82524E",
+        "usage": 0.00032,
+        "images": 1
+      },
+      {
+        "color": "#F8C6B6",
+        "usage": 0.00031,
+        "images": 1
+      },
+      {
+        "color": "#703233",
+        "usage": 0.0003,
+        "images": 1
+      },
+      {
+        "color": "#B05D59",
+        "usage": 0.00029,
+        "images": 1
+      },
+      {
+        "color": "#B2776D",
+        "usage": 0.00026,
+        "images": 1
+      },
+      {
+        "color": "#A8CBE9",
+        "usage": 0.00026,
+        "images": 1
+      },
+      {
+        "color": "#F4A394",
+        "usage": 0.00025,
+        "images": 1
+      },
+      {
+        "color": "#351D20",
+        "usage": 0.00025,
+        "images": 1
+      },
+      {
+        "color": "#2D272A",
+        "usage": 0.00024,
+        "images": 1
+      },
+      {
+        "color": "#F7D9D5",
+        "usage": 0.00024,
+        "images": 1
+      },
+      {
+        "color": "#794C4D",
+        "usage": 0.00022,
+        "images": 1
+      },
+      {
+        "color": "#CB8278",
+        "usage": 0.00022,
+        "images": 1
+      },
+      {
+        "color": "#272123",
+        "usage": 0.00022,
+        "images": 1
+      },
+      {
+        "color": "#88859A",
+        "usage": 0.00021,
+        "images": 1
+      },
+      {
+        "color": "#AF726B",
+        "usage": 0.00021,
+        "images": 1
+      },
+      {
+        "color": "#2F2323",
+        "usage": 0.00019,
+        "images": 1
+      },
+      {
+        "color": "#683230",
+        "usage": 0.00019,
+        "images": 1
+      },
+      {
+        "color": "#C17066",
+        "usage": 0.00019,
+        "images": 1
+      },
+      {
+        "color": "#4D4B58",
+        "usage": 0.00018,
+        "images": 1
+      },
+      {
+        "color": "#686869",
+        "usage": 0.00016,
+        "images": 1
+      },
+      {
+        "color": "#4B201F",
+        "usage": 0.00014,
+        "images": 1
+      },
+      {
+        "color": "#563836",
+        "usage": 0.00014,
+        "images": 1
+      },
+      {
+        "color": "#65627A",
+        "usage": 0.00014,
+        "images": 1
+      },
+      {
+        "color": "#60282D",
+        "usage": 0.00013,
+        "images": 1
+      },
+      {
+        "color": "#EF6671",
+        "usage": 0.00012,
+        "images": 1
+      }
+    ],
+    "dropped_count": 76,
+    "removed_ramps": [],
+    "removed_colors": 0,
+    "colors": 50,
+    "background_colors": [],
+    "sources": 17,
+    "sampled": 0,
+    "ramps": [
+      {
+        "name": "red",
+        "colors": [
+          "#502523",
+          "#F4B3A3",
+          "#F9B5A4",
+          "#FCD9CB",
+          "#FCD9CB",
+          "#FCD9CB"
+        ],
+        "padded": 2,
+        "usage": 0.1553
+      },
+      {
+        "name": "purple",
+        "colors": [
+          "#1E1028",
+          "#3A2350",
+          "#563476",
+          "#7248A0",
+          "#9370BF",
+          "#9370BF"
+        ],
+        "padded": 1,
+        "usage": 0.1176
+      },
+      {
+        "name": "orange",
+        "colors": [
+          "#21140C",
+          "#452B19",
+          "#623E26",
+          "#7E5234",
+          "#9A6F52",
+          "#9A6F52"
+        ],
+        "padded": 1,
+        "usage": 0.1176
+      },
+      {
+        "name": "orange_2",
+        "colors": [
+          "#341E0E",
+          "#6E3F1D",
+          "#9C5C2E",
+          "#C87A42",
+          "#D49262",
+          "#D49262"
+        ],
+        "padded": 1,
+        "usage": 0.1176
+      },
+      {
+        "name": "purple_2",
+        "colors": [
+          "#201D23",
+          "#2D2A32",
+          "#3A3640",
+          "#625D6A",
+          "#625D6A",
+          "#625D6A"
+        ],
+        "padded": 2,
+        "usage": 0.1092
+      },
+      {
+        "name": "blue",
+        "colors": [
+          "#101F31",
+          "#224269",
+          "#356094",
+          "#4A7EBE",
+          "#4A7EBE",
+          "#4A7EBE"
+        ],
+        "padded": 2,
+        "usage": 0.0588
+      },
+      {
+        "name": "green",
+        "colors": [
+          "#172915",
+          "#31572D",
+          "#487B42",
+          "#5F9E58",
+          "#5F9E58",
+          "#5F9E58"
+        ],
+        "padded": 2,
+        "usage": 0.0588
+      },
+      {
+        "name": "red_2",
+        "colors": [
+          "#35100D",
+          "#71211B",
+          "#A0352C",
+          "#CD4A40",
+          "#CD4A40",
+          "#CD4A40"
+        ],
+        "padded": 2,
+        "usage": 0.0588
+      },
+      {
+        "name": "orange_3",
+        "colors": [
+          "#3B3014",
+          "#7D652B",
+          "#B19142",
+          "#E3BC5C",
+          "#E3BC5C",
+          "#E3BC5C"
+        ],
+        "padded": 2,
+        "usage": 0.0588
+      },
+      {
+        "name": "orange_4",
+        "colors": [
+          "#9B7A7A",
+          "#EDB6A3",
+          "#FBDECE",
+          "#FBDECE",
+          "#FBDECE",
+          "#FBDECE"
+        ],
+        "padded": 3,
+        "usage": 0.031
+      },
+      {
+        "name": "red_3",
+        "colors": [
+          "#B45C66",
+          "#EB9395",
+          "#EB9395",
+          "#EB9395",
+          "#EB9395",
+          "#EB9395"
+        ],
+        "padded": 4,
+        "usage": 0.0206
+      },
+      {
+        "name": "gray",
+        "colors": [
+          "#4D464C",
+          "#4D464C",
+          "#4D464C",
+          "#4D464C",
+          "#4D464C",
+          "#4D464C"
+        ],
+        "padded": 5,
+        "usage": 0.0112
+      },
+      {
+        "name": "gray_2",
+        "colors": [
+          "#FAF9F9",
+          "#FAF9F9",
+          "#FAF9F9",
+          "#FAF9F9",
+          "#FAF9F9",
+          "#FAF9F9"
+        ],
+        "padded": 5,
+        "usage": 0.0109
+      },
+      {
+        "name": "blue_2",
+        "colors": [
+          "#415174",
+          "#415174",
+          "#415174",
+          "#415174",
+          "#415174",
+          "#415174"
+        ],
+        "padded": 5,
+        "usage": 0.0058
+      },
+      {
+        "name": "orange_5",
+        "colors": [
+          "#F6E7D8",
+          "#F6E7D8",
+          "#F6E7D8",
+          "#F6E7D8",
+          "#F6E7D8",
+          "#F6E7D8"
+        ],
+        "padded": 5,
+        "usage": 0.0044
+      },
+      {
+        "name": "pink",
+        "colors": [
+          "#362D33",
+          "#362D33",
+          "#362D33",
+          "#362D33",
+          "#362D33",
+          "#362D33"
+        ],
+        "padded": 5,
+        "usage": 0.0022
+      }
+    ],
+    "outline": "#171717",
+    "outline_candidate": "#171717",
+    "ramp_len": 6
+  },
+  "images": [
+    {
+      "file": "char_people/body.png",
+      "background": false,
+      "size": 208,
+      "pixel": true,
+      "colors": 37,
+      "smooth": 0.0648,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0511,
+      "near_pairs": 2,
+      "outline": "mixed",
+      "outline_share": 0.058,
+      "black_ratio": 0.7281,
+      "edge_color": "#100F0C",
+      "edge_color_count": 134,
+      "light": "unknown"
+    },
+    {
+      "file": "char_people/face_01.png",
+      "background": false,
+      "size": 80,
+      "pixel": true,
+      "colors": 15,
+      "smooth": 0.0028,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0124,
+      "near_pairs": 0,
+      "outline": "black",
+      "outline_share": 0.0465,
+      "black_ratio": 0.911,
+      "edge_color": "#070606",
+      "edge_color_count": 210,
+      "light": "top"
+    },
+    {
+      "file": "char_people/face_02.png",
+      "background": false,
+      "size": 80,
+      "pixel": true,
+      "colors": 15,
+      "smooth": 0.0038,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0083,
+      "near_pairs": 2,
+      "outline": "black",
+      "outline_share": 0.0465,
+      "black_ratio": 0.9195,
+      "edge_color": "#070706",
+      "edge_color_count": 155,
+      "light": "top"
+    },
+    {
+      "file": "char_people/face_03.png",
+      "background": false,
+      "size": 80,
+      "pixel": true,
+      "colors": 17,
+      "smooth": 0.0063,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0138,
+      "near_pairs": 1,
+      "outline": "black",
+      "outline_share": 0.0463,
+      "black_ratio": 0.9234,
+      "edge_color": "#030302",
+      "edge_color_count": 215,
+      "light": "top"
+    },
+    {
+      "file": "char_people/hair_01_black.png",
+      "background": false,
+      "size": 95,
+      "pixel": true,
+      "colors": 5,
+      "smooth": 0.0575,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0025,
+      "near_pairs": 0,
+      "outline": "black",
+      "outline_share": 0.0504,
+      "black_ratio": 0.9825,
+      "edge_color": "#0F0E11",
+      "edge_color_count": 281,
+      "light": "top"
+    },
+    {
+      "file": "char_people/hair_01_brown.png",
+      "background": false,
+      "size": 95,
+      "pixel": true,
+      "colors": 5,
+      "smooth": 0.1581,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0025,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0504,
+      "black_ratio": 0.0,
+      "edge_color": "#21140C",
+      "edge_color_count": 281,
+      "light": "top"
+    },
+    {
+      "file": "char_people/hair_01_orange.png",
+      "background": false,
+      "size": 95,
+      "pixel": true,
+      "colors": 5,
+      "smooth": 0.0521,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0025,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0504,
+      "black_ratio": 0.0,
+      "edge_color": "#341E0E",
+      "edge_color_count": 281,
+      "light": "top"
+    },
+    {
+      "file": "char_people/hair_01_purple.png",
+      "background": false,
+      "size": 95,
+      "pixel": true,
+      "colors": 5,
+      "smooth": 0.0388,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0025,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0504,
+      "black_ratio": 0.0,
+      "edge_color": "#1E1028",
+      "edge_color_count": 281,
+      "light": "top"
+    },
+    {
+      "file": "char_people/hair_02_black.png",
+      "background": false,
+      "size": 92,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0432,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0016,
+      "near_pairs": 0,
+      "outline": "black",
+      "outline_share": 0.0658,
+      "black_ratio": 0.961,
+      "edge_color": "#0F0E11",
+      "edge_color_count": 271,
+      "light": "top"
+    },
+    {
+      "file": "char_people/hair_02_brown.png",
+      "background": false,
+      "size": 92,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0105,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0016,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0658,
+      "black_ratio": 0.0,
+      "edge_color": "#21140C",
+      "edge_color_count": 271,
+      "light": "top"
+    },
+    {
+      "file": "char_people/hair_02_orange.png",
+      "background": false,
+      "size": 92,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0081,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0016,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0658,
+      "black_ratio": 0.0,
+      "edge_color": "#341E0E",
+      "edge_color_count": 271,
+      "light": "top"
+    },
+    {
+      "file": "char_people/hair_02_purple.png",
+      "background": false,
+      "size": 92,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0081,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0016,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0658,
+      "black_ratio": 0.0,
+      "edge_color": "#1E1028",
+      "edge_color_count": 271,
+      "light": "top"
+    },
+    {
+      "file": "char_people/shirt_blue.png",
+      "background": false,
+      "size": 65,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0571,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0044,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0755,
+      "black_ratio": 0.0,
+      "edge_color": "#101F31",
+      "edge_color_count": 184,
+      "light": "unknown"
+    },
+    {
+      "file": "char_people/shirt_green.png",
+      "background": false,
+      "size": 65,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0571,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0044,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0755,
+      "black_ratio": 0.0,
+      "edge_color": "#172915",
+      "edge_color_count": 184,
+      "light": "unknown"
+    },
+    {
+      "file": "char_people/shirt_red.png",
+      "background": false,
+      "size": 65,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0571,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0044,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0755,
+      "black_ratio": 0.0,
+      "edge_color": "#35100D",
+      "edge_color_count": 184,
+      "light": "unknown"
+    },
+    {
+      "file": "char_people/shirt_yellow.png",
+      "background": false,
+      "size": 65,
+      "pixel": true,
+      "colors": 4,
+      "smooth": 0.0571,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0044,
+      "near_pairs": 0,
+      "outline": "solid",
+      "outline_share": 0.0755,
+      "black_ratio": 0.0,
+      "edge_color": "#3B3014",
+      "edge_color_count": 184,
+      "light": "unknown"
+    },
+    {
+      "file": "char_people/stall_owner.png",
+      "background": false,
+      "size": 174,
+      "pixel": true,
+      "colors": 38,
+      "smooth": 0.0275,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0561,
+      "near_pairs": 2,
+      "outline": "black",
+      "outline_share": 0.0366,
+      "black_ratio": 0.9047,
+      "edge_color": "#171717",
+      "edge_color_count": 344,
+      "light": "unknown"
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "by_kind",
+      "ok": false,
+      "detail": "outline 표가 갈렸다 — 종류가 섞인 무리로 보인다. 종류별 폴더로 나눠 폴더마다 따로 뽑는다",
+      "items": []
+    }
+  ],
+  "out": {
+    "palette": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_people_palette.json",
+    "swatch": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_people_swatch.png",
+    "profile": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_people_profile.yaml",
+    "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_people_report.json"
+  }
+}

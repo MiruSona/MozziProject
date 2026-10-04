@@ -1,0 +1,11 @@
+# arttool style extract 가 뽑은 조각 — 보고 고쳐서 프로필에 붙인다. 자동으로 안 붙는다
+# 기준 그림 16장 — 도트 16장 (스프라이트 16 · 배경 0) · 도트 아님 0장
+palette:
+  # 외곽선 판정 보류 — 검정 후보 #12110F 를 팔레트 파일 outline 칸에만 넣었다
+  # 한 색짜리 램프 4개 : red, red_2, blue, blue_2 — 그늘 칸을 채우거나 뺀다
+  ramp_len: 6   # 팔레트 파일과 짝
+  ramps_file: "palettes/mozzi_char_mozzi.json"   # 팔레트를 그 자리로 옮긴 뒤
+# style : outline : 정하지 못함 (solid 4 · black 3 · mixed 2 · none 2) — 프로필 값 그대로
+# style : light : 정하지 못함 (unknown 13 · top_left 2 · top 1) — 프로필 값 그대로
+# style : style.scale : 1 — 프로필과 같아 뺐다 (6장 중 6장 (100%))
+# check.warn : 판정 보류 — outline 표가 갈렸다 — 종류가 섞인 무리로 보인다. 문턱 제안을 안 낸다

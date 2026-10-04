@@ -1,0 +1,971 @@
+{
+  "version": 1,
+  "status": "ok",
+  "name": "mozzi_bg",
+  "summary": {
+    "images": 5,
+    "pixel": 5,
+    "not_pixel": 0,
+    "sprites": 1,
+    "backgrounds": 4
+  },
+  "outline": {
+    "table": {
+      "none": 1
+    },
+    "pick": "none"
+  },
+  "light": {
+    "table": {
+      "unknown": 1
+    },
+    "pick": "unknown"
+  },
+  "scale": {
+    "table": {
+      "1": 5
+    },
+    "pick": 1
+  },
+  "held": null,
+  "size_bins": [
+    {
+      "bin": "above",
+      "images": 1,
+      "colors_p50": 7.0,
+      "colors_p90": 7.0,
+      "cap": null
+    }
+  ],
+  "stats": {
+    "isolated": {
+      "p50": 0.0024,
+      "p95": 0.0104,
+      "n": 5
+    },
+    "near_pairs": {
+      "p50": 2.0,
+      "p95": 4.6,
+      "n": 5
+    },
+    "outline_share": {
+      "p50": 0.0368,
+      "p95": 0.0368,
+      "n": 1
+    },
+    "smooth": {
+      "p50": 0.0145,
+      "p95": 0.0426,
+      "n": 5
+    }
+  },
+  "palette": {
+    "usage": {
+      "#FDD68B": 0.1922,
+      "#D4EEFA": 0.1747,
+      "#F6E8D0": 0.0984,
+      "#DC8D52": 0.0692,
+      "#B26755": 0.0665,
+      "#9C6E51": 0.0418,
+      "#CE8958": 0.0406,
+      "#D69860": 0.0186,
+      "#956451": 0.0177,
+      "#DF9898": 0.017,
+      "#894C4D": 0.0165,
+      "#B3714B": 0.0105,
+      "#8A534E": 0.009,
+      "#6E3932": 0.0088,
+      "#AD755B": 0.008,
+      "#330F27": 0.0076,
+      "#301A1F": 0.0075,
+      "#EEBFAA": 0.0071,
+      "#95CAE2": 0.0069,
+      "#FCFDF1": 0.0067,
+      "#CA9073": 0.0065,
+      "#FCF3D6": 0.0063,
+      "#A16A57": 0.0062,
+      "#7B4047": 0.0061,
+      "#330E1E": 0.006,
+      "#558AA2": 0.0059,
+      "#575F4F": 0.0056,
+      "#DDA56A": 0.0056,
+      "#A4604E": 0.0049,
+      "#451A24": 0.0048,
+      "#FBD394": 0.0048,
+      "#F1DDC0": 0.0047,
+      "#F4B67F": 0.0047,
+      "#C2876B": 0.0046,
+      "#EDC8B3": 0.0041,
+      "#834847": 0.0034,
+      "#965C53": 0.0032,
+      "#6D4039": 0.0031,
+      "#230C17": 0.003,
+      "#2B0C20": 0.003,
+      "#BE7679": 0.003,
+      "#BB8864": 0.0029,
+      "#9D5F40": 0.0028,
+      "#CB795A": 0.0027,
+      "#310A27": 0.0026,
+      "#6B2E3B": 0.0025,
+      "#EFDEFA": 0.0023,
+      "#495A4A": 0.0021,
+      "#794646": 0.002,
+      "#914F4A": 0.0018,
+      "#E8ADA9": 0.0015,
+      "#C48473": 0.0006
+    },
+    "hue_step": 5.8,
+    "noise_merged": 20,
+    "merged": [
+      {
+        "from": "#1F0917",
+        "to": "#230C17",
+        "why": "noise"
+      },
+      {
+        "from": "#300F20",
+        "to": "#330E1E",
+        "why": "noise"
+      },
+      {
+        "from": "#351027",
+        "to": "#330F27",
+        "why": "noise"
+      },
+      {
+        "from": "#6F3D3F",
+        "to": "#6D4039",
+        "why": "noise"
+      },
+      {
+        "from": "#7A4A45",
+        "to": "#794646",
+        "why": "noise"
+      },
+      {
+        "from": "#804E4A",
+        "to": "#894C4D",
+        "why": "noise"
+      },
+      {
+        "from": "#814A49",
+        "to": "#834847",
+        "why": "noise"
+      },
+      {
+        "from": "#89504B",
+        "to": "#894C4D",
+        "why": "noise"
+      },
+      {
+        "from": "#8D5750",
+        "to": "#8A534E",
+        "why": "noise"
+      },
+      {
+        "from": "#8E4D4B",
+        "to": "#914F4A",
+        "why": "noise"
+      },
+      {
+        "from": "#975F53",
+        "to": "#965C53",
+        "why": "noise"
+      },
+      {
+        "from": "#97CDE6",
+        "to": "#95CAE2",
+        "why": "noise"
+      },
+      {
+        "from": "#A2634C",
+        "to": "#A4604E",
+        "why": "noise"
+      },
+      {
+        "from": "#AF704F",
+        "to": "#B3714B",
+        "why": "noise"
+      },
+      {
+        "from": "#BE846A",
+        "to": "#C2876B",
+        "why": "noise"
+      },
+      {
+        "from": "#C27D57",
+        "to": "#CE8958",
+        "why": "noise"
+      },
+      {
+        "from": "#EABFA8",
+        "to": "#EEBFAA",
+        "why": "noise"
+      },
+      {
+        "from": "#FBFCF5",
+        "to": "#FCFDF1",
+        "why": "noise"
+      },
+      {
+        "from": "#703D41",
+        "to": "#6D4039",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#783F36",
+        "to": "#6E3932",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#845246",
+        "to": "#894C4D",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#AA6946",
+        "to": "#B3714B",
+        "why": "ramp_len"
+      },
+      {
+        "from": "#C57F54",
+        "to": "#CE8958",
+        "why": "ramp_len"
+      }
+    ],
+    "merge_table": {
+      "#1F0917": "#230C17",
+      "#300F20": "#330E1E",
+      "#351027": "#330F27",
+      "#6F3D3F": "#6D4039",
+      "#7A4A45": "#794646",
+      "#804E4A": "#894C4D",
+      "#814A49": "#834847",
+      "#89504B": "#894C4D",
+      "#8D5750": "#8A534E",
+      "#8E4D4B": "#914F4A",
+      "#975F53": "#965C53",
+      "#97CDE6": "#95CAE2",
+      "#A2634C": "#A4604E",
+      "#AF704F": "#B3714B",
+      "#BE846A": "#C2876B",
+      "#C27D57": "#CE8958",
+      "#EABFA8": "#EEBFAA",
+      "#FBFCF5": "#FCFDF1",
+      "#703D41": "#6D4039",
+      "#783F36": "#6E3932",
+      "#845246": "#894C4D",
+      "#AA6946": "#B3714B",
+      "#C57F54": "#CE8958"
+    },
+    "padded": [
+      {
+        "ramp": "orange",
+        "cells": 4
+      },
+      {
+        "ramp": "blue",
+        "cells": 3
+      },
+      {
+        "ramp": "orange_3",
+        "cells": 1
+      },
+      {
+        "ramp": "orange_5",
+        "cells": 3
+      },
+      {
+        "ramp": "red_2",
+        "cells": 2
+      },
+      {
+        "ramp": "orange_6",
+        "cells": 2
+      },
+      {
+        "ramp": "pink",
+        "cells": 3
+      },
+      {
+        "ramp": "gray",
+        "cells": 4
+      },
+      {
+        "ramp": "green",
+        "cells": 4
+      },
+      {
+        "ramp": "red_3",
+        "cells": 5
+      },
+      {
+        "ramp": "red_4",
+        "cells": 5
+      },
+      {
+        "ramp": "orange_7",
+        "cells": 4
+      },
+      {
+        "ramp": "pink_2",
+        "cells": 5
+      },
+      {
+        "ramp": "red_5",
+        "cells": 5
+      }
+    ],
+    "singles": [
+      "red_3",
+      "red_4",
+      "pink_2",
+      "red_5"
+    ],
+    "dropped": [
+      {
+        "color": "#A7D5EC",
+        "usage": 0.00192,
+        "images": 1
+      },
+      {
+        "color": "#DDA381",
+        "usage": 0.00191,
+        "images": 1
+      },
+      {
+        "color": "#5F2E29",
+        "usage": 0.00169,
+        "images": 1
+      },
+      {
+        "color": "#F0C48D",
+        "usage": 0.0015,
+        "images": 1
+      },
+      {
+        "color": "#8D5A4D",
+        "usage": 0.00146,
+        "images": 1
+      },
+      {
+        "color": "#5B3533",
+        "usage": 0.00135,
+        "images": 1
+      },
+      {
+        "color": "#B67E5C",
+        "usage": 0.00123,
+        "images": 1
+      },
+      {
+        "color": "#EAAD75",
+        "usage": 0.00111,
+        "images": 1
+      },
+      {
+        "color": "#602B39",
+        "usage": 0.0011,
+        "images": 1
+      },
+      {
+        "color": "#91573B",
+        "usage": 0.0011,
+        "images": 1
+      },
+      {
+        "color": "#F5C8A6",
+        "usage": 0.0011,
+        "images": 1
+      },
+      {
+        "color": "#B1684C",
+        "usage": 0.00108,
+        "images": 1
+      },
+      {
+        "color": "#D1E7ED",
+        "usage": 0.00107,
+        "images": 1
+      },
+      {
+        "color": "#3F182A",
+        "usage": 0.00104,
+        "images": 1
+      },
+      {
+        "color": "#562734",
+        "usage": 0.00103,
+        "images": 1
+      },
+      {
+        "color": "#662D3D",
+        "usage": 0.00097,
+        "images": 1
+      },
+      {
+        "color": "#C5DEEA",
+        "usage": 0.00094,
+        "images": 1
+      },
+      {
+        "color": "#AC6063",
+        "usage": 0.00087,
+        "images": 1
+      },
+      {
+        "color": "#FAE4BE",
+        "usage": 0.00082,
+        "images": 1
+      },
+      {
+        "color": "#CE8381",
+        "usage": 0.00081,
+        "images": 1
+      },
+      {
+        "color": "#F2E5FA",
+        "usage": 0.00078,
+        "images": 1
+      },
+      {
+        "color": "#512624",
+        "usage": 0.00077,
+        "images": 1
+      },
+      {
+        "color": "#67614F",
+        "usage": 0.00074,
+        "images": 1
+      },
+      {
+        "color": "#EFC298",
+        "usage": 0.00069,
+        "images": 1
+      },
+      {
+        "color": "#391C20",
+        "usage": 0.00068,
+        "images": 1
+      },
+      {
+        "color": "#67343C",
+        "usage": 0.00064,
+        "images": 1
+      },
+      {
+        "color": "#3E1523",
+        "usage": 0.00061,
+        "images": 1
+      },
+      {
+        "color": "#F4A587",
+        "usage": 0.00061,
+        "images": 1
+      },
+      {
+        "color": "#F0C7A8",
+        "usage": 0.0006,
+        "images": 1
+      },
+      {
+        "color": "#D8D9D6",
+        "usage": 0.00057,
+        "images": 1
+      },
+      {
+        "color": "#C48D64",
+        "usage": 0.00056,
+        "images": 1
+      },
+      {
+        "color": "#BF7A5C",
+        "usage": 0.00054,
+        "images": 1
+      },
+      {
+        "color": "#DBA17A",
+        "usage": 0.00054,
+        "images": 1
+      },
+      {
+        "color": "#9C5850",
+        "usage": 0.00052,
+        "images": 1
+      },
+      {
+        "color": "#C16F51",
+        "usage": 0.00051,
+        "images": 1
+      },
+      {
+        "color": "#BD8575",
+        "usage": 0.0005,
+        "images": 1
+      },
+      {
+        "color": "#E0B1A2",
+        "usage": 0.0005,
+        "images": 1
+      },
+      {
+        "color": "#F0F4F7",
+        "usage": 0.00045,
+        "images": 1
+      },
+      {
+        "color": "#D8B097",
+        "usage": 0.00044,
+        "images": 1
+      },
+      {
+        "color": "#E3AF70",
+        "usage": 0.00044,
+        "images": 1
+      },
+      {
+        "color": "#C78463",
+        "usage": 0.00043,
+        "images": 1
+      },
+      {
+        "color": "#EAB379",
+        "usage": 0.00041,
+        "images": 1
+      },
+      {
+        "color": "#92463F",
+        "usage": 0.00041,
+        "images": 1
+      },
+      {
+        "color": "#F8C898",
+        "usage": 0.0004,
+        "images": 1
+      },
+      {
+        "color": "#CA8C5F",
+        "usage": 0.00039,
+        "images": 1
+      },
+      {
+        "color": "#E3C5B7",
+        "usage": 0.00038,
+        "images": 1
+      },
+      {
+        "color": "#E29B62",
+        "usage": 0.00037,
+        "images": 1
+      },
+      {
+        "color": "#F3AE8B",
+        "usage": 0.00035,
+        "images": 1
+      },
+      {
+        "color": "#F8DAAF",
+        "usage": 0.00034,
+        "images": 1
+      },
+      {
+        "color": "#B4816C",
+        "usage": 0.00033,
+        "images": 1
+      },
+      {
+        "color": "#4E1E27",
+        "usage": 0.00032,
+        "images": 1
+      },
+      {
+        "color": "#3A3D46",
+        "usage": 0.00031,
+        "images": 1
+      },
+      {
+        "color": "#4D262B",
+        "usage": 0.0003,
+        "images": 1
+      },
+      {
+        "color": "#CB9966",
+        "usage": 0.00029,
+        "images": 1
+      },
+      {
+        "color": "#52322D",
+        "usage": 0.00029,
+        "images": 1
+      },
+      {
+        "color": "#A0736D",
+        "usage": 0.00028,
+        "images": 1
+      },
+      {
+        "color": "#481F2E",
+        "usage": 0.00027,
+        "images": 1
+      },
+      {
+        "color": "#AD8062",
+        "usage": 0.00027,
+        "images": 1
+      },
+      {
+        "color": "#885844",
+        "usage": 0.00023,
+        "images": 1
+      },
+      {
+        "color": "#E7B662",
+        "usage": 0.00022,
+        "images": 1
+      },
+      {
+        "color": "#884E37",
+        "usage": 0.00022,
+        "images": 1
+      },
+      {
+        "color": "#FFEEC8",
+        "usage": 0.0002,
+        "images": 1
+      },
+      {
+        "color": "#3A152A",
+        "usage": 0.0002,
+        "images": 1
+      },
+      {
+        "color": "#D39884",
+        "usage": 0.0002,
+        "images": 1
+      }
+    ],
+    "dropped_count": 116,
+    "removed_ramps": [],
+    "removed_colors": 0,
+    "colors": 52,
+    "background_colors": [],
+    "sources": 5,
+    "sampled": 0,
+    "ramps": [
+      {
+        "name": "orange",
+        "colors": [
+          "#FBD394",
+          "#FDD68B",
+          "#FDD68B",
+          "#FDD68B",
+          "#FDD68B",
+          "#FDD68B"
+        ],
+        "padded": 4,
+        "usage": 0.197
+      },
+      {
+        "name": "blue",
+        "colors": [
+          "#558AA2",
+          "#95CAE2",
+          "#D4EEFA",
+          "#D4EEFA",
+          "#D4EEFA",
+          "#D4EEFA"
+        ],
+        "padded": 3,
+        "usage": 0.1875
+      },
+      {
+        "name": "orange_2",
+        "colors": [
+          "#965C53",
+          "#956451",
+          "#A16A57",
+          "#9C6E51",
+          "#B26755",
+          "#AD755B"
+        ],
+        "padded": 0,
+        "usage": 0.1435
+      },
+      {
+        "name": "orange_3",
+        "colors": [
+          "#EEBFAA",
+          "#EDC8B3",
+          "#F1DDC0",
+          "#F6E8D0",
+          "#FCF3D6",
+          "#FCF3D6"
+        ],
+        "padded": 1,
+        "usage": 0.1206
+      },
+      {
+        "name": "orange_4",
+        "colors": [
+          "#6E3932",
+          "#9D5F40",
+          "#B3714B",
+          "#CE8958",
+          "#D69860",
+          "#DDA56A"
+        ],
+        "padded": 0,
+        "usage": 0.0869
+      },
+      {
+        "name": "orange_5",
+        "colors": [
+          "#A4604E",
+          "#DC8D52",
+          "#F4B67F",
+          "#F4B67F",
+          "#F4B67F",
+          "#F4B67F"
+        ],
+        "padded": 3,
+        "usage": 0.0788
+      },
+      {
+        "name": "red",
+        "colors": [
+          "#6D4039",
+          "#7B4047",
+          "#794646",
+          "#834847",
+          "#894C4D",
+          "#8A534E"
+        ],
+        "padded": 0,
+        "usage": 0.0401
+      },
+      {
+        "name": "red_2",
+        "colors": [
+          "#330E1E",
+          "#BE7679",
+          "#DF9898",
+          "#E8ADA9",
+          "#E8ADA9",
+          "#E8ADA9"
+        ],
+        "padded": 2,
+        "usage": 0.0274
+      },
+      {
+        "name": "orange_6",
+        "colors": [
+          "#BB8864",
+          "#C48473",
+          "#C2876B",
+          "#CA9073",
+          "#CA9073",
+          "#CA9073"
+        ],
+        "padded": 2,
+        "usage": 0.0146
+      },
+      {
+        "name": "pink",
+        "colors": [
+          "#2B0C20",
+          "#310A27",
+          "#330F27",
+          "#330F27",
+          "#330F27",
+          "#330F27"
+        ],
+        "padded": 3,
+        "usage": 0.0133
+      },
+      {
+        "name": "gray",
+        "colors": [
+          "#EFDEFA",
+          "#FCFDF1",
+          "#FCFDF1",
+          "#FCFDF1",
+          "#FCFDF1",
+          "#FCFDF1"
+        ],
+        "padded": 4,
+        "usage": 0.009
+      },
+      {
+        "name": "green",
+        "colors": [
+          "#495A4A",
+          "#575F4F",
+          "#575F4F",
+          "#575F4F",
+          "#575F4F",
+          "#575F4F"
+        ],
+        "padded": 4,
+        "usage": 0.0077
+      },
+      {
+        "name": "red_3",
+        "colors": [
+          "#301A1F",
+          "#301A1F",
+          "#301A1F",
+          "#301A1F",
+          "#301A1F",
+          "#301A1F"
+        ],
+        "padded": 5,
+        "usage": 0.0075
+      },
+      {
+        "name": "red_4",
+        "colors": [
+          "#451A24",
+          "#451A24",
+          "#451A24",
+          "#451A24",
+          "#451A24",
+          "#451A24"
+        ],
+        "padded": 5,
+        "usage": 0.0048
+      },
+      {
+        "name": "orange_7",
+        "colors": [
+          "#914F4A",
+          "#CB795A",
+          "#CB795A",
+          "#CB795A",
+          "#CB795A",
+          "#CB795A"
+        ],
+        "padded": 4,
+        "usage": 0.0045
+      },
+      {
+        "name": "pink_2",
+        "colors": [
+          "#230C17",
+          "#230C17",
+          "#230C17",
+          "#230C17",
+          "#230C17",
+          "#230C17"
+        ],
+        "padded": 5,
+        "usage": 0.003
+      },
+      {
+        "name": "red_5",
+        "colors": [
+          "#6B2E3B",
+          "#6B2E3B",
+          "#6B2E3B",
+          "#6B2E3B",
+          "#6B2E3B",
+          "#6B2E3B"
+        ],
+        "padded": 5,
+        "usage": 0.0025
+      }
+    ],
+    "outline": null,
+    "outline_candidate": "#0F0511",
+    "ramp_len": 6
+  },
+  "images": [
+    {
+      "file": "bg/kitchen_bg.png",
+      "background": true,
+      "size": 1200,
+      "pixel": true,
+      "colors": 64,
+      "smooth": 0.0145,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0019,
+      "near_pairs": 3
+    },
+    {
+      "file": "bg/path_main.png",
+      "background": false,
+      "size": 540,
+      "pixel": true,
+      "colors": 7,
+      "smooth": 0.0,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0124,
+      "near_pairs": 0,
+      "outline": "none",
+      "outline_share": 0.0368,
+      "black_ratio": 0.0,
+      "edge_color": "#FDD68B",
+      "edge_color_count": 1170,
+      "light": "unknown"
+    },
+    {
+      "file": "bg/sky.png",
+      "background": true,
+      "size": 720,
+      "pixel": true,
+      "colors": 14,
+      "smooth": 0.0475,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0023,
+      "near_pairs": 2
+    },
+    {
+      "file": "bg/stall_bg.png",
+      "background": true,
+      "size": 1200,
+      "pixel": true,
+      "colors": 65,
+      "smooth": 0.0232,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0025,
+      "near_pairs": 0
+    },
+    {
+      "file": "bg/synthesis_bg.png",
+      "background": true,
+      "size": 1200,
+      "pixel": true,
+      "colors": 68,
+      "smooth": 0.0131,
+      "scale": 1,
+      "scale_mixed": false,
+      "scales": [
+        1
+      ],
+      "isolated": 0.0024,
+      "near_pairs": 5
+    }
+  ],
+  "warnings": [],
+  "out": {
+    "palette": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_bg_palette.json",
+    "swatch": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_bg_swatch.png",
+    "profile": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_bg_profile.yaml",
+    "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_bg_report.json"
+  }
+}

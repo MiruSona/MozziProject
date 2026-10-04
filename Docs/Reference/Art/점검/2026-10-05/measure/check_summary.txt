@@ -1,0 +1,32 @@
+﻿===== bg.json fail failed ['max_colors'] must [] checked {'mode': 'loose', 'files': 5}
+  FAIL max_colors 한도 48가지를 넘은 그림 3개
+  WARN color_cap | 권장 색 수를 넘은 그림 2장 | 2 ['stall_bg.png', 'synthesis_bg.png']
+===== bldg.json fail failed ['max_colors'] must [] checked {'mode': 'loose', 'files': 22}
+  FAIL max_colors 한도 48가지를 넘은 그림 6개
+  INFO outline {'selout': 18, 'solid': 4}
+===== char_mozzi.json ok failed [] must [] checked {'mode': 'loose', 'files': 17}
+  WARN near_colors | 비슷한 색 쌍이 있는 그림 1장 | 1 ['body_hop3.png']
+  INFO outline {'mixed': 2, 'solid': 4, 'none': 2, 'black': 3}
+===== char_people.json ok failed [] must [] checked {'mode': 'loose', 'files': 17}
+  INFO outline {'mixed': 1, 'black': 6, 'solid': 10}
+===== fx.json ok failed [] must [] checked {'mode': 'loose', 'files': 3}
+  INFO outline {'none': 3}
+===== icon.json ok failed [] must [] checked {'mode': 'loose', 'files': 17}
+  INFO outline {'mixed': 11, 'solid': 4, 'selout': 1, 'none': 1}
+===== piece.json ok failed [] must [] checked {'mode': 'loose', 'files': 9}
+  WARN isolated | 외톨이 픽셀이 많은 그림 3장 | 3 ['stall_prop_menu.png', 'stall_prop_register.png', 'stall_prop_vase.png']
+  WARN color_cap | 권장 색 수를 넘은 그림 1장 | 1 ['stall_prop_menu.png']
+  WARN near_colors | 비슷한 색 쌍이 있는 그림 1장 | 1 ['synthesis_plate.png']
+  INFO outline {'selout': 5, 'solid': 1, 'mixed': 2, 'black': 1}
+===== tile.json ok failed [] must [] checked {'mode': 'loose', 'files': 15}
+  WARN integer_scale | 도트 굵기 · 부드러운 확대가 걸린 그림 3장 | 3 ['decor_03.png', 'fence_h.png', 'fence_post.png']
+  WARN isolated | 외톨이 픽셀이 많은 그림 8장 | 8 ['decor_01.png', 'decor_03.png', 'decor_04.png', 'decor_05.png', 'decor_06.png', 'fence_h.png', 'fence_post.png', 'fence_v.png']
+  WARN color_cap | 권장 색 수를 넘은 그림 4장 | 4 ['decor_04.png', 'decor_05.png', 'decor_06.png', 'fence_v.png']
+  WARN near_colors | 비슷한 색 쌍이 있는 그림 1장 | 1 ['grass_base.png']
+  INFO outline {'selout': 9, 'solid': 4, 'selout+light': 1}
+===== ui.json fail failed ['max_colors'] must [] checked {'mode': 'loose', 'files': 6}
+  FAIL max_colors 한도 48가지를 넘은 그림 1개
+  WARN isolated | 외톨이 픽셀이 많은 그림 1장 | 1 ['ui_bubble_c.png']
+  WARN color_cap | 권장 색 수를 넘은 그림 2장 | 2 ['icon_upgrade.png', 'ui_bubble_c.png']
+  WARN near_colors | 비슷한 색 쌍이 있는 그림 2장 | 2 ['ui_bubble_c.png', 'ui_button.png']
+  INFO outline {'selout': 5, 'mixed': 1}
