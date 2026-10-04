@@ -26,15 +26,16 @@ namespace Mozzi.Game.Ui
         // 덮개 뿌리 뒤에 까는 바탕. OverlayScreen 이 코드로 만들어 내용 칸 옆 · 안전 영역 밖까지 덮는다.
         public const string OverlayBackdrop = "Backdrop";
 
-        // 정식 화면(가판대 · 합성소)의 뼈대. Scene 은 내용 칸 가운데에 붙는 360×640 그림 좌표 칸이다.
-        // 배경 그림(SceneBg)은 코드가 SpriteKeys 로 끼운다. BottomPanel 은 그림 좌표 y 440 부터 바닥까지다.
-        public const string Scene = "Scene";
+        // 전용 화면의 배경 그림(Stage 맨 뒤)과 1200 보다 긴 화면의 위를 채우는 띠.
         public const string SceneBg = "SceneBg";
         public const string SceneFillTop = "SceneFillTop";
-        public const string SceneFillBottom = "SceneFillBottom";
-        public const string TopBar = "TopBar";
-        public const string BottomPanel = "BottomPanel";
-        public const string BottomPanelBack = "PanelBack";
+
+        // 전용 화면(540 기준) 공통 뼈대. Stage 는 내용 칸 아래끝에 붙는 540×1200 세계 좌표 칸이다 (FormalLayout).
+        // 윗줄 판(TopRow)과 아래 버튼 줄(BottomRow)은 Stage 가 아니라 내용 칸 위끝 · 아래끝에 붙는다.
+        public const string Stage = "Stage";
+        public const string TopRow = "TopRow";
+        public const string GoldPlate = "GoldPlate";
+        public const string BottomRow = "BottomRow";
 
         // UI 에 그리는 찹쌀이 한 마리의 겹 (Image). 자리 뿌리(예 InletA) 밑에서 찾는다.
         public const string MozziIconBody = "MozziBody";
@@ -88,30 +89,26 @@ namespace Mozzi.Game.Ui
         public const string FarmNightText = "NightText";
         public const string FarmNextDayButton = "NextDayButton";
 
-        // 합성소 화면 (Prefabs/UI/SynthesisScreen). 칸은 "Slot_" + 번호(0~3), 칸 안 이름은 칸 뿌리에서 찾는다.
+        // 합성소 화면 (Prefabs/UI/SynthesisScreen). 기계 넷은 Stage 밑 "Machine_" + 칸 번호(0~3)이고,
+        // 그 안 이름은 넷이 같으니 반드시 각 기계 뿌리 밑에서 찾는다.
         public const string SynthesisShortcutText = "ShortcutText";
         public const string SynthesisShortcutBuyButton = "ShortcutBuyButton";
-        public const string SynthesisSlotPrefix = "Slot_";
-        public const string SynthesisLockedGroup = "LockedGroup";
-        public const string SynthesisBuySlotButton = "BuySlotButton";
-        public const string SynthesisEmptyGroup = "EmptyGroup";
-        public const string SynthesisMaterialAButton = "MaterialAButton";
-        public const string SynthesisMaterialBButton = "MaterialBButton";
-        public const string SynthesisPreviewText = "PreviewText";
-        public const string SynthesisStartButton = "StartButton";
-        public const string SynthesisRunningGroup = "RunningGroup";
-        public const string SynthesisRemainText = "RemainText";
-        public const string SynthesisDoneGroup = "DoneGroup";
-        public const string SynthesisTakeButton = "TakeButton";
+        public const string SynthesisMozziCodexButton = "MozziCodexButton";
+        public const string SynthesisMachinePrefix = "Machine_";
 
-        // 칸 고르기 탭은 "SlotTab_" + 번호(0~3). 누르면 기계와 아래 판이 그 칸을 보여 준다.
-        public const string SynthesisSlotTabPrefix = "SlotTab_";
+        // 기계 하나 안. MachineArt 는 상태별 그림(쉼 · 도는 · 다 됨 · 살 칸 · 잠김)을 갈아 끼우는 Image 다.
+        // Plate = 나무 표(누르면 시작 · 다 되면 받기), DrawerButton = 서랍(받기), BuyStand = 빈 받침(칸 사기).
+        public const string SynthesisMachineArt = "MachineArt";
+        public const string SynthesisPlate = "Plate";
+        public const string SynthesisPlateText = "PlateText";
+        public const string SynthesisDrawerButton = "DrawerButton";
+        public const string SynthesisBuyStand = "BuyStand";
+        public const string SynthesisBuyText = "BuyText";
 
-        // 기계 (Scene 안). 투입구 둘은 찹쌀이 겹 자리, 창 연출은 WindowFx 밑, 배출구 앞 결과는 OutletResult.
-        public const string SynthesisMachine = "Machine";
+        // 깔때기 찹쌀이 둘은 찹쌀이 겹 자리, 창 연출은 WindowFx 밑, 서랍 속 결과 그림자는 OutletResult.
         public const string SynthesisInletA = "InletA";
         public const string SynthesisInletB = "InletB";
-        // 투입구 위의 보이지 않는 누름 칸. 빈 입구에는 그 안의 Plus 글자가 켜진다.
+        // 깔때기 위의 보이지 않는 누름 칸. 빈 입구에는 그 안의 Plus 말풍선이 켜진다.
         public const string SynthesisInletAButton = "InletAButton";
         public const string SynthesisInletBButton = "InletBButton";
         public const string SynthesisInletPlus = "Plus";
@@ -125,8 +122,9 @@ namespace Mozzi.Game.Ui
         public const string SynthesisOutletResult = "OutletResult";
         public const string SynthesisOutletMark = "OutletMark";
 
-        // 찹쌀이 고르기 목록. 줄은 "PickRow_" + 번호.
+        // 찹쌀이 고르기 목록. 줄은 "PickRow_" + 번호, 판 뒤 PickBlocker 를 누르면 닫힌다.
         public const string SynthesisPickPanel = "PickPanel";
+        public const string SynthesisPickBlocker = "PickBlocker";
         public const string SynthesisPickTitleText = "PickTitleText";
         public const string SynthesisPickCloseButton = "PickCloseButton";
         public const string SynthesisPickRowPrefix = "PickRow_";
@@ -156,63 +154,63 @@ namespace Mozzi.Game.Ui
         public const string StorageSellButton = "SellButton";
         public const string StorageSellAllButton = "SellAllButton";
         public const string StorageEmptyText = "EmptyText";
-        public const string StorageFenceText = "FenceText";
-        public const string StorageFenceButton = "FenceButton";
 
-        // 가판대 (Prefabs/UI/StallScreen). 줄 칸은 "QueueCell_" + 번호, 만들기 줄은 "MakeRow_" + 번호,
-        // 실험 토글은 "ExpToggle_" + 부재료 id.
+        // 주방 (Prefabs/UI/KitchenScreen). 쟁반 칸은 "TrayCell_" + 부재료 id, 칸 안에 Icon · CountText.
+        public const string KitchenTrayCellPrefix = "TrayCell_";
+        public const string KitchenTrayCountText = "CountText";
+        // 절구 + 떡메 (누르면 떡메 한 번). 고른 재료 그림은 "MortarSlot_" + 0~2.
+        public const string KitchenMortar = "Mortar";
+        public const string KitchenMortarSlotPrefix = "MortarSlot_";
+        public const int KitchenMortarSlotCount = 3;
+        // 접시 위 결과 묶음. 떡 그림은 CakeIcon.
+        public const string KitchenResult = "Result";
+        public const string KitchenResultNameText = "ResultNameText";
+        public const string KitchenResultNewText = "ResultNewText";
+        public const string KitchenResultFlash = "ResultFlash";
+        public const string KitchenHintText = "HintText";
+        public const string KitchenDoorButton = "DoorButton";
+        public const string KitchenPoundButton = "PoundButton";
+        public const string KitchenMenuButton = "MenuButton";
+        // 차림표 판 : 찾은 떡을 한 번에 만드는 목록. 줄은 "MenuRow_" + 번호, 판 뒤 Blocker 를 누르면 닫힌다.
+        public const string KitchenMenuPanel = "MenuPanel";
+        public const string KitchenMenuBlocker = "Blocker";
+        public const string KitchenMenuTitleText = "MenuTitle";
+        public const string KitchenMenuRowPrefix = "MenuRow_";
+        public const int KitchenMenuRowCount = 12;
+        public const string KitchenMenuEmptyText = "MenuEmptyText";
+
+        // 가판대 (Prefabs/UI/StallScreen). 윗줄 판의 손님 · 영업 상태 글자와 아래 버튼 줄 버튼들.
+        public const string StallStatusPlate = "StatusPlate";
         public const string StallStatusText = "StatusText";
-        public const string StallShelfText = "ShelfText";
-
-        // 진열대 묶음 칸은 "ShelfCell_" + 번호(0~5). 유리 진열장 안에 앞에서부터 여섯 칸만 그림으로 보인다.
-        // 칸 안 떡 그림은 CakeIcon, 개수 글자는 CountText. 전체 목록은 아래 판의 ShelfText 한 줄이다.
-        public const string StallShelfCellPrefix = "ShelfCell_";
-        public const int StallShelfCellCount = 6;
-        public const string StallShelfCountText = "CountText";
-        public const string StallQueueCellPrefix = "QueueCell_";
-        public const string StallMakeRowPrefix = "MakeRow_";
-        public const int StallMakeRowCount = 10;
-        // 찾은 레시피가 없을 때 「만들기」 줄 자리에 뜨는 안내 글자.
-        public const string StallMakeEmptyText = "MakeEmptyText";
-        public const string StallExpTogglePrefix = "ExpToggle_";
-        public const string StallExpInfoText = "ExpInfoText";
-        public const string StallExpMakeButton = "ExpMakeButton";
         public const string StallOpenButton = "OpenButton";
         public const string StallClerkButton = "ClerkButton";
         public const string StallRecipeCodexButton = "RecipeCodexButton";
+        public const string StallKitchenButton = "KitchenButton";
 
-        // 손님 머리 위 주문 말풍선 (Image). 주문 글자(Label)와 떡 그림(Icon)이 이 밑에 있다. 손님이 없으면 끈다.
-        public const string StallOrderBubble = "OrderBubble";
-        // 말풍선 흰 바탕 조각들 (몸 셋 + 꼬리 둘). 손님 종류에 따라 코드가 색을 넣는다.
-        public const string StallBubbleFillPrefix = "BubbleFill_";
-        public const int StallBubbleFillCount = 5;
-        public const string StallBubbleEdgePrefix = "BubbleEdge_";
-        public const int StallBubbleEdgeCount = 5;
+        // 진열장 안 묶음 칸은 "ShelfCell_" + 번호(0~5, 윗단 왼→오 · 아랫단 왼→오). 칸 안 떡 그림은 CakeIcon, 개수 글자는 CountText.
+        public const string StallShelfCellPrefix = "ShelfCell_";
+        public const int StallShelfCellCount = 6;
+        public const string StallShelfCountText = "CountText";
 
-        // 칠판 위에 덧댄 판과 한글 메뉴 글자.
+        // 앞 손님 셋은 Stage 밑 "Customer_" + 번호(뿌리 = 누르는 버튼), 주문 말풍선은 "Bubble_" + 번호.
+        // 말풍선 안 : 늘어나는 판 Frame · 작은 판 FrameSmall · 떡 그림 CakeIcon · 글자 ButtonLabel. 넷째부터는 QueueMoreText 글자.
+        public const string StallCustomerPrefix = "Customer_";
+        public const string StallBubblePrefix = "Bubble_";
+        public const string StallBubbleFrame = "Frame";
+        public const string StallBubbleFrameSmall = "FrameSmall";
+        public const string StallQueueMoreText = "QueueMoreText";
+
+        // 칠판 녹색 면 누름 칸(MenuBoard)과 그 위 진열 요약 글자, 칠판 머리 장식 위 「오늘의 떡」 글자.
         public const string StallMenuBoard = "MenuBoard";
         public const string StallMenuTitleText = "MenuTitleText";
         public const string StallMenuBodyText = "MenuBodyText";
 
-        // 손님 줄 칸 안의 겹 그림 넷 (Image). 그림이 없으면 꺼 둔다.
+        // 손님 뿌리 안의 겹 그림 넷 (Image). 그림이 없으면 꺼 둔다.
         // 이름에 Customer 접두어를 반드시 붙인다 — FindDeep 가 화면 전체에서 먼저 만난 자식을 집기 때문이다.
         public const string CustomerBody = "CustomerBody";
         public const string CustomerHair = "CustomerHair";
         public const string CustomerShirt = "CustomerShirt";
         public const string CustomerFace = "CustomerFace";
-
-        // 떡메 3탭 덮개 (StallScreen 안). 덮개 자체가 큰 버튼이다.
-        public const string PoundPanel = "PoundPanel";
-        public const string PoundHintText = "PoundHintText";
-        public const string PoundCountText = "PoundCountText";
-        public const string PoundDoughBox = "PoundDoughBox";
-
-        // 만든 결과 · 발견 연출 (StallScreen 안). 판 자체가 닫기 버튼이다.
-        public const string StallMadePanel = "MadePanel";
-        public const string StallMadeFlash = "MadeFlash";
-        public const string StallMadeNewText = "MadeNewText";
-        public const string StallMadeNameText = "MadeNameText";
-        public const string StallMadePriceText = "MadePriceText";
 
         // 돌아왔어요 팝업 (Prefabs/UI/OfflinePopup). 뿌리 자체가 닫기 버튼이다.
         public const string OfflineTitleText = "OfflineTitleText";

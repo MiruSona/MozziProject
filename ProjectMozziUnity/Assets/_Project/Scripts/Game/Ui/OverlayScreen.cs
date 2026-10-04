@@ -29,10 +29,14 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            _title = UiBindUtil.Find<TMP_Text>(transform, UiNames.TitleText, PrefabName);
+            // 전용 화면(540)에는 제목 글자가 없다. 있으면 채우고 없으면 넘어간다.
+            if (UiBindUtil.TryFind<TMP_Text>(transform, UiNames.TitleText, out _title))
+            {
+                UiBindUtil.SetText(_title, Title);
+            }
+
             _gold = UiBindUtil.Find<TMP_Text>(transform, UiNames.GoldText, PrefabName);
-            UiBindUtil.BindButton(transform, UiNames.CloseButton, PrefabName, ui.CloseAll);
-            UiBindUtil.SetText(_title, Title);
+            UiBindUtil.BindButton(transform, UiNames.CloseButton, PrefabName, ui.CloseTop);
             EnsureBackdrop();
 
             BindChildren();

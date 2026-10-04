@@ -1,7 +1,8 @@
 namespace Mozzi.Game.Ui
 {
     // 손님 겹 그림의 스프라이트 키. 앞자리 "Art/"(SpriteKeys.Root) 는 스프라이트 원천이 붙여 준다.
-    // 몸 1 · 머리 2모양×4색 · 옷 4색 · 표정 3 = 16장을 Resources/Art/Customer/ 에 미리 구워 둔다.
+    // 몸 1 · 머리 2모양×4색 · 옷 4색 · 표정(머리통) 3 = 16장을 Resources/Art/Customer/ 에 미리 구워 둔다.
+    // 모두 같은 120×240 옆모습 캔버스이고 겹 순서는 body → shirt → face → hair 다 (정식/가판대/README 「손님 3차」).
     public static class CustomerArtKeys
     {
         public const string Folder = "Customer/";

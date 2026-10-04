@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Mozzi.Data;
 using Mozzi.Game.Clock;
 using Mozzi.Game.Codex;
-using Mozzi.Game.Inventory;
 using Mozzi.Game.Stall;
 using Mozzi.Game.Wallet;
 using Mozzi.Hubs;
@@ -13,67 +12,37 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 가판대 화면 (세로조각1판설계 3-4). 가게 그림 위에 칠판 메뉴 · 유리 진열장 · 손님 줄이 놓이고,
-    // 아래 판에 진열 목록 · 만들기 · 실험 · 버튼이 모인다. 위에 떡메 덮개와 발견 연출.
-    // 찾은 레시피 · 해 본 조합은 탭 한 번에 Make, 처음 보는 조합만 PoundAgent 가 3탭을 돌린 뒤 Make 를 부른다.
+    // 가판대 화면 (가게 안쪽 정식 화면). 칠판에 진열 요약, 진열장에 떡 그림, 마루에 앞 손님 셋과 주문 말풍선.
+    // 자리는 StallLayout 이 정본이고 프리팹은 Editor 의 StallScreenSetup 이 짓는다. 떡 만들기는 주방 화면(KitchenScreen) 몫이다.
     public sealed class StallScreen : OverlayScreen
     {
-        private const string StallRowId = DataKeys.DefaultRowId;
-        private const float FlashDuration = 0.4f;
-        private const float DoughSquash = 0.6f;
-        private const float DoughRecoverPerSec = 3f;
         private const string PlainName = "평범한 떡";
 
-        private static readonly Color ToggleOff = new Color(0.35f, 0.38f, 0.55f, 1f);
-        private static readonly Color ToggleOn = new Color(0.9f, 0.7f, 0.25f, 1f);
+        // 칠판에 떡 종류를 몇 줄까지 쓰나. 넘치면 마지막 줄을 「외 N종」 으로 줄인다.
+        private const int BoardItemLineMax = 4;
+
         // 주문 말풍선 색. 힌트 손님(못 찾은 떡을 찾는 손님)은 하늘색이다.
-        private static readonly Color BubbleCustomer = new Color(1f, 0.98f, 0.92f, 1f);
+        private static readonly Color BubbleCustomer = Color.white;
         private static readonly Color BubbleHint = new Color(0.72f, 0.89f, 0.97f, 1f);
 
-        private readonly List<Button> _queueCells = new List<Button>();
-        private readonly List<Button> _makeRows = new List<Button>();
-        private readonly List<string> _makeRowRecipes = new List<string>();
-        private readonly List<Image> _makeRowIcons = new List<Image>();
-        private readonly List<Image> _queueIcons = new List<Image>();
-        private readonly List<OrderBubbleView> _queueBubbles = new List<OrderBubbleView>();
-        private readonly List<CustomerCellView> _queueCustomers = new List<CustomerCellView>();
+        private readonly List<Button> _customerButtons = new List<Button>();
+        private readonly List<CustomerCellView> _customers = new List<CustomerCellView>();
+        private readonly List<OrderBubbleView> _bubbles = new List<OrderBubbleView>();
         private readonly List<ShelfCellView> _shelfCells = new List<ShelfCellView>();
-        private readonly Dictionary<string, Button> _expToggles = new Dictionary<string, Button>();
-        private readonly Dictionary<string, Image> _expIcons = new Dictionary<string, Image>();
-        private readonly List<string> _selected = new List<string>();
 
         private IResourceHub _resource;
         private IStallHub _stall;
         private IClockHub _clock;
         private ICodexHub _codex;
         private IWalletHub _wallet;
-        private IInventoryHub _inventory;
         private IStaticDataHub _data;
         private IUiHub _ui;
 
         private TMP_Text _status;
-        private TMP_Text _shelf;
-        private GameObject _makeEmpty;
-        private TMP_Text _menuBody;
-        private TMP_Text _expInfo;
-        private Button _expMake;
+        private TMP_Text _boardBody;
+        private TMP_Text _queueMore;
         private Button _openButton;
         private Button _clerkButton;
-
-        private GameObject _poundPanel;
-        private TMP_Text _poundHint;
-        private TMP_Text _poundCount;
-        private RectTransform _poundDough;
-        private PoundAgent _pound;
-
-        private GameObject _madePanel;
-        private Image _madeFlash;
-        private Image _madeIcon;
-        private GameObject _madeNew;
-        private TMP_Text _madeName;
-        private TMP_Text _madePrice;
-        private float _flashTime;
-        private bool _flashing;
 
         protected override string PrefabName
         {
@@ -91,174 +60,55 @@ namespace Mozzi.Game.Ui
             _clock = InGameHub.Get<IClockHub>();
             _codex = InGameHub.Get<ICodexHub>();
             _wallet = InGameHub.Get<IWalletHub>();
-            _inventory = InGameHub.Get<IInventoryHub>();
             _data = InGameHub.Get<IStaticDataHub>();
             _ui = InGameHub.Get<IUiHub>();
             _resource = GlobalHub.Get<IResourceHub>();
-            _pound = new PoundAgent(this, _data.Stalls.Get(StallRowId));
 
-            UiBindUtil.Find<Image>(transform, UiNames.SceneBg, PrefabName).sprite = _resource.GetSprite(SpriteKeys.ScreenStallBg);
             UiBindUtil.SetText(UiBindUtil.Find<TMP_Text>(transform, UiNames.StallMenuTitleText, PrefabName), UiText.StallMenuTitle);
-            _menuBody = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallMenuBodyText, PrefabName);
-
+            _boardBody = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallMenuBodyText, PrefabName);
             _status = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallStatusText, PrefabName);
-            _shelf = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallShelfText, PrefabName);
-            BindShelfCells();
+            _queueMore = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallQueueMoreText, PrefabName);
 
-            for (int i = 0; i < _stall.QueueMax; i++)
+            // 칠판을 누르면 주방이 열리며 차림표가 뜬다.
+            UiBindUtil.BindButton(transform, UiNames.StallMenuBoard, PrefabName, _ui.OpenKitchenMenu);
+
+            for (int i = 0; i < UiNames.StallShelfCellCount; i++)
+            {
+                Transform cell = UiBindUtil.FindObject(transform, UiNames.StallShelfCellPrefix + i, PrefabName).transform;
+                _shelfCells.Add(new ShelfCellView(cell));
+            }
+
+            // 손님 · 말풍선은 같은 이름 자식이 셋씩이라 각 뿌리 밑에서 찾는다.
+            for (int i = 0; i < StallLayout.QueueShown; i++)
             {
                 int index = i;
-                Button cell = UiBindUtil.BindButton(transform, UiNames.StallQueueCellPrefix + i, PrefabName,
+                Button customer = UiBindUtil.BindButton(transform, UiNames.StallCustomerPrefix + i, PrefabName,
                     delegate { OnServe(index); });
-                _queueCells.Add(cell);
-                _queueIcons.Add(IconOf(cell.transform));
-                _queueBubbles.Add(new OrderBubbleView(cell.transform, PrefabName));
-                _queueCustomers.Add(new CustomerCellView(cell.transform));
+                _customerButtons.Add(customer);
+                _customers.Add(new CustomerCellView(customer.transform));
+
+                Transform bubble = UiBindUtil.FindObject(transform, UiNames.StallBubblePrefix + i, PrefabName).transform;
+                _bubbles.Add(new OrderBubbleView(bubble, PrefabName));
             }
 
-            _makeEmpty = UiBindUtil.FindObject(transform, UiNames.StallMakeEmptyText, PrefabName);
-            UiBindUtil.SetText(_makeEmpty.GetComponent<TMP_Text>(), UiText.StallMakeEmpty);
-
-            for (int i = 0; i < UiNames.StallMakeRowCount; i++)
-            {
-                int index = i;
-                Button row = UiBindUtil.BindButton(transform, UiNames.StallMakeRowPrefix + i, PrefabName,
-                    delegate { OnMakeRow(index); });
-                _makeRows.Add(row);
-                _makeRowRecipes.Add(null);
-                _makeRowIcons.Add(IconOf(row.transform));
-            }
-
-            IReadOnlyList<string> ids = _inventory.IngredientIds;
-            for (int i = 0; i < ids.Count; i++)
-            {
-                string id = ids[i];
-                Button toggle = UiBindUtil.BindButton(transform, UiNames.StallExpTogglePrefix + id, PrefabName,
-                    delegate { OnToggle(id); });
-                _expToggles[id] = toggle;
-                SetToggleIcon(toggle, id, _resource.GetSprite(_data.Ingredients.Get(id).SpriteKey));
-            }
-
-            _expInfo = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallExpInfoText, PrefabName);
-            _expMake = UiBindUtil.BindButton(transform, UiNames.StallExpMakeButton, PrefabName, OnExpMake);
             _openButton = UiBindUtil.BindButton(transform, UiNames.StallOpenButton, PrefabName, OnOpenOrNextDay);
             _clerkButton = UiBindUtil.BindButton(transform, UiNames.StallClerkButton, PrefabName, OnBuyClerk);
             UiBindUtil.BindButton(transform, UiNames.StallRecipeCodexButton, PrefabName, _ui.OpenRecipeCodex);
-
-            _poundPanel = UiBindUtil.FindObject(transform, UiNames.PoundPanel, PrefabName);
-            _poundHint = UiBindUtil.Find<TMP_Text>(_poundPanel.transform, UiNames.PoundHintText, PrefabName);
-            _poundCount = UiBindUtil.Find<TMP_Text>(_poundPanel.transform, UiNames.PoundCountText, PrefabName);
-            _poundDough = UiBindUtil.Find<RectTransform>(_poundPanel.transform, UiNames.PoundDoughBox, PrefabName);
-            Button poundButton = _poundPanel.GetComponent<Button>();
-            poundButton.onClick.RemoveAllListeners();
-            poundButton.onClick.AddListener(OnPoundTap);
-
-            _madePanel = UiBindUtil.FindObject(transform, UiNames.StallMadePanel, PrefabName);
-            _madeFlash = UiBindUtil.Find<Image>(_madePanel.transform, UiNames.StallMadeFlash, PrefabName);
-            _madeIcon = IconOf(_madePanel.transform);
-            _madeNew = UiBindUtil.FindObject(_madePanel.transform, UiNames.StallMadeNewText, PrefabName);
-            _madeName = UiBindUtil.Find<TMP_Text>(_madePanel.transform, UiNames.StallMadeNameText, PrefabName);
-            _madePrice = UiBindUtil.Find<TMP_Text>(_madePanel.transform, UiNames.StallMadePriceText, PrefabName);
-            Button madeButton = _madePanel.GetComponent<Button>();
-            madeButton.onClick.RemoveAllListeners();
-            madeButton.onClick.AddListener(CloseMade);
-
-            UiBindUtil.SetActive(_poundPanel, false);
-            UiBindUtil.SetActive(_madePanel, false);
-        }
-
-        // 유리 진열장 안 묶음 칸 여섯. 전체 목록은 늘 ShelfText 한 줄로 같이 보여 준다.
-        private void BindShelfCells()
-        {
-            for (int i = 0; i < UiNames.StallShelfCellCount; i++)
-            {
-                RectTransform cell;
-                if (UiBindUtil.TryFind<RectTransform>(transform, UiNames.StallShelfCellPrefix + i, out cell) == false)
-                {
-                    break;
-                }
-
-                ShelfCellView view = new ShelfCellView(cell);
-                if (view.HasParts == false)
-                {
-                    break;
-                }
-
-                _shelfCells.Add(view);
-            }
-        }
-
-        // 칸 안의 떡 그림 자식. 프리팹에 없으면 null 이고, 그때는 예전처럼 글자만 나온다.
-        private static Image IconOf(Transform root)
-        {
-            Image icon;
-            UiBindUtil.TryFind<Image>(root, UiNames.CakeIcon, out icon);
-            return icon;
-        }
-
-        // 그림이 없으면 아이콘을 끄고 글씨를 가운데로 되돌린다. 토글이 54px 이라 이름과 그림 둘 다는 못 넣는다.
-        private void SetToggleIcon(Button toggle, string ingredientId, Sprite sprite)
-        {
-            Image icon;
-            if (UiBindUtil.TryFind<Image>(toggle.transform, UiNames.IngredientIcon, out icon) == false)
-            {
-                return;
-            }
-
-            _expIcons[ingredientId] = icon;
-            icon.sprite = sprite;
-            UiBindUtil.SetActive(icon.gameObject, sprite != null);
-
-            TMP_Text label = UiBindUtil.LabelOf(toggle);
-            if (label == null)
-            {
-                return;
-            }
-
-            float indent = 0f;
-            if (sprite != null)
-            {
-                indent = LayoutConstUi.ToggleTextIndent;
-            }
-
-            label.margin = new Vector4(indent, 0f, 0f, 0f);
-        }
-
-        private bool HasToggleIcon(string ingredientId)
-        {
-            Image icon;
-            if (_expIcons.TryGetValue(ingredientId, out icon) == false)
-            {
-                return false;
-            }
-
-            return icon.gameObject.activeSelf;
+            UiBindUtil.BindButton(transform, UiNames.StallKitchenButton, PrefabName, _ui.OpenKitchen);
         }
 
         protected override void UnbindChildren()
         {
-            _queueCells.Clear();
-            _queueIcons.Clear();
-            _queueBubbles.Clear();
-            _queueCustomers.Clear();
+            _customerButtons.Clear();
+            _customers.Clear();
+            _bubbles.Clear();
             _shelfCells.Clear();
-            _expIcons.Clear();
-            _makeRows.Clear();
-            _makeRowRecipes.Clear();
-            _makeRowIcons.Clear();
-            _expToggles.Clear();
-            _selected.Clear();
-            _flashing = false;
-            _pound = null;
-            _madeIcon = null;
-            _makeEmpty = null;
 
             _resource = null;
             _stall = null;
             _clock = null;
             _codex = null;
             _wallet = null;
-            _inventory = null;
             _data = null;
             _ui = null;
         }
@@ -268,42 +118,8 @@ namespace Mozzi.Game.Ui
             SetGold(_wallet.Gold);
             RefreshStatus();
             RefreshShelf();
-            RefreshMenuBoard();
             RefreshQueue();
-            RefreshMakeRows();
-            RefreshExperiment();
             RefreshButtons();
-        }
-
-        public override void Process(float deltaTime)
-        {
-            if (_poundPanel.activeSelf)
-            {
-                float y = Mathf.MoveTowards(_poundDough.localScale.y, 1f, DoughRecoverPerSec * deltaTime);
-                _poundDough.localScale = new Vector3(2f - y, y, 1f);
-            }
-
-            if (_flashing == false)
-            {
-                return;
-            }
-
-            _flashTime += deltaTime;
-            float alpha = 1f - Mathf.Clamp01(_flashTime / FlashDuration);
-            _madeFlash.color = new Color(1f, 1f, 1f, alpha);
-            if (alpha <= 0f)
-            {
-                _flashing = false;
-            }
-        }
-
-        public override void OnClosed()
-        {
-            _pound.Cancel();
-            _selected.Clear();
-            _flashing = false;
-            UiBindUtil.SetActive(_poundPanel, false);
-            UiBindUtil.SetActive(_madePanel, false);
         }
 
         private void RefreshStatus()
@@ -318,8 +134,7 @@ namespace Mozzi.Game.Ui
                 state = "열림";
             }
 
-            UiBindUtil.SetText(_status, "오늘 손님 " + _stall.ServedToday + "/" + _stall.CustomersPerDay + " · " + state
-                + " · 진열 " + _stall.Shelf.Count + "/" + _stall.ShelfMax);
+            UiBindUtil.SetText(_status, "손님 " + _stall.ServedToday + "/" + _stall.CustomersPerDay + " · " + state);
         }
 
         // 묶음 칸 하나에 드는 떡 수 = ceil(상한 ÷ 6). 올림이라야 한 종류가 상한까지 차도 6칸 안에 든다.
@@ -328,7 +143,7 @@ namespace Mozzi.Game.Ui
             return (shelfMax + 5) / 6;
         }
 
-        // 종류별 수를 표 순서대로, 평범한 떡은 맨 뒤에 묶는다. 진열장 칸에는 앞에서부터 그림으로, 아래 판에는 전체를 글자 한 줄로.
+        // 종류별 수를 표 순서대로, 평범한 떡은 맨 뒤에 묶는다. 진열장 칸에는 앞에서부터 그림으로, 칠판에는 글자로.
         private void RefreshShelf()
         {
             IReadOnlyList<ShelfItem> shelf = _stall.Shelf;
@@ -349,50 +164,47 @@ namespace Mozzi.Game.Ui
 
             IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
             RefreshShelfCells(rows, counts, plain);
+            RefreshBoard(rows, counts, plain, shelf.Count);
+        }
 
-            List<string> parts = new List<string>();
+        // 칠판 녹색 면 : 맨 윗줄 「진열 n/상한」, 그 아래 종류별 「팥떡 ×3」. 비었으면 만들러 가라는 안내.
+        private void RefreshBoard(IReadOnlyList<RecipeRow> rows, Dictionary<string, int> counts, int plain, int total)
+        {
+            List<string> items = new List<string>();
             for (int i = 0; i < rows.Count; i++)
             {
                 int count;
                 if (counts.TryGetValue(rows[i].Id, out count))
                 {
-                    parts.Add(rows[i].Name + "×" + count);
+                    items.Add(rows[i].Name + " ×" + count);
                 }
             }
 
             if (plain > 0)
             {
-                parts.Add(PlainName + "×" + plain);
+                items.Add(PlainName + " ×" + plain);
             }
 
-            string body = "비었음";
-            if (parts.Count > 0)
-            {
-                body = string.Join("  ", parts);
-            }
-
-            UiBindUtil.SetText(_shelf, "진열 " + shelf.Count + "/" + _stall.ShelfMax + " · " + body);
-        }
-
-        // 칠판 메뉴. 찾은 레시피 이름을 표 순서로 몇 줄, 하나도 없으면 기본 메뉴 한 줄.
-        private void RefreshMenuBoard()
-        {
             List<string> lines = new List<string>();
-            IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
-            for (int i = 0; i < rows.Count && lines.Count < LayoutConstUi.StallMenuLineMax; i++)
+            lines.Add("진열 " + total + "/" + _stall.ShelfMax);
+            if (items.Count == 0)
             {
-                if (_codex.IsRecipeOpen(rows[i].Id))
+                lines.Add("비었어요");
+                lines.Add("눌러서 떡 만들기");
+            }
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (i == BoardItemLineMax - 1 && items.Count > BoardItemLineMax)
                 {
-                    lines.Add(rows[i].Name);
+                    lines.Add("외 " + (items.Count - i) + "종");
+                    break;
                 }
+
+                lines.Add(items[i]);
             }
 
-            if (lines.Count == 0)
-            {
-                lines.Add(UiText.StallMenuDefault);
-            }
-
-            UiBindUtil.SetText(_menuBody, string.Join("\n", lines));
+            UiBindUtil.SetText(_boardBody, string.Join("\n", lines));
         }
 
         // 레시피표 순서로 묶음 칸을 펼치고 평범한 떡은 맨 뒤. 남은 칸은 끈다.
@@ -422,7 +234,7 @@ namespace Mozzi.Game.Ui
             }
         }
 
-        // 한 종류 count 개를 unit 씩 칸에 나눠 담고 다음 칸 번호를 돌려준다. 진열장 칸이 다 차면 거기서 멈춘다 (나머지는 글자 목록으로 본다).
+        // 한 종류 count 개를 unit 씩 칸에 나눠 담고 다음 칸 번호를 돌려준다. 진열장 칸이 다 차면 거기서 멈춘다 (나머지는 칠판 글자로 본다).
         private int FillCells(int cellIndex, Sprite sprite, int count, int unit)
         {
             int left = count;
@@ -442,57 +254,65 @@ namespace Mozzi.Game.Ui
             return cellIndex;
         }
 
+        // 앞 손님 셋만 세우고, 넷째부터는 「뒤에 N명」 글자로 센다.
         private void RefreshQueue()
         {
             IReadOnlyList<StallCustomer> queue = _stall.Queue;
-            for (int i = 0; i < _queueCells.Count; i++)
+            for (int i = 0; i < _customers.Count; i++)
             {
-                Button cell = _queueCells[i];
-                OrderBubbleView bubble = _queueBubbles[i];
                 if (i >= queue.Count)
                 {
-                    cell.interactable = false;
-                    _queueCustomers[i].Hide();
-                    SetQueueIcon(i, null);
-                    UiBindUtil.SetLabel(cell, "");
-                    bubble.SetActive(false);
+                    _customerButtons[i].interactable = false;
+                    _customers[i].Hide();
+                    _bubbles[i].Hide();
                     continue;
                 }
 
-                StallCustomer customer = queue[i];
-                bubble.SetActive(true);
-                bubble.SetColor(BubbleCustomer);
-                if (customer.isHint)
-                {
-                    bubble.SetColor(BubbleHint);
-                }
+                _customerButtons[i].interactable = _stall.Shelf.Count > 0;
+                SetCustomer(i, queue[i]);
+            }
 
-                cell.interactable = _stall.Shelf.Count > 0;
-                SetQueueCell(i, customer);
+            int more = queue.Count - _customers.Count;
+            UiBindUtil.SetActive(_queueMore.gameObject, more > 0);
+            if (more > 0)
+            {
+                UiBindUtil.SetText(_queueMore, "뒤에 " + more + "명");
             }
         }
 
-        // 손님 그림을 겹으로 세우고 주문은 머리 위 말풍선에. 찾은 떡은 그림만, 아무거나 · 못 찾은 떡은 글자로.
-        private void SetQueueCell(int index, StallCustomer customer)
+        // 손님 겹을 세우고 주문은 머리 위 말풍선에. 찾은 떡은 그림만, 아무거나 · 못 찾은 떡은 글자로.
+        private void SetCustomer(int index, StallCustomer customer)
         {
+            _customers[index].Apply(_resource, CustomerLook.FromSeed(customer.lookSeed), FaceOf(customer));
+
+            Color color = BubbleCustomer;
+            if (customer.isHint)
+            {
+                color = BubbleHint;
+            }
+
+            bool facesLeft = StallLayout.QueueFacesLeft[index];
+            float headX = StallLayout.QueueFootX[index] - StallLayout.HeadCenterOffset;
+            if (facesLeft)
+            {
+                headX = StallLayout.QueueFootX[index] + StallLayout.HeadCenterOffset;
+            }
+
+            float headTop = StallLayout.QueueFootY - StallLayout.HeadHeight;
+
             Sprite sprite = null;
             if (customer.HasOrder && _codex.IsRecipeOpen(customer.orderRecipeId))
             {
                 sprite = _resource.GetSprite(_data.Recipes.Get(customer.orderRecipeId).SpriteKey);
             }
 
-            CustomerCellView view = _queueCustomers[index];
-            view.Apply(_resource, CustomerLook.FromSeed(customer.lookSeed), FaceOf(customer));
-            SetQueueIcon(index, sprite);
-            _queueBubbles[index].SetWide(sprite == null);
-
             if (sprite != null)
             {
-                UiBindUtil.SetLabel(_queueCells[index], "");
+                _bubbles[index].ShowIcon(sprite, color, headX, headTop, facesLeft);
                 return;
             }
 
-            UiBindUtil.SetLabel(_queueCells[index], OrderLine(customer));
+            _bubbles[index].ShowText(OrderLine(customer), color, headX, headTop, facesLeft);
         }
 
         // 주문 떡이 진열대에 있으면 웃고, 없으면 시무룩. 아무거나 사는 손님은 기본 얼굴이다.
@@ -538,137 +358,6 @@ namespace Mozzi.Game.Ui
             return "? " + string.Join("+", names);
         }
 
-        // 말풍선 안 떡 그림.
-        private void SetQueueIcon(int index, Sprite sprite)
-        {
-            Image icon = _queueIcons[index];
-            if (icon == null)
-            {
-                return;
-            }
-
-            icon.sprite = sprite;
-            UiBindUtil.SetActive(icon.gameObject, sprite != null);
-        }
-
-        // 찾은 레시피만 표 순서대로 한 줄씩. 재료가 있으면 밝게.
-        private void RefreshMakeRows()
-        {
-            List<RecipeRow> open = new List<RecipeRow>();
-            IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
-            for (int i = 0; i < rows.Count; i++)
-            {
-                if (_codex.IsRecipeOpen(rows[i].Id))
-                {
-                    open.Add(rows[i]);
-                }
-            }
-
-            UiBindUtil.SetActive(_makeEmpty, open.Count == 0);
-
-            for (int i = 0; i < _makeRows.Count; i++)
-            {
-                bool has = i < open.Count;
-                UiBindUtil.SetActive(_makeRows[i].gameObject, has);
-                if (has == false)
-                {
-                    _makeRowRecipes[i] = null;
-                    continue;
-                }
-
-                RecipeRow recipe = open[i];
-                _makeRowRecipes[i] = recipe.Id;
-                SetMakeRowIcon(i, _resource.GetSprite(recipe.SpriteKey));
-                UiBindUtil.SetLabel(_makeRows[i], recipe.Name + " " + _stall.PreviewPrice(recipe.IngredientIds) + "G");
-                _makeRows[i].interactable = _stall.CanMake(recipe.IngredientIds);
-            }
-        }
-
-        // 재료 토글과 같은 셈법 — 그림을 켜면 라벨을 그만큼 오른쪽으로 민다.
-        private void SetMakeRowIcon(int rowIndex, Sprite sprite)
-        {
-            Image icon = _makeRowIcons[rowIndex];
-            if (icon == null)
-            {
-                return;
-            }
-
-            icon.sprite = sprite;
-            UiBindUtil.SetActive(icon.gameObject, sprite != null);
-
-            TMP_Text label = UiBindUtil.LabelOf(_makeRows[rowIndex]);
-            if (label == null)
-            {
-                return;
-            }
-
-            float indent = 0f;
-            if (sprite != null)
-            {
-                indent = LayoutConstUi.MakeRowTextIndent;
-            }
-
-            label.margin = new Vector4(indent, 0f, 0f, 0f);
-        }
-
-        private void RefreshExperiment()
-        {
-            bool full = _selected.Count >= 3;
-            foreach (KeyValuePair<string, Button> pair in _expToggles)
-            {
-                string id = pair.Key;
-                bool on = _selected.Contains(id);
-                int count = _inventory.Count(id);
-                pair.Value.image.color = ToggleOff;
-                if (on)
-                {
-                    pair.Value.image.color = ToggleOn;
-                }
-
-                pair.Value.interactable = on || (count > 0 && full == false);
-
-                // 아이콘이 켜져 있으면 이름은 그림이 대신하므로 숫자만 쓴다.
-                string head = _data.Ingredients.Get(id).Name + " ";
-                if (HasToggleIcon(id))
-                {
-                    head = "";
-                }
-
-                UiBindUtil.SetLabel(pair.Value, head + count);
-            }
-
-            UiBindUtil.SetText(_expInfo, ExperimentInfo());
-            _expMake.interactable = _selected.Count > 0 && _stall.CanMake(_selected);
-        }
-
-        private string ExperimentInfo()
-        {
-            if (_selected.Count == 0)
-            {
-                return "재료를 1~3개 고르세요";
-            }
-
-            List<string> names = new List<string>();
-            for (int i = 0; i < _selected.Count; i++)
-            {
-                names.Add(_data.Ingredients.Get(_selected[i]).Name);
-            }
-
-            string head = string.Join("+", names);
-            RecipeRow recipe = RecipeMatchUtil.FindRecipe(_data.Recipes, _selected);
-            if (recipe != null && _codex.IsRecipeOpen(recipe.Id))
-            {
-                return head + " → " + recipe.Name + " (찾음)";
-            }
-
-            if (_codex.HasTriedCombo(RecipeMatchUtil.ComboKey(_selected)))
-            {
-                return head + " → 해 본 조합 · " + PlainName;
-            }
-
-            return head + " → 새 조합! 떡메를 친다";
-        }
-
         private void RefreshButtons()
         {
             if (_clock.IsNight)
@@ -702,139 +391,6 @@ namespace Mozzi.Game.Ui
         {
             _stall.Serve(queueIndex);
             Refresh();
-        }
-
-        private void OnMakeRow(int rowIndex)
-        {
-            string recipeId = _makeRowRecipes[rowIndex];
-            if (recipeId == null || _pound.IsRunning)
-            {
-                return;
-            }
-
-            _stall.Make(_data.Recipes.Get(recipeId).IngredientIds);
-            Refresh();
-        }
-
-        // 떡메 덮개가 떠 있는 동안은 밑의 버튼을 받지 않는다 (덮개가 레이캐스트를 막지만 코드 호출도 막는다).
-        private void OnToggle(string ingredientId)
-        {
-            if (_pound.IsRunning)
-            {
-                return;
-            }
-
-            if (_selected.Remove(ingredientId) == false && _selected.Count < 3)
-            {
-                _selected.Add(ingredientId);
-            }
-
-            RefreshExperiment();
-        }
-
-        // 찾은 레시피 · 해 본 조합은 바로, 처음 보는 조합은 떡메 덮개로. 목록은 복사해 넘긴다 (이벤트 중 Refresh 가 끼어든다).
-        private void OnExpMake()
-        {
-            List<string> ids = new List<string>(_selected);
-            if (ids.Count == 0 || _pound.IsRunning || _stall.CanMake(ids) == false)
-            {
-                return;
-            }
-
-            if (_codex.HasTriedCombo(RecipeMatchUtil.ComboKey(ids)))
-            {
-                _selected.Clear();
-                _stall.Make(ids);
-                Refresh();
-                return;
-            }
-
-            _pound.Begin(ids);
-            _poundDough.localScale = Vector3.one;
-            UiBindUtil.SetText(_poundHint, "떡메를 " + _pound.TotalTaps + "번 치세요");
-            UiBindUtil.SetText(_poundCount, "0/" + _pound.TotalTaps);
-            UiBindUtil.SetActive(_poundPanel, true);
-        }
-
-        private void OnPoundTap()
-        {
-            PoundTapResult result = _pound.Tap(Time.realtimeSinceStartup);
-            if (result == PoundTapResult.Ignored)
-            {
-                return;
-            }
-
-            _poundDough.localScale = new Vector3(2f - DoughSquash, DoughSquash, 1f);
-            UiBindUtil.SetText(_poundCount, _pound.Taps + "/" + _pound.TotalTaps);
-            if (result == PoundTapResult.Counted)
-            {
-                return;
-            }
-
-            List<string> ids = new List<string>(_pound.IngredientIds);
-            _selected.Clear();
-            UiBindUtil.SetActive(_poundPanel, false);
-            MakeResult made = _stall.Make(ids);
-            Refresh();
-            if (made.Succeeded)
-            {
-                PlayMade(made);
-            }
-        }
-
-        // 발견 연출 : 새 레시피면 흰 번쩍(알파 1→0) + 「NEW 팥콩떡!」 + 값, 평범한 떡이면 이름만.
-        private void PlayMade(MakeResult made)
-        {
-            string name = PlainName;
-            string spriteKey = SpriteKeys.CakePlain;
-            if (made.IsPlain == false)
-            {
-                RecipeRow recipe = _data.Recipes.Get(made.RecipeId);
-                name = recipe.Name;
-                spriteKey = recipe.SpriteKey;
-            }
-
-            SetMadeIcon(_resource.GetSprite(spriteKey));
-            UiBindUtil.SetActive(_madeNew, made.IsNewRecipe);
-            if (made.IsNewRecipe)
-            {
-                name = "NEW " + name + "!";
-            }
-
-            UiBindUtil.SetText(_madeName, name);
-            UiBindUtil.SetText(_madePrice, made.Price + "G");
-
-            _flashing = made.IsNewRecipe;
-            _flashTime = 0f;
-            float alpha = 0f;
-            if (_flashing)
-            {
-                alpha = 1f;
-            }
-
-            _madeFlash.color = new Color(1f, 1f, 1f, alpha);
-            UiBindUtil.SetActive(_madePanel, true);
-        }
-
-        private void SetMadeIcon(Sprite sprite)
-        {
-            if (_madeIcon == null)
-            {
-                return;
-            }
-
-            _madeIcon.sprite = sprite;
-            UiBindUtil.SetActive(_madeIcon.gameObject, sprite != null);
-        }
-
-        private void CloseMade()
-        {
-            if (_flashing)
-            {
-                return;
-            }
-
-            UiBindUtil.SetActive(_madePanel, false);
         }
 
         private void OnOpenOrNextDay()

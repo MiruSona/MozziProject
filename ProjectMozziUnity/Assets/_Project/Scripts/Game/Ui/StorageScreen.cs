@@ -23,8 +23,6 @@ namespace Mozzi.Game.Ui
         private IWalletHub _wallet;
         private IStaticDataHub _data;
         private GameObject _emptyText;
-        private TMP_Text _fenceText;
-        private Button _fenceButton;
 
         protected override string PrefabName
         {
@@ -44,8 +42,6 @@ namespace Mozzi.Game.Ui
             _data = InGameHub.Get<IStaticDataHub>();
 
             _emptyText = UiBindUtil.FindObject(transform, UiNames.StorageEmptyText, PrefabName);
-            _fenceText = UiBindUtil.Find<TMP_Text>(transform, UiNames.StorageFenceText, PrefabName);
-            _fenceButton = UiBindUtil.BindButton(transform, UiNames.StorageFenceButton, PrefabName, OnBuyFence);
 
             for (int i = 0; i < UiNames.StorageRowCount; i++)
             {
@@ -76,7 +72,6 @@ namespace Mozzi.Game.Ui
 
             _dragSources.Clear();
             _rows.Clear();
-            _fenceButton = null;
             _storage = null;
             _farm = null;
             _wallet = null;
@@ -86,8 +81,6 @@ namespace Mozzi.Game.Ui
         public override void Refresh()
         {
             SetGold(_wallet.Gold);
-            UiBindUtil.SetText(_fenceText, "농장 " + _farm.MozziCount + "/" + _farm.FenceMax);
-            RefreshFenceButton();
 
             IReadOnlyList<CountEntry> entries = _storage.Entries;
             UiBindUtil.SetActive(_emptyText, entries.Count == 0);
@@ -112,27 +105,6 @@ namespace Mozzi.Game.Ui
                 UiBindUtil.SetLabel(row.SellButton, "팔기 " + _storage.SellPrice);
                 UiBindUtil.SetLabel(row.SellAllButton, "일괄 팔기");
             }
-        }
-
-        // 최대 단계면 「담장 최대」 로 잠그고, 골드가 모자라면 눌리지 않게 한다.
-        private void RefreshFenceButton()
-        {
-            int price = _farm.NextFencePrice;
-            if (price < 0)
-            {
-                UiBindUtil.SetLabel(_fenceButton, "담장 최대");
-                _fenceButton.interactable = false;
-                return;
-            }
-
-            UiBindUtil.SetLabel(_fenceButton, "담장 늘리기 " + price + "G");
-            _fenceButton.interactable = _wallet.CanPay(price);
-        }
-
-        private void OnBuyFence()
-        {
-            _farm.BuyFence();
-            Refresh();
         }
 
         // 줄을 끌기 시작. 담장이 찼으면 버튼처럼 안 된다. 화면을 닫고 월드 쪽에 넘긴다.

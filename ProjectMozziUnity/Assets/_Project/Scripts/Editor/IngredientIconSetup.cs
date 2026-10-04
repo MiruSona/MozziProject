@@ -6,12 +6,11 @@ using UnityEngine.UI;
 
 namespace Mozzi.Editor
 {
-    // 자원바 부재료 칸과 가판대 실험 토글에 그림 자식(Icon)을 넣는 일회성 손질기.
+    // 자원바 부재료 칸에 그림 자식(Icon)을 넣는 일회성 손질기. 실험 토글은 주방 화면으로 옮겨 가 KitchenScreenSetup 이 짓는다.
     // 부르는 법 : unity command eval_file 에 `Mozzi.Editor.IngredientIconSetup.Apply();` 한 줄.
     public static class IngredientIconSetup
     {
         private const string FarmScreenPath = "Assets/_Project/Resources/Prefabs/UI/FarmScreen.prefab";
-        private const string StallScreenPath = "Assets/_Project/Resources/Prefabs/UI/StallScreen.prefab";
 
         // 「대추 100/100」이 옆 칸에 붙던 것을 글씨 크기로 푼다. 농장 화면이 540 기준이라 옛 9 의 1.5배다 (칸 87px).
         private const float IngredientFontSize = 13.5f;
@@ -24,7 +23,6 @@ namespace Mozzi.Editor
         public static void Apply()
         {
             ApplyFarmScreen();
-            ApplyStallScreen();
             AssetDatabase.SaveAssets();
             Debug.Log("[IngredientIconSetup] 끝");
         }
@@ -49,26 +47,6 @@ namespace Mozzi.Editor
             PrefabUtility.SaveAsPrefabAsset(root, FarmScreenPath);
             PrefabUtility.UnloadPrefabContents(root);
             Debug.Log("[IngredientIconSetup] 자원바 칸 " + IngredientIds.Length + " 에 아이콘 · 글씨 " + IngredientFontSize);
-        }
-
-        private static void ApplyStallScreen()
-        {
-            GameObject root = PrefabUtility.LoadPrefabContents(StallScreenPath);
-            for (int i = 0; i < IngredientIds.Length; i++)
-            {
-                Transform toggle = FindDeep(root.transform, UiNames.StallExpTogglePrefix + IngredientIds[i]);
-                if (toggle == null)
-                {
-                    Debug.LogError("[IngredientIconSetup] 토글이 없다 : " + IngredientIds[i]);
-                    continue;
-                }
-
-                MakeIcon(toggle, LayoutConstUi.ToggleIconSize, LayoutConstUi.ToggleIconLeft);
-            }
-
-            PrefabUtility.SaveAsPrefabAsset(root, StallScreenPath);
-            PrefabUtility.UnloadPrefabContents(root);
-            Debug.Log("[IngredientIconSetup] 실험 토글 " + IngredientIds.Length + " 에 아이콘");
         }
 
         // 왼쪽 가운데에 붙는 정사각 그림 자리. 그림을 끼우는 것은 코드 몫이라 꺼 둔 채로 둔다.

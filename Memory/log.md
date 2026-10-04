@@ -790,3 +790,69 @@
 - 들어옴 20261004-7735ed05 `농장 강화 후보와 순서 · 새 기능 셋` (mem/0.3.0)
 - 들어옴 20261004-e88df9c0 `v15 피드백 2·3·4와 보관함 담장 버튼` (mem/0.3.0)
 - 들어옴 20261004-6bc23c58 `전용 화면 버튼은 아래쪽 정렬` (mem/0.3.0)
+- 거절 tag-standard howto-numbered duplicate-soft `540×1200 실내 배경은 세 조각을 나무 띠에서 잇는다`
+- 거절 tag-standard severity `pro 크기 시험 판을 취소해도 값이 빠진다`
+- 거절 howto-numbered duplicate-soft `540×1200 실내 배경은 세 조각을 나무 띠에서 잇는다`
+- 거절 severity `pro 크기 시험 판을 취소해도 값이 빠진다`
+- 들어옴 20261004-42a7866f `540x1200 실내 배경은 세 조각을 나무 띠에서 잇는다` (mem/0.3.0)
+- 들어옴 20261004-6ee51509 `pro 크기 시험 판을 취소해도 값이 빠진다` (mem/0.3.0)
+- 거절 body-thin duplicate-soft `천장 조각은 천장만 있는 그림을 화풍으로 준다`
+- 거절 summary-len title-shape tag-standard body-thin howto-numbered `전용 화면 기계는 메인 기계를 pro_flash 화풍으로 크게 다시 뽑는다`
+- 들어옴 20261004-d16725d0 `천장 조각은 천장만 있는 그림을 화풍으로` (mem/0.3.0)
+- 들어옴 20261004-531a0d9d `전용 화면 기계는 메인 기계를 화풍으로 키운다` (mem/0.3.0)
+- 거절 tag-standard tag-shape body-thin howto-numbered duplicate-soft `시안을 키워 edit_pro_flash 로 1px 로 다시 그린다`
+- 거절 tag-standard tag-shape severity sources-shape body-thin `inpaint 머리 겹에 살·옷 점이 섞인다`
+- 들어옴 20261004-03d0d765 `시안을 키워 edit_pro_flash 로 1px 로 다시 그린다` (mem/0.3.0)
+- 거절 severity sources-shape `inpaint 머리 겹에 살·옷 점이 섞인다`
+- 거절 severity `inpaint 머리 겹에 살·옷 점이 섞인다`
+- 들어옴 20261004-74de6003 `inpaint 머리 겹에 살·옷 점이 섞인다` (mem/0.3.0)
+- 거절 tag-standard tag-shape severity sources-shape body-thin `inpaint only-changes 출력은 마스크 칸 전체`
+- 거절 tag-standard tag-shape body-thin howto-numbered `옆모습 손님 겹은 대머리 몸 + royal blue + 6 단 굽기`
+- 들어옴 20261004-ab4ef343 `inpaint only-changes 출력은 마스크 칸 전체` (mem/0.3.0)
+- 거절 howto-numbered duplicate-soft `옆모습 손님 겹은 대머리 몸 + royal blue + 6 단 굽기`
+- 들어옴 20261004-1905aece `옆모습 손님 겹은 대머리 몸 + royal blue + 6 단 굽기` (mem/0.3.0)
+- 거절 tag-standard tag-shape severity sources-shape body-thin `animate_image 는 기계 창 속에 김 덩이를 그린다`
+- 거절 tag-standard tag-shape severity sources-shape body-thin duplicate-soft `pro_flash 화풍 그림은 캔버스보다 작고 짧게`
+- 거절 tag-shape severity sources-shape body-thin `열린 서랍 그림은 발 아래로 내려온다 — 피벗 여유`
+- 거절 tag-shape sources-required body-thin `합성소·주방 정식 2차 — 기계실 벽·기계 동작·칸 조각·떡메 7장`
+- 들어옴 20261004-62412422 `animate_image 는 기계 창 속에 김을 그린다` (mem/0.3.0)
+- 들어옴 20261004-b0e8b287 `pro_flash 화풍 그림은 작게·짧게 넣는다` (mem/0.3.0)
+- 들어옴 20261004-17f49521 `다 됨 서랍은 발 아래로 나와 피벗에 여유를 둔다` (mem/0.3.0)
+- 들어옴 20261004-779bff56 `합성소·주방 정식 2차 그림을 냈다` (mem/0.3.0)
+- 거절 summary-len tag-shape body-thin `주방 화면은 반복 05 에서 갈아엎는다 — 만드는 과정을 여러 단계로`
+- 들어옴 20261004-80fc4a14 `주방 화면은 반복 05 에서 갈아엎는다` (mem/0.3.0)
+- 거절 decision-gate `반복 04 가판대·합성소 그림 확정`
+- 들어옴 20261004-baf7dfa2 `반복 04 가판대·합성소 그림 확정` (mem/0.3.0) --new
+- 거절 tag-standard body-thin `전용 화면은 uGUI Stage 에 세계 좌표 그대로`
+- 거절 summary-len title-shape tag-standard body-thin `Sliced Image 는 pixelsPerUnitMultiplier 100/32`
+- 거절 tag-standard decision-gate `전용 화면은 Stage 540×1200 세계 좌표`
+- 들어옴 20261004-542a39e7 `Sliced Image 는 배율 100/32` (mem/0.3.0)
+- 들어옴 20261004-2dd8f651 `전용 화면은 Stage 540×1200 세계 좌표` (mem/0.3.0) --new
+- 거절 tag-standard body-thin howto-numbered `옆모습 손님 겹은 입히기 뒤 그 파츠만 남기기로 뽑는다`
+- 거절 title-shape tag-standard severity sources-shape body-thin `edit 은 모든 점을 조금씩 다시 칠해 작은 부위 떼기는 살색이 네모로 보인다`
+- 들어옴 20261004-c0c3f4b0 `옆모습 손님 겹은 입히고 그 파츠만 남겨 뽑는다` (mem/0.3.0)
+- 들어옴 20261004-bd4d7857 `edit 은 모든 점을 다시 칠해 작은 부위 떼기가 약하다` (mem/0.3.0)
+- 들어옴 20261004-bb7109c8 `가판대 손님 옷 종류 늘리기 (치마·정장 등)` (mem/0.3.0)
+- 거절 tag-standard `합성소 화면 누름 자리와 골드 판 자리`
+- 들어옴 20261004-45c5bc1a `합성소 화면 누름 자리와 골드 판 자리` (mem/0.3.0)
+- 들어옴 20261004-63d0fc41 `꺼진 TMP 외곽선과 반쯤 지은 뿌리` (mem/0.3.0)
+- 들어옴 20261004-5d9486a0 `머리통을 떼면 턱 밑이 잘린 줄로 남는다` (mem/0.3.0)
+- 거절 tag-standard `가판대 손님은 앞 셋만 세운다`
+- 들어옴 20261004-363f22a4 `가판대 손님은 앞 셋만 세운다` (mem/0.3.0)
+- 들어옴 20261004-492b126b `진열장 접시 좌표는 README 값과 다르다` (mem/0.3.0)
+- 들어옴 20261004-3e0e140c `작은 TMP 테두리는 프리팹에서 안 보인다` (mem/0.3.0)
+- 들어옴 20261004-4624c8e5 `Play 중 스크립트를 고치면 허브가 빈다` (mem/0.3.0)
+- 들어옴 20261004-4daf9a68 `가판대 새 그림은 옛 파일 이름에 덮는다` (mem/0.3.0)
+- 거절 issue-sections `칠판에서 연 주방 닫기는 농장으로 간다`
+- 들어옴 20261004-ca9ec544 `칠판에서 연 주방 닫기는 농장으로 간다` (mem/0.3.0)
+- 들어옴 20261004-ad762c1a `손님 머리통 턱 밑·입은 손으로 고쳤다` (mem/0.3.0)
+- 들어옴 20261004-97eb448c `덮개 되돌아가기는 겹 목록으로 쌓는다` (mem/0.3.0)
+- 덮음 20261004-ca9ec544 → 20261004-97eb448c
+- 거절 tag-standard `가판대 앞 손님 발끝 x 는 190·410·78`
+- 거절 tag-count `가판대 앞 손님 발끝 x 는 190·410·78`
+- 들어옴 20261004-26300707 `가판대 앞 손님 발끝 x 는 190·410·78` (mem/0.3.0)
+- 덮음 20261004-363f22a4 → 20261004-26300707
+- 들어옴 20261004-c525b0a5 `반복 04 전용 화면 셋 정식 그림 v16` (mem/0.3.0)
+- 거절 summary-len tag-standard sources-required body-thin duplicate-soft `APK v16 빌드 148초`
+- 들어옴 20261004-d8d873c3 `APK v16 빌드 148초` (mem/0.3.0)
+- 들어옴 20261004-5e7f4726 `v16 폰 시험과 피드백은 다음 세션` (mem/0.3.0)

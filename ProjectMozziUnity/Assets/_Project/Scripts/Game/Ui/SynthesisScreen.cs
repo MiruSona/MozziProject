@@ -15,21 +15,22 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 합성소 화면 (세로조각1판설계 3-3). 기계 한 대 · 칸 탭 4개 · 찹쌀이 고르기 목록 · 결과 연출.
-    // 기계와 아래 판은 「보고 있는 칸」 하나만 보여 주고, 탭을 누르면 그 칸으로 바뀐다.
-    // 고른 재료는 화면이 종 id 로만 기억하고, 「시작」 때 농장 것이면 보관함으로 먼저 옮긴 뒤 Manager 에 넘긴다.
+    // 합성소 화면 (540 정식). 기계 넷이 칸 넷이고, 칸마다 상태(쉼 · 도는 중 · 다 됨 · 살 수 있음 · 잠김)를 그림으로 보인다.
+    // 누르는 곳 : 깔때기 = 찹쌀이 넣기/빼기, 나무 표 = 시작(다 되면 받기), 서랍 = 받기, 빈 받침 = 칸 사기.
+    // 고른 재료는 화면이 종 id 로만 기억하고, 시작 때 농장 것이면 보관함으로 먼저 옮긴 뒤 Manager 에 넘긴다.
+    // 배치는 Editor/SynthesisScreenSetup · SynthesisRoomLayout 이 정본이다.
     public sealed class SynthesisScreen : OverlayScreen
     {
         private const string Unknown = UiText.Unknown;
         private const float ResultDuration = 0.9f;
         private const float ResultPeakScale = 1.6f;
 
-        private static readonly Color TabOff = new Color(0.35f, 0.38f, 0.55f, 1f);
-        private static readonly Color TabOn = new Color(0.9f, 0.7f, 0.25f, 1f);
+        private static readonly Color PlateTextOn = new Color(1f, 0.96f, 0.86f, 1f);
+        private static readonly Color PlateTextOff = new Color(1f, 0.96f, 0.86f, 0.5f);
+        private static readonly Color BuyTextOn = new Color(0.29f, 0.18f, 0.13f, 1f);
+        private static readonly Color BuyTextOff = new Color(0.29f, 0.18f, 0.13f, 0.45f);
 
         private readonly List<SynthesisSlotView> _slots = new List<SynthesisSlotView>();
-        private readonly List<Button> _tabs = new List<Button>();
-        private readonly List<TMP_Text> _tabLabels = new List<TMP_Text>();
         // 칸마다 마지막으로 적은 남은 초. 초가 바뀔 때만 글자를 고친다.
         private readonly List<int> _shownSec = new List<int>();
         private readonly List<string> _pickA = new List<string>();
@@ -44,16 +45,16 @@ namespace Mozzi.Game.Ui
         private IWalletHub _wallet;
         private IStaticDataHub _data;
         private IResourceHub _resource;
+        private IUiHub _ui;
 
-        private SynthesisMachineView _machine;
-        // 기계와 아래 판이 보여 주는 칸.
-        private int _viewSlot;
-
-        // 기계 입구 누름 칸 둘과 빈 입구 표시(+).
-        private Button _inletA;
-        private Button _inletB;
-        private GameObject _inletPlusA;
-        private GameObject _inletPlusB;
+        // 기계 몸 그림. 도는 프레임은 고리로 돌리고, 없는 장은 쉼 그림으로 대신한다.
+        private Sprite _idleSprite;
+        private Sprite _doneSprite;
+        private Sprite _buySprite;
+        private Sprite _lockedSprite;
+        private Sprite[] _runSprites;
+        private float _runTime;
+        private int _runFrame;
 
         private TMP_Text _shortcutText;
         private Button _shortcutBuyButton;
@@ -88,43 +89,20 @@ namespace Mozzi.Game.Ui
             _codex = InGameHub.Get<ICodexHub>();
             _wallet = InGameHub.Get<IWalletHub>();
             _data = InGameHub.Get<IStaticDataHub>();
+            _ui = InGameHub.Get<IUiHub>();
             _resource = GlobalHub.Get<IResourceHub>();
 
-            Transform scene = UiBindUtil.FindObject(transform, UiNames.Scene, PrefabName).transform;
-            UiBindUtil.Find<Image>(scene, UiNames.SceneBg, PrefabName).sprite = _resource.GetSprite(SpriteKeys.ScreenSynthesisBg);
-            _machine = new SynthesisMachineView(scene, PrefabName, _resource, InGameHub.Get<IVfxHub>());
-            _viewSlot = 0;
-
-            _inletA = UiBindUtil.BindButton(scene, UiNames.SynthesisInletAButton, PrefabName, delegate { OnInlet(true); });
-            _inletB = UiBindUtil.BindButton(scene, UiNames.SynthesisInletBButton, PrefabName, delegate { OnInlet(false); });
-            _inletPlusA = UiBindUtil.FindObject(_inletA.transform, UiNames.SynthesisInletPlus, PrefabName);
-            _inletPlusB = UiBindUtil.FindObject(_inletB.transform, UiNames.SynthesisInletPlus, PrefabName);
+            BindSprites();
+            BindMachines();
 
             _shortcutText = UiBindUtil.Find<TMP_Text>(transform, UiNames.SynthesisShortcutText, PrefabName);
             _shortcutBuyButton = UiBindUtil.BindButton(transform, UiNames.SynthesisShortcutBuyButton, PrefabName, OnBuyShortcut);
-
-            for (int i = 0; i < _synthesis.MaxSlotCount; i++)
-            {
-                int index = i;
-                Transform slotRoot = UiBindUtil.FindObject(transform, UiNames.SynthesisSlotPrefix + i, PrefabName).transform;
-                _slots.Add(new SynthesisSlotView(slotRoot, PrefabName,
-                    OnBuySlot,
-                    delegate { OpenPick(index, true); },
-                    delegate { OpenPick(index, false); },
-                    delegate { OnStart(index); },
-                    delegate { OnTake(index); }));
-                Button tab = UiBindUtil.BindButton(transform, UiNames.SynthesisSlotTabPrefix + i, PrefabName,
-                    delegate { SelectSlot(index); });
-                _tabs.Add(tab);
-                _tabLabels.Add(UiBindUtil.Find<TMP_Text>(tab.transform, UiNames.ButtonLabel, PrefabName));
-                _shownSec.Add(-1);
-                _pickA.Add(null);
-                _pickB.Add(null);
-            }
+            UiBindUtil.BindButton(transform, UiNames.SynthesisMozziCodexButton, PrefabName, _ui.OpenMozziCodex);
 
             _pickPanel = UiBindUtil.FindObject(transform, UiNames.SynthesisPickPanel, PrefabName);
             _pickTitle = UiBindUtil.Find<TMP_Text>(_pickPanel.transform, UiNames.SynthesisPickTitleText, PrefabName);
             UiBindUtil.BindButton(_pickPanel.transform, UiNames.SynthesisPickCloseButton, PrefabName, ClosePick);
+            UiBindUtil.BindButton(_pickPanel.transform, UiNames.SynthesisPickBlocker, PrefabName, ClosePick);
             for (int i = 0; i < UiNames.SynthesisPickRowCount; i++)
             {
                 int index = i;
@@ -146,24 +124,61 @@ namespace Mozzi.Game.Ui
             UiBindUtil.SetActive(_resultPanel, false);
         }
 
+        private void BindSprites()
+        {
+            _idleSprite = _resource.GetSprite(SpriteKeys.ScreenSynthesisMachine);
+            _doneSprite = _resource.GetSprite(SpriteKeys.ScreenSynthesisMachineDone);
+            _buySprite = _resource.GetSprite(SpriteKeys.ScreenSynthesisSlotBuy);
+            _lockedSprite = _resource.GetSprite(SpriteKeys.ScreenSynthesisSlotLocked);
+            _runSprites = new Sprite[SpriteKeys.SynthesisMachineRunFrameCount];
+            for (int i = 0; i < _runSprites.Length; i++)
+            {
+                _runSprites[i] = _resource.GetSprite(SpriteKeys.SynthesisMachineRun(i));
+                if (_runSprites[i] == null)
+                {
+                    _runSprites[i] = _idleSprite;
+                }
+            }
+        }
+
+        // 기계 넷. 같은 이름 자식이 넷씩이라 Stage 밑 기계 뿌리를 먼저 찾고 그 밑에서만 찾는다.
+        private void BindMachines()
+        {
+            Transform stage = UiBindUtil.FindObject(transform, UiNames.Stage, PrefabName).transform;
+            IVfxHub vfx = InGameHub.Get<IVfxHub>();
+            for (int i = 0; i < _synthesis.MaxSlotCount; i++)
+            {
+                int index = i;
+                Transform root = UiBindUtil.FindObject(stage, UiNames.SynthesisMachinePrefix + i, PrefabName).transform;
+                SynthesisMachineView machine = new SynthesisMachineView(root, PrefabName, _resource, vfx);
+                _slots.Add(new SynthesisSlotView(root, PrefabName, machine,
+                    delegate { OnInlet(index, true); },
+                    delegate { OnInlet(index, false); },
+                    delegate { OnPlate(index); },
+                    delegate { OnDrawer(index); },
+                    OnBuySlot));
+                _shownSec.Add(-1);
+                _pickA.Add(null);
+                _pickB.Add(null);
+            }
+        }
+
         protected override void UnbindChildren()
         {
-            _machine.Clear();
-            _machine = null;
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                _slots[i].Machine.Clear();
+            }
+
             _slots.Clear();
-            _tabs.Clear();
-            _tabLabels.Clear();
             _shownSec.Clear();
-            _inletA = null;
-            _inletB = null;
-            _inletPlusA = null;
-            _inletPlusB = null;
             _pickA.Clear();
             _pickB.Clear();
             _pickRows.Clear();
             _pickRowSpecies.Clear();
             _pickSlot = -1;
             _resultPlaying = false;
+            _runSprites = null;
 
             _synthesis = null;
             _storage = null;
@@ -172,6 +187,7 @@ namespace Mozzi.Game.Ui
             _wallet = null;
             _data = null;
             _resource = null;
+            _ui = null;
         }
 
         public override void Refresh()
@@ -181,12 +197,7 @@ namespace Mozzi.Game.Ui
             for (int i = 0; i < _slots.Count; i++)
             {
                 RefreshSlot(i);
-                RefreshTab(i);
-                UiBindUtil.SetActive(_slots[i].Root, i == _viewSlot);
             }
-
-            RefreshMachine();
-            RefreshInlets();
 
             if (_pickPanel.activeSelf)
             {
@@ -196,12 +207,22 @@ namespace Mozzi.Game.Ui
 
         public override void Process(float deltaTime)
         {
+            _runTime += deltaTime;
+            int frame = (int)(_runTime / SynthesisRoomLayout.RunFrameSec) % _runSprites.Length;
+            bool frameChanged = frame != _runFrame;
+            _runFrame = frame;
+
             for (int i = 0; i < _slots.Count; i++)
             {
                 SynthesisSlot slot = _synthesis.GetSlot(i);
                 if (slot.status != SynthesisSlotStatus.Running)
                 {
                     continue;
+                }
+
+                if (frameChanged)
+                {
+                    _slots[i].MachineArt.sprite = _runSprites[frame];
                 }
 
                 int sec = CeilSec(slot.remainingSec);
@@ -211,8 +232,7 @@ namespace Mozzi.Game.Ui
                 }
 
                 _shownSec[i] = sec;
-                UiBindUtil.SetText(_slots[i].RemainText, "남은 시간 " + FormatSec(slot.remainingSec));
-                RefreshTab(i);
+                UiBindUtil.SetText(_slots[i].PlateText, FormatSec(slot.remainingSec));
             }
 
             if (_resultPlaying == false)
@@ -234,7 +254,11 @@ namespace Mozzi.Game.Ui
 
         public override void OnClosed()
         {
-            _machine.Clear();
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                _slots[i].Machine.Clear();
+            }
+
             ClosePick();
             UiBindUtil.SetActive(_resultPanel, false);
             _resultPlaying = false;
@@ -257,12 +281,12 @@ namespace Mozzi.Game.Ui
         {
             int level = _synthesis.ShortcutLevel;
             int price = _synthesis.NextShortcutPrice;
-            string text = "단축 " + level + "/" + _synthesis.MaxShortcutLevel + " · 대기 " + Percent(_synthesis.ShortcutRate);
+            string text = "영구 단축 " + level + "/" + _synthesis.MaxShortcutLevel + " · 대기 " + Percent(_synthesis.ShortcutRate);
             if (price < 0)
             {
                 UiBindUtil.SetText(_shortcutText, text + " (최대)");
                 _shortcutBuyButton.interactable = false;
-                UiBindUtil.SetLabel(_shortcutBuyButton, "최대");
+                UiBindUtil.SetLabel(_shortcutBuyButton, "단축 최대");
                 return;
             }
 
@@ -271,87 +295,147 @@ namespace Mozzi.Game.Ui
             _shortcutBuyButton.interactable = _wallet.CanPay(price);
         }
 
-        // 탭을 누르면 기계와 아래 판이 그 칸을 보여 준다. 잠긴 칸도 고를 수 있다 (「칸 사기」가 거기 있다).
-        private void SelectSlot(int index)
+        // 칸 하나의 상태를 기계 그림 · 누를 곳 · 표 글자 · 연출로 옮긴다.
+        private void RefreshSlot(int index)
         {
-            _viewSlot = index;
-            Refresh();
-        }
-
-        // 탭 글자는 「1 · 비었음」처럼 칸 번호와 상태 한 마디다. 보고 있는 칸은 색으로 표시한다.
-        private void RefreshTab(int index)
-        {
+            SynthesisSlotView view = _slots[index];
             SynthesisSlot slot = _synthesis.GetSlot(index);
-            string state = "비었음";
+
             if (slot.status == SynthesisSlotStatus.Locked)
             {
-                state = "잠김";
-            }
-            else if (slot.status == SynthesisSlotStatus.Running)
-            {
-                state = FormatSec(slot.remainingSec);
-            }
-            else if (slot.status == SynthesisSlotStatus.Done)
-            {
-                state = "다 됨!";
+                view.Machine.ShowIdle(index, null, null);
+                RefreshLocked(index, view);
+                return;
             }
 
-            UiBindUtil.SetText(_tabLabels[index], (index + 1) + " · " + state);
-
-            Color color = TabOff;
-            if (index == _viewSlot)
-            {
-                color = TabOn;
-            }
-
-            _tabs[index].image.color = color;
-        }
-
-        // 기계는 보고 있는 칸의 상태를 그린다. 시작 연출은 OnStart 가 따로 건다.
-        private void RefreshMachine()
-        {
-            SynthesisSlot slot = _synthesis.GetSlot(_viewSlot);
             if (slot.status == SynthesisSlotStatus.Running)
             {
-                _machine.ShowRunning(_viewSlot, _data.Species.Get(slot.speciesA), _data.Species.Get(slot.speciesB));
+                view.MachineArt.sprite = _runSprites[_runFrame];
+                view.ShowControls(true, false, false, false);
+                view.PlateText.color = PlateTextOn;
+                _shownSec[index] = CeilSec(slot.remainingSec);
+                UiBindUtil.SetText(view.PlateText, FormatSec(slot.remainingSec));
+                view.Machine.ShowRunning(index, _data.Species.Get(slot.speciesA), _data.Species.Get(slot.speciesB));
                 return;
             }
 
             if (slot.status == SynthesisSlotStatus.Done)
             {
+                view.MachineArt.sprite = _doneSprite;
+                view.ShowControls(true, true, false, false);
+                view.PlateText.color = PlateTextOn;
+                UiBindUtil.SetText(view.PlateText, "다 됨! 받기");
                 // 무엇이 나왔는지는 받을 때 알린다 — 그림자는 재료 모양을 빌린다.
-                _machine.ShowDone(_viewSlot, _data.Species.Get(slot.speciesA));
+                view.Machine.ShowDone(index, _data.Species.Get(slot.speciesA));
                 return;
             }
 
-            if (slot.status == SynthesisSlotStatus.Locked)
-            {
-                _machine.ShowIdle(_viewSlot, null, null);
-                return;
-            }
-
-            _machine.ShowIdle(_viewSlot, SpeciesOrNull(_pickA[_viewSlot]), SpeciesOrNull(_pickB[_viewSlot]));
+            view.MachineArt.sprite = _idleSprite;
+            view.ShowControls(true, false, false, true);
+            UiBindUtil.SetActive(view.PlusA, _pickA[index] == null);
+            UiBindUtil.SetActive(view.PlusB, _pickB[index] == null);
+            view.Machine.ShowIdle(index, SpeciesOrNull(_pickA[index]), SpeciesOrNull(_pickB[index]));
+            RefreshEmptyPlate(index, view);
         }
 
-        // 입구 누름 칸은 재료를 고를 수 있는 빈 칸에서만 켠다. 아직 안 고른 쪽에는 + 를 띄운다.
-        private void RefreshInlets()
+        // 다음 칸만 살 수 있다 (빈 받침 + 간판). 그 뒤 칸은 덮개 + 자물쇠.
+        private void RefreshLocked(int index, SynthesisSlotView view)
         {
-            bool empty = _synthesis.GetSlot(_viewSlot).status == SynthesisSlotStatus.Empty;
-            UiBindUtil.SetActive(_inletA.gameObject, empty);
-            UiBindUtil.SetActive(_inletB.gameObject, empty);
-            UiBindUtil.SetActive(_inletPlusA, _pickA[_viewSlot] == null);
-            UiBindUtil.SetActive(_inletPlusB, _pickB[_viewSlot] == null);
+            int price = _synthesis.NextSlotPrice;
+            bool isNext = index == _synthesis.SlotCount && price >= 0;
+            if (isNext == false)
+            {
+                view.MachineArt.sprite = _lockedSprite;
+                view.ShowControls(false, false, false, false);
+                return;
+            }
+
+            view.MachineArt.sprite = _buySprite;
+            view.ShowControls(false, false, true, false);
+            UiBindUtil.SetText(view.BuyText, "칸 사기\n" + price + "G");
+            bool canPay = _wallet.CanPay(price);
+            view.BuyStand.interactable = canPay;
+            view.BuyText.color = BuyTextOff;
+            if (canPay)
+            {
+                view.BuyText.color = BuyTextOn;
+            }
         }
 
-        // 기계 입구를 눌렀을 때. 아래 판의 재료 버튼과 같은 일을 보고 있는 칸에 한다.
-        private void OnInlet(bool first)
+        // 빈 칸의 나무 표. 둘 다 넣으면 「시작 20G · 풀 75%」 (확정 종이 있으면 그 이름과 확률).
+        private void RefreshEmptyPlate(int index, SynthesisSlotView view)
         {
-            if (_synthesis.GetSlot(_viewSlot).status != SynthesisSlotStatus.Empty)
+            string a = _pickA[index];
+            string b = _pickB[index];
+            if (a == null || b == null)
+            {
+                view.PlateText.color = PlateTextOff;
+                UiBindUtil.SetText(view.PlateText, "찹쌀이 2마리 넣기");
+                return;
+            }
+
+            SynthesisPreview preview = _synthesis.Preview(a, b);
+            string text = "시작 " + preview.Gold + "G";
+            if (preview.FixedSpeciesId != null)
+            {
+                text += " · " + NameOrUnknown(preview.FixedSpeciesId) + " " + Percent(preview.PFixed);
+            }
+
+            UiBindUtil.SetText(view.PlateText, text);
+            view.PlateText.color = PlateTextOff;
+            if (_wallet.CanPay(preview.Gold) && HasEnough(a, b))
+            {
+                view.PlateText.color = PlateTextOn;
+            }
+        }
+
+        // 깔때기를 눌렀을 때. 빈 깔때기면 고르기 목록을 열고, 이미 넣었으면 뺀다.
+        private void OnInlet(int index, bool first)
+        {
+            if (_synthesis.GetSlot(index).status != SynthesisSlotStatus.Empty)
             {
                 return;
             }
 
-            OpenPick(_viewSlot, first);
+            if (first && _pickA[index] != null)
+            {
+                _pickA[index] = null;
+                Refresh();
+                return;
+            }
+
+            if (first == false && _pickB[index] != null)
+            {
+                _pickB[index] = null;
+                Refresh();
+                return;
+            }
+
+            OpenPick(index, first);
+        }
+
+        // 나무 표. 빈 칸이면 시작, 다 됐으면 받기 (서랍과 같다).
+        private void OnPlate(int index)
+        {
+            SynthesisSlotStatus status = _synthesis.GetSlot(index).status;
+            if (status == SynthesisSlotStatus.Empty)
+            {
+                OnStart(index);
+                return;
+            }
+
+            if (status == SynthesisSlotStatus.Done)
+            {
+                OnTake(index);
+            }
+        }
+
+        private void OnDrawer(int index)
+        {
+            if (_synthesis.GetSlot(index).status == SynthesisSlotStatus.Done)
+            {
+                OnTake(index);
+            }
         }
 
         private MozziSpeciesRow SpeciesOrNull(string speciesId)
@@ -362,111 +446,6 @@ namespace Mozzi.Game.Ui
             }
 
             return _data.Species.Get(speciesId);
-        }
-
-        private void RefreshSlot(int index)
-        {
-            SynthesisSlotView view = _slots[index];
-            SynthesisSlot slot = _synthesis.GetSlot(index);
-
-            if (slot.status == SynthesisSlotStatus.Locked)
-            {
-                view.ShowGroup(view.LockedGroup);
-                RefreshLocked(index, view);
-                return;
-            }
-
-            if (slot.status == SynthesisSlotStatus.Running)
-            {
-                view.ShowGroup(view.RunningGroup);
-                UiBindUtil.SetText(view.RemainText, "남은 시간 " + FormatSec(slot.remainingSec));
-                return;
-            }
-
-            if (slot.status == SynthesisSlotStatus.Done)
-            {
-                view.ShowGroup(view.DoneGroup);
-                UiBindUtil.SetLabel(view.TakeButton, "받기");
-                return;
-            }
-
-            view.ShowGroup(view.EmptyGroup);
-            RefreshEmpty(index, view);
-        }
-
-        // 다음 칸만 살 수 있다. 그 뒤 칸은 「잠김」.
-        private void RefreshLocked(int index, SynthesisSlotView view)
-        {
-            bool isNext = index == _synthesis.SlotCount;
-            int price = _synthesis.NextSlotPrice;
-            if (isNext == false || price < 0)
-            {
-                UiBindUtil.SetLabel(view.BuySlotButton, "잠김");
-                view.BuySlotButton.interactable = false;
-                return;
-            }
-
-            UiBindUtil.SetLabel(view.BuySlotButton, "칸 사기 " + price + "G");
-            view.BuySlotButton.interactable = _wallet.CanPay(price);
-        }
-
-        private void RefreshEmpty(int index, SynthesisSlotView view)
-        {
-            string a = _pickA[index];
-            string b = _pickB[index];
-            UiBindUtil.SetLabel(view.MaterialAButton, MaterialLabel(a));
-            UiBindUtil.SetLabel(view.MaterialBButton, MaterialLabel(b));
-
-            if (a == null || b == null)
-            {
-                UiBindUtil.SetText(view.PreviewText, "재료 2마리를 고르세요");
-                UiBindUtil.SetLabel(view.StartButton, "시작");
-                view.StartButton.interactable = false;
-                return;
-            }
-
-            SynthesisPreview preview = _synthesis.Preview(a, b);
-            UiBindUtil.SetText(view.PreviewText, PreviewText(preview));
-            UiBindUtil.SetLabel(view.StartButton, "시작 " + preview.Gold + "G");
-            view.StartButton.interactable = _wallet.CanPay(preview.Gold) && HasEnough(a, b);
-        }
-
-        private string MaterialLabel(string speciesId)
-        {
-            if (speciesId == null)
-            {
-                return "고르기";
-            }
-
-            return _data.Species.Get(speciesId).Name;
-        }
-
-        private string PreviewText(SynthesisPreview preview)
-        {
-            List<string> lines = new List<string>();
-            if (preview.FixedSpeciesId != null)
-            {
-                lines.Add(NameOrUnknown(preview.FixedSpeciesId) + " " + Percent(preview.PFixed));
-            }
-
-            List<string> others = new List<string>();
-            for (int i = 0; i < preview.OtherFamilyIds.Count; i++)
-            {
-                others.Add(NameOrUnknown(preview.OtherFamilyIds[i]));
-            }
-
-            if (others.Count > 0)
-            {
-                lines.Add("다른 계열(" + string.Join("/", others) + ") " + Percent(preview.POtherFamily));
-            }
-
-            if (preview.ShinySpeciesId != null)
-            {
-                lines.Add("변종 " + NameOrUnknown(preview.ShinySpeciesId) + " " + Percent(preview.PShiny));
-            }
-
-            lines.Add("대기 " + FormatSec(preview.WaitSec));
-            return string.Join("\n", lines);
         }
 
         private string NameOrUnknown(string speciesId)
@@ -557,10 +536,7 @@ namespace Mozzi.Game.Ui
             {
                 _pickA[index] = null;
                 _pickB[index] = null;
-                if (index == _viewSlot)
-                {
-                    _machine.PlayMerge(index, _data.Species.Get(a), _data.Species.Get(b));
-                }
+                _slots[index].Machine.PlayMerge(index, _data.Species.Get(a), _data.Species.Get(b));
             }
             else
             {
@@ -640,13 +616,13 @@ namespace Mozzi.Game.Ui
         {
             _pickSlot = slotIndex;
             _pickFirst = first;
-            string which = "둘째";
+            string which = "오른쪽";
             if (first)
             {
-                which = "첫째";
+                which = "왼쪽";
             }
 
-            UiBindUtil.SetText(_pickTitle, "칸 " + (slotIndex + 1) + " · " + which + " 재료 고르기");
+            UiBindUtil.SetText(_pickTitle, "칸 " + (slotIndex + 1) + " · " + which + " 깔때기에 넣을 찹쌀이");
             UiBindUtil.SetActive(_pickPanel, true);
             RefreshPickRows();
         }

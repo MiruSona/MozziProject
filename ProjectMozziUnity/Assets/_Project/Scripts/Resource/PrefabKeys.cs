@@ -12,6 +12,7 @@ namespace Mozzi.Resource
         public const string UiMozziCodexScreen = "Prefabs/UI/MozziCodexScreen";
         public const string UiStorageScreen = "Prefabs/UI/StorageScreen";
         public const string UiStallScreen = "Prefabs/UI/StallScreen";
+        public const string UiKitchenScreen = "Prefabs/UI/KitchenScreen";
         public const string UiRecipeCodexScreen = "Prefabs/UI/RecipeCodexScreen";
         public const string UiOfflinePopup = "Prefabs/UI/OfflinePopup";
         public const string UiMozziPopup = "Prefabs/UI/MozziPopup";

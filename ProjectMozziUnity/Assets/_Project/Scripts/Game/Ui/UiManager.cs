@@ -21,7 +21,7 @@ namespace Mozzi.Game.Ui
     // Canvas 를 코드로 만들고 화면 프리팹을 빌려 붙인다. Manager → 화면은 EventBus 로 받는다.
     // 농장 화면이 바탕, 덮개는 한 번에 하나, 팝업 · 디버그 패널이 맨 위다 (세로조각1판설계 3절).
     // 화면·디버그 패널은 내용 칸(안전 영역 안 540 폭)에 붙이고, 팝업의 어두운 막은 화면 끝까지 덮는다.
-    // 옛 360 기준 프리팹은 Legacy360 껍데기(×1.5) 안에 붙여 겉보기를 지킨다 — 540 으로 옮긴 화면(농장)은 껍데기 밖 내용 칸에 바로 붙인다.
+    // 옛 360 기준 프리팹은 Legacy360 껍데기(×1.5) 안에 붙여 겉보기를 지킨다 — 540 으로 옮긴 화면(농장 · 주방)은 껍데기 밖 내용 칸에 바로 붙인다.
     public sealed class UiManager : IManager, IProcess, IUiHub
     {
         // 이보다 짧게 비웠으면 팝업을 안 띄운다.
@@ -56,8 +56,11 @@ namespace Mozzi.Game.Ui
         private MozziCodexScreen _codexScreen;
         private StorageScreen _storageScreen;
         private StallScreen _stallScreen;
+        private KitchenScreen _kitchenScreen;
         private RecipeCodexScreen _recipeCodexScreen;
         private OverlayScreen _open;
+        // 다른 덮개 위에서 연 화면(주방 · 도감)을 닫으면 돌아갈 덮개들. 맨 뒤가 바로 아래 겹이다. 비면 농장으로.
+        private readonly List<OverlayScreen> _returnStack = new List<OverlayScreen>();
         private OfflinePopup _offlinePopup;
         private MozziPopup _mozziPopup;
 #if UNITY_EDITOR || MOZZI_DEBUG
@@ -102,11 +105,13 @@ namespace Mozzi.Game.Ui
             _farmScreen.Bind(_inventory.IngredientIds, this, _clock.AdvanceDay, OnBuyFence);
             BindIngredientIcons();
 
-            _synthesisScreen = RentOverlay<SynthesisScreen>(PrefabKeys.UiSynthesisScreen);
-            _codexScreen = RentOverlay<MozziCodexScreen>(PrefabKeys.UiMozziCodexScreen);
-            _storageScreen = RentOverlay<StorageScreen>(PrefabKeys.UiStorageScreen);
-            _stallScreen = RentOverlay<StallScreen>(PrefabKeys.UiStallScreen);
-            _recipeCodexScreen = RentOverlay<RecipeCodexScreen>(PrefabKeys.UiRecipeCodexScreen);
+            // 540 기준 전용 화면은 내용 칸에, 옛 360 기준 화면은 껍데기 안에 붙인다.
+            _synthesisScreen = RentOverlay<SynthesisScreen>(PrefabKeys.UiSynthesisScreen, _contentRoot);
+            _codexScreen = RentOverlay<MozziCodexScreen>(PrefabKeys.UiMozziCodexScreen, _legacyContent);
+            _storageScreen = RentOverlay<StorageScreen>(PrefabKeys.UiStorageScreen, _legacyContent);
+            _stallScreen = RentOverlay<StallScreen>(PrefabKeys.UiStallScreen, _contentRoot);
+            _kitchenScreen = RentOverlay<KitchenScreen>(PrefabKeys.UiKitchenScreen, _contentRoot);
+            _recipeCodexScreen = RentOverlay<RecipeCodexScreen>(PrefabKeys.UiRecipeCodexScreen, _legacyContent);
 
             _offlinePopup = _resource.Rent<OfflinePopup>(PrefabKeys.UiOfflinePopup, _legacyPopup);
             StretchToParent(_offlinePopup.transform as RectTransform);
@@ -234,7 +239,7 @@ namespace Mozzi.Game.Ui
 
         public void OpenMozziCodex()
         {
-            Open(_codexScreen);
+            OpenOver(_codexScreen);
         }
 
         public void OpenStorage()
@@ -247,22 +252,41 @@ namespace Mozzi.Game.Ui
             Open(_stallScreen);
         }
 
-        // 가판대 화면의 「레시피 도감」 버튼에서도 온다 — 3-1 「패널끼리 안 옮김」의 유일한 예외다.
+        public void OpenKitchen()
+        {
+            OpenOver(_kitchenScreen);
+        }
+
+        public void OpenKitchenMenu()
+        {
+            OpenOver(_kitchenScreen);
+            _kitchenScreen.OpenMenu();
+        }
+
+        // 가판대 · 주방 화면의 「레시피 도감」 버튼에서도 온다. 닫으면 연 화면으로 돌아간다.
         public void OpenRecipeCodex()
         {
-            Open(_recipeCodexScreen);
+            OpenOver(_recipeCodexScreen);
+        }
+
+        public void CloseTop()
+        {
+            if (_returnStack.Count == 0)
+            {
+                CloseAll();
+                return;
+            }
+
+            OverlayScreen back = _returnStack[_returnStack.Count - 1];
+            _returnStack.RemoveAt(_returnStack.Count - 1);
+            HideOpen();
+            Show(back);
         }
 
         public void CloseAll()
         {
-            if (_open == null)
-            {
-                return;
-            }
-
-            _open.OnClosed();
-            _open.gameObject.SetActive(false);
-            _open = null;
+            _returnStack.Clear();
+            HideOpen();
         }
 
         // 농장에 없는 id 면 안 연다 (탭과 사라짐이 같은 프레임에 겹칠 때).
@@ -312,6 +336,30 @@ namespace Mozzi.Game.Ui
             _mozziPopup.Hide();
         }
 
+        // 지금 열린 덮개를 돌아갈 자리로 쌓고 연다. 농장에서 열었으면 쌓을 것이 없어 닫으면 농장이다.
+        // 이미 쌓인 덮개를 다시 열면 그 위 겹은 버린다 — 고리가 생기지 않게.
+        private void OpenOver(OverlayScreen screen)
+        {
+            if (_open == screen)
+            {
+                return;
+            }
+
+            int index = _returnStack.IndexOf(screen);
+            if (index >= 0)
+            {
+                _returnStack.RemoveRange(index, _returnStack.Count - index);
+            }
+            else if (_open != null)
+            {
+                _returnStack.Add(_open);
+            }
+
+            HideOpen();
+            Show(screen);
+        }
+
+        // 농장 건물에서 바로 여는 길. 쌓인 겹을 다 버린다.
         private void Open(OverlayScreen screen)
         {
             if (_open == screen)
@@ -320,6 +368,23 @@ namespace Mozzi.Game.Ui
             }
 
             CloseAll();
+            Show(screen);
+        }
+
+        private void HideOpen()
+        {
+            if (_open == null)
+            {
+                return;
+            }
+
+            _open.OnClosed();
+            _open.gameObject.SetActive(false);
+            _open = null;
+        }
+
+        private void Show(OverlayScreen screen)
+        {
             _open = screen;
             screen.gameObject.SetActive(true);
             screen.transform.SetAsLastSibling();
@@ -355,10 +420,10 @@ namespace Mozzi.Game.Ui
         }
 #endif
 
-        // 덮개는 빌려서 내용 칸 밑에 두고 처음엔 꺼 둔다.
-        private T RentOverlay<T>(string key) where T : OverlayScreen
+        // 덮개는 빌려서 parent(내용 칸 또는 옛 껍데기) 밑에 두고 처음엔 꺼 둔다.
+        private T RentOverlay<T>(string key, RectTransform parent) where T : OverlayScreen
         {
-            T screen = _resource.Rent<T>(key, _legacyContent);
+            T screen = _resource.Rent<T>(key, parent);
             StretchToParent(screen.transform as RectTransform);
             screen.Bind(this);
             screen.gameObject.SetActive(false);

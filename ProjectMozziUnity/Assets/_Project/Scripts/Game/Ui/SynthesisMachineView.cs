@@ -9,8 +9,8 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 합성소 화면 가운데의 기계 한 대. 보고 있는 칸의 상태를 그림으로 보여 준다 :
-    // 투입구의 재료 둘 · 창 안의 음양 연출 · 배출구 앞의 결과 그림자.
+    // 합성소 기계 한 대(칸 하나)의 연출 : 깔때기의 재료 둘 · 창 안의 음양 연출 · 서랍 속 결과 그림자.
+    // 기계 몸 그림(상태별 스프라이트)은 화면이 갈아 끼우고, 여기는 그 위에 얹는 것만 맡는다.
     // 모션은 전부 _motions 에 모아 두고, 상태가 바뀌거나 화면이 닫히면 StopFx 가 한 번에 끊는다.
     public sealed class SynthesisMachineView
     {
@@ -62,21 +62,19 @@ namespace Mozzi.Game.Ui
         private SynthesisMachineMode _mode = SynthesisMachineMode.None;
         private int _slot = -1;
 
-        public SynthesisMachineView(Transform scene, string prefabName, IResourceHub resource, IVfxHub vfx)
+        // 넷이 같은 자식 이름을 쓰므로 반드시 기계 뿌리(Machine_i) 밑에서만 찾는다.
+        public SynthesisMachineView(Transform machineRoot, string prefabName, IResourceHub resource, IVfxHub vfx)
         {
             _resource = resource;
             // 화면 연출이라 실제 시간으로 돈다 — 디버그 배속을 올려도 연출 빠르기는 같다.
             _scheduler = vfx.Ui;
 
-            Image machine = UiBindUtil.Find<Image>(scene, UiNames.SynthesisMachine, prefabName);
-            machine.sprite = resource.GetSprite(SpriteKeys.ScreenSynthesisMachine);
-
-            _inletA = new MozziIconView(UiBindUtil.FindObject(scene, UiNames.SynthesisInletA, prefabName).transform, prefabName);
-            _inletB = new MozziIconView(UiBindUtil.FindObject(scene, UiNames.SynthesisInletB, prefabName).transform, prefabName);
+            _inletA = new MozziIconView(UiBindUtil.FindObject(machineRoot, UiNames.SynthesisInletA, prefabName).transform, prefabName);
+            _inletB = new MozziIconView(UiBindUtil.FindObject(machineRoot, UiNames.SynthesisInletB, prefabName).transform, prefabName);
             _inletAHome = _inletA.Root.anchoredPosition;
             _inletBHome = _inletB.Root.anchoredPosition;
 
-            RectTransform window = UiBindUtil.Find<RectTransform>(scene, UiNames.SynthesisWindowFx, prefabName);
+            RectTransform window = UiBindUtil.Find<RectTransform>(machineRoot, UiNames.SynthesisWindowFx, prefabName);
             _windowPos = window.anchoredPosition;
             _yinRoot = UiBindUtil.Find<RectTransform>(window, UiNames.SynthesisYinRoot, prefabName);
             _halfA = UiBindUtil.Find<Image>(window, UiNames.SynthesisYinHalfA, prefabName);
@@ -106,7 +104,7 @@ namespace Mozzi.Game.Ui
                 _sparkleEnds.Add(new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius);
             }
 
-            Transform outlet = UiBindUtil.FindObject(scene, UiNames.SynthesisOutletResult, prefabName).transform;
+            Transform outlet = UiBindUtil.FindObject(machineRoot, UiNames.SynthesisOutletResult, prefabName).transform;
             _outlet = new MozziIconView(outlet, prefabName);
             _outletMark = UiBindUtil.FindObject(outlet, UiNames.SynthesisOutletMark, prefabName);
 

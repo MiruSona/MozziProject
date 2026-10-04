@@ -7,13 +7,24 @@ namespace Mozzi.Game.Ui
 
         void OpenSynthesis();
 
+        // 다른 덮개 위에서 열면 닫을 때 그 덮개로 돌아간다 (CloseTop).
         void OpenMozziCodex();
 
         void OpenStorage();
 
         void OpenStall();
 
+        // 가판대에서 열면 닫을 때 가판대로 돌아간다 (CloseTop).
+        void OpenKitchen();
+
+        // 주방을 열고 차림표 판(찾은 떡 바로 만들기)까지 띄운다. 가판대 칠판에서 온다.
+        void OpenKitchenMenu();
+
+        // 다른 덮개 위에서 열면 닫을 때 그 덮개로 돌아간다 (CloseTop).
         void OpenRecipeCodex();
+
+        // 덮개의 「닫기」. 다른 덮개에서 왔으면(가판대 → 주방 → 도감) 한 겹씩 되돌아가고, 아니면 농장으로.
+        void CloseTop();
 
         void CloseAll();
 

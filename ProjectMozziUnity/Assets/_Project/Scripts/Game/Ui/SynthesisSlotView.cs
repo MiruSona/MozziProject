@@ -5,48 +5,50 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 합성소 화면의 칸 하나가 쥔 위젯 묶음. 상태(잠김 · 빔 · 돌고 있음 · 다 됨)마다 그룹 하나를 켠다.
+    // 합성소 칸 하나(기계 뿌리 Machine_i)가 쥔 위젯 묶음. 넷이 같은 자식 이름을 쓰므로 전부 기계 뿌리 밑에서 찾는다.
+    // 상태별로 무엇을 켜고 끌지는 화면(SynthesisScreen)이 정한다.
     public sealed class SynthesisSlotView
     {
-        // 칸 뿌리. 화면은 보고 있는 칸 하나만 켠다.
         public readonly GameObject Root;
-        public readonly GameObject LockedGroup;
-        public readonly GameObject EmptyGroup;
-        public readonly GameObject RunningGroup;
-        public readonly GameObject DoneGroup;
+        public readonly Image MachineArt;
+        public readonly Button Plate;
+        public readonly TMP_Text PlateText;
+        public readonly Button DrawerButton;
+        public readonly Button BuyStand;
+        public readonly TMP_Text BuyText;
+        public readonly Button InletAButton;
+        public readonly Button InletBButton;
+        public readonly GameObject PlusA;
+        public readonly GameObject PlusB;
+        public readonly SynthesisMachineView Machine;
 
-        public readonly Button BuySlotButton;
-        public readonly Button MaterialAButton;
-        public readonly Button MaterialBButton;
-        public readonly Button StartButton;
-        public readonly Button TakeButton;
-        public readonly TMP_Text PreviewText;
-        public readonly TMP_Text RemainText;
-
-        public SynthesisSlotView(Transform slotRoot, string prefabName,
-            UnityAction onBuySlot, UnityAction onMaterialA, UnityAction onMaterialB, UnityAction onStart, UnityAction onTake)
+        public SynthesisSlotView(Transform machineRoot, string prefabName, SynthesisMachineView machine,
+            UnityAction onInletA, UnityAction onInletB, UnityAction onPlate, UnityAction onDrawer, UnityAction onBuy)
         {
-            Root = slotRoot.gameObject;
-            LockedGroup = UiBindUtil.FindObject(slotRoot, UiNames.SynthesisLockedGroup, prefabName);
-            EmptyGroup = UiBindUtil.FindObject(slotRoot, UiNames.SynthesisEmptyGroup, prefabName);
-            RunningGroup = UiBindUtil.FindObject(slotRoot, UiNames.SynthesisRunningGroup, prefabName);
-            DoneGroup = UiBindUtil.FindObject(slotRoot, UiNames.SynthesisDoneGroup, prefabName);
+            Root = machineRoot.gameObject;
+            Machine = machine;
+            MachineArt = UiBindUtil.Find<Image>(machineRoot, UiNames.SynthesisMachineArt, prefabName);
 
-            BuySlotButton = UiBindUtil.BindButton(slotRoot, UiNames.SynthesisBuySlotButton, prefabName, onBuySlot);
-            MaterialAButton = UiBindUtil.BindButton(slotRoot, UiNames.SynthesisMaterialAButton, prefabName, onMaterialA);
-            MaterialBButton = UiBindUtil.BindButton(slotRoot, UiNames.SynthesisMaterialBButton, prefabName, onMaterialB);
-            StartButton = UiBindUtil.BindButton(slotRoot, UiNames.SynthesisStartButton, prefabName, onStart);
-            TakeButton = UiBindUtil.BindButton(slotRoot, UiNames.SynthesisTakeButton, prefabName, onTake);
-            PreviewText = UiBindUtil.Find<TMP_Text>(slotRoot, UiNames.SynthesisPreviewText, prefabName);
-            RemainText = UiBindUtil.Find<TMP_Text>(slotRoot, UiNames.SynthesisRemainText, prefabName);
+            Plate = UiBindUtil.BindButton(machineRoot, UiNames.SynthesisPlate, prefabName, onPlate);
+            PlateText = UiBindUtil.Find<TMP_Text>(Plate.transform, UiNames.SynthesisPlateText, prefabName);
+            DrawerButton = UiBindUtil.BindButton(machineRoot, UiNames.SynthesisDrawerButton, prefabName, onDrawer);
+            BuyStand = UiBindUtil.BindButton(machineRoot, UiNames.SynthesisBuyStand, prefabName, onBuy);
+            BuyText = UiBindUtil.Find<TMP_Text>(BuyStand.transform, UiNames.SynthesisBuyText, prefabName);
+
+            InletAButton = UiBindUtil.BindButton(machineRoot, UiNames.SynthesisInletAButton, prefabName, onInletA);
+            InletBButton = UiBindUtil.BindButton(machineRoot, UiNames.SynthesisInletBButton, prefabName, onInletB);
+            PlusA = UiBindUtil.FindObject(InletAButton.transform, UiNames.SynthesisInletPlus, prefabName);
+            PlusB = UiBindUtil.FindObject(InletBButton.transform, UiNames.SynthesisInletPlus, prefabName);
         }
 
-        public void ShowGroup(GameObject group)
+        // 상태마다 누를 수 있는 것만 켠다. 표 · 서랍 · 받침 · 깔때기 둘.
+        public void ShowControls(bool plate, bool drawer, bool buy, bool inlets)
         {
-            UiBindUtil.SetActive(LockedGroup, group == LockedGroup);
-            UiBindUtil.SetActive(EmptyGroup, group == EmptyGroup);
-            UiBindUtil.SetActive(RunningGroup, group == RunningGroup);
-            UiBindUtil.SetActive(DoneGroup, group == DoneGroup);
+            UiBindUtil.SetActive(Plate.gameObject, plate);
+            UiBindUtil.SetActive(DrawerButton.gameObject, drawer);
+            UiBindUtil.SetActive(BuyStand.gameObject, buy);
+            UiBindUtil.SetActive(InletAButton.gameObject, inlets);
+            UiBindUtil.SetActive(InletBButton.gameObject, inlets);
         }
     }
 }
