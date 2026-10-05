@@ -59,6 +59,10 @@ b = 0.4
 rerank_top = 200
 abstain_floor = 0.15
 syn_weight = 0.5
+# keys_strict 를 켜면 keys 칸으로만 맞은 기억도 엄격 칸 답이 된다. 기본 꺼짐 (C1).
+keys_strict = false
+# obs_strict_full 을 켜면 모음 기억은 칸 0·1 에서 맞았을 때만 엄격 답이다. 기본 꺼짐 (B1).
+obs_strict_full = false
 
 # 임베딩은 조건부다. 모델 파일이 없으면 조용히 낱말 검색만 한다.
 # path 는 낱말 임베딩 표(ko.bin) 자리다. 비면 Memory/model/ko.bin 을 본다.
@@ -70,6 +74,18 @@ path = ""
 model = ""
 floor = 0.35
 rrf_weight = 1.5
+# mix 는 뜻 후보 섞기다. 의미 모드에서 뜻이 가까운 기억을 낱말 후보와 따로 데려와 섞는다.
+# 뜻으로만 올라온 답에는 [뜻] 이 붙는다. mix_floor·mix_rank 가 뜻 몫을 주는 바닥이다.
+# mix_keep 은 섞은 뒤에도 제 자리를 지키는 낱말 상위 건수다.
+# 기본은 끔이다 — 켜면 답이 더 잘 오르지만 답 없는 질문에도 헛답이 는다.
+# 끄면(false) 섞기 전과 결과가 같다. 모델이 없으면 켜 있어도 아무 일도 안 한다.
+mix = false
+mix_top = 20
+mix_weight = 1
+mix_k = 60
+mix_floor = 0.58
+mix_rank = 3
+mix_keep = 0
 
 # 문서 품질 문턱. mem eval --quality 가 규칙을 강등하면 여기 적는다.
 [quality]
@@ -105,3 +121,14 @@ precision_off = 0.6
 
 # 폴더 이름 -> scope 값. 비어 있어도 된다 (없으면 폴더 이름 소문자를 쓴다).
 [scope]
+
+# 자동 쌓기. nudge = false 면 Stop 훅이 붙어 있어도 침묵한다.
+# 문턱은 nudge_edits(파일 고침 수) 또는 nudge_turns(사용자 턴 수) 하나만 넘어도 된다.
+[retain]
+nudge = true
+nudge_edits = 5
+nudge_turns = 8
+nudge_max = 2
+per_session = 5
+per_day = 20
+queue_days = 14

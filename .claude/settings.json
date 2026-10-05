@@ -87,6 +87,49 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mem",
+            "args": [
+              "hook",
+              "stop"
+            ],
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mem",
+            "args": [
+              "hook",
+              "pre-compact"
+            ],
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mem",
+            "args": [
+              "hook",
+              "session-end"
+            ],
+            "timeout": 10
+          }
+        ]
       }
     ]
   },
