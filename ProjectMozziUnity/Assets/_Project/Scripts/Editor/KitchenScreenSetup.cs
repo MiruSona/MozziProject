@@ -245,7 +245,8 @@ namespace Mozzi.Editor
                 icon.anchorMin = new Vector2(0f, 0.5f);
                 icon.anchorMax = new Vector2(0f, 0.5f);
                 icon.pivot = new Vector2(0f, 0.5f);
-                icon.anchoredPosition = new Vector2(12f, 0f);
+                // 떡 그림이 캔버스 바닥에 붙어 있어 그림 가운데가 캔버스 가운데보다 약 5 아래다. 그만큼 올려 줄 가운데에 맞춘다.
+                icon.anchoredPosition = new Vector2(12f, 5f);
                 icon.sizeDelta = new Vector2(32f, 32f);
                 FormalUiBuild.SetImage(icon, Color.white, false).preserveAspect = true;
             }

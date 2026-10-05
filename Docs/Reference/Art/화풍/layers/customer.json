@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "canvas": [120, 240],
+  "layers": [
+    { "name": "body", "kind": "body" },
+    { "name": "shirt", "kind": "cloth" },
+    { "name": "bottom", "kind": "cloth", "optional": true },
+    { "name": "face", "kind": "face" },
+    { "name": "hair", "kind": "hair" }
+  ],
+  "items": []
+}

@@ -1,0 +1,30 @@
+{
+ "version": 1,
+ "status": "ok",
+ "in": "(임시) layers/mozzi.json + Resources/Art",
+ "canvas": [
+  64,
+  64
+ ],
+ "layers": [
+  "body",
+  "cheek",
+  "face",
+  "acc"
+ ],
+ "items": [
+  "face_01",
+  "face_02",
+  "face_03",
+  "face_04",
+  "face_05",
+  "face_06",
+  "face_07",
+  "face_08",
+  "face_09",
+  "face_10"
+ ],
+ "failed": [],
+ "rules": [],
+ "warnings": []
+}

@@ -1,0 +1,1418 @@
+{
+  "version": 1,
+  "profile": "mozzi_prop",
+  "status": "fail",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 22
+  },
+  "failed": [
+    "max_colors"
+  ],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": false,
+      "detail": "한도 48가지를 넘은 그림 6개",
+      "items": [
+        {
+          "where": "kitchen_pound_0.png",
+          "colors": 44
+        },
+        {
+          "where": "kitchen_pound_1.png",
+          "colors": 55
+        },
+        {
+          "where": "kitchen_pound_2.png",
+          "colors": 53
+        },
+        {
+          "where": "kitchen_pound_3.png",
+          "colors": 58
+        },
+        {
+          "where": "kitchen_pound_4.png",
+          "colors": 57
+        },
+        {
+          "where": "kitchen_pound_5.png",
+          "colors": 60
+        },
+        {
+          "where": "kitchen_pound_6.png",
+          "colors": 54
+        },
+        {
+          "where": "stall_main.png",
+          "colors": 25
+        },
+        {
+          "where": "storage_main.png",
+          "colors": 43
+        },
+        {
+          "where": "synthesis_machine.png",
+          "colors": 36
+        },
+        {
+          "where": "synthesis_machine_done.png",
+          "colors": 17
+        },
+        {
+          "where": "synthesis_machine_run_0.png",
+          "colors": 40
+        },
+        {
+          "where": "synthesis_machine_run_1.png",
+          "colors": 44
+        },
+        {
+          "where": "synthesis_machine_run_2.png",
+          "colors": 45
+        },
+        {
+          "where": "synthesis_machine_run_3.png",
+          "colors": 46
+        },
+        {
+          "where": "synthesis_machine_run_4.png",
+          "colors": 45
+        },
+        {
+          "where": "synthesis_machine_run_5.png",
+          "colors": 44
+        },
+        {
+          "where": "synthesis_machine_run_6.png",
+          "colors": 43
+        },
+        {
+          "where": "synthesis_machine_run_7.png",
+          "colors": 44
+        },
+        {
+          "where": "synthesis_main.png",
+          "colors": 16
+        },
+        {
+          "where": "synthesis_slot_buy.png",
+          "colors": 33
+        },
+        {
+          "where": "synthesis_slot_locked.png",
+          "colors": 20
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 254가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#0B0503",
+          "first": "synthesis_machine_run_2.png"
+        },
+        {
+          "color": "#1F0910",
+          "first": "kitchen_pound_1.png"
+        },
+        {
+          "color": "#22150B",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#260B1B",
+          "first": "kitchen_pound_1.png"
+        },
+        {
+          "color": "#2A1014",
+          "first": "kitchen_pound_1.png"
+        },
+        {
+          "color": "#2B1A0D",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#2D221A",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#31261D",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#321D16",
+          "first": "synthesis_machine_run_0.png"
+        },
+        {
+          "color": "#32231A",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#331A22",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#350D16",
+          "first": "kitchen_pound_1.png"
+        },
+        {
+          "color": "#362A22",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#382A21",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#392A20",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#3A2D25",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#3C1D26",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#3F0A27",
+          "first": "kitchen_pound_3.png"
+        },
+        {
+          "color": "#403229",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#413026",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#432429",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#432617",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#43333C",
+          "first": "kitchen_pound_1.png"
+        },
+        {
+          "color": "#472E24",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#483E40",
+          "first": "synthesis_machine_run_0.png"
+        },
+        {
+          "color": "#493930",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#4B372B",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#4C382F",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#4D2B2D",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#55321E",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#5A3532",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#5C3F4A",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#5E4D45",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#5F4238",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#605657",
+          "first": "kitchen_pound_1.png"
+        },
+        {
+          "color": "#613320",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#614839",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#635E50",
+          "first": "synthesis_machine_run_1.png"
+        },
+        {
+          "color": "#642626",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#64473B",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#66412A",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#664B3D",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#664E4C",
+          "first": "kitchen_pound_1.png"
+        },
+        {
+          "color": "#684038",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#6A4134",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#6C3C27",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#6C4737",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#6D5C53",
+          "first": "synthesis_machine_run_1.png"
+        },
+        {
+          "color": "#6F493E",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#70716C",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#724329",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#724732",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#724E3A",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#754C3E",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#762A2C",
+          "first": "kitchen_pound_1.png"
+        },
+        {
+          "color": "#765245",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#775C69",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#78695F",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#794A3A",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#7A4E3E",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#7B5241",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#7C5645",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#7E4A2F",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#7E5343",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#7F715F",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#805845",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#805941",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#81756A",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#82523E",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#847B79",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#858686",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#875439",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#877A6F",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#885A44",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#89534A",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#897F6F",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#8B3636",
+          "first": "kitchen_pound_1.png"
+        },
+        {
+          "color": "#8B5A42",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#8C544F",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#8C5A3E",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#8C5B4E",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#8D5546",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#8E5342",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#8E644A",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#8F7E8A",
+          "first": "kitchen_pound_5.png"
+        },
+        {
+          "color": "#8F8276",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#925C52",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#926148",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#92644E",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#936145",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#944232",
+          "first": "kitchen_pound_1.png"
+        },
+        {
+          "color": "#94694E",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#955A48",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#959966",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#965E41",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#966247",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#96624B",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#97554F",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#985E4B",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#985F55",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#996347",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#996448",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#996648",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#9A7666",
+          "first": "kitchen_pound_4.png"
+        },
+        {
+          "color": "#9C6A4A",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#9C6C4F",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#9C6E51",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#9D5C49",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#9F604B",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#A06E4D",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#A16A4F",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#A24F41",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#A2655E",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#A2664D",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#A3715A",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#A4725B",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#A47959",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#A56860",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#A57468",
+          "first": "kitchen_pound_2.png"
+        },
+        {
+          "color": "#A67350",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#A69789",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#A7978B",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#A98571",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#AA7C5E",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#AB6E50",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#AC6757",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#AD8062",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#AD8C80",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#AE4C2F",
+          "first": "kitchen_pound_1.png"
+        },
+        {
+          "color": "#AE7151",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#AE7B56",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#AF6955",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#AF805A",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#AF8561",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#B1786B",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#B27253",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#B27553",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#B27F59",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#B2826B",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#B6756F",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#B87C76",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#B88B69",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#B89B83",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#B8A797",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#B9785B",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#B98165",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#BAA69B",
+          "first": "kitchen_pound_3.png"
+        },
+        {
+          "color": "#BD7A69",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#BD7E5F",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#BE7760",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#BE8672",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#BE8C66",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#C09CB6",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#C38163",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#C4A18F",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#C5967E",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#C59E92",
+          "first": "kitchen_pound_3.png"
+        },
+        {
+          "color": "#C5A393",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#C6805C",
+          "first": "synthesis_machine_run_2.png"
+        },
+        {
+          "color": "#C68179",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#C68666",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#C6956E",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#C69960",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#C77E63",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#C89A7A",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#C98581",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#C9B5A3",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#CA7E7D",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#CA8D6C",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#CA9C7A",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#CBA386",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#CBC2BE",
+          "first": "synthesis_machine_run_3.png"
+        },
+        {
+          "color": "#CC916F",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#CCAB9C",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#CD9189",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#CD9E77",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#CDAA9C",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#CE9088",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#D09672",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#D2C2B1",
+          "first": "synthesis_machine_run_0.png"
+        },
+        {
+          "color": "#D39974",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#D4898A",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#D4A997",
+          "first": "synthesis_machine_run_0.png"
+        },
+        {
+          "color": "#D4B2A0",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#D5CBC3",
+          "first": "synthesis_machine_run_1.png"
+        },
+        {
+          "color": "#D69E79",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#D6BEB1",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#D79088",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#D7B39A",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#DA947E",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#DBBD9E",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#DBD6D0",
+          "first": "synthesis_machine_run_1.png"
+        },
+        {
+          "color": "#DD9A90",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#DEB190",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#DEB77D",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#E0AC86",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#E0CBC2",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#E19C92",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#E1C2AE",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#E1C8AD",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#E2CDB4",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#E5A499",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#E6A69C",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#E6B48E",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#E6B7A3",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#E6BEA6",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#E6C9B4",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#E8D3BC",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#E9D3BD",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#E9DACF",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#EAA296",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#EABD98",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#EACCB0",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#EBD1BB",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#ECA699",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#ECBEAA",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#ECCFBC",
+          "first": "kitchen_pound_3.png"
+        },
+        {
+          "color": "#EDC1B0",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#EEBBAF",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#EECFB7",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#EED6BF",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#EFCBAD",
+          "first": "kitchen_pound_3.png"
+        },
+        {
+          "color": "#F0DAC4",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#F0E1CC",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#F0E5DC",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#F1DAC3",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#F1DDC0",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#F2A9A1",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#F2DCC0",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#F3DDC7",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#F3E5D4",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#F4B640",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#F4D3BE",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#F5E2CE",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#F5E5D2",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#F5E6D2",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#F5E9D8",
+          "first": "synthesis_main.png"
+        },
+        {
+          "color": "#F6E3CE",
+          "first": "synthesis_slot_buy.png"
+        },
+        {
+          "color": "#F6E7D5",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#F6E8D0",
+          "first": "stall_main.png"
+        },
+        {
+          "color": "#F6E9D7",
+          "first": "synthesis_slot_locked.png"
+        },
+        {
+          "color": "#F6F0EB",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#F8E0C1",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#F9EFDF",
+          "first": "synthesis_machine.png"
+        },
+        {
+          "color": "#FCDF6B",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#FCFBFA",
+          "first": "synthesis_machine_done.png"
+        },
+        {
+          "color": "#FDB4AC",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#FDEBD1",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#FEFBF6",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#FFC1BB",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#FFF3DA",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#FFF3DD",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#FFF5DD",
+          "first": "storage_main.png"
+        },
+        {
+          "color": "#FFF6E2",
+          "first": "storage_main.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "outline",
+      "ok": false,
+      "detail": "외곽선 방식이 다른 그림 4장",
+      "items": [
+        {
+          "where": "stall_main.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9828,
+          "lit": 1.209
+        },
+        {
+          "where": "storage_main.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9586,
+          "lit": 0.946
+        },
+        {
+          "where": "synthesis_machine_done.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9441,
+          "lit": 1.075
+        },
+        {
+          "where": "synthesis_main.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9802,
+          "lit": 0.799
+        }
+      ]
+    },
+    {
+      "rule": "color_cap",
+      "ok": false,
+      "detail": "권장 색 수를 넘은 그림 6장",
+      "items": [
+        {
+          "where": "kitchen_pound_1.png",
+          "why": [
+            "색 55가지 > 권장 48가지 (크기 232)"
+          ],
+          "size": 232,
+          "colors": 55,
+          "cap": 48
+        },
+        {
+          "where": "kitchen_pound_2.png",
+          "why": [
+            "색 53가지 > 권장 48가지 (크기 226)"
+          ],
+          "size": 226,
+          "colors": 53,
+          "cap": 48
+        },
+        {
+          "where": "kitchen_pound_3.png",
+          "why": [
+            "색 58가지 > 권장 48가지 (크기 205)"
+          ],
+          "size": 205,
+          "colors": 58,
+          "cap": 48
+        },
+        {
+          "where": "kitchen_pound_4.png",
+          "why": [
+            "색 57가지 > 권장 48가지 (크기 205)"
+          ],
+          "size": 205,
+          "colors": 57,
+          "cap": 48
+        },
+        {
+          "where": "kitchen_pound_5.png",
+          "why": [
+            "색 60가지 > 권장 48가지 (크기 211)"
+          ],
+          "size": 211,
+          "colors": 60,
+          "cap": 48
+        },
+        {
+          "where": "kitchen_pound_6.png",
+          "why": [
+            "색 54가지 > 권장 48가지 (크기 222)"
+          ],
+          "size": 222,
+          "colors": 54,
+          "cap": 48
+        }
+      ]
+    },
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            19.71,
+            3.89
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ]
+        }
+      ]
+    }
+  ]
+}

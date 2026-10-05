@@ -1,0 +1,29 @@
+# 연출 (Resources/Art/Fx/) — 흰 1색
+# 값 정본 : Docs/Design/화풍통일/2026-10-05-그림화풍통일설계.md 3 · 5절
+name: mozzi_fx
+preset: topdown_action
+
+style:
+  outline: none
+  light: top_left              # 빛은 왼쪽 위
+  scale: 1                     # 1px 도트
+
+palette:
+  ramp_len: 5
+  outline: null
+  exact_match: false           # 램프 밖 색은 알리기만 한다 (지금 그림은 아직 팔레트에 안 맞췄다)
+  ramps_file: palettes/mozzi_master.json   # 이 프로필 폴더 아래 사본을 읽는다 (README 「팔레트 사본」)
+  swap: runtime_lut
+
+check:
+  allow_alpha: binary          # 반투명 없음
+  max_colors: 1
+
+tiles:
+  size: 32                     # 06 문서 2절 6번
+
+ui:
+  ppu: 32
+  reference: [540, 1200]       # 540 기준 · 9:20
+  scale_mode: integer
+  letterbox: true

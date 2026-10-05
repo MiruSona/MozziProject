@@ -117,7 +117,7 @@ namespace Mozzi.Editor
         }
 
         // 서랍 속 결과 그림자(찹쌀이 겹)와 「?」. 다 됨일 때만 켜진다.
-        // 맥박 연출이 OutletResult 의 scale 을 덮어쓰므로 줄이는 배율은 바깥 묶음(OutletHolder)에 준다.
+        // 맥박 연출이 OutletResult 의 scale 을 덮어쓰므로 배율은 바깥 묶음(OutletHolder)에 준다.
         private static void MakeOutlet(RectTransform machine)
         {
             float size = LayoutConstUi.MozziIconSize;
@@ -126,10 +126,11 @@ namespace Mozzi.Editor
             holder.localScale = new Vector3(SynthesisRoomLayout.OutletScale, SynthesisRoomLayout.OutletScale, 1f);
 
             RectTransform outlet = MakeMozziIcon(holder, UiNames.SynthesisOutletResult, size * 0.5f, size * 0.5f);
-            TextMeshProUGUI mark = FormalUiBuild.MakeText(outlet, UiNames.SynthesisOutletMark, 40f, FormalUiBuild.TextLight, TextAlignmentOptions.Center);
+            TextMeshProUGUI mark = FormalUiBuild.MakeText(outlet, UiNames.SynthesisOutletMark,
+                SynthesisRoomLayout.OutletMarkFontSize, FormalUiBuild.TextLight, TextAlignmentOptions.Center);
             mark.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
             mark.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-            mark.rectTransform.sizeDelta = new Vector2(64f, 64f);
+            mark.rectTransform.sizeDelta = new Vector2(SynthesisRoomLayout.OutletMarkSize, SynthesisRoomLayout.OutletMarkSize);
             mark.fontStyle = FontStyles.Bold;
 
             // 꺼진 TMP 는 재질이 아직 없어 외곽선을 넣으면 NRE 가 난다. 잠깐 켜고 넣은 뒤 다시 끈다.
@@ -329,7 +330,8 @@ namespace Mozzi.Editor
             panel.gameObject.SetActive(false);
         }
 
-        // 결과 연출 : 화면 전체 어두운 판(누르면 닫힘) + 가운데 색 네모 · 이름 · NEW.
+        // 결과 연출 : 화면 전체 어두운 판(누르면 닫힘) + 가운데 찹쌀이 · 이름 · NEW.
+        // 커지는 연출이 ResultBox 의 scale 을 덮어쓰므로 ×2 배율은 그 안 찹쌀이 겹 묶음에 준다.
         private static void MakeResultPanel(Transform root)
         {
             RectTransform panel = FormalUiBuild.NewNode(root, UiNames.SynthesisResultPanel);
@@ -339,12 +341,14 @@ namespace Mozzi.Editor
 
             float size = SynthesisRoomLayout.ResultBoxSize;
             RectTransform box = Middle(panel, UiNames.SynthesisResultBox, size);
-            FormalUiBuild.SetImage(box, Color.white, false);
+            RectTransform mozzi = MakeMozziIcon(box, UiNames.SynthesisResultMozzi, size * 0.5f, size * 0.5f);
+            mozzi.localScale = new Vector3(SynthesisRoomLayout.ResultMozziScale, SynthesisRoomLayout.ResultMozziScale, 1f);
 
+            float textOffset = SynthesisRoomLayout.ResultTextOffset;
             TextMeshProUGUI isNew = FormalUiBuild.MakeText(panel, UiNames.SynthesisResultNewText, 30f, NewColor, TextAlignmentOptions.Center);
             isNew.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
             isNew.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-            isNew.rectTransform.anchoredPosition = new Vector2(0f, size);
+            isNew.rectTransform.anchoredPosition = new Vector2(0f, textOffset);
             isNew.rectTransform.sizeDelta = new Vector2(240f, 44f);
             isNew.fontStyle = FontStyles.Bold;
             isNew.text = "NEW!";
@@ -352,7 +356,7 @@ namespace Mozzi.Editor
             TextMeshProUGUI name = FormalUiBuild.MakeText(panel, UiNames.SynthesisResultNameText, 28f, FormalUiBuild.TextLight, TextAlignmentOptions.Center);
             name.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
             name.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-            name.rectTransform.anchoredPosition = new Vector2(0f, -size);
+            name.rectTransform.anchoredPosition = new Vector2(0f, -textOffset);
             name.rectTransform.sizeDelta = new Vector2(400f, 44f);
             name.text = "";
 

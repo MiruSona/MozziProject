@@ -1,0 +1,2293 @@
+{
+  "version": 1,
+  "profile": "mozzi_prop",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 9
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 48가지를 넘은 그림 0개",
+      "items": [
+        {
+          "where": "display_case.png",
+          "colors": 27
+        },
+        {
+          "where": "kitchen_plate.png",
+          "colors": 37
+        },
+        {
+          "where": "kitchen_tray.png",
+          "colors": 22
+        },
+        {
+          "where": "stall_board_topper.png",
+          "colors": 18
+        },
+        {
+          "where": "stall_counter.png",
+          "colors": 22
+        },
+        {
+          "where": "stall_prop_menu.png",
+          "colors": 48
+        },
+        {
+          "where": "stall_prop_register.png",
+          "colors": 34
+        },
+        {
+          "where": "stall_prop_vase.png",
+          "colors": 38
+        },
+        {
+          "where": "synthesis_plate.png",
+          "colors": 45
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 291가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#000000",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#050402",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#090D03",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#0A1706",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#0E1F09",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#110E26",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#12020B",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#14290E",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#150603",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#180D09",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#181B15",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#191028",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#1B1512",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#1C3511",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#1D1425",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#1F0702",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#201D1A",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#232111",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#250A08",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#261621",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#280A04",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#2A2119",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#2B0B16",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#2C1305",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#2C1C04",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#2E281D",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#304F19",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#310413",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#312A20",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#351C0B",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#351D20",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#352348",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#36211F",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#362B22",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#371408",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#371D27",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#3C2523",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#3E1D06",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#3E2121",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#3E2927",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#3F2731",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#40140A",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#402E23",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#431C1A",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#452A36",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#453326",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#462522",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#471705",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#482125",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#482D2C",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#49291E",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#4A2B09",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#4A2E3A",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#4B3632",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#4B6E22",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#4E2404",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#4F2A24",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#523643",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#543728",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#543734",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#562931",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#56302F",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#573123",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#582316",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#582A05",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#582E26",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#5A412B",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#5A5252",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#5B8026",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#5D2212",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#60372C",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#64402F",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#64433F",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#663A37",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#673C41",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#678D28",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#68331B",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#683D15",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#693D2A",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#694F5D",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#6D350B",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#6D3E30",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#6D4634",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#6E2D38",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#713E3C",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#72422E",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#724634",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#734935",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#734E3A",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#742C0D",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#743B43",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#744A39",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#754E3A",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#764332",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#765550",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#766E6D",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#77463E",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#784240",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#794E3B",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#79523E",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#7A4129",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#7C2525",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#7C3140",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#7D503D",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#80450D",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#82513A",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#834F33",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#844E43",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#854D35",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#85533A",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#86553B",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#8B5752",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#8C440B",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#8C5A3F",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#8D4E3B",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#8D5238",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#8F453B",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#8F5548",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#904A50",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#915E40",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#926142",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#955360",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#956243",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#956C63",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#966544",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#986A5B",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#996646",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#9A5D40",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#9A6947",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#9B573F",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#9B5D4B",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#9C520A",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#9D360B",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#9D5E41",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#9D6A48",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#9E303C",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#9E6C4A",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#9F7051",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#A06142",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#A1704E",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#A35A2B",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#A38D7D",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#A4595C",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#A67552",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#A76249",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#A76751",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#A7722B",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#A87F71",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#AA7956",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#AB4F07",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#AD3C52",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#B06E4C",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#B08C86",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#B1585D",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#B15A06",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#B17158",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#B46064",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#B46365",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#B56946",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#B5A392",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#B7744F",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#BA723A",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#BA8629",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#BD4D5D",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#BD6A6C",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#BD7B53",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#BF7F5F",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#C07146",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#C18A58",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#C27F56",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#C2A29A",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#C2AE97",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#C37577",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#C47312",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#C67171",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#C68763",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#C7875D",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#C8A960",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#CA8D68",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#CABAA7",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#CC6605",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#CD6572",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#CD8927",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#CD926D",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#CE7778",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#CF8893",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#D1644F",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#D28180",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#D29668",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#D2A041",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#D37A78",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#D49087",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#D49B75",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#D76E79",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#D7886D",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#D7B7A2",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#D8883F",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#D95872",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#D98137",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#DA8F46",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#DBA5A1",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#DCA272",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#DCCCB8",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#DD6F07",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#DD7C1A",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#DD9691",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#DEA680",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#DED5D3",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#DFAC60",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#E08784",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#E16C79",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#E1C5B0",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#E1CAB5",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#E1CEB9",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#E2A5A5",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#E2AC7B",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#E3BC86",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#E3BEB6",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#E3CBB8",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#E48F41",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#E4BA69",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#E5B281",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#E5B383",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#E67D80",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#E68387",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#E68A17",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#E6908B",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#E6D2BE",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#E7A6A0",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#E7B685",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#E7D4C1",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#E8B995",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#E9BA89",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#E9D0BB",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#EA9A93",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#EBB2A9",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#EBC195",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#ECC091",
+          "first": "kitchen_tray.png"
+        },
+        {
+          "color": "#EEB46F",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#EFC486",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#EFC49B",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#F07B91",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#F17E0C",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#F18E91",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#F1BDB3",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#F1C0AF",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#F1CBAA",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#F29495",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#F2A450",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#F2AF9F",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#F39A0E",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#F3C2B8",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#F3CBBF",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#F3D596",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#F4D1A2",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#F4E8D9",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#F4EEE3",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#F595A0",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#F692A3",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#F6E5CF",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#F6EBD9",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#F7B858",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#F7CE7E",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#F7DBB1",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#F8A3B0",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#F8A8A8",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#F8AEA3",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#F8D69F",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#F98F0F",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#F9BAA9",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#F9D8CB",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#F9DDCF",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#F9EEE2",
+          "first": "kitchen_plate.png"
+        },
+        {
+          "color": "#FAEBBA",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#FAF9F9",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#FAFAF9",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FBBBB8",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FBBEC8",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#FBEFD3",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#FCCBB6",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#FCD3CD",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FDCCCC",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FDEC75",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FDF1DB",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#FDFEFD",
+          "first": "stall_prop_register.png"
+        },
+        {
+          "color": "#FE7208",
+          "first": "stall_prop_menu.png"
+        },
+        {
+          "color": "#FEEDCD",
+          "first": "stall_board_topper.png"
+        },
+        {
+          "color": "#FEFAF3",
+          "first": "synthesis_plate.png"
+        },
+        {
+          "color": "#FEFDFA",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#FEFEFE",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FFBEC0",
+          "first": "stall_counter.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "outline",
+      "ok": false,
+      "detail": "외곽선 방식이 다른 그림 4장",
+      "items": [
+        {
+          "where": "stall_board_topper.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9835,
+          "lit": 1.102
+        },
+        {
+          "where": "stall_counter.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.8802,
+          "lit": 0.572
+        },
+        {
+          "where": "stall_prop_menu.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 1.0,
+          "dark": 1.0,
+          "lit": 6.783
+        },
+        {
+          "where": "stall_prop_vase.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.7415,
+          "dark": 0.9796,
+          "lit": 1.015
+        }
+      ]
+    },
+    {
+      "rule": "isolated",
+      "ok": false,
+      "detail": "외톨이 픽셀이 많은 그림 3장",
+      "items": [
+        {
+          "where": "stall_prop_menu.png",
+          "why": [
+            "외톨이 픽셀 132개 · 비율 0.203 > 0.15"
+          ],
+          "ratio": 0.2025,
+          "points": [
+            [
+              12,
+              1
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              14,
+              1
+            ],
+            [
+              12,
+              2
+            ],
+            [
+              13,
+              2
+            ],
+            [
+              14,
+              2
+            ],
+            [
+              12,
+              3
+            ],
+            [
+              13,
+              3
+            ],
+            [
+              14,
+              3
+            ],
+            [
+              5,
+              4
+            ],
+            [
+              6,
+              4
+            ],
+            [
+              12,
+              4
+            ],
+            [
+              13,
+              4
+            ],
+            [
+              14,
+              4
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              21,
+              4
+            ],
+            [
+              5,
+              5
+            ],
+            [
+              6,
+              5
+            ],
+            [
+              16,
+              5
+            ],
+            [
+              20,
+              5
+            ],
+            [
+              21,
+              5
+            ],
+            [
+              5,
+              6
+            ],
+            [
+              20,
+              6
+            ],
+            [
+              7,
+              7
+            ],
+            [
+              20,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              5,
+              9
+            ],
+            [
+              6,
+              9
+            ],
+            [
+              7,
+              9
+            ],
+            [
+              8,
+              9
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              7,
+              10
+            ],
+            [
+              20,
+              10
+            ],
+            [
+              21,
+              10
+            ],
+            [
+              22,
+              10
+            ],
+            [
+              6,
+              11
+            ],
+            [
+              7,
+              11
+            ],
+            [
+              20,
+              11
+            ],
+            [
+              21,
+              11
+            ],
+            [
+              6,
+              12
+            ],
+            [
+              20,
+              12
+            ],
+            [
+              6,
+              13
+            ],
+            [
+              22,
+              13
+            ],
+            [
+              4,
+              14
+            ],
+            [
+              6,
+              14
+            ],
+            [
+              8,
+              14
+            ],
+            [
+              21,
+              14
+            ],
+            [
+              22,
+              14
+            ],
+            [
+              6,
+              15
+            ],
+            [
+              8,
+              15
+            ]
+          ]
+        },
+        {
+          "where": "stall_prop_register.png",
+          "why": [
+            "외톨이 픽셀 131개 · 비율 0.176 > 0.15"
+          ],
+          "ratio": 0.1758,
+          "points": [
+            [
+              17,
+              2
+            ],
+            [
+              13,
+              3
+            ],
+            [
+              14,
+              3
+            ],
+            [
+              10,
+              4
+            ],
+            [
+              14,
+              4
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              7,
+              5
+            ],
+            [
+              11,
+              5
+            ],
+            [
+              14,
+              5
+            ],
+            [
+              16,
+              5
+            ],
+            [
+              18,
+              5
+            ],
+            [
+              21,
+              5
+            ],
+            [
+              8,
+              6
+            ],
+            [
+              15,
+              6
+            ],
+            [
+              17,
+              6
+            ],
+            [
+              18,
+              6
+            ],
+            [
+              19,
+              6
+            ],
+            [
+              21,
+              6
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              10,
+              7
+            ],
+            [
+              18,
+              7
+            ],
+            [
+              4,
+              8
+            ],
+            [
+              8,
+              8
+            ],
+            [
+              17,
+              8
+            ],
+            [
+              22,
+              8
+            ],
+            [
+              4,
+              9
+            ],
+            [
+              14,
+              9
+            ],
+            [
+              21,
+              9
+            ],
+            [
+              22,
+              9
+            ],
+            [
+              22,
+              10
+            ],
+            [
+              27,
+              10
+            ],
+            [
+              27,
+              11
+            ],
+            [
+              4,
+              12
+            ],
+            [
+              22,
+              12
+            ],
+            [
+              26,
+              12
+            ],
+            [
+              28,
+              12
+            ],
+            [
+              3,
+              13
+            ],
+            [
+              12,
+              13
+            ],
+            [
+              18,
+              13
+            ],
+            [
+              19,
+              13
+            ],
+            [
+              23,
+              13
+            ],
+            [
+              25,
+              13
+            ],
+            [
+              26,
+              13
+            ],
+            [
+              27,
+              13
+            ],
+            [
+              3,
+              14
+            ],
+            [
+              7,
+              14
+            ],
+            [
+              8,
+              14
+            ],
+            [
+              11,
+              14
+            ],
+            [
+              12,
+              14
+            ],
+            [
+              13,
+              14
+            ]
+          ]
+        },
+        {
+          "where": "stall_prop_vase.png",
+          "why": [
+            "외톨이 픽셀 117개 · 비율 0.194 > 0.15"
+          ],
+          "ratio": 0.1937,
+          "points": [
+            [
+              11,
+              1
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              10,
+              2
+            ],
+            [
+              11,
+              2
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              14,
+              3
+            ],
+            [
+              16,
+              3
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              8,
+              5
+            ],
+            [
+              12,
+              5
+            ],
+            [
+              13,
+              5
+            ],
+            [
+              16,
+              5
+            ],
+            [
+              9,
+              6
+            ],
+            [
+              15,
+              6
+            ],
+            [
+              4,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              13,
+              7
+            ],
+            [
+              9,
+              8
+            ],
+            [
+              12,
+              8
+            ],
+            [
+              15,
+              8
+            ],
+            [
+              19,
+              8
+            ],
+            [
+              20,
+              8
+            ],
+            [
+              8,
+              9
+            ],
+            [
+              9,
+              9
+            ],
+            [
+              12,
+              9
+            ],
+            [
+              19,
+              9
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              7,
+              10
+            ],
+            [
+              11,
+              10
+            ],
+            [
+              12,
+              10
+            ],
+            [
+              13,
+              10
+            ],
+            [
+              14,
+              10
+            ],
+            [
+              19,
+              10
+            ],
+            [
+              20,
+              10
+            ],
+            [
+              6,
+              11
+            ],
+            [
+              7,
+              11
+            ],
+            [
+              12,
+              11
+            ],
+            [
+              13,
+              11
+            ],
+            [
+              18,
+              11
+            ],
+            [
+              3,
+              12
+            ],
+            [
+              5,
+              12
+            ],
+            [
+              6,
+              12
+            ],
+            [
+              8,
+              12
+            ],
+            [
+              18,
+              12
+            ],
+            [
+              19,
+              12
+            ],
+            [
+              21,
+              12
+            ],
+            [
+              1,
+              13
+            ],
+            [
+              5,
+              13
+            ],
+            [
+              18,
+              13
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "color_cap",
+      "ok": false,
+      "detail": "권장 색 수를 넘은 그림 5장",
+      "items": [
+        {
+          "where": "kitchen_plate.png",
+          "why": [
+            "색 37가지 > 권장 32가지 (크기 81)"
+          ],
+          "size": 81,
+          "colors": 37,
+          "cap": 32
+        },
+        {
+          "where": "stall_prop_menu.png",
+          "why": [
+            "색 48가지 > 권장 16가지 (크기 34)"
+          ],
+          "size": 34,
+          "colors": 48,
+          "cap": 16
+        },
+        {
+          "where": "stall_prop_register.png",
+          "why": [
+            "색 34가지 > 권장 16가지 (크기 33)"
+          ],
+          "size": 33,
+          "colors": 34,
+          "cap": 16
+        },
+        {
+          "where": "stall_prop_vase.png",
+          "why": [
+            "색 38가지 > 권장 16가지 (크기 38)"
+          ],
+          "size": 38,
+          "colors": 38,
+          "cap": 16
+        },
+        {
+          "where": "synthesis_plate.png",
+          "why": [
+            "색 45가지 > 권장 32가지 (크기 116)"
+          ],
+          "size": 116,
+          "colors": 45,
+          "cap": 32
+        }
+      ]
+    },
+    {
+      "rule": "near_colors",
+      "ok": false,
+      "detail": "비슷한 색 쌍이 있는 그림 1장",
+      "items": [
+        {
+          "where": "synthesis_plate.png",
+          "why": [
+            "비슷한 색 쌍 29개 (합치기 후보)"
+          ],
+          "count": 29,
+          "pairs": [
+            {
+              "from": "#996646",
+              "to": "#956243",
+              "from_count": 276,
+              "to_count": 351,
+              "delta": 4
+            },
+            {
+              "from": "#926142",
+              "to": "#956243",
+              "from_count": 229,
+              "to_count": 351,
+              "delta": 3
+            },
+            {
+              "from": "#966544",
+              "to": "#926142",
+              "from_count": 155,
+              "to_count": 229,
+              "delta": 4
+            },
+            {
+              "from": "#966544",
+              "to": "#956243",
+              "from_count": 155,
+              "to_count": 351,
+              "delta": 3
+            },
+            {
+              "from": "#966544",
+              "to": "#996646",
+              "from_count": 155,
+              "to_count": 276,
+              "delta": 3
+            },
+            {
+              "from": "#9A6947",
+              "to": "#966544",
+              "from_count": 153,
+              "to_count": 155,
+              "delta": 4
+            },
+            {
+              "from": "#9A6947",
+              "to": "#996646",
+              "from_count": 153,
+              "to_count": 276,
+              "delta": 3
+            },
+            {
+              "from": "#9D6A48",
+              "to": "#996646",
+              "from_count": 122,
+              "to_count": 276,
+              "delta": 4
+            },
+            {
+              "from": "#9D6A48",
+              "to": "#9A6947",
+              "from_count": 122,
+              "to_count": 153,
+              "delta": 3
+            },
+            {
+              "from": "#85533A",
+              "to": "#82513A",
+              "from_count": 113,
+              "to_count": 126,
+              "delta": 3
+            },
+            {
+              "from": "#915E40",
+              "to": "#926142",
+              "from_count": 92,
+              "to_count": 229,
+              "delta": 3
+            },
+            {
+              "from": "#915E40",
+              "to": "#956243",
+              "from_count": 92,
+              "to_count": 351,
+              "delta": 4
+            },
+            {
+              "from": "#724634",
+              "to": "#734935",
+              "from_count": 90,
+              "to_count": 114,
+              "delta": 3
+            },
+            {
+              "from": "#9E6C4A",
+              "to": "#9A6947",
+              "from_count": 83,
+              "to_count": 153,
+              "delta": 4
+            },
+            {
+              "from": "#9E6C4A",
+              "to": "#9D6A48",
+              "from_count": 83,
+              "to_count": 122,
+              "delta": 2
+            },
+            {
+              "from": "#2E281D",
+              "to": "#312A20",
+              "from_count": 80,
+              "to_count": 133,
+              "delta": 3
+            },
+            {
+              "from": "#86553B",
+              "to": "#82513A",
+              "from_count": 79,
+              "to_count": 126,
+              "delta": 4
+            },
+            {
+              "from": "#86553B",
+              "to": "#85533A",
+              "from_count": 79,
+              "to_count": 113,
+              "delta": 2
+            },
+            {
+              "from": "#A67552",
+              "to": "#AA7956",
+              "from_count": 78,
+              "to_count": 146,
+              "delta": 4
+            },
+            {
+              "from": "#7D503D",
+              "to": "#79523E",
+              "from_count": 38,
+              "to_count": 41,
+              "delta": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝기가 칸마다 오르지 않는다",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            19.71
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ]
+        }
+      ]
+    }
+  ]
+}

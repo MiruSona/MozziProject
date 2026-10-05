@@ -1,0 +1,34 @@
+# 찹쌀이 몸 · 표정 · 볼 · 악세 (Resources/Art/Mozzi/)
+# 값 정본 : Docs/Design/화풍통일/2026-10-05-그림화풍통일설계.md 3 · 5절
+name: mozzi_char
+preset: topdown_action
+canvas:
+  frame: [64, 64]
+  baseline_y: 50               # 몸 bbox 아래끝
+  center_x: 31.5
+  pivot: bottom_center
+
+style:
+  outline: solid
+  light: top_left              # 빛은 왼쪽 위
+  scale: 1                     # 1px 도트
+
+palette:
+  ramp_len: 5
+  outline: "#5E5048"       # 찹쌀이 몸 선 (2026-10-05 확정 · 옛 값 회색 #6E6E6E)
+  exact_match: false           # 램프 밖 색은 알리기만 한다 (지금 그림은 아직 팔레트에 안 맞췄다)
+  ramps_file: palettes/mozzi_master.json   # 이 프로필 폴더 아래 사본을 읽는다 (README 「팔레트 사본」)
+  swap: runtime_lut
+
+check:
+  allow_alpha: binary          # 반투명 없음
+  max_colors: 8
+
+tiles:
+  size: 32                     # 06 문서 2절 6번
+
+ui:
+  ppu: 32
+  reference: [540, 1200]       # 540 기준 · 9:20
+  scale_mode: integer
+  letterbox: true

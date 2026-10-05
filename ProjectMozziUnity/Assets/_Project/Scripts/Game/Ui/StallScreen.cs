@@ -75,7 +75,7 @@ namespace Mozzi.Game.Ui
             for (int i = 0; i < UiNames.StallShelfCellCount; i++)
             {
                 Transform cell = UiBindUtil.FindObject(transform, UiNames.StallShelfCellPrefix + i, PrefabName).transform;
-                _shelfCells.Add(new ShelfCellView(cell));
+                _shelfCells.Add(new ShelfCellView(cell, PrefabName));
             }
 
             // 손님 · 말풍선은 같은 이름 자식이 셋씩이라 각 뿌리 밑에서 찾는다.
@@ -135,12 +135,6 @@ namespace Mozzi.Game.Ui
             }
 
             UiBindUtil.SetText(_status, "손님 " + _stall.ServedToday + "/" + _stall.CustomersPerDay + " · " + state);
-        }
-
-        // 묶음 칸 하나에 드는 떡 수 = ceil(상한 ÷ 6). 올림이라야 한 종류가 상한까지 차도 6칸 안에 든다.
-        private static int ShelfUnit(int shelfMax)
-        {
-            return (shelfMax + 5) / 6;
         }
 
         // 종류별 수를 표 순서대로, 평범한 떡은 맨 뒤에 묶는다. 진열장 칸에는 앞에서부터 그림으로, 칠판에는 글자로.
@@ -207,51 +201,30 @@ namespace Mozzi.Game.Ui
             UiBindUtil.SetText(_boardBody, string.Join("\n", lines));
         }
 
-        // 레시피표 순서로 묶음 칸을 펼치고 평범한 떡은 맨 뒤. 남은 칸은 끈다.
+        // 레시피표 순서로 한 종류에 접시 하나, 평범한 떡은 맨 뒤. 접시 여섯을 넘는 종류는 칠판 글자로만 본다. 남은 접시는 비운다.
         private void RefreshShelfCells(IReadOnlyList<RecipeRow> rows, Dictionary<string, int> counts, int plain)
         {
-            int unit = ShelfUnit(_stall.ShelfMax);
             int cellIndex = 0;
-            for (int i = 0; i < rows.Count; i++)
+            for (int i = 0; i < rows.Count && cellIndex < _shelfCells.Count; i++)
             {
                 int count;
-                if (counts.TryGetValue(rows[i].Id, out count) == false)
+                if (counts.TryGetValue(rows[i].Id, out count))
                 {
-                    continue;
+                    _shelfCells[cellIndex].Set(_resource.GetSprite(SpriteKeys.CakeOne(rows[i].SpriteKey)), count);
+                    cellIndex++;
                 }
-
-                cellIndex = FillCells(cellIndex, _resource.GetSprite(rows[i].SpriteKey), count, unit);
             }
 
-            if (plain > 0)
+            if (plain > 0 && cellIndex < _shelfCells.Count)
             {
-                cellIndex = FillCells(cellIndex, _resource.GetSprite(SpriteKeys.CakePlain), plain, unit);
+                _shelfCells[cellIndex].Set(_resource.GetSprite(SpriteKeys.CakeOne(SpriteKeys.CakePlain)), plain);
+                cellIndex++;
             }
 
             for (int i = cellIndex; i < _shelfCells.Count; i++)
             {
                 _shelfCells[i].Hide();
             }
-        }
-
-        // 한 종류 count 개를 unit 씩 칸에 나눠 담고 다음 칸 번호를 돌려준다. 진열장 칸이 다 차면 거기서 멈춘다 (나머지는 칠판 글자로 본다).
-        private int FillCells(int cellIndex, Sprite sprite, int count, int unit)
-        {
-            int left = count;
-            while (left > 0)
-            {
-                if (cellIndex >= _shelfCells.Count)
-                {
-                    return cellIndex;
-                }
-
-                int inCell = Mathf.Min(left, unit);
-                _shelfCells[cellIndex].Set(sprite, inCell);
-                left -= inCell;
-                cellIndex++;
-            }
-
-            return cellIndex;
         }
 
         // 앞 손님 셋만 세우고, 넷째부터는 「뒤에 N명」 글자로 센다.

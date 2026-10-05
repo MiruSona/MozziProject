@@ -1,0 +1,968 @@
+{
+  "version": 1,
+  "profile": "mozzi_bg",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 5
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 48가지를 넘은 그림 0개 (배경 그림은 68가지)",
+      "items": [
+        {
+          "where": "kitchen_bg.png",
+          "colors": 64,
+          "background": true
+        },
+        {
+          "where": "path_main.png",
+          "colors": 7
+        },
+        {
+          "where": "sky.png",
+          "colors": 14,
+          "background": true
+        },
+        {
+          "where": "stall_bg.png",
+          "colors": 65,
+          "background": true
+        },
+        {
+          "where": "synthesis_bg.png",
+          "colors": 68,
+          "background": true
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 185가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#09020D",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#0F0511",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#1F0207",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#1F0917",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#230C17",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#2B0C20",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#2E2628",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#300F20",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#301A1F",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#310A27",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#330E1E",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#330F27",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#351027",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#391C20",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#3A152A",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#3A3D46",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#3E1523",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#3F182A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#451A24",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#481F2E",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#495A4A",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#4A131C",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#4C2D33",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#4D262B",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#4E1E27",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#4F2632",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#512624",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#52322D",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#562734",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#575F4F",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#592434",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#5B3533",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#5B4940",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#5C4C56",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#5C645A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#5F2E29",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#602B39",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#622C2F",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#662D3D",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#665C5B",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#67331F",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#67343C",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#67614F",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#6896AF",
+          "first": "sky.png"
+        },
+        {
+          "color": "#6B2E3B",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#6D4039",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#6F3D3F",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#703D41",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#75ABC2",
+          "first": "sky.png"
+        },
+        {
+          "color": "#783F36",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#794646",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#7A4A45",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#7B4047",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#7D4341",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#804E4A",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#814A49",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#834847",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#845246",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#859079",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#884E37",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#885844",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#894C4D",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#89504B",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#8A534E",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#8A7477",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#8A8F63",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#8C97A0",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#8D5750",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#8D5A4D",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#8E4D4B",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#902C27",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#914F4A",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#91573B",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#92463F",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#938980",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#956451",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#965C53",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#975F53",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#97CDE6",
+          "first": "sky.png"
+        },
+        {
+          "color": "#995649",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#9C5850",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#9C6E51",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#9E747A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#A0736D",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#A08D87",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#A16A57",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#A2634C",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#A2A873",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#A4604E",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#A54D45",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#A7B8C7",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#A7D5EC",
+          "first": "sky.png"
+        },
+        {
+          "color": "#A87552",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#A96255",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#AA6946",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#AC6063",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#AD755B",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#AD8062",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#ADA29C",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#AEB177",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#AF704F",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#B1684C",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#B26755",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#B4816C",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#B5CFE1",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#B67E5C",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#B69E9A",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#B7DCF0",
+          "first": "sky.png"
+        },
+        {
+          "color": "#BB8864",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#BBB4A9",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#BCE5F7",
+          "first": "sky.png"
+        },
+        {
+          "color": "#BD8575",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#BD9C78",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#BE846A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#BF7A5C",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#C16F51",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#C27D57",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#C2876B",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#C29474",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#C48473",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#C48D64",
+          "first": "path_main.png"
+        },
+        {
+          "color": "#C57F54",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#C5DEEA",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#C78463",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#CA8C5F",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#CA9073",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#CB795A",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#CB9966",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#CE8381",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#CEA389",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#CEB7AF",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#D1E7ED",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#D39286",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#D39884",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#D4A689",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#D69860",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#D7DEE1",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#D8B097",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#D8D9D6",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#D9A180",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#DBA17A",
+          "first": "path_main.png"
+        },
+        {
+          "color": "#DC8D52",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#DDA381",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#E0B1A2",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#E15747",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#E1AC87",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#E29B62",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#E3AF70",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#E3C5B7",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#E4BBA7",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#E7B662",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#EAAD75",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#EAB379",
+          "first": "path_main.png"
+        },
+        {
+          "color": "#EABFA8",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#EDC8B3",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#EDCC80",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#EEBFAA",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#EEDE78",
+          "first": "path_main.png"
+        },
+        {
+          "color": "#EFC298",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#EFDEFA",
+          "first": "sky.png"
+        },
+        {
+          "color": "#F0C48D",
+          "first": "path_main.png"
+        },
+        {
+          "color": "#F0C7A8",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#F0F4F7",
+          "first": "sky.png"
+        },
+        {
+          "color": "#F1DDC0",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F2956E",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#F2D5BA",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#F2E5FA",
+          "first": "sky.png"
+        },
+        {
+          "color": "#F3AE8B",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#F3D0AD",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#F4A587",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#F4B67F",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F5C8A6",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F5DDC9",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F6E8D0",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F8C898",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F8DAAF",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#FAE4BE",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#FBD394",
+          "first": "path_main.png"
+        },
+        {
+          "color": "#FBFCF5",
+          "first": "sky.png"
+        },
+        {
+          "color": "#FCF3D6",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#FCFDF1",
+          "first": "sky.png"
+        },
+        {
+          "color": "#FDD68B",
+          "first": "path_main.png"
+        },
+        {
+          "color": "#FFEEC8",
+          "first": "stall_bg.png"
+        },
+        {
+          "color": "#FFF8EF",
+          "first": "synthesis_bg.png"
+        },
+        {
+          "color": "#FFFFFC",
+          "first": "kitchen_bg.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            19.71,
+            3.89
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -29,11 +29,11 @@ namespace Mozzi.Game.Ui
         public const float MortarSlotSize = 28f;
         public const float MortarSlotGap = 4f;
 
-        // 결과 접시 (아래 가운데)와 떡 · 이름 · NEW 자리.
+        // 결과 접시 (아래 가운데)와 떡 · 이름 · NEW 자리. 떡 그림은 캔버스 바닥에 붙어 있어 ResultIconBottom 이 곧 접시 면 위 떡 밑이다 (외곽선 꼴 ① · ② 같은 값).
         public const float PlateX = 420f;
         public const float PlateY = 1000f;
         public const float ResultIconSize = 32f;
-        public const float ResultIconBottom = 966f;
+        public const float ResultIconBottom = 977f;
         public const float ResultNewY = 900f;
         public const float ResultNameTop = 1008f;
         public const float ResultTextWidth = 220f;

@@ -1,0 +1,1164 @@
+{
+  "version": 1,
+  "profile": "mozzi_prop",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 7
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 48가지를 넘은 그림 0개",
+      "items": [
+        {
+          "where": "display_case.png",
+          "colors": 27
+        },
+        {
+          "where": "stall_counter.png",
+          "colors": 20
+        },
+        {
+          "where": "stall_prop_vase.png",
+          "colors": 36
+        },
+        {
+          "where": "ui_badge_alert.png",
+          "colors": 5
+        },
+        {
+          "where": "ui_bubble.png",
+          "colors": 29
+        },
+        {
+          "where": "ui_bubble_c.png",
+          "colors": 24
+        },
+        {
+          "where": "ui_button.png",
+          "colors": 20
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 151가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#090D03",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#0A1706",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#0E1F09",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#0F0803",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#120D08",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#14290E",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#161B10",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#1A100B",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#1A1A14",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#1A433D",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#1B1310",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#1C3511",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#211A15",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#222019",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#261D1E",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#272517",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#2A221E",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#2A2A24",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#2B291E",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#2C2318",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#30231C",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#302923",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#304F19",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#351610",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#351D20",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#352348",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#352B27",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#361E1F",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#36211F",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#371415",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#3C2523",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#3D2C35",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#3E2121",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#3E2320",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#3E2927",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#40140A",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#401E1E",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#402017",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#422926",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#44282D",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#462522",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#481E18",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#482627",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#482D2C",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#4B6E22",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#4C2A24",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#4D2822",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#4F1A13",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#4F2A24",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#543734",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#552520",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#582316",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#582E26",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#583C2F",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#5A5252",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#5B8026",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#5E2E26",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#60372C",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#64433F",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#678D28",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#68331B",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#68585C",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#6D3327",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#6D3E30",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#6E2D38",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#753A2E",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#764332",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#765550",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#766E6D",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#7A4E46",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#7C2525",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#814E43",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#834F33",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#8D4E3B",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#8F453B",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#956C63",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#9B5538",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#9B573F",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#9E303C",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#9F7051",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#A25935",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#A38D7D",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#A76249",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#A87F71",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#B1585D",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#B2653A",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#B56946",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#B5A392",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#B78E75",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#BC7245",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#BD4D5D",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#BF9D7C",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#C07146",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#C2733D",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#C2AE97",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#C3A17F",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#C58460",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#C67741",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#CABAA7",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#CD6572",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#CD7F46",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#CDB0A3",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#CF8893",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#D1644F",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#D1854B",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#D2A983",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#D3B08E",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#D76E79",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#D7886D",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#D78C4D",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#DA9254",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#DBBB9E",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#DCCCB8",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#E16C79",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#E1985B",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#E1C5B0",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#E1C6A6",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#E1CEB9",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#E2A5A5",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#E67D80",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#E68387",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#E9D0BB",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#EDCFB6",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#EDE3C0",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#F0D7B8",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#F18E91",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#F29495",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#F3E1BF",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#F4E8D9",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#F4EEE3",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#F595A0",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#F5D6B2",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#F6E0C7",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#F6EBD9",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#F8A8A8",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#F8AEA3",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#F9BAA9",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#F9E6C5",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#FAFAF9",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FBBBB8",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FBEAD5",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#FBEDD6",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#FBEDD9",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#FCCBB6",
+          "first": "display_case.png"
+        },
+        {
+          "color": "#FCD3CD",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FDCCCC",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FDEC75",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FEF8E9",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#FEFDFA",
+          "first": "stall_counter.png"
+        },
+        {
+          "color": "#FEFEFE",
+          "first": "stall_prop_vase.png"
+        },
+        {
+          "color": "#FFBEC0",
+          "first": "stall_counter.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "outline",
+      "ok": false,
+      "detail": "외곽선 방식이 다른 그림 5장",
+      "items": [
+        {
+          "where": "stall_counter.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.8792,
+          "lit": 0.456
+        },
+        {
+          "where": "stall_prop_vase.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.2381,
+          "dark": 0.9796,
+          "lit": 0.93
+        },
+        {
+          "where": "ui_badge_alert.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 1.0,
+          "lit": 0.837
+        },
+        {
+          "where": "ui_bubble_c.png",
+          "why": [
+            "외곽선 판정 selout+light 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "selout+light",
+          "black": 0.1984,
+          "dark": 1.0,
+          "lit": 1.197
+        },
+        {
+          "where": "ui_button.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 1.0,
+          "lit": 0.502
+        }
+      ]
+    },
+    {
+      "rule": "isolated",
+      "ok": false,
+      "detail": "외톨이 픽셀이 많은 그림 1장",
+      "items": [
+        {
+          "where": "stall_prop_vase.png",
+          "why": [
+            "외톨이 픽셀 108개 · 비율 0.179 > 0.15"
+          ],
+          "ratio": 0.1788,
+          "points": [
+            [
+              11,
+              1
+            ],
+            [
+              13,
+              1
+            ],
+            [
+              10,
+              2
+            ],
+            [
+              11,
+              2
+            ],
+            [
+              8,
+              3
+            ],
+            [
+              14,
+              3
+            ],
+            [
+              16,
+              3
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              8,
+              5
+            ],
+            [
+              12,
+              5
+            ],
+            [
+              13,
+              5
+            ],
+            [
+              16,
+              5
+            ],
+            [
+              9,
+              6
+            ],
+            [
+              15,
+              6
+            ],
+            [
+              4,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              13,
+              7
+            ],
+            [
+              9,
+              8
+            ],
+            [
+              12,
+              8
+            ],
+            [
+              15,
+              8
+            ],
+            [
+              19,
+              8
+            ],
+            [
+              20,
+              8
+            ],
+            [
+              8,
+              9
+            ],
+            [
+              19,
+              9
+            ],
+            [
+              5,
+              10
+            ],
+            [
+              6,
+              10
+            ],
+            [
+              7,
+              10
+            ],
+            [
+              12,
+              10
+            ],
+            [
+              14,
+              10
+            ],
+            [
+              19,
+              10
+            ],
+            [
+              20,
+              10
+            ],
+            [
+              6,
+              11
+            ],
+            [
+              7,
+              11
+            ],
+            [
+              12,
+              11
+            ],
+            [
+              13,
+              11
+            ],
+            [
+              18,
+              11
+            ],
+            [
+              3,
+              12
+            ],
+            [
+              5,
+              12
+            ],
+            [
+              6,
+              12
+            ],
+            [
+              8,
+              12
+            ],
+            [
+              18,
+              12
+            ],
+            [
+              19,
+              12
+            ],
+            [
+              21,
+              12
+            ],
+            [
+              1,
+              13
+            ],
+            [
+              5,
+              13
+            ],
+            [
+              18,
+              13
+            ],
+            [
+              19,
+              13
+            ],
+            [
+              23,
+              13
+            ],
+            [
+              4,
+              14
+            ],
+            [
+              5,
+              14
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "color_cap",
+      "ok": false,
+      "detail": "권장 색 수를 넘은 그림 4장",
+      "items": [
+        {
+          "where": "stall_prop_vase.png",
+          "why": [
+            "색 36가지 > 권장 16가지 (크기 38)"
+          ],
+          "size": 38,
+          "colors": 36,
+          "cap": 16
+        },
+        {
+          "where": "ui_bubble.png",
+          "why": [
+            "색 29가지 > 권장 16가지 (크기 53)"
+          ],
+          "size": 53,
+          "colors": 29,
+          "cap": 16
+        },
+        {
+          "where": "ui_bubble_c.png",
+          "why": [
+            "색 24가지 > 권장 16가지 (크기 54)"
+          ],
+          "size": 54,
+          "colors": 24,
+          "cap": 16
+        },
+        {
+          "where": "ui_button.png",
+          "why": [
+            "색 20가지 > 권장 16가지 (크기 36)"
+          ],
+          "size": 36,
+          "colors": 20,
+          "cap": 16
+        }
+      ]
+    },
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝기가 칸마다 오르지 않는다",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            19.71
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ]
+        }
+      ]
+    }
+  ],
+  "info": [
+    {
+      "rule": "outline.small",
+      "detail": "작은 그림의 외곽선 몫",
+      "items": [
+        {
+          "where": "ui_badge_alert.png",
+          "note": "16px 그림에서 외곽선 몫 0.21 (크기 기준 0.23) — 작은 그림은 외곽선을 빼는 길도 있다"
+        }
+      ]
+    }
+  ]
+}

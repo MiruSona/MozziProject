@@ -16,6 +16,9 @@ namespace Mozzi.Resource
         public const string UiIconUpgrade = "UI/icon_upgrade";
         public const string UiIconMenu = "UI/icon_menu";
 
+        // 농장 건물 위 알림 표식 (16×16). 합성 다 됨 · 가판대 손님 있음.
+        public const string UiBadgeAlert = "UI/ui_badge_alert";
+
         // 정식 화면 배경 · 합성 기계(쉼) · 합성 연출 조각. 표가 없어 코드 상수로 둔다.
         public const string ScreenStallBg = "Screen/stall_bg";
         public const string ScreenSynthesisBg = "Screen/synthesis_bg";
@@ -31,13 +34,12 @@ namespace Mozzi.Resource
         public const string ScreenKitchenPoundPrefix = "Screen/kitchen_pound_";
         public const int KitchenPoundFrameCount = 7;
 
-        // 가판대 화면 부품 (계산대 · 주인 · 진열장 · 소품 셋 · 칠판 머리 장식). FormalArtCopy.CopyStall 이 정식 out 에서 들인다.
+        // 가판대 화면 부품 (계산대 · 주인 · 진열장 · 소품 둘 · 칠판 머리 장식). FormalArtCopy.CopyStall 이 정식 out 에서 들인다.
         public const string ScreenStallCounter = "Screen/stall_counter";
         public const string ScreenStallOwner = "Screen/stall_owner";
         public const string ScreenStallDisplayCase = "Screen/display_case";
         public const string ScreenStallVase = "Screen/stall_prop_vase";
         public const string ScreenStallRegister = "Screen/stall_prop_register";
-        public const string ScreenStallMenuStand = "Screen/stall_prop_menu";
         public const string ScreenStallBoardTopper = "Screen/stall_board_topper";
 
         // 9-slice 틀 (테두리는 MozziArtImport.BorderFor 가 넣는다). 꼬리 가운데 말풍선은 늘리지 않고 제 크기(54×29)로만 쓴다.
@@ -65,6 +67,16 @@ namespace Mozzi.Resource
 
         // 평범한 떡. Recipe 표에 줄이 없어 건물과 같이 코드 상수로 둔다.
         public const string CakePlain = "Cake/plain_cake";
+
+        // 진열장에 쌓는 한 개짜리 떡 그림. 떡 키("Cake/redbean_cake")에서 규칙으로 뽑는다 -> "CakeOne/redbean_cake_one".
+        public const string CakeFolder = "Cake/";
+        public const string CakeOneFolder = "CakeOne/";
+        public const string CakeOneSuffix = "_one";
+
+        public static string CakeOne(string cakeKey)
+        {
+            return CakeOneFolder + cakeKey.Substring(CakeFolder.Length) + CakeOneSuffix;
+        }
 
         // 메인 화면 하늘 (아래 가운데 피벗). 없으면 SkyView 가 단색 네모로 대신한다.
         public const string MainSky = "Main/sky";

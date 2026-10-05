@@ -247,7 +247,7 @@ namespace Mozzi.Game.View
         private BuildingObject RentBuilding(BuildingKind kind, string spriteKey, string label)
         {
             BuildingObject building = _resource.Rent<BuildingObject>(PrefabKeys.Building, _root);
-            building.Setup(kind, _resource.GetSprite(spriteKey), label);
+            building.Setup(kind, _resource.GetSprite(spriteKey), _resource.GetSprite(SpriteKeys.UiBadgeAlert), label);
             return building;
         }
 

@@ -28,16 +28,23 @@ namespace Mozzi.Game.Ui
         public const float VaseX = 200f;
         public const float RegisterX = 359f;
 
-        // 메뉴 세움판은 계산대에 자리가 없어 문 앞 마루에 세운다 (아래 가운데).
-        public const float MenuStandX = 468f;
-        public const float MenuStandY = 712f;
-
         // 진열장 그림 왼쪽 위와, 그 안 접시 여섯(2단 × 3)의 가운데 x · 떡 바닥 y (진열장 그림 안 좌표).
         public const float CaseLeft = 8f;
         public const float CaseTop = 559f;
         public static readonly float[] PlateCenterX = { 41f, 88f, 135f };
         public static readonly float[] PlateCakeBottom = { 45f, 83f };
-        public const float ShelfIconSize = 32f;
+
+        // 접시에 쌓는 한 개짜리 떡 그림의 크기 (Art/CakeOne). 그림 22×16 = 떡 21×15 + 오른쪽 · 아래 빈 1줄.
+        public const float ShelfCakeWidth = 22f;
+        public const float ShelfCakeHeight = 16f;
+
+        // 접시 하나에 쌓아 보이는 떡 수 : 개수가 문턱 k 번째 값 이상이면 k+1 개 (1~4개 = 1 · 5~9개 = 2 · 10개 이상 = 3).
+        public static readonly int[] PlateStackThresholds = { 1, 5, 10 };
+
+        // 쌓는 꼴. [보이는 떡 수 - 1][몇 번째 떡] = 접시 가운데에서 오른쪽 · 위로 옮기는 px. 뒤 번호가 앞에 그려진다.
+        // 2개는 나란히 놓아 살짝 겹치고, 3개는 아래 둘 + 위 하나다. 아랫단은 선반 턱까지 26px 이라 위 떡(8 + 떡 높이 15)이 3px 남기고 든다.
+        public static readonly float[][] PlateStackX = { new float[] { 0f }, new float[] { -7f, 7f }, new float[] { -9f, 9f, 0f } };
+        public static readonly float[][] PlateStackY = { new float[] { 0f }, new float[] { 2f, 0f }, new float[] { 0f, 0f, 8f } };
 
         // 앞 손님 셋의 발끝 x (줄 번호 순서)와 왼쪽을 보는지. 넷째부터는 「뒤에 N명」 글자로만 센다.
         // 오른쪽을 보는 손님 몸은 발끝에서 왼쪽 51 · 오른쪽 44, 머리 폭은 약 90 이라 왼쪽 둘은 112 떨어뜨린다.
@@ -61,7 +68,8 @@ namespace Mozzi.Game.Ui
         public const float BubbleHeight = 54f;
         public const float BubbleTextMaxWidth = 96f;
         public const float BubbleIconSize = 32f;
-        public const float BubbleIconBottom = 16f;
+        // 떡 그림(캔버스 바닥 1줄 위)의 가운데가 풍선 안쪽 가운데에 오는 값. 외곽선 꼴 ① (떡 높이 20) 은 19, 꼴 ② (높이 18) 는 20.
+        public const float BubbleIconBottom = 19f;
 
         // 「뒤에 N명」 글자 (가운데 · 높이). 오른쪽 손님 발밑과 버튼 줄 사이.
         public const float QueueMoreX = 410f;

@@ -1,0 +1,344 @@
+{
+ "label": "개편 뒤 (2026-10-05 뒷정리)",
+ "files": 111,
+ "groups": [
+  {
+   "group": "bg",
+   "kind": "bg",
+   "profile": "mozzi_bg",
+   "files": 5,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {},
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 185
+  },
+  {
+   "group": "bldg",
+   "kind": "bldg",
+   "profile": "mozzi_prop",
+   "files": 22,
+   "status": "fail",
+   "exit": 4,
+   "failed": [
+    "max_colors"
+   ],
+   "failed_detail": {
+    "max_colors": "한도 48가지를 넘은 그림 6개 : kitchen_pound_1.png 55, kitchen_pound_2.png 53, kitchen_pound_3.png 58, kitchen_pound_4.png 57, kitchen_pound_5.png 60, kitchen_pound_6.png 54"
+   },
+   "failed_files": {
+    "max_colors": [
+     "kitchen_pound_1.png",
+     "kitchen_pound_2.png",
+     "kitchen_pound_3.png",
+     "kitchen_pound_4.png",
+     "kitchen_pound_5.png",
+     "kitchen_pound_6.png"
+    ]
+   },
+   "warnings": {
+    "outline": [
+     "stall_main.png",
+     "storage_main.png",
+     "synthesis_machine_done.png",
+     "synthesis_main.png"
+    ],
+    "color_cap": [
+     "kitchen_pound_1.png",
+     "kitchen_pound_2.png",
+     "kitchen_pound_3.png",
+     "kitchen_pound_4.png",
+     "kitchen_pound_5.png",
+     "kitchen_pound_6.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 254
+  },
+  {
+   "group": "char_mozzi",
+   "kind": "char_mozzi",
+   "profile": "mozzi_char",
+   "files": 17,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "outline": [
+     "acc_crown.png",
+     "cheek.png",
+     "face_02.png",
+     "face_03.png",
+     "face_05.png",
+     "face_07.png",
+     "face_10.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 18
+  },
+  {
+   "group": "char_people",
+   "kind": "char_people",
+   "profile": "mozzi_people",
+   "files": 17,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "outline": [
+     "body.png",
+     "face_01.png",
+     "face_02.png",
+     "face_03.png",
+     "hair_01_black.png",
+     "hair_01_brown.png",
+     "hair_01_orange.png",
+     "hair_01_purple.png",
+     "hair_02_black.png",
+     "hair_02_brown.png",
+     "hair_02_orange.png",
+     "hair_02_purple.png",
+     "shirt_blue.png",
+     "shirt_green.png",
+     "shirt_red.png",
+     "shirt_yellow.png"
+    ],
+    "color_cap": [
+     "face_03.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 144
+  },
+  {
+   "group": "fx",
+   "kind": "fx",
+   "profile": "mozzi_fx",
+   "files": 3,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {},
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 1
+  },
+  {
+   "group": "icon",
+   "kind": "icon",
+   "profile": "mozzi_icon",
+   "files": 17,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "outline": [
+     "bean.png",
+     "bean_cake.png",
+     "jujube_cake.png",
+     "mugwort.png",
+     "mugwort_cake.png",
+     "mugwort_sesame_cake.png",
+     "pinenut.png",
+     "pinenut_cake.png",
+     "pinenut_jujube_cake.png",
+     "plain_cake.png",
+     "redbean_bean_cake.png",
+     "redbean_cake.png",
+     "redbean_mugwort_sesame_cake.png",
+     "sesame.png",
+     "sesame_cake.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 39
+  },
+  {
+   "group": "piece",
+   "kind": "piece",
+   "profile": "mozzi_prop",
+   "files": 8,
+   "status": "fail",
+   "exit": 4,
+   "failed": [
+    "alpha"
+   ],
+   "failed_detail": {
+    "alpha": "반투명 픽셀이 있는 프레임 1개"
+   },
+   "failed_files": {
+    "alpha": [
+     "display_case.png"
+    ]
+   },
+   "warnings": {
+    "outline": [
+     "stall_board_topper.png",
+     "stall_counter.png",
+     "stall_prop_vase.png"
+    ],
+    "isolated": [
+     "stall_prop_register.png",
+     "stall_prop_vase.png"
+    ],
+    "color_cap": [
+     "stall_prop_register.png",
+     "stall_prop_vase.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 220
+  },
+  {
+   "group": "tile",
+   "kind": "tile",
+   "profile": "mozzi_prop",
+   "files": 14,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "integer_scale": [
+     "fence_h.png",
+     "fence_post.png"
+    ],
+    "outline": [
+     "decor_07.png",
+     "decor_08.png",
+     "decor_09.png",
+     "decor_10.png",
+     "fence_v.png"
+    ],
+    "isolated": [
+     "decor_01.png",
+     "decor_03.png",
+     "decor_04.png",
+     "decor_05.png",
+     "decor_06.png",
+     "fence_h.png",
+     "fence_post.png",
+     "fence_v.png"
+    ],
+    "color_cap": [
+     "decor_04.png",
+     "decor_05.png",
+     "decor_06.png",
+     "fence_v.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 55
+  },
+  {
+   "group": "tile_bg",
+   "kind": "tile",
+   "profile": "mozzi_bg",
+   "files": 1,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "near_colors": [
+     "grass_base.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 33
+  },
+  {
+   "group": "ui",
+   "kind": "ui",
+   "profile": "mozzi_prop",
+   "files": 7,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "outline": [
+     "ui_badge_alert.png",
+     "ui_bubble_c.png",
+     "ui_button.png"
+    ],
+    "color_cap": [
+     "icon_codex.png",
+     "icon_upgrade.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 181
+  }
+ ],
+ "layers": [
+  {
+   "set": "mozzi",
+   "status": "ok",
+   "exit": 0,
+   "items": 10,
+   "layers": [
+    "body",
+    "cheek",
+    "face",
+    "acc"
+   ],
+   "warnings": {}
+  },
+  {
+   "set": "customer",
+   "status": "ok",
+   "exit": 0,
+   "items": 8,
+   "layers": [
+    "body",
+    "shirt",
+    "bottom",
+    "face",
+    "hair"
+   ],
+   "warnings": {}
+  }
+ ],
+ "not_in_kinds": [
+  "Mozzi/acc_none.png",
+  "UI/ui_badge_alert.png"
+ ],
+ "new_failures": [],
+ "new_warnings": [],
+ "known_count": 88
+}

@@ -64,8 +64,6 @@ namespace Mozzi.Editor
             Vector2 bottomCenter = new Vector2(0.5f, 0f);
             FormalUiBuild.PlaceSprite(stage, "Vase", SpriteKeys.ScreenStallVase, StallLayout.VaseX, StallLayout.ItemLineY, bottomCenter);
             FormalUiBuild.PlaceSprite(stage, "Register", SpriteKeys.ScreenStallRegister, StallLayout.RegisterX, StallLayout.ItemLineY, bottomCenter);
-            FormalUiBuild.PlaceSprite(stage, "MenuStand", SpriteKeys.ScreenStallMenuStand, StallLayout.MenuStandX, StallLayout.MenuStandY, bottomCenter);
-
             for (int i = 0; i < StallLayout.QueueShown; i++)
             {
                 MakeCustomer(stage, i);
@@ -107,32 +105,28 @@ namespace Mozzi.Editor
             body.text = "진열 0/0";
         }
 
-        // 진열장 접시 여섯 위의 떡 칸. 칸 아래 가운데 = 떡 바닥, 개수 글자는 떡 오른쪽 아래. 처음엔 꺼 둔다.
+        // 진열장 접시 여섯 위의 떡 칸. 칸 아래 가운데 = 접시 위 떡 바닥. 칸마다 떡 그림 셋을 겹쳐 두고, 몇 개를 어디에 보일지는 화면이 정한다. 처음엔 꺼 둔다.
         private static void MakeShelfCells(RectTransform stage)
         {
             int columns = StallLayout.PlateCenterX.Length;
-            float size = StallLayout.ShelfIconSize;
+            Vector2 cakeSize = new Vector2(StallLayout.ShelfCakeWidth, StallLayout.ShelfCakeHeight);
             for (int i = 0; i < UiNames.StallShelfCellCount; i++)
             {
                 float x = StallLayout.CaseLeft + StallLayout.PlateCenterX[i % columns];
                 float y = StallLayout.CaseTop + StallLayout.PlateCakeBottom[i / columns];
                 RectTransform cell = FormalUiBuild.NewNode(stage, UiNames.StallShelfCellPrefix + i);
-                FormalUiBuild.PivotAt(cell, x, y, new Vector2(0.5f, 0f), size, size);
+                FormalUiBuild.PivotAt(cell, x, y, new Vector2(0.5f, 0f), cakeSize.x, cakeSize.y);
 
-                RectTransform icon = FormalUiBuild.NewNode(cell, UiNames.CakeIcon);
-                FormalUiBuild.Stretch(icon, 0f);
-                FormalUiBuild.SetImage(icon, Color.white, false).preserveAspect = true;
-
-                // 흰 접시 위라 어두운 글자로 둔다 (밝은 글자 + 테두리는 13pt 에서 테두리가 안 보여 묻혔다). 유리 기둥에 안 걸리게 6 만 내민다.
-                TextMeshProUGUI count = FormalUiBuild.MakeText(cell, UiNames.StallShelfCountText, 13f, FormalUiBuild.TextDark, TextAlignmentOptions.BottomRight);
-                RectTransform rect = count.rectTransform;
-                rect.anchorMin = new Vector2(1f, 0f);
-                rect.anchorMax = new Vector2(1f, 0f);
-                rect.pivot = new Vector2(1f, 0f);
-                rect.anchoredPosition = new Vector2(6f, -4f);
-                rect.sizeDelta = new Vector2(30f, 16f);
-                count.fontStyle = FontStyles.Bold;
-                count.text = "×1";
+                for (int k = 0; k < UiNames.StallShelfCakeCount; k++)
+                {
+                    RectTransform cake = FormalUiBuild.NewNode(cell, UiNames.StallShelfCakePrefix + k);
+                    cake.anchorMin = new Vector2(0.5f, 0f);
+                    cake.anchorMax = new Vector2(0.5f, 0f);
+                    cake.pivot = new Vector2(0.5f, 0f);
+                    cake.anchoredPosition = Vector2.zero;
+                    cake.sizeDelta = cakeSize;
+                    FormalUiBuild.SetImage(cake, Color.white, false);
+                }
 
                 cell.gameObject.SetActive(false);
             }

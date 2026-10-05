@@ -130,9 +130,10 @@ namespace Mozzi.Game.Ui
         public const string SynthesisPickRowPrefix = "PickRow_";
         public const int SynthesisPickRowCount = 24;
 
-        // 결과 연출
+        // 결과 연출. ResultBox 는 커졌다 작아지는 묶음이고, 그 안 ResultMozzi 가 찹쌀이 겹 자리다.
         public const string SynthesisResultPanel = "ResultPanel";
         public const string SynthesisResultBox = "ResultBox";
+        public const string SynthesisResultMozzi = "ResultMozzi";
         public const string SynthesisResultNameText = "ResultNameText";
         public const string SynthesisResultNewText = "ResultNewText";
 
@@ -187,10 +188,11 @@ namespace Mozzi.Game.Ui
         public const string StallRecipeCodexButton = "RecipeCodexButton";
         public const string StallKitchenButton = "KitchenButton";
 
-        // 진열장 안 묶음 칸은 "ShelfCell_" + 번호(0~5, 윗단 왼→오 · 아랫단 왼→오). 칸 안 떡 그림은 CakeIcon, 개수 글자는 CountText.
+        // 진열장 안 접시 칸은 "ShelfCell_" + 번호(0~5, 윗단 왼→오 · 아랫단 왼→오). 칸 안에 쌓는 떡 그림은 "Cake_" + 번호(0~2, 뒤 번호가 앞).
         public const string StallShelfCellPrefix = "ShelfCell_";
         public const int StallShelfCellCount = 6;
-        public const string StallShelfCountText = "CountText";
+        public const string StallShelfCakePrefix = "Cake_";
+        public const int StallShelfCakeCount = 3;
 
         // 앞 손님 셋은 Stage 밑 "Customer_" + 번호(뿌리 = 누르는 버튼), 주문 말풍선은 "Bubble_" + 번호.
         // 말풍선 안 : 늘어나는 판 Frame · 작은 판 FrameSmall · 떡 그림 CakeIcon · 글자 ButtonLabel. 넷째부터는 QueueMoreText 글자.

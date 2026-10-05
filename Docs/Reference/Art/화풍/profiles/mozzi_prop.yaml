@@ -1,0 +1,35 @@
+# 건물 · 기계 · 화면 조각 · 소품 · UI · 농장 장식
+# 값 정본 : Docs/Design/화풍통일/2026-10-05-그림화풍통일설계.md 3 · 5절
+name: mozzi_prop
+preset: topdown_action
+
+style:
+  outline: selout
+  light: top_left              # 빛은 왼쪽 위
+  scale: 1                     # 1px 도트
+
+palette:
+  ramp_len: 5
+  outline: null
+  exact_match: false           # 램프 밖 색은 알리기만 한다 (지금 그림은 아직 팔레트에 안 맞췄다)
+  ramps_file: palettes/mozzi_master.json   # 이 프로필 폴더 아래 사본을 읽는다 (README 「팔레트 사본」)
+  swap: runtime_lut
+
+check:
+  allow_alpha: binary          # 반투명 없음
+  max_colors: 48
+  warn:
+    color_cap:
+      # 설계 3-2 : 장식 16 · UI 틀 · 울타리 32 · 건물 · 화면 조각 48. 툴은 긴 변 하나로만 고르므로
+      # 32px 까지 16 · 64px 까지 32 · 그 위 48 로 적었다 (2026-10-05 뒷정리). 작은 소품(25~60px)의 16 은 크기로 못 갈라 32 로 잰다.
+      # 48 · 64 는 툴 기본값(44 · 64)이 끼지 않게 적었다.
+      table: { 32: 16, 48: 32, 64: 32, 128: 48, 256: 48 }
+
+tiles:
+  size: 32                     # 06 문서 2절 6번
+
+ui:
+  ppu: 32
+  reference: [540, 1200]       # 540 기준 · 9:20
+  scale_mode: integer
+  letterbox: true

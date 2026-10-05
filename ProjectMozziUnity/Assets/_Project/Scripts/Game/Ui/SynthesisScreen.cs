@@ -62,7 +62,7 @@ namespace Mozzi.Game.Ui
         private TMP_Text _pickTitle;
         private GameObject _resultPanel;
         private RectTransform _resultBox;
-        private Image _resultBoxImage;
+        private MozziIconView _resultMozzi;
         private TMP_Text _resultName;
         private GameObject _resultNew;
 
@@ -113,8 +113,8 @@ namespace Mozzi.Game.Ui
             }
 
             _resultPanel = UiBindUtil.FindObject(transform, UiNames.SynthesisResultPanel, PrefabName);
-            _resultBoxImage = UiBindUtil.Find<Image>(_resultPanel.transform, UiNames.SynthesisResultBox, PrefabName);
-            _resultBox = _resultBoxImage.rectTransform;
+            _resultBox = UiBindUtil.Find<RectTransform>(_resultPanel.transform, UiNames.SynthesisResultBox, PrefabName);
+            _resultMozzi = new MozziIconView(UiBindUtil.FindObject(_resultBox, UiNames.SynthesisResultMozzi, PrefabName).transform, PrefabName);
             _resultName = UiBindUtil.Find<TMP_Text>(_resultPanel.transform, UiNames.SynthesisResultNameText, PrefabName);
             _resultNew = UiBindUtil.FindObject(_resultPanel.transform, UiNames.SynthesisResultNewText, PrefabName);
             _resultPanel.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -264,11 +264,11 @@ namespace Mozzi.Game.Ui
             _resultPlaying = false;
         }
 
-        // 「받기」 뒤 결과 연출. 새 찹쌀이 색 네모가 커졌다 작아지며 이름, 도감 새 칸이면 NEW.
+        // 「받기」 뒤 결과 연출. 새 찹쌀이 그림이 커졌다 작아지며 이름, 도감 새 칸이면 NEW.
         public void PlayResult(string speciesId, bool isNew)
         {
             MozziSpeciesRow species = _data.Species.Get(speciesId);
-            _resultBoxImage.color = View.MozziArtKeys.BodyColorOf(species);
+            _resultMozzi.Show(_resource, species);
             UiBindUtil.SetText(_resultName, species.Name);
             UiBindUtil.SetActive(_resultNew, isNew);
             _resultBox.localScale = new Vector3(0.3f, 0.3f, 1f);

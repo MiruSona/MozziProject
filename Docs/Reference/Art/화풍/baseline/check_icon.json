@@ -1,0 +1,539 @@
+{
+  "version": 1,
+  "profile": "mozzi_icon",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 17
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 8가지를 넘은 그림 0개",
+      "items": [
+        {
+          "where": "bean.png",
+          "colors": 4
+        },
+        {
+          "where": "bean_cake.png",
+          "colors": 4
+        },
+        {
+          "where": "jujube.png",
+          "colors": 5
+        },
+        {
+          "where": "jujube_cake.png",
+          "colors": 3
+        },
+        {
+          "where": "mugwort.png",
+          "colors": 4
+        },
+        {
+          "where": "mugwort_cake.png",
+          "colors": 3
+        },
+        {
+          "where": "mugwort_sesame_cake.png",
+          "colors": 4
+        },
+        {
+          "where": "pinenut.png",
+          "colors": 4
+        },
+        {
+          "where": "pinenut_cake.png",
+          "colors": 6
+        },
+        {
+          "where": "pinenut_jujube_cake.png",
+          "colors": 6
+        },
+        {
+          "where": "plain_cake.png",
+          "colors": 3
+        },
+        {
+          "where": "redbean.png",
+          "colors": 4
+        },
+        {
+          "where": "redbean_bean_cake.png",
+          "colors": 6
+        },
+        {
+          "where": "redbean_cake.png",
+          "colors": 5
+        },
+        {
+          "where": "redbean_mugwort_sesame_cake.png",
+          "colors": 6
+        },
+        {
+          "where": "sesame.png",
+          "colors": 3
+        },
+        {
+          "where": "sesame_cake.png",
+          "colors": 4
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 25가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#47752F",
+          "first": "mugwort.png"
+        },
+        {
+          "color": "#4C7433",
+          "first": "mugwort_cake.png"
+        },
+        {
+          "color": "#6A4A28",
+          "first": "jujube.png"
+        },
+        {
+          "color": "#6E9B4A",
+          "first": "mugwort_cake.png"
+        },
+        {
+          "color": "#7A2A2A",
+          "first": "redbean_bean_cake.png"
+        },
+        {
+          "color": "#86B860",
+          "first": "mugwort.png"
+        },
+        {
+          "color": "#8A6430",
+          "first": "bean.png"
+        },
+        {
+          "color": "#8E3622",
+          "first": "jujube.png"
+        },
+        {
+          "color": "#8E3B26",
+          "first": "jujube_cake.png"
+        },
+        {
+          "color": "#A84848",
+          "first": "redbean_bean_cake.png"
+        },
+        {
+          "color": "#A9743E",
+          "first": "pinenut.png"
+        },
+        {
+          "color": "#B08A48",
+          "first": "sesame.png"
+        },
+        {
+          "color": "#BF6448",
+          "first": "jujube_cake.png"
+        },
+        {
+          "color": "#C2A048",
+          "first": "bean.png"
+        },
+        {
+          "color": "#C9BCA6",
+          "first": "pinenut_cake.png"
+        },
+        {
+          "color": "#D6B06A",
+          "first": "sesame.png"
+        },
+        {
+          "color": "#D6C49A",
+          "first": "pinenut.png"
+        },
+        {
+          "color": "#DC7A58",
+          "first": "jujube.png"
+        },
+        {
+          "color": "#DEC27E",
+          "first": "pinenut_cake.png"
+        },
+        {
+          "color": "#E8C4B2",
+          "first": "jujube_cake.png"
+        },
+        {
+          "color": "#F0D8A0",
+          "first": "sesame.png"
+        },
+        {
+          "color": "#F2E4D4",
+          "first": "redbean.png"
+        },
+        {
+          "color": "#F4EACC",
+          "first": "pinenut.png"
+        },
+        {
+          "color": "#F8E8A8",
+          "first": "bean.png"
+        },
+        {
+          "color": "#FFFFFF",
+          "first": "pinenut.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "outline",
+      "ok": false,
+      "detail": "외곽선 방식이 다른 그림 16장",
+      "items": [
+        {
+          "where": "bean.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.3111,
+          "lit": 1.005
+        },
+        {
+          "where": "bean_cake.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.5857,
+          "lit": 1.017
+        },
+        {
+          "where": "jujube.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.3226,
+          "lit": 1.0
+        },
+        {
+          "where": "jujube_cake.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.6286,
+          "lit": 1.001
+        },
+        {
+          "where": "mugwort.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.3704,
+          "lit": 1.042
+        },
+        {
+          "where": "mugwort_cake.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.6286,
+          "lit": 1.0
+        },
+        {
+          "where": "mugwort_sesame_cake.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.6286,
+          "lit": 0.992
+        },
+        {
+          "where": "pinenut.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.3556,
+          "lit": 1.049
+        },
+        {
+          "where": "pinenut_cake.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.3429,
+          "lit": 1.0
+        },
+        {
+          "where": "pinenut_jujube_cake.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.6286,
+          "lit": 1.001
+        },
+        {
+          "where": "plain_cake.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.3429,
+          "lit": 1.0
+        },
+        {
+          "where": "redbean_bean_cake.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.5143,
+          "lit": 1.017
+        },
+        {
+          "where": "redbean_cake.png",
+          "why": [
+            "외곽선 판정 none 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "none",
+          "black": 0.0,
+          "dark": 0.2857,
+          "lit": 1.0
+        },
+        {
+          "where": "redbean_mugwort_sesame_cake.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.5571,
+          "lit": 0.992
+        },
+        {
+          "where": "sesame.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.4907,
+          "lit": 1.09
+        },
+        {
+          "where": "sesame_cake.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.3571,
+          "lit": 0.968
+        }
+      ]
+    },
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝기가 칸마다 오르지 않는다",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            19.71
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ]
+        }
+      ]
+    }
+  ]
+}

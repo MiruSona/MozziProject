@@ -1,0 +1,751 @@
+{
+  "version": 1,
+  "profile": "mozzi_char",
+  "status": "fail",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 17
+  },
+  "failed": [
+    "max_colors"
+  ],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": false,
+      "detail": "한도 8가지를 넘은 그림 2개",
+      "items": [
+        {
+          "where": "acc_crown.png",
+          "colors": 4
+        },
+        {
+          "where": "acc_none.png",
+          "colors": 0
+        },
+        {
+          "where": "body_hop0.png",
+          "colors": 6
+        },
+        {
+          "where": "body_hop1.png",
+          "colors": 9
+        },
+        {
+          "where": "body_hop2.png",
+          "colors": 6
+        },
+        {
+          "where": "body_hop3.png",
+          "colors": 32
+        },
+        {
+          "where": "cheek.png",
+          "colors": 4
+        },
+        {
+          "where": "face_01.png",
+          "colors": 1
+        },
+        {
+          "where": "face_02.png",
+          "colors": 2
+        },
+        {
+          "where": "face_03.png",
+          "colors": 3
+        },
+        {
+          "where": "face_04.png",
+          "colors": 2
+        },
+        {
+          "where": "face_05.png",
+          "colors": 2
+        },
+        {
+          "where": "face_06.png",
+          "colors": 2
+        },
+        {
+          "where": "face_07.png",
+          "colors": 2
+        },
+        {
+          "where": "face_08.png",
+          "colors": 2
+        },
+        {
+          "where": "face_09.png",
+          "colors": 1
+        },
+        {
+          "where": "face_10.png",
+          "colors": 2
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 56가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#12110F",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#3A3A44",
+          "first": "face_04.png"
+        },
+        {
+          "color": "#5BC0EB",
+          "first": "face_08.png"
+        },
+        {
+          "color": "#6E6E6E",
+          "first": "body_hop0.png"
+        },
+        {
+          "color": "#959597",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#9E9EA0",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#A4A4A4",
+          "first": "body_hop0.png"
+        },
+        {
+          "color": "#B7B5B5",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#B8B7B7",
+          "first": "body_hop0.png"
+        },
+        {
+          "color": "#BABAB9",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#C0C0C0",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#C4C4C4",
+          "first": "body_hop2.png"
+        },
+        {
+          "color": "#C5C4C4",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#C7C7C7",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#C8C7C8",
+          "first": "body_hop0.png"
+        },
+        {
+          "color": "#CACAC9",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#CCCBCB",
+          "first": "body_hop2.png"
+        },
+        {
+          "color": "#CECDCD",
+          "first": "body_hop1.png"
+        },
+        {
+          "color": "#D1D0D0",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#D3D3D3",
+          "first": "body_hop1.png"
+        },
+        {
+          "color": "#D4B600",
+          "first": "acc_crown.png"
+        },
+        {
+          "color": "#D4D4D4",
+          "first": "body_hop2.png"
+        },
+        {
+          "color": "#D6D5D6",
+          "first": "body_hop0.png"
+        },
+        {
+          "color": "#D6D6D6",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#D9D8D8",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#D9D9D8",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#DAD9D9",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#DBDADA",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#DBDBDA",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#DCDCDB",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#DDDDDD",
+          "first": "body_hop1.png"
+        },
+        {
+          "color": "#DFDFDF",
+          "first": "body_hop2.png"
+        },
+        {
+          "color": "#E2E2E2",
+          "first": "body_hop1.png"
+        },
+        {
+          "color": "#E8433F",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#E9E9E9",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#EACD00",
+          "first": "acc_crown.png"
+        },
+        {
+          "color": "#EBE8E5",
+          "first": "body_hop1.png"
+        },
+        {
+          "color": "#F0EEEB",
+          "first": "body_hop1.png"
+        },
+        {
+          "color": "#F1F1F1",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#F28C8C",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#F6F5F5",
+          "first": "body_hop1.png"
+        },
+        {
+          "color": "#F6F7F6",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#F7F7F7",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#F7F8F8",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#F8F8F7",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#F8F8F8",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#F8F8F9",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#F8F9F8",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#F9F8F8",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#F9F9F8",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#F9F9F9",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#F9FAF9",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#FBFBFB",
+          "first": "body_hop3.png"
+        },
+        {
+          "color": "#FCEEB9",
+          "first": "cheek.png"
+        },
+        {
+          "color": "#FDEAA3",
+          "first": "cheek.png"
+        },
+        {
+          "color": "#FDFDFD",
+          "first": "body_hop0.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "outline",
+      "ok": false,
+      "detail": "외곽선 방식이 다른 그림 7장",
+      "items": [
+        {
+          "where": "acc_crown.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline solid 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0,
+          "dark": 0.359,
+          "lit": 1.176
+        },
+        {
+          "where": "cheek.png",
+          "why": [
+            "외곽선 판정 none 가 style.outline solid 과 다르다"
+          ],
+          "verdict": "none",
+          "black": 0.0,
+          "dark": 0.0,
+          "lit": 1.007
+        },
+        {
+          "where": "face_02.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline solid 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 1.0,
+          "dark": 1.0,
+          "lit": 1.0
+        },
+        {
+          "where": "face_03.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline solid 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.5,
+          "dark": 0.5,
+          "lit": 0.871
+        },
+        {
+          "where": "face_05.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline solid 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 1.0,
+          "dark": 1.0,
+          "lit": 1.0
+        },
+        {
+          "where": "face_07.png",
+          "why": [
+            "외곽선 판정 none 가 style.outline solid 과 다르다"
+          ],
+          "verdict": "none",
+          "black": 0.0,
+          "dark": 0.0,
+          "lit": 1.0
+        },
+        {
+          "where": "face_10.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline solid 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 1.0,
+          "dark": 1.0,
+          "lit": 1.0
+        }
+      ]
+    },
+    {
+      "rule": "near_colors",
+      "ok": false,
+      "detail": "비슷한 색 쌍이 있는 그림 1장",
+      "items": [
+        {
+          "where": "body_hop3.png",
+          "why": [
+            "비슷한 색 쌍 86개 (합치기 후보)"
+          ],
+          "count": 86,
+          "pairs": [
+            {
+              "from": "#F8F8F7",
+              "to": "#F8F8F8",
+              "from_count": 138,
+              "to_count": 253,
+              "delta": 1
+            },
+            {
+              "from": "#F7F7F7",
+              "to": "#F8F8F7",
+              "from_count": 117,
+              "to_count": 138,
+              "delta": 1
+            },
+            {
+              "from": "#F7F7F7",
+              "to": "#F8F8F8",
+              "from_count": 117,
+              "to_count": 253,
+              "delta": 1
+            },
+            {
+              "from": "#F9F9F9",
+              "to": "#F7F7F7",
+              "from_count": 63,
+              "to_count": 117,
+              "delta": 2
+            },
+            {
+              "from": "#F9F9F9",
+              "to": "#F8F8F7",
+              "from_count": 63,
+              "to_count": 138,
+              "delta": 2
+            },
+            {
+              "from": "#F9F9F9",
+              "to": "#F8F8F8",
+              "from_count": 63,
+              "to_count": 253,
+              "delta": 1
+            },
+            {
+              "from": "#F9F9F8",
+              "to": "#F7F7F7",
+              "from_count": 52,
+              "to_count": 117,
+              "delta": 2
+            },
+            {
+              "from": "#F9F9F8",
+              "to": "#F8F8F7",
+              "from_count": 52,
+              "to_count": 138,
+              "delta": 1
+            },
+            {
+              "from": "#F9F9F8",
+              "to": "#F8F8F8",
+              "from_count": 52,
+              "to_count": 253,
+              "delta": 1
+            },
+            {
+              "from": "#F9F9F8",
+              "to": "#F9F9F9",
+              "from_count": 52,
+              "to_count": 63,
+              "delta": 1
+            },
+            {
+              "from": "#F8F8F9",
+              "to": "#F7F7F7",
+              "from_count": 46,
+              "to_count": 117,
+              "delta": 2
+            },
+            {
+              "from": "#F8F8F9",
+              "to": "#F8F8F7",
+              "from_count": 46,
+              "to_count": 138,
+              "delta": 2
+            },
+            {
+              "from": "#F8F8F9",
+              "to": "#F8F8F8",
+              "from_count": 46,
+              "to_count": 253,
+              "delta": 1
+            },
+            {
+              "from": "#F8F8F9",
+              "to": "#F9F9F8",
+              "from_count": 46,
+              "to_count": 52,
+              "delta": 1
+            },
+            {
+              "from": "#F8F8F9",
+              "to": "#F9F9F9",
+              "from_count": 46,
+              "to_count": 63,
+              "delta": 1
+            },
+            {
+              "from": "#F9F8F8",
+              "to": "#F7F7F7",
+              "from_count": 39,
+              "to_count": 117,
+              "delta": 2
+            },
+            {
+              "from": "#F9F8F8",
+              "to": "#F8F8F7",
+              "from_count": 39,
+              "to_count": 138,
+              "delta": 1
+            },
+            {
+              "from": "#F9F8F8",
+              "to": "#F8F8F8",
+              "from_count": 39,
+              "to_count": 253,
+              "delta": 1
+            },
+            {
+              "from": "#F9F8F8",
+              "to": "#F8F8F9",
+              "from_count": 39,
+              "to_count": 46,
+              "delta": 1
+            },
+            {
+              "from": "#F9F8F8",
+              "to": "#F9F9F8",
+              "from_count": 39,
+              "to_count": 52,
+              "delta": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝기가 칸마다 오르지 않는다",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            19.71
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ]
+        }
+      ]
+    }
+  ],
+  "info": [
+    {
+      "rule": "outline.small",
+      "detail": "작은 그림의 외곽선 몫",
+      "items": [
+        {
+          "where": "acc_crown.png",
+          "note": "14px 그림에서 외곽선 몫 0.38 (크기 기준 0.27) — 작은 그림은 외곽선을 빼는 길도 있다"
+        },
+        {
+          "where": "cheek.png",
+          "note": "11px 그림에서 외곽선 몫 0.29 (크기 기준 0.33) — 작은 그림은 외곽선을 빼는 길도 있다"
+        },
+        {
+          "where": "face_01.png",
+          "note": "16px 그림에서 외곽선 몫 0.00 (크기 기준 0.23) — 작은 그림은 외곽선을 빼는 길도 있다"
+        }
+      ]
+    }
+  ]
+}

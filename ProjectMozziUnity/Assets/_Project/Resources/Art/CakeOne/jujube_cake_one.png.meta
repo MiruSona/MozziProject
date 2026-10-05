@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a5722e5f5f07abd4194143d35fd647df
+guid: 4ac6998a71f58554a8e5c52339ae3f72
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6074915498976217683
-    second: stall_prop_menu_0
+      213: 5453490846223940501
+    second: jujube_cake_one_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: stall_prop_menu_0
+      name: jujube_cake_one_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 27
-        height: 34
+        width: 22
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 35a0ef4c57f6e4450800000000000000
-      internalID: 6074915498976217683
+      spriteID: 59bb503e701beab40800000000000000
+      internalID: 5453490846223940501
       vertices: []
       indices: 
       edges: []

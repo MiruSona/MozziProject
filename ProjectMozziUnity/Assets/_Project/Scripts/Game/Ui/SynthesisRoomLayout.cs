@@ -43,10 +43,14 @@ namespace Mozzi.Game.Ui
         public const float DrawerTouchBottom = 220f;
         public const float DrawerTouchPad = 12f;
 
-        // 다 됨일 때 서랍 속 결과 그림자 · 「?」 가운데 (조각 좌표)와 그림자 배율 (찹쌀이 64 캔버스 → 32).
-        public const float OutletX = 86f;
-        public const float OutletY = 180f;
-        public const float OutletScale = 0.5f;
+        // 다 됨일 때 서랍 속 결과 그림자 · 「?」 가운데 (조각 좌표)와 그림자 배율 (찹쌀이 64 캔버스 그대로 ×1).
+        // 다 됨 그림은 서랍이 앞으로 빠져나와 안쪽 칸이 x 70~124 · 바닥 y 192 다 (쉼 그림 앞판보다 오른쪽).
+        // 몸(캔버스 y 16~51)의 아래끝을 바닥에 맞추면 머리가 서랍 위로 조금 나온다.
+        public const float OutletX = 97f;
+        public const float OutletY = 174f;
+        public const float OutletScale = 1f;
+        public const float OutletMarkFontSize = 20f;
+        public const float OutletMarkSize = 32f;
 
         // 살 칸 간판의 빈 크림색 면 (조각 좌표). 「칸 사기 300G」 글자가 들어간다.
         public const float SignLeft = 48f;
@@ -82,7 +86,10 @@ namespace Mozzi.Game.Ui
         public const float PickTitleHeight = 44f;
         public const float PickCloseWidth = 80f;
 
-        // 결과 연출 상자 (내용 칸 가운데).
-        public const float ResultBoxSize = 96f;
+        // 결과 연출 (내용 칸 가운데). 찹쌀이 64 캔버스를 정수 배 ×2 로 키워 상자가 128 이다.
+        // NEW! · 이름 글자는 상자 가운데에서 위아래로 ResultTextOffset 만큼 떨어진다.
+        public const float ResultMozziScale = 2f;
+        public const float ResultBoxSize = 128f;
+        public const float ResultTextOffset = 96f;
     }
 }

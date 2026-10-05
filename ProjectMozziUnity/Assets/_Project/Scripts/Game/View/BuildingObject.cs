@@ -18,6 +18,9 @@ namespace Mozzi.Game.View
         private SpriteRenderer _renderer;
         private TMP_Text _label;
         private GameObject _badge;
+        private SpriteRenderer _badgeRenderer;
+        // 표식 그림이 없을 때 쓰는 색 네모의 색 (프리팹에 적힌 빨강).
+        private Color _badgeFallbackColor;
         private BoxCollider2D _collider;
         private Rect _hitWorld;
 
@@ -38,16 +41,14 @@ namespace Mozzi.Game.View
             if (badge != null)
             {
                 _badge = badge.gameObject;
-                SpriteRenderer badgeRenderer = _badge.GetComponent<SpriteRenderer>();
-                if (badgeRenderer != null && badgeRenderer.sprite == null)
-                {
-                    badgeRenderer.sprite = SpriteUtil.White;
-                }
+                _badgeRenderer = _badge.GetComponent<SpriteRenderer>();
+                _badgeFallbackColor = _badgeRenderer.color;
             }
         }
 
         // sprite 가 null 이면 누르는 네모 크기의 색 네모다. 그림을 찾아 주는 것은 Manager 몫이다.
-        public void Setup(BuildingKind kind, Sprite sprite, string label)
+        // badgeSprite 는 알림 표식 그림(16px)이고, null 이면 같은 크기의 빨간 네모로 대신한다.
+        public void Setup(BuildingKind kind, Sprite sprite, Sprite badgeSprite, string label)
         {
             Kind = kind;
             gameObject.name = "Building_" + kind;
@@ -92,7 +93,17 @@ namespace Mozzi.Game.View
 
             if (_badge != null)
             {
-                float badge = LayoutConst.ToUnits(LayoutConst.BadgePx);
+                // 표식 그림은 제 크기(×1)로 찍고, 흰 네모(1×1)는 표식 크기만큼 늘린다.
+                float badge = 1f;
+                _badgeRenderer.sprite = badgeSprite;
+                _badgeRenderer.color = Color.white;
+                if (badgeSprite == null)
+                {
+                    badge = LayoutConst.ToUnits(LayoutConst.BadgePx);
+                    _badgeRenderer.sprite = SpriteUtil.White;
+                    _badgeRenderer.color = _badgeFallbackColor;
+                }
+
                 _badge.transform.localScale = new Vector3(badge / scale.x, badge / scale.y, 1f);
                 _badge.transform.localPosition = Divide(layout.BadgeWorld - rootPos, scale);
             }

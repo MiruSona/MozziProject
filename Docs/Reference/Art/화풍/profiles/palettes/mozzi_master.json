@@ -1,0 +1,170 @@
+{
+  "version": 1,
+  "name": "mozzi_master",
+  "ramp_len": 5,
+  "outline": "#352E27",
+  "comment": "찹쌀이 농장 공용 팔레트. 값 정본은 Docs/Design/화풍통일/2026-10-05-그림화풍통일설계.md 4절. 툴이 램프 길이를 하나로 요구해 짧은 램프는 밝은 끝 색을 되풀이해 5칸으로 채웠다 (real_len 이 진짜 칸 수). line 은 툴의 밝기(luma) 순(2026-10-05 뒷정리로 차례를 고치고 찹쌀이 몸 선 #5E5048 을 밝은 끝에 더함). grass 는 풀 장식 새 색(2026-10-05 C 갈래)으로 바꿨고 잔디 바탕 #C0CF7D 는 mozzi_bg 그림이라 램프에 안 넣었다. food_* 는 설계의 음식 램프 하나를 재료별 여섯으로 갈랐다.",
+  "real_len": {
+    "line": 5,
+    "wood": 5,
+    "floor": 5,
+    "paper": 5,
+    "pink": 4,
+    "accent": 4,
+    "violet": 5,
+    "navy": 3,
+    "skin": 4,
+    "grass": 5,
+    "sky": 3,
+    "mozzi_white": 4,
+    "mozzi_yellow": 4,
+    "food_redbean": 3,
+    "food_mugwort": 3,
+    "food_bean": 3,
+    "food_cake": 2,
+    "food_sesame": 1,
+    "food_jujube": 2
+  },
+  "kind_outline": {"mozzi_char": "#5E5048 찹쌀이 몸 선 (2026-10-05 확정 · 프로필 mozzi_char 의 palette.outline 과 같은 값)"},
+  "chabi": {
+    "pink[3]": "#F8BBC0 머리 분홍",
+    "accent[2]": "#FA6270 볼 다이아",
+    "violet[4]": "#AE74DB 눈 보라",
+    "navy[1]": "#393651 모자 남색"
+  },
+  "ramps": {
+    "line": [
+      "#211D16",
+      "#352E27",
+      "#4A2622",
+      "#3A2E25",
+      "#5E5048"
+    ],
+    "wood": [
+      "#513930",
+      "#8D6347",
+      "#A66B4E",
+      "#C98A6A",
+      "#DEBDA9"
+    ],
+    "floor": [
+      "#6E3932",
+      "#9D5F40",
+      "#B3714B",
+      "#CE8958",
+      "#DDA56A"
+    ],
+    "paper": [
+      "#E5B787",
+      "#F3D7AF",
+      "#F8E6C2",
+      "#FBECD0",
+      "#FDFCF5"
+    ],
+    "pink": [
+      "#BE7679",
+      "#DF9898",
+      "#E8ADA9",
+      "#F8BBC0",
+      "#F8BBC0"
+    ],
+    "accent": [
+      "#A64758",
+      "#D56172",
+      "#FA6270",
+      "#EAA1A1",
+      "#EAA1A1"
+    ],
+    "violet": [
+      "#3A2350",
+      "#563476",
+      "#7248A0",
+      "#9370BF",
+      "#AE74DB"
+    ],
+    "navy": [
+      "#2C2D46",
+      "#393651",
+      "#415174",
+      "#415174",
+      "#415174"
+    ],
+    "skin": [
+      "#502523",
+      "#E99F90",
+      "#F4B3A3",
+      "#FBD8C9",
+      "#FBD8C9"
+    ],
+    "grass": [
+      "#314F2A",
+      "#557849",
+      "#77A35D",
+      "#9BC366",
+      "#BBD76E"
+    ],
+    "sky": [
+      "#558AA2",
+      "#95CAE2",
+      "#D4EEFA",
+      "#D4EEFA",
+      "#D4EEFA"
+    ],
+    "mozzi_white": [
+      "#AEAEAE",
+      "#CCCCCC",
+      "#DEDEDE",
+      "#FCFCFC",
+      "#FCFCFC"
+    ],
+    "mozzi_yellow": [
+      "#C1A301",
+      "#EAC600",
+      "#FBD701",
+      "#FDE367",
+      "#FDE367"
+    ],
+    "food_redbean": [
+      "#742424",
+      "#9A3232",
+      "#C45A58",
+      "#C45A58",
+      "#C45A58"
+    ],
+    "food_mugwort": [
+      "#3F6A2A",
+      "#5F9440",
+      "#C9DCB4",
+      "#C9DCB4",
+      "#C9DCB4"
+    ],
+    "food_bean": [
+      "#BE9840",
+      "#E6C868",
+      "#F7E6A8",
+      "#F7E6A8",
+      "#F7E6A8"
+    ],
+    "food_cake": [
+      "#F2E9DC",
+      "#FFFBF2",
+      "#FFFBF2",
+      "#FFFBF2",
+      "#FFFBF2"
+    ],
+    "food_sesame": [
+      "#8A5A2C",
+      "#8A5A2C",
+      "#8A5A2C",
+      "#8A5A2C",
+      "#8A5A2C"
+    ],
+    "food_jujube": [
+      "#863220",
+      "#B0482E",
+      "#B0482E",
+      "#B0482E",
+      "#B0482E"
+    ]
+  }
+}

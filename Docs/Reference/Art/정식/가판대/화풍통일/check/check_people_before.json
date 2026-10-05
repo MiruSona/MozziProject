@@ -1,0 +1,1045 @@
+{
+  "version": 1,
+  "profile": "mozzi_people",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 17
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 40가지를 넘은 그림 0개",
+      "items": [
+        {
+          "where": "body.png",
+          "colors": 37
+        },
+        {
+          "where": "face_01.png",
+          "colors": 15
+        },
+        {
+          "where": "face_02.png",
+          "colors": 15
+        },
+        {
+          "where": "face_03.png",
+          "colors": 17
+        },
+        {
+          "where": "hair_01_black.png",
+          "colors": 5
+        },
+        {
+          "where": "hair_01_brown.png",
+          "colors": 5
+        },
+        {
+          "where": "hair_01_orange.png",
+          "colors": 5
+        },
+        {
+          "where": "hair_01_purple.png",
+          "colors": 5
+        },
+        {
+          "where": "hair_02_black.png",
+          "colors": 4
+        },
+        {
+          "where": "hair_02_brown.png",
+          "colors": 4
+        },
+        {
+          "where": "hair_02_orange.png",
+          "colors": 4
+        },
+        {
+          "where": "hair_02_purple.png",
+          "colors": 4
+        },
+        {
+          "where": "shirt_blue.png",
+          "colors": 4
+        },
+        {
+          "where": "shirt_green.png",
+          "colors": 4
+        },
+        {
+          "where": "shirt_red.png",
+          "colors": 4
+        },
+        {
+          "where": "shirt_yellow.png",
+          "colors": 4
+        },
+        {
+          "where": "stall_owner.png",
+          "colors": 38
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 145가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#000000",
+          "first": "body.png"
+        },
+        {
+          "color": "#030302",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#030403",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#070504",
+          "first": "body.png"
+        },
+        {
+          "color": "#070606",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#070706",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#0B0A0A",
+          "first": "body.png"
+        },
+        {
+          "color": "#0D0B0C",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#0F0E11",
+          "first": "hair_01_black.png"
+        },
+        {
+          "color": "#100F0C",
+          "first": "body.png"
+        },
+        {
+          "color": "#101F31",
+          "first": "shirt_blue.png"
+        },
+        {
+          "color": "#120D0D",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#121213",
+          "first": "body.png"
+        },
+        {
+          "color": "#141313",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#171717",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#172915",
+          "first": "shirt_green.png"
+        },
+        {
+          "color": "#1C1514",
+          "first": "body.png"
+        },
+        {
+          "color": "#1C1D21",
+          "first": "body.png"
+        },
+        {
+          "color": "#1D1C1C",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#1E1028",
+          "first": "hair_01_purple.png"
+        },
+        {
+          "color": "#1E1919",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#1E1D2C",
+          "first": "body.png"
+        },
+        {
+          "color": "#201D23",
+          "first": "hair_01_black.png"
+        },
+        {
+          "color": "#21140C",
+          "first": "hair_01_brown.png"
+        },
+        {
+          "color": "#224269",
+          "first": "shirt_blue.png"
+        },
+        {
+          "color": "#272123",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#2D1A1B",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#2D272A",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#2D2A32",
+          "first": "hair_01_black.png"
+        },
+        {
+          "color": "#2F2323",
+          "first": "body.png"
+        },
+        {
+          "color": "#31572D",
+          "first": "shirt_green.png"
+        },
+        {
+          "color": "#341E0E",
+          "first": "hair_01_orange.png"
+        },
+        {
+          "color": "#343959",
+          "first": "body.png"
+        },
+        {
+          "color": "#35100D",
+          "first": "shirt_red.png"
+        },
+        {
+          "color": "#351D20",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#356094",
+          "first": "shirt_blue.png"
+        },
+        {
+          "color": "#362D33",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#37353F",
+          "first": "body.png"
+        },
+        {
+          "color": "#394567",
+          "first": "body.png"
+        },
+        {
+          "color": "#3A3640",
+          "first": "hair_01_black.png"
+        },
+        {
+          "color": "#3B3014",
+          "first": "shirt_yellow.png"
+        },
+        {
+          "color": "#3D3137",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#3F4E71",
+          "first": "body.png"
+        },
+        {
+          "color": "#433B41",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#452B19",
+          "first": "hair_01_brown.png"
+        },
+        {
+          "color": "#487B42",
+          "first": "shirt_green.png"
+        },
+        {
+          "color": "#4A7EBE",
+          "first": "shirt_blue.png"
+        },
+        {
+          "color": "#4B201F",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#4C5D81",
+          "first": "body.png"
+        },
+        {
+          "color": "#4D464C",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#4D4B58",
+          "first": "body.png"
+        },
+        {
+          "color": "#512726",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#563836",
+          "first": "body.png"
+        },
+        {
+          "color": "#583F53",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#5D5B5F",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#5F9E58",
+          "first": "shirt_green.png"
+        },
+        {
+          "color": "#60282D",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#623E26",
+          "first": "hair_01_brown.png"
+        },
+        {
+          "color": "#625D6A",
+          "first": "hair_01_black.png"
+        },
+        {
+          "color": "#65627A",
+          "first": "body.png"
+        },
+        {
+          "color": "#683230",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#685B5B",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#686869",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#6E3F1D",
+          "first": "hair_01_orange.png"
+        },
+        {
+          "color": "#703233",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#71211B",
+          "first": "shirt_red.png"
+        },
+        {
+          "color": "#773A31",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#776E76",
+          "first": "body.png"
+        },
+        {
+          "color": "#794C4D",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#7D4046",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#7D652B",
+          "first": "shirt_yellow.png"
+        },
+        {
+          "color": "#7E5234",
+          "first": "hair_01_brown.png"
+        },
+        {
+          "color": "#82524E",
+          "first": "body.png"
+        },
+        {
+          "color": "#834647",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#88859A",
+          "first": "body.png"
+        },
+        {
+          "color": "#894F4B",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#927082",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#966270",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#974D54",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#9A635C",
+          "first": "body.png"
+        },
+        {
+          "color": "#9A6F52",
+          "first": "hair_01_brown.png"
+        },
+        {
+          "color": "#9B7A7A",
+          "first": "body.png"
+        },
+        {
+          "color": "#9C5C2E",
+          "first": "hair_01_orange.png"
+        },
+        {
+          "color": "#9C7E7C",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#A0352C",
+          "first": "shirt_red.png"
+        },
+        {
+          "color": "#A05451",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#A05B56",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#A59FB5",
+          "first": "body.png"
+        },
+        {
+          "color": "#A68E9A",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#A8CBE9",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#AC5760",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#ACACAD",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#AD6C69",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#AF726B",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#B05D59",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#B19142",
+          "first": "shirt_yellow.png"
+        },
+        {
+          "color": "#B2776D",
+          "first": "body.png"
+        },
+        {
+          "color": "#B3AFC1",
+          "first": "body.png"
+        },
+        {
+          "color": "#B45C66",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#BD636C",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#C17066",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#C2A7A0",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#C38FAF",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#C87A42",
+          "first": "hair_01_orange.png"
+        },
+        {
+          "color": "#C8C4D1",
+          "first": "body.png"
+        },
+        {
+          "color": "#CA7379",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#CA8D80",
+          "first": "body.png"
+        },
+        {
+          "color": "#CB8278",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#CD4A40",
+          "first": "shirt_red.png"
+        },
+        {
+          "color": "#CFB7BD",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#D0BEBB",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#D4867D",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#D49262",
+          "first": "hair_01_orange.png"
+        },
+        {
+          "color": "#D9A495",
+          "first": "body.png"
+        },
+        {
+          "color": "#DDDAE1",
+          "first": "body.png"
+        },
+        {
+          "color": "#E07E83",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#E3BC5C",
+          "first": "shirt_yellow.png"
+        },
+        {
+          "color": "#E68B8F",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#E78F7F",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#E99093",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#EB9395",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#EBB5AC",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#ECCFC7",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#EDB6A3",
+          "first": "body.png"
+        },
+        {
+          "color": "#EE9E9F",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#EF6671",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#EFEDF0",
+          "first": "body.png"
+        },
+        {
+          "color": "#F3C9B8",
+          "first": "body.png"
+        },
+        {
+          "color": "#F4A394",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#F6E7D8",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#F6F5F5",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#F7B7A4",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#F7D9D5",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#F8C6B6",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#F8E3E0",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#F8F7F7",
+          "first": "face_01.png"
+        },
+        {
+          "color": "#F9B5A4",
+          "first": "face_02.png"
+        },
+        {
+          "color": "#F9D38E",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#F9EDE8",
+          "first": "stall_owner.png"
+        },
+        {
+          "color": "#FAF9F9",
+          "first": "body.png"
+        },
+        {
+          "color": "#FBD8CA",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#FBDACD",
+          "first": "face_03.png"
+        },
+        {
+          "color": "#FBDECE",
+          "first": "body.png"
+        },
+        {
+          "color": "#FBE0D0",
+          "first": "body.png"
+        },
+        {
+          "color": "#FCD9CB",
+          "first": "face_02.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "outline",
+      "ok": false,
+      "detail": "외곽선 방식이 다른 그림 17장",
+      "items": [
+        {
+          "where": "body.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.7281,
+          "dark": 0.981,
+          "lit": 1.51
+        },
+        {
+          "where": "face_01.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 0.911,
+          "dark": 0.9407,
+          "lit": 1.962
+        },
+        {
+          "where": "face_02.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 0.9195,
+          "dark": 0.9407,
+          "lit": 1.441
+        },
+        {
+          "where": "face_03.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 0.9234,
+          "dark": 0.9404,
+          "lit": 1.116
+        },
+        {
+          "where": "hair_01_black.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 0.9825,
+          "dark": 0.993,
+          "lit": 1.004
+        },
+        {
+          "where": "hair_01_brown.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.993,
+          "lit": 1.004
+        },
+        {
+          "where": "hair_01_orange.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.993,
+          "lit": 1.004
+        },
+        {
+          "where": "hair_01_purple.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.993,
+          "lit": 1.004
+        },
+        {
+          "where": "hair_02_black.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 0.961,
+          "dark": 0.9858,
+          "lit": 1.367
+        },
+        {
+          "where": "hair_02_brown.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9858,
+          "lit": 1.385
+        },
+        {
+          "where": "hair_02_orange.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9858,
+          "lit": 1.389
+        },
+        {
+          "where": "hair_02_purple.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9858,
+          "lit": 1.39
+        },
+        {
+          "where": "shirt_blue.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9788,
+          "lit": 0.699
+        },
+        {
+          "where": "shirt_green.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9788,
+          "lit": 0.705
+        },
+        {
+          "where": "shirt_red.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9788,
+          "lit": 0.696
+        },
+        {
+          "where": "shirt_yellow.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 0.9788,
+          "lit": 0.704
+        },
+        {
+          "where": "stall_owner.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 0.9047,
+          "dark": 0.9331,
+          "lit": 0.732
+        }
+      ]
+    },
+    {
+      "rule": "color_cap",
+      "ok": false,
+      "detail": "권장 색 수를 넘은 그림 1장",
+      "items": [
+        {
+          "where": "face_03.png",
+          "why": [
+            "색 17가지 > 권장 16가지 (크기 80)"
+          ],
+          "size": 80,
+          "colors": 17,
+          "cap": 16
+        }
+      ]
+    },
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝기가 칸마다 오르지 않는다",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            19.71
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ]
+        }
+      ]
+    }
+  ]
+}

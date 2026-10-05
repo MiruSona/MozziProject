@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "canvas": [64, 64],
+  "layers": [
+    { "name": "body", "kind": "body" },
+    { "name": "cheek", "kind": "deco", "optional": true },
+    { "name": "face", "kind": "face" },
+    { "name": "acc", "kind": "deco", "optional": true }
+  ],
+  "items": []
+}
