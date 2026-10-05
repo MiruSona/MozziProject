@@ -5,7 +5,8 @@ namespace Mozzi.Resource
     public static class PrefabKeys
     {
         public const string Mozzi = "Prefabs/Mozzi";
-        public const string IngredientPile = "Prefabs/IngredientPile";
+        // 바닥 재료(FloorItemObject). 프리팹 파일 이름은 옛 이름 그대로다.
+        public const string FloorItem = "Prefabs/IngredientPile";
         public const string Building = "Prefabs/Building";
         public const string UiFarmScreen = "Prefabs/UI/FarmScreen";
         public const string UiSynthesisScreen = "Prefabs/UI/SynthesisScreen";

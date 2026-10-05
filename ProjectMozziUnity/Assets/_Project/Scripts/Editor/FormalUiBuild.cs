@@ -17,6 +17,8 @@ namespace Mozzi.Editor
         public static readonly Color TextDark = new Color(0.29f, 0.18f, 0.13f, 1f);
         public static readonly Color TextLight = new Color(1f, 0.98f, 0.92f, 1f);
         public static readonly Color PlateDark = new Color(0.17f, 0.11f, 0.09f, 0.85f);
+        private static readonly Color MenuCream = new Color(1f, 0.965f, 0.9f, 1f);
+        private static readonly Color MenuDim = new Color(0f, 0f, 0f, 0.45f);
 
         public static RectTransform NewNode(Transform parent, string name)
         {
@@ -231,6 +233,66 @@ namespace Mozzi.Editor
             TextMeshProUGUI gold = MakeText(plate, UiNames.GoldText, 24f, TextLight, TextAlignmentOptions.Center);
             Stretch(gold.rectTransform, 4f);
             gold.text = "0 G";
+        }
+
+        // 차림표 판 (주방 · 가판대 같이 씀, 코드는 RecipeMenuView) : 어두운 가림막(누르면 닫힘) + 크림색 상자 + 줄 열둘(2열). 처음엔 꺼 둔다.
+        // 판은 화면 뿌리 맨 위에 붙인다. 가림막은 버튼 줄까지 덮지만 상자는 버튼 줄 바로 위(KitchenLayout.MenuBoxBottom)에 아래끝을 붙여 버튼을 안 가린다.
+        // 여기서는 줄 열둘이 다 든 높이로 짓고, 열 때 RecipeMenuView 가 찾은 떡 수에 맞춰 높이를 줄인다 (줄은 상자 위끝 기준이라 위로 자란다).
+        public static void MakeRecipeMenuPanel(Transform root)
+        {
+            RectTransform panel = NewNode(root, UiNames.KitchenMenuPanel);
+            Stretch(panel, 0f);
+
+            RectTransform blocker = NewNode(panel, UiNames.KitchenMenuBlocker);
+            Stretch(blocker, -LayoutConstUi.BarBleedLength);
+            SetImage(blocker, MenuDim, true);
+            blocker.gameObject.AddComponent<Button>().transition = Selectable.Transition.None;
+
+            float boxWidth = KitchenLayout.MenuBoxPad * 2f + KitchenLayout.MenuRowWidth * KitchenLayout.MenuColumns + KitchenLayout.MenuRowGap;
+            float boxHeight = KitchenLayout.MenuBoxHeight(UiNames.KitchenMenuRowCount);
+
+            RectTransform box = NewNode(panel, UiNames.KitchenMenuBox);
+            box.anchorMin = new Vector2(0.5f, 0f);
+            box.anchorMax = new Vector2(0.5f, 0f);
+            box.pivot = new Vector2(0.5f, 0f);
+            box.anchoredPosition = new Vector2(0f, KitchenLayout.MenuBoxBottom);
+            box.sizeDelta = new Vector2(boxWidth, boxHeight);
+            MakeSliced(box, SpriteKeys.UiButtonFrame, MenuCream, true);
+
+            TextMeshProUGUI title = MakeText(box, UiNames.KitchenMenuTitleText, 24f, TextDark, TextAlignmentOptions.Center);
+            TopLeft(title.rectTransform, KitchenLayout.MenuBoxPad, KitchenLayout.MenuBoxPad, boxWidth - KitchenLayout.MenuBoxPad * 2f, KitchenLayout.MenuTitleHeight);
+            title.text = "차림표 : 누르면 바로 만든다";
+
+            TextMeshProUGUI empty = MakeText(box, UiNames.KitchenMenuEmptyText, 20f, TextDark, TextAlignmentOptions.Center);
+            TopLeft(empty.rectTransform, KitchenLayout.MenuBoxPad, KitchenLayout.MenuBoxPad + KitchenLayout.MenuTitleHeight,
+                boxWidth - KitchenLayout.MenuBoxPad * 2f, KitchenLayout.MenuRowHeight * 2f);
+            empty.textWrappingMode = TextWrappingModes.Normal;
+            empty.text = UiText.StallMakeEmpty;
+
+            for (int i = 0; i < UiNames.KitchenMenuRowCount; i++)
+            {
+                int column = i % KitchenLayout.MenuColumns;
+                int line = i / KitchenLayout.MenuColumns;
+                RectTransform row = MakeButton(box, UiNames.KitchenMenuRowPrefix + i, "", 20f);
+                TopLeft(row,
+                    KitchenLayout.MenuBoxPad + column * (KitchenLayout.MenuRowWidth + KitchenLayout.MenuRowGap),
+                    KitchenLayout.MenuBoxPad + KitchenLayout.MenuTitleHeight + line * (KitchenLayout.MenuRowHeight + KitchenLayout.MenuRowGap),
+                    KitchenLayout.MenuRowWidth, KitchenLayout.MenuRowHeight);
+
+                RectTransform label = row.Find(UiNames.ButtonLabel) as RectTransform;
+                label.offsetMin = new Vector2(52f, 6f);
+
+                RectTransform icon = NewNode(row, UiNames.CakeIcon);
+                icon.anchorMin = new Vector2(0f, 0.5f);
+                icon.anchorMax = new Vector2(0f, 0.5f);
+                icon.pivot = new Vector2(0f, 0.5f);
+                // 떡 그림이 캔버스 바닥에 붙어 있어 그림 가운데가 캔버스 가운데보다 약 5 아래다. 그만큼 올려 줄 가운데에 맞춘다.
+                icon.anchoredPosition = new Vector2(12f, 5f);
+                icon.sizeDelta = new Vector2(32f, 32f);
+                SetImage(icon, Color.white, false).preserveAspect = true;
+            }
+
+            panel.gameObject.SetActive(false);
         }
 
         public static void SavePrefab(GameObject root, string path)

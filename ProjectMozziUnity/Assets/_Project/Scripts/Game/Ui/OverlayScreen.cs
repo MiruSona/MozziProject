@@ -98,6 +98,12 @@ namespace Mozzi.Game.Ui
         {
         }
 
+        // 「닫기」(CloseTop) 가 화면보다 먼저 닫을 안쪽 판(차림표 등)이 열려 있으면 그것만 닫고 true. 닫기는 한 겹씩 되돌아간다.
+        public virtual bool CloseInner()
+        {
+            return false;
+        }
+
         // 닫힐 때 고르던 것 · 연출을 비우는 자리.
         public virtual void OnClosed()
         {

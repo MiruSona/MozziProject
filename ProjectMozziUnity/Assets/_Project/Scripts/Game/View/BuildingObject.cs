@@ -15,6 +15,11 @@ namespace Mozzi.Game.View
 
         private static readonly Color LabelColor = new Color(0.29f, 0.18f, 0.13f, 1f);
 
+        // 들썩임 (찹쌀이가 궤짝에 들어갔을 때). 세로만 눌렀다 솟았다 돌아온다. 피벗이 발끝이라 바닥은 안 뜬다.
+        private const float BumpSec = 0.2f;
+        private const float BumpSquash = 0.9f;
+        private const float BumpStretch = 1.05f;
+
         private SpriteRenderer _renderer;
         private TMP_Text _label;
         private GameObject _badge;
@@ -23,6 +28,9 @@ namespace Mozzi.Game.View
         private Color _badgeFallbackColor;
         private BoxCollider2D _collider;
         private Rect _hitWorld;
+        private Vector3 _baseScale = Vector3.one;
+        private bool _bumping;
+        private float _bumpTime;
 
         public BuildingKind Kind { get; private set; }
 
@@ -74,6 +82,8 @@ namespace Mozzi.Game.View
 
             transform.position = new Vector3(rootPos.x, rootPos.y, 0f);
             transform.localScale = new Vector3(scale.x, scale.y, 1f);
+            _baseScale = transform.localScale;
+            _bumping = false;
 
             // 자식 · 콜라이더는 부모 scale 을 타므로 월드 값을 local 로 바꿔 쓴다.
             if (_collider != null)
@@ -117,6 +127,45 @@ namespace Mozzi.Game.View
             {
                 _badge.SetActive(on);
             }
+        }
+
+        public void PlayBump()
+        {
+            _bumping = true;
+            _bumpTime = 0f;
+        }
+
+        // 앞 절반은 눌린 0.9 에서 1.05 로 솟고, 뒤 절반은 1 로 내려앉는다.
+        public void Step(float deltaTime)
+        {
+            if (_bumping == false)
+            {
+                return;
+            }
+
+            _bumpTime += deltaTime;
+            float t = Mathf.Clamp01(_bumpTime / BumpSec);
+            float k;
+            if (t < 0.5f)
+            {
+                k = Mathf.Lerp(BumpSquash, BumpStretch, t / 0.5f);
+            }
+            else
+            {
+                k = Mathf.Lerp(BumpStretch, 1f, (t - 0.5f) / 0.5f);
+            }
+
+            transform.localScale = new Vector3(_baseScale.x, _baseScale.y * k, _baseScale.z);
+            if (t >= 1f)
+            {
+                _bumping = false;
+            }
+        }
+
+        public override void OnReturn()
+        {
+            base.OnReturn();
+            _bumping = false;
         }
 
         // 월드 점이 누르는 네모 안인가. 찹쌀이를 끌어다 놓을 자리 판정이다.

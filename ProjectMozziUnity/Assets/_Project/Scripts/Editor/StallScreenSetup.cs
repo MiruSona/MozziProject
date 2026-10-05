@@ -42,7 +42,7 @@ namespace Mozzi.Editor
             Debug.Log("[StallScreenSetup] 저장 " + PrefabPath);
         }
 
-        // 겹 순서 (뒤 → 앞) : 배경 → 칠판 장식 · 칠판 글자 → 주인 → 계산대 → 진열장 · 떡 · 소품 → 손님 → 말풍선 → 윗줄 · 버튼 줄.
+        // 겹 순서 (뒤 → 앞) : 배경 → 칠판 장식 · 칠판 글자 → 주인 → 계산대 → 진열장 · 떡 · 소품 → 손님 → 말풍선 → 윗줄 · 버튼 줄 → 차림표 판.
         private static void Build(GameObject root)
         {
             root.AddComponent<StallScreen>();
@@ -79,6 +79,8 @@ namespace Mozzi.Editor
             FormalUiBuild.MakeTopRow(t);
             MakeStatusPlate(t);
             MakeBottomRow(t);
+            // 칠판을 누르면 뜨는 차림표 판. 가림막이 버튼 줄까지 덮도록 맨 위에 둔다 (상자는 버튼 줄 위).
+            FormalUiBuild.MakeRecipeMenuPanel(t);
         }
 
         // 칠판 머리 장식 + 그 위 「오늘의 떡」, 녹색 면 = 누름 칸 + 진열 요약 글자.
@@ -132,7 +134,7 @@ namespace Mozzi.Editor
             }
         }
 
-        // 손님 뿌리 = 겹 캔버스(120×240) 크기 · 피벗 발끝. 왼쪽을 보는 자리는 뿌리째 좌우로 뒤집는다 (발끝은 그대로).
+        // 손님 뿌리 = 겹 캔버스(120×240) 크기 · 피벗 발끝. 모두 오른쪽(주인 쪽)을 보므로 뒤집지 않는다. 걷는 자리는 StallScreen 이 옮긴다.
         // 겹은 아래 → 위 body · shirt · face · hair. 그림은 StallScreen 이 끼운다.
         private static void MakeCustomer(RectTransform stage, int index)
         {
@@ -146,10 +148,6 @@ namespace Mozzi.Editor
             RectTransform customer = FormalUiBuild.NewNode(stage, UiNames.StallCustomerPrefix + index);
             FormalUiBuild.PivotAt(customer, StallLayout.QueueFootX[index], StallLayout.QueueFootY,
                 new Vector2(StallLayout.CustomerPivotX, 0f), size.x, size.y);
-            if (StallLayout.QueueFacesLeft[index])
-            {
-                customer.localScale = new Vector3(-1f, 1f, 1f);
-            }
 
             Image tap = FormalUiBuild.SetImage(customer, FormalUiBuild.Clear, true);
             tap.raycastPadding = CustomerTapPadding;

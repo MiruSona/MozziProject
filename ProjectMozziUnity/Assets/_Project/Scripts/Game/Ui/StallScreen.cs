@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using Mozzi.Data;
 using Mozzi.Game.Clock;
 using Mozzi.Game.Codex;
+using LitMotion;
 using Mozzi.Game.Stall;
+using Mozzi.Game.Vfx;
 using Mozzi.Game.Wallet;
 using Mozzi.Hubs;
 using Mozzi.Resource;
@@ -13,7 +15,8 @@ using UnityEngine.UI;
 namespace Mozzi.Game.Ui
 {
     // 가판대 화면 (가게 안쪽 정식 화면). 칠판에 진열 요약, 진열장에 떡 그림, 마루에 앞 손님 셋과 주문 말풍선.
-    // 자리는 StallLayout 이 정본이고 프리팹은 Editor 의 StallScreenSetup 이 짓는다. 떡 만들기는 주방 화면(KitchenScreen) 몫이다.
+    // 자리는 StallLayout 이 정본이고 프리팹은 Editor 의 StallScreenSetup 이 짓는다. 칠판을 누르면 차림표 판에서 찾은 떡을 바로 만들고,
+    // 새 조합 실험(떡메)은 주방 화면(KitchenScreen) 몫이다. 손님은 왼쪽에서 걸어 들어와 한 줄로 서고, 앞 손님이 빠지면 당겨진다.
     public sealed class StallScreen : OverlayScreen
     {
         private const string PlainName = "평범한 떡";
@@ -28,7 +31,13 @@ namespace Mozzi.Game.Ui
         private readonly List<Button> _customerButtons = new List<Button>();
         private readonly List<CustomerCellView> _customers = new List<CustomerCellView>();
         private readonly List<OrderBubbleView> _bubbles = new List<OrderBubbleView>();
+        private readonly List<CustomerWalkView> _walkers = new List<CustomerWalkView>();
         private readonly List<ShelfCellView> _shelfCells = new List<ShelfCellView>();
+        // 걷기 연출 모션 묶음. 화면이 닫히면 한 번에 끊는다.
+        private readonly CompositeMotionHandle _motions = new CompositeMotionHandle();
+        // RefreshQueue 가 칸을 바꾸기 전에 옛 줄(누가 · 어디)을 베껴 두는 자리.
+        private readonly List<StallCustomer> _lastWho = new List<StallCustomer>();
+        private readonly List<float> _lastX = new List<float>();
 
         private IResourceHub _resource;
         private IStallHub _stall;
@@ -43,6 +52,10 @@ namespace Mozzi.Game.Ui
         private TMP_Text _queueMore;
         private Button _openButton;
         private Button _clerkButton;
+        private RecipeMenuView _menu;
+        private IMotionScheduler _scheduler;
+        // 화면을 열고 첫 줄 그리기인가. 그때는 걸어 들어오지 않고 제 자리에 세운다.
+        private bool _queueFresh = true;
 
         protected override string PrefabName
         {
@@ -63,14 +76,17 @@ namespace Mozzi.Game.Ui
             _data = InGameHub.Get<IStaticDataHub>();
             _ui = InGameHub.Get<IUiHub>();
             _resource = GlobalHub.Get<IResourceHub>();
+            // 화면 연출이라 실제 시간으로 걷는다 — 디버그 배속을 올려도 걷는 빠르기는 같다.
+            _scheduler = InGameHub.Get<IVfxHub>().Ui;
 
             UiBindUtil.SetText(UiBindUtil.Find<TMP_Text>(transform, UiNames.StallMenuTitleText, PrefabName), UiText.StallMenuTitle);
             _boardBody = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallMenuBodyText, PrefabName);
             _status = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallStatusText, PrefabName);
             _queueMore = UiBindUtil.Find<TMP_Text>(transform, UiNames.StallQueueMoreText, PrefabName);
 
-            // 칠판을 누르면 주방이 열리며 차림표가 뜬다.
-            UiBindUtil.BindButton(transform, UiNames.StallMenuBoard, PrefabName, _ui.OpenKitchenMenu);
+            // 칠판을 누르면 가판대 위에 차림표 판이 뜨고, 줄을 누르면 그 자리에서 떡을 만든다.
+            _menu = new RecipeMenuView(transform, PrefabName, _resource, _data, _codex, _stall, OnMenuPick);
+            UiBindUtil.BindButton(transform, UiNames.StallMenuBoard, PrefabName, _menu.Open);
 
             for (int i = 0; i < UiNames.StallShelfCellCount; i++)
             {
@@ -88,7 +104,11 @@ namespace Mozzi.Game.Ui
                 _customers.Add(new CustomerCellView(customer.transform));
 
                 Transform bubble = UiBindUtil.FindObject(transform, UiNames.StallBubblePrefix + i, PrefabName).transform;
-                _bubbles.Add(new OrderBubbleView(bubble, PrefabName));
+                OrderBubbleView bubbleView = new OrderBubbleView(bubble, PrefabName);
+                _bubbles.Add(bubbleView);
+                _walkers.Add(new CustomerWalkView(customer.transform as RectTransform, bubbleView, StallLayout.QueueFootX[i]));
+                _lastWho.Add(null);
+                _lastX.Add(0f);
             }
 
             _openButton = UiBindUtil.BindButton(transform, UiNames.StallOpenButton, PrefabName, OnOpenOrNextDay);
@@ -99,10 +119,17 @@ namespace Mozzi.Game.Ui
 
         protected override void UnbindChildren()
         {
+            _motions.Cancel();
             _customerButtons.Clear();
             _customers.Clear();
             _bubbles.Clear();
+            _walkers.Clear();
+            _lastWho.Clear();
+            _lastX.Clear();
             _shelfCells.Clear();
+            _menu = null;
+            _scheduler = null;
+            _queueFresh = true;
 
             _resource = null;
             _stall = null;
@@ -120,6 +147,35 @@ namespace Mozzi.Game.Ui
             RefreshShelf();
             RefreshQueue();
             RefreshButtons();
+            if (_menu.IsOpen)
+            {
+                _menu.Refresh();
+            }
+        }
+
+        // 「닫기」 를 누르면 차림표 판부터 닫는다.
+        public override bool CloseInner()
+        {
+            if (_menu.IsOpen == false)
+            {
+                return false;
+            }
+
+            _menu.Close();
+            return true;
+        }
+
+        // 걷던 손님은 모두 멈추고, 다음에 열 때는 제 자리에 바로 서게 한다.
+        public override void OnClosed()
+        {
+            _motions.Cancel();
+            for (int i = 0; i < _walkers.Count; i++)
+            {
+                _walkers[i].Clear();
+            }
+
+            _queueFresh = true;
+            _menu.Close();
         }
 
         private void RefreshStatus()
@@ -228,8 +284,15 @@ namespace Mozzi.Game.Ui
         }
 
         // 앞 손님 셋만 세우고, 넷째부터는 「뒤에 N명」 글자로 센다.
+        // 칸을 바꾸기 전에 옛 줄을 베껴 두고, 칸마다 그 손님이 전에 어디 있었나를 보고 걷게 한다.
         private void RefreshQueue()
         {
+            for (int i = 0; i < _walkers.Count; i++)
+            {
+                _lastWho[i] = _walkers[i].Who;
+                _lastX[i] = _walkers[i].X;
+            }
+
             IReadOnlyList<StallCustomer> queue = _stall.Queue;
             for (int i = 0; i < _customers.Count; i++)
             {
@@ -238,12 +301,16 @@ namespace Mozzi.Game.Ui
                     _customerButtons[i].interactable = false;
                     _customers[i].Hide();
                     _bubbles[i].Hide();
+                    _walkers[i].Clear();
                     continue;
                 }
 
                 _customerButtons[i].interactable = _stall.Shelf.Count > 0;
                 SetCustomer(i, queue[i]);
+                MoveCustomer(i, queue[i]);
             }
+
+            _queueFresh = false;
 
             int more = queue.Count - _customers.Count;
             UiBindUtil.SetActive(_queueMore.gameObject, more > 0);
@@ -251,6 +318,33 @@ namespace Mozzi.Game.Ui
             {
                 UiBindUtil.SetText(_queueMore, "뒤에 " + more + "명");
             }
+        }
+
+        // 화면을 처음 열 때는 제 자리에 세운다. 같은 손님이 이미 이 칸에 있으면(걷는 중이어도) 그대로 두고 말풍선만 머리에 다시 붙인다.
+        // 다른 칸에 있던 손님이면 그 자리에서 당겨 오고, 처음 보는 손님이면 화면 왼쪽 밖에서 걸어 들어온다.
+        private void MoveCustomer(int index, StallCustomer customer)
+        {
+            CustomerWalkView walker = _walkers[index];
+            if (_queueFresh)
+            {
+                walker.Place(customer);
+                return;
+            }
+
+            if (_lastWho[index] == customer)
+            {
+                walker.SnapBubble();
+                return;
+            }
+
+            int from = _lastWho.IndexOf(customer);
+            float fromX = StallLayout.QueueEnterX;
+            if (from >= 0)
+            {
+                fromX = _lastX[from];
+            }
+
+            walker.Walk(customer, fromX, _scheduler, _motions);
         }
 
         // 손님 겹을 세우고 주문은 머리 위 말풍선에. 찾은 떡은 그림만, 아무거나 · 못 찾은 떡은 글자로.
@@ -264,13 +358,8 @@ namespace Mozzi.Game.Ui
                 color = BubbleHint;
             }
 
-            bool facesLeft = StallLayout.QueueFacesLeft[index];
+            // 말풍선은 제 칸 자리에 먼저 그리고, 걷는 중이면 MoveCustomer 가 지금 자리로 옮긴다.
             float headX = StallLayout.QueueFootX[index] - StallLayout.HeadCenterOffset;
-            if (facesLeft)
-            {
-                headX = StallLayout.QueueFootX[index] + StallLayout.HeadCenterOffset;
-            }
-
             float headTop = StallLayout.QueueFootY - StallLayout.HeadHeight;
 
             Sprite sprite = null;
@@ -281,11 +370,11 @@ namespace Mozzi.Game.Ui
 
             if (sprite != null)
             {
-                _bubbles[index].ShowIcon(sprite, color, headX, headTop, facesLeft);
+                _bubbles[index].ShowIcon(sprite, color, headX, headTop);
                 return;
             }
 
-            _bubbles[index].ShowText(OrderLine(customer), color, headX, headTop, facesLeft);
+            _bubbles[index].ShowText(OrderLine(customer), color, headX, headTop);
         }
 
         // 주문 떡이 진열대에 있으면 웃고, 없으면 시무룩. 아무거나 사는 손님은 기본 얼굴이다.
@@ -363,6 +452,13 @@ namespace Mozzi.Game.Ui
         private void OnServe(int queueIndex)
         {
             _stall.Serve(queueIndex);
+            Refresh();
+        }
+
+        // 차림표 줄 : 그 자리에서 떡을 만들고 진열장 · 칠판 · 손님 표정을 같이 고친다. 판은 열린 채로 둔다.
+        private void OnMenuPick(string recipeId)
+        {
+            _stall.Make(_data.Recipes.Get(recipeId).IngredientIds);
             Refresh();
         }
 

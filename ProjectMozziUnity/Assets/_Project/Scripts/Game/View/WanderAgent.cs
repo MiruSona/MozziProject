@@ -30,14 +30,22 @@ namespace Mozzi.Game.View
             get { return _speed; }
         }
 
-        // speed 는 MozziObject 가 씨앗으로 뽑아 준다.
-        public void Reset(Rect area, Vector2 start, float speed)
+        // 처음 쉼을 이 범위에서 뽑는다 (초). 쉬는 쪽 마리가 한꺼번에 일어나지 않게 흩는다.
+        public const float FirstRestMin = 0.5f;
+        public const float FirstRestMax = 3f;
+
+        // 처음부터 걷는 채로 시작할 확률. 나머지는 FirstRest 만큼 섰다가 걷는다.
+        public const float StartWalkingChance = 0.5f;
+
+        // speed · firstRest 는 MozziObject 가 씨앗으로 뽑아 준다. firstRest 가 0 이면 걷는 채로 시작한다.
+        // 처음 목표를 제자리로 두면 모두 쉼만 끝나고 같이 출발해 보여서, 바로 새 목표를 고른다.
+        public void Reset(Rect area, float speed, float firstRest)
         {
             _speed = speed;
             _area = area;
-            _target = start;
-            _rest = Random.Range(0f, RestMax);
-            IsMoving = false;
+            _target = PickTarget();
+            _rest = firstRest;
+            IsMoving = firstRest <= 0f;
         }
 
         // 드래그로 옮겨진 뒤. 목표를 지금 자리로 바꾸고 잠깐 쉰다 — 안 그러면 옛 목표로 미끄러진다.

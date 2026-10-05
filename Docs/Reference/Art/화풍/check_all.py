@@ -46,6 +46,8 @@ KIND_PROFILE = {
 }
 # 종류 안에서 프로필이 다른 그림 (설계 5-1 : 잔디 바탕은 mozzi_bg)
 FILE_PROFILE = {("tile", "grass_base.png"): "mozzi_bg"}
+# 합성 창 반죽 소용돌이 24장은 Fx 폴더에 있지만 회색 세 단계(곱하기용 겹) · 외곽선 겹이라 흰 1색 한도인 mozzi_fx 로는 걸린다
+FILE_PROFILE.update({("fx", f"fx_swirl_{layer}_{i}.png"): "mozzi_prop" for layer in ("a", "b", "top") for i in range(8)})
 # 종류 → 그 종류 그림이 있는 Resources/Art 하위 폴더 (같은 이름이 두 폴더에 있어 종류로 가른다)
 KIND_FOLDERS = {
    "bg": ["Screen", "Main"],
@@ -62,10 +64,13 @@ KIND_FOLDERS = {
 FOLDER_KIND = {
    "Mozzi": "char_mozzi", "Customer": "char_people", "Fx": "fx", "Cake": "icon", "Ingredient": "icon",
    "Farm": "tile", "UI": "ui", "Building": "bldg", "Main": "bg", "Screen": "piece",
+   "CakeOne": "icon",
 }
 # 종류 표에는 있지만 일부러 지운 그림 (없어도 멈추지 않는다)
 REMOVED = {
    "stall_prop_menu.png": "2026-10-05 가판대 메뉴 세움판을 뺐다",
+   "fx_yinyang_half.png": "2026-10-05 반복 06 에서 음양 반쪽 연출 그림을 뺐다",
+   "kitchen_tray.png": "2026-10-05 반복 06 에서 주방 쟁반 그림을 뺐다",
 }
 # 알고 두는 경고 · 실패 — (묶음, 규칙, 파일 무늬, 까닭). 요약은 이 목록에 없는 것만 「새로 생긴 것」 으로 따로 센다.
 # 까닭의 긴 설명은 README 「알고 두는 경고 · 실패」 표. 줄을 더하거나 뺄 때 그 표도 같이 고친다.

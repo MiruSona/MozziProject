@@ -27,13 +27,25 @@ namespace Mozzi.Game.Ui
         public const float PlusBubbleWidth = 36f;
         public const float PlusBubbleHeight = 34f;
 
-        // 둥근 창 (음양 · 도는 통).
-        public const float WindowX = 97f;
-        public const float WindowY = 117f;
-        public const float WindowRadius = 31f;
-        public const float YinSize = 50f;
+        // 둥근 창 유리 (조각 좌표). 유리는 x 65~124 · y 86~145 라 가운데 (95, 116) · 지름 60. 번쩍 · 반짝이도 이 가운데에서 난다.
+        public const float WindowX = 95f;
+        public const float WindowY = 116f;
+        public const float WindowRadius = 30f;
         public const float FlashSize = 70f;
+
+        // 창 안 두 색 반죽 소용돌이 (그림 fx_swirl_a · b · top, 60×60 × SwirlFrameCount 장). 유리 모양 가림판(MaskSize, 그림 fx_window_mask) 안에
+        // 세 겹을 같은 자리에 포개고 SwirlFrameSec 마다 한 장씩 넘긴다 (8장 고리 0.88초).
+        // 반죽 두 겹은 넣은 두 마리 몸 색을 곱하고, 진행률 p 만큼 상대 색으로 MixBlendMax·p 물든다.
+        public const float MaskSize = 60f;
+        public const int SwirlFrameCount = 8;
+        public const float SwirlFrameSec = 0.11f;
+        public const float MixBlendMax = 0.35f;
         public const float SparkleSize = 11f;
+
+        // 깔때기 가림 칸의 아래끝 (조각 좌표 y) = 그릇 안쪽 앞 가장자리. 합성을 시작하면 찹쌀이가 이 줄 아래로 내려가며 사라진다.
+        // 가림 칸은 찹쌀이 겹 자리(64)의 위끝부터 이 줄까지라, 그 높이만큼 내려가면 한 점도 안 남는다.
+        public const float InletClipBottom = 25f;
+        public const float InletClipHeight = InletClipBottom - InletIconY + LayoutConstUi.MozziIconSize * 0.5f;
 
         // 서랍 앞판 (쉼 그림). 다 됨 그림은 서랍이 아래로 나오므로 누름 칸은 발 아래까지 넉넉히 잡는다.
         public const float DrawerLeft = 52f;

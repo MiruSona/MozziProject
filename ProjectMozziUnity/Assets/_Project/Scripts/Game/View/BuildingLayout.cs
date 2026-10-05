@@ -12,6 +12,9 @@ namespace Mozzi.Game.View
         public Vector2 LabelPx;
         public Vector2 BadgePx;
 
+        // 찹쌀이가 뛰어 들어가는 입구. 보관함 궤짝만 쓴다 — 궤짝 그림(92×77) 안 어두운 속(y 4~16)의 가운데다.
+        public Vector2 MouthPx;
+
         public static BuildingLayout For(BuildingKind kind)
         {
             if (kind == BuildingKind.Synthesis)
@@ -24,7 +27,14 @@ namespace Mozzi.Game.View
                 return Make(306f, 428f, 181f, 431f, 225f, 428f, 306f, 442f, 352f, 256f);
             }
 
-            return Make(484f, 470f, 438f, 530f, 393f, 470f, 484f, 385f, 522f, 400f);
+            BuildingLayout storage = Make(484f, 470f, 438f, 530f, 393f, 470f, 484f, 385f, 522f, 400f);
+            storage.MouthPx = new Vector2(484f, 404f);
+            return storage;
+        }
+
+        public Vector2 MouthWorld
+        {
+            get { return new Vector2(LayoutConst.XFromLeft(MouthPx.x), LayoutConst.YFromTop(MouthPx.y)); }
         }
 
         // 발끝 월드 자리.

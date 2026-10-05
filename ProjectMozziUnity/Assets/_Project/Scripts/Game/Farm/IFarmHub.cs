@@ -31,6 +31,9 @@ namespace Mozzi.Game.Farm
         // 더미 전부를 창고로 옮기고 실제로 들어간 수를 준다. 창고가 차면 남은 것은 더미에 그대로.
         int PickUp(string ingredientId);
 
+        // 더미에서 amount 개까지만 옮긴다 (바닥 낱개 · 꾸러미 하나를 주울 때). 실제로 들어간 수를 준다.
+        int PickUp(string ingredientId, int amount);
+
         // 담장이 차면 false.
         bool Place(string speciesId);
 

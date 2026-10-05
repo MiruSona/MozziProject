@@ -12,28 +12,32 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 주방 화면 (임시판). 쟁반에서 재료 1~3개를 고르고 「떡메 치기」 → 처음 보는 조합이면 절구를 3번 눌러 만든다.
-    // 찾은 레시피 · 해 본 조합은 바로 Make. 차림표 판에서는 찾은 떡을 한 번에 만든다. 결과는 접시 위에 보인다.
-    // 다음 반복에 화면을 통째로 바꿀 예정이라 배치는 KitchenScreenSetup · KitchenLayout, 프레임은 KitchenMortarView 에 두고
-    // 여기는 고르기 · 만들기 흐름만 든다.
+    // 주방 화면 — 네 단계 상자 판 (반복 06). 서랍장에서 재료 1~3개를 고르고 찜기 → 절구 3탭 → 빚기판 순서로 누르면 만든다.
+    // 단계 규칙(다음 도구 · 연타 건너뛰기 · 해 본 조합 건너뛰기)은 KitchenFlowAgent, 여기는 고르기 · 그림 · Make 호출만 든다.
+    // 과정은 결과를 안 바꾼다 — StallManager.Make 는 그대로 부르고 부르는 때만 마지막 단계 끝이다.
+    // 차림표 판에서는 찾은 떡을 한 번에 만든다. 결과는 빚기판 위 접시에 보인다. 배치는 KitchenScreenSetup · KitchenLayout.
     public sealed class KitchenScreen : OverlayScreen
     {
         private const string StallRowId = DataKeys.DefaultRowId;
         private const string PlainName = "평범한 떡";
+        private const string LockedMark = "?";
         private const float FlashDuration = 0.4f;
         private const int MaxSelected = 3;
 
-        private static readonly Color CellOff = new Color(1f, 1f, 1f, 0f);
-        private static readonly Color CellOn = new Color(1f, 0.85f, 0.3f, 0.55f);
+        // 서랍 칸 앞면 · 고른 칸 · 닫힌 칸 색. 도구는 다음 차례만 제 색이고 나머지는 Dim 을 곱한다.
+        private static readonly Color DrawerFront = new Color(0.86f, 0.68f, 0.48f, 1f);
+        private static readonly Color DrawerOn = new Color(1f, 0.85f, 0.3f, 1f);
+        private static readonly Color DrawerLocked = new Color(0.45f, 0.36f, 0.28f, 1f);
         private static readonly Color IconEmpty = new Color(0.35f, 0.35f, 0.35f, 1f);
+        private static readonly Color SteamerColor = new Color(0.72f, 0.86f, 0.92f, 1f);
+        private static readonly Color BoardColor = new Color(0.96f, 0.84f, 0.62f, 1f);
+        private const float Dim = 0.5f;
 
-        private readonly Dictionary<string, Button> _trayCells = new Dictionary<string, Button>();
-        private readonly Dictionary<string, Image> _trayIcons = new Dictionary<string, Image>();
-        private readonly Dictionary<string, TMP_Text> _trayCounts = new Dictionary<string, TMP_Text>();
-        private readonly List<Image> _mortarSlots = new List<Image>();
-        private readonly List<Button> _menuRows = new List<Button>();
-        private readonly List<Image> _menuRowIcons = new List<Image>();
-        private readonly List<string> _menuRowRecipes = new List<string>();
+        private readonly List<Button> _drawerCells = new List<Button>();
+        private readonly List<Image> _drawerIcons = new List<Image>();
+        private readonly List<TMP_Text> _drawerCounts = new List<TMP_Text>();
+        private readonly List<string> _drawerIds = new List<string>();
+        private readonly List<Image> _bowlSlots = new List<Image>();
         private readonly List<string> _selected = new List<string>();
 
         private IResourceHub _resource;
@@ -44,10 +48,15 @@ namespace Mozzi.Game.Ui
         private IStaticDataHub _data;
         private IUiHub _ui;
 
-        private PoundAgent _pound;
+        private KitchenFlowAgent _flow;
         private KitchenMortarView _mortar;
+        private Image _mortarImage;
+        private Image _steamer;
+        private Image _board;
         private TMP_Text _hint;
-        private Button _poundButton;
+
+        private RectTransform _bounceRect;
+        private float _bounceTime;
 
         private GameObject _result;
         private Image _resultIcon;
@@ -57,8 +66,7 @@ namespace Mozzi.Game.Ui
         private float _flashTime;
         private bool _flashing;
 
-        private GameObject _menuPanel;
-        private GameObject _menuEmpty;
+        private RecipeMenuView _menu;
 
         protected override string PrefabName
         {
@@ -79,10 +87,10 @@ namespace Mozzi.Game.Ui
             _data = InGameHub.Get<IStaticDataHub>();
             _ui = InGameHub.Get<IUiHub>();
             _resource = GlobalHub.Get<IResourceHub>();
-            _pound = new PoundAgent(this, _data.Stalls.Get(StallRowId));
+            _flow = new KitchenFlowAgent(_data.Stalls.Get(StallRowId));
 
-            BindTray();
-            BindMortar();
+            BindDrawers();
+            BindTools();
 
             _result = UiBindUtil.FindObject(transform, UiNames.KitchenResult, PrefabName);
             _resultIcon = UiBindUtil.Find<Image>(_result.transform, UiNames.CakeIcon, PrefabName);
@@ -91,82 +99,83 @@ namespace Mozzi.Game.Ui
             _flash = UiBindUtil.Find<Image>(transform, UiNames.KitchenResultFlash, PrefabName);
             _hint = UiBindUtil.Find<TMP_Text>(transform, UiNames.KitchenHintText, PrefabName);
 
-            _poundButton = UiBindUtil.BindButton(transform, UiNames.KitchenPoundButton, PrefabName, OnPoundButton);
             UiBindUtil.BindButton(transform, UiNames.KitchenMenuButton, PrefabName, ToggleMenu);
             UiBindUtil.BindButton(transform, UiNames.StallRecipeCodexButton, PrefabName, _ui.OpenRecipeCodex);
             UiBindUtil.BindButton(transform, UiNames.KitchenDoorButton, PrefabName, _ui.OpenStall);
 
-            BindMenu();
+            _menu = new RecipeMenuView(transform, PrefabName, _resource, _data, _codex, _stall, OnMenuPick);
             ClearResult();
         }
 
-        private void BindTray()
+        // 서랍 칸 열둘. 앞 칸부터 부재료 표 순서로 채우고, 남는 칸은 닫힌 「?」 칸(못 누름)이다.
+        private void BindDrawers()
         {
             IReadOnlyList<string> ids = _inventory.IngredientIds;
-            for (int i = 0; i < ids.Count; i++)
+            for (int i = 0; i < UiNames.KitchenDrawerCellCount; i++)
             {
-                string id = ids[i];
-                Button cell = UiBindUtil.BindButton(transform, UiNames.KitchenTrayCellPrefix + id, PrefabName,
-                    delegate { OnToggle(id); });
-                _trayCells[id] = cell;
-                _trayCounts[id] = UiBindUtil.Find<TMP_Text>(cell.transform, UiNames.KitchenTrayCountText, PrefabName);
+                string id = null;
+                if (i < ids.Count)
+                {
+                    id = ids[i];
+                }
 
+                Button cell = UiBindUtil.BindButton(transform, UiNames.KitchenDrawerCellPrefix + i, PrefabName,
+                    delegate { OnToggle(id); });
                 Image icon = UiBindUtil.Find<Image>(cell.transform, UiNames.IngredientIcon, PrefabName);
-                icon.sprite = IngredientSprite(id);
+                icon.sprite = null;
+                if (id != null)
+                {
+                    icon.sprite = IngredientSprite(id);
+                }
+
                 UiBindUtil.SetActive(icon.gameObject, icon.sprite != null);
-                _trayIcons[id] = icon;
+                _drawerCells.Add(cell);
+                _drawerIcons.Add(icon);
+                _drawerCounts.Add(UiBindUtil.Find<TMP_Text>(cell.transform, UiNames.KitchenTrayCountText, PrefabName));
+                _drawerIds.Add(id);
             }
         }
 
-        private void BindMortar()
+        private void BindTools()
         {
-            Button mortar = UiBindUtil.BindButton(transform, UiNames.KitchenMortar, PrefabName, OnMortarTap);
+            _steamer = UiBindUtil.BindButton(transform, UiNames.KitchenSteamer, PrefabName,
+                delegate { OnTool(KitchenTool.Steamer); }).image;
+            _board = UiBindUtil.BindButton(transform, UiNames.KitchenBoard, PrefabName,
+                delegate { OnTool(KitchenTool.Board); }).image;
+
+            Button mortar = UiBindUtil.BindButton(transform, UiNames.KitchenMortar, PrefabName,
+                delegate { OnTool(KitchenTool.Mortar); });
+            _mortarImage = mortar.image;
             Sprite[] frames = new Sprite[SpriteKeys.KitchenPoundFrameCount];
             for (int i = 0; i < frames.Length; i++)
             {
                 frames[i] = _resource.GetSprite(SpriteKeys.KitchenPound(i));
             }
 
-            _mortar = new KitchenMortarView(mortar.image, frames, KitchenLayout.PoundFrameSec);
+            _mortar = new KitchenMortarView(_mortarImage, frames, KitchenLayout.PoundFrameSec);
 
             for (int i = 0; i < UiNames.KitchenMortarSlotCount; i++)
             {
-                _mortarSlots.Add(UiBindUtil.Find<Image>(transform, UiNames.KitchenMortarSlotPrefix + i, PrefabName));
+                _bowlSlots.Add(UiBindUtil.Find<Image>(transform, UiNames.KitchenMortarSlotPrefix + i, PrefabName));
             }
-        }
-
-        private void BindMenu()
-        {
-            _menuPanel = UiBindUtil.FindObject(transform, UiNames.KitchenMenuPanel, PrefabName);
-            _menuEmpty = UiBindUtil.FindObject(_menuPanel.transform, UiNames.KitchenMenuEmptyText, PrefabName);
-            UiBindUtil.BindButton(_menuPanel.transform, UiNames.KitchenMenuBlocker, PrefabName, CloseMenu);
-
-            for (int i = 0; i < UiNames.KitchenMenuRowCount; i++)
-            {
-                int index = i;
-                Button row = UiBindUtil.BindButton(_menuPanel.transform, UiNames.KitchenMenuRowPrefix + i, PrefabName,
-                    delegate { OnMenuRow(index); });
-                _menuRows.Add(row);
-                _menuRowIcons.Add(UiBindUtil.Find<Image>(row.transform, UiNames.CakeIcon, PrefabName));
-                _menuRowRecipes.Add(null);
-            }
-
-            UiBindUtil.SetActive(_menuPanel, false);
         }
 
         protected override void UnbindChildren()
         {
-            _trayCells.Clear();
-            _trayIcons.Clear();
-            _trayCounts.Clear();
-            _mortarSlots.Clear();
-            _menuRows.Clear();
-            _menuRowIcons.Clear();
-            _menuRowRecipes.Clear();
+            _drawerCells.Clear();
+            _drawerIcons.Clear();
+            _drawerCounts.Clear();
+            _drawerIds.Clear();
+            _bowlSlots.Clear();
             _selected.Clear();
             _flashing = false;
-            _pound = null;
+            _bounceRect = null;
+            _flow = null;
             _mortar = null;
+            _mortarImage = null;
+            _steamer = null;
+            _board = null;
+            _menu = null;
 
             _resource = null;
             _stall = null;
@@ -177,50 +186,52 @@ namespace Mozzi.Game.Ui
             _ui = null;
         }
 
-        // 가판대 칠판에서 바로 차림표로 올 때도 이걸 부른다.
-        public void OpenMenu()
-        {
-            if (_pound.IsRunning)
-            {
-                return;
-            }
-
-            UiBindUtil.SetActive(_menuPanel, true);
-            RefreshMenu();
-        }
-
-        // 아래 줄 「차림표」는 열려 있으면 닫는다 (판이 가림막을 거의 다 덮는다).
+        // 아래 줄 「차림표」는 열려 있으면 닫는다 (판이 가림막을 거의 다 덮는다). 만드는 과정 중에는 안 연다.
         private void ToggleMenu()
         {
-            if (_menuPanel.activeSelf)
+            if (_menu.IsOpen)
             {
-                CloseMenu();
+                _menu.Close();
                 return;
             }
 
-            OpenMenu();
+            if (_flow.IsRunning)
+            {
+                return;
+            }
+
+            _menu.Open();
         }
 
-        private void CloseMenu()
+        // 「닫기」 를 누르면 차림표 판부터 닫는다.
+        public override bool CloseInner()
         {
-            UiBindUtil.SetActive(_menuPanel, false);
+            if (_menu.IsOpen == false)
+            {
+                return false;
+            }
+
+            _menu.Close();
+            return true;
         }
 
         public override void Refresh()
         {
             SetGold(_wallet.Gold);
-            RefreshTray();
-            RefreshMortarSlots();
+            RefreshDrawers();
+            RefreshBowl();
+            RefreshTools();
             RefreshHint();
-            if (_menuPanel.activeSelf)
+            if (_menu.IsOpen)
             {
-                RefreshMenu();
+                _menu.Refresh();
             }
         }
 
         public override void Process(float deltaTime)
         {
             _mortar.Process(deltaTime);
+            ProcessBounce(deltaTime);
             if (_flashing == false)
             {
                 return;
@@ -235,74 +246,106 @@ namespace Mozzi.Game.Ui
             }
         }
 
+        // 도중에 닫으면 흐름을 처음으로 (재료는 Make 때만 빠지니 잃는 것이 없다).
         public override void OnClosed()
         {
-            _pound.Cancel();
+            _flow.Reset();
             _mortar.Stop();
+            StopBounce();
             _selected.Clear();
             _flashing = false;
             _flash.color = new Color(1f, 1f, 1f, 0f);
             ClearResult();
-            CloseMenu();
+            _menu.Close();
         }
 
-        // 고른 칸은 노랗게, 남은 수가 0 이면 그림을 어둡게. 다 골랐으면(3개) 안 고른 칸은 못 누른다.
-        private void RefreshTray()
+        // 고른 칸은 노랗게, 남은 수가 0 이면 그림을 어둡게. 다 골랐거나(3개) 과정 중이면 안 고른 칸은 못 누른다.
+        private void RefreshDrawers()
         {
             bool full = _selected.Count >= MaxSelected;
-            foreach (KeyValuePair<string, Button> pair in _trayCells)
+            for (int i = 0; i < _drawerCells.Count; i++)
             {
-                string id = pair.Key;
+                Button cell = _drawerCells[i];
+                string id = _drawerIds[i];
+                if (id == null)
+                {
+                    cell.image.color = DrawerLocked;
+                    cell.interactable = false;
+                    UiBindUtil.SetText(_drawerCounts[i], LockedMark);
+                    continue;
+                }
+
                 int count = _inventory.Count(id);
                 bool on = _selected.Contains(id);
-
-                pair.Value.image.color = CellOff;
+                cell.image.color = DrawerFront;
                 if (on)
                 {
-                    pair.Value.image.color = CellOn;
+                    cell.image.color = DrawerOn;
                 }
 
-                pair.Value.interactable = on || (count > 0 && full == false);
-                _trayIcons[id].color = Color.white;
+                cell.interactable = _flow.IsRunning == false && (on || (count > 0 && full == false));
+                _drawerIcons[i].color = Color.white;
                 if (count <= 0)
                 {
-                    _trayIcons[id].color = IconEmpty;
+                    _drawerIcons[i].color = IconEmpty;
                 }
 
-                UiBindUtil.SetText(_trayCounts[id], count.ToString());
+                UiBindUtil.SetText(_drawerCounts[i], count.ToString());
             }
         }
 
-        // 절구 아래에 고른 재료 그림을 차례로.
-        private void RefreshMortarSlots()
+        // 그릇 위에 고른 재료 그림을 차례로.
+        private void RefreshBowl()
         {
-            for (int i = 0; i < _mortarSlots.Count; i++)
+            for (int i = 0; i < _bowlSlots.Count; i++)
             {
                 bool has = i < _selected.Count;
-                UiBindUtil.SetActive(_mortarSlots[i].gameObject, has);
+                UiBindUtil.SetActive(_bowlSlots[i].gameObject, has);
                 if (has)
                 {
-                    _mortarSlots[i].sprite = IngredientSprite(_selected[i]);
+                    _bowlSlots[i].sprite = IngredientSprite(_selected[i]);
                 }
             }
+        }
+
+        // 다음에 누를 도구만 제 색, 나머지는 어둡게 (「여기 눌러」).
+        private void RefreshTools()
+        {
+            KitchenTool next = _flow.NextTool(CanStart());
+            _steamer.color = Lit(SteamerColor, next == KitchenTool.Steamer);
+            _board.color = Lit(BoardColor, next == KitchenTool.Board);
+            _mortarImage.color = Lit(Color.white, next == KitchenTool.Mortar);
+        }
+
+        private static Color Lit(Color color, bool on)
+        {
+            if (on)
+            {
+                return color;
+            }
+
+            return new Color(color.r * Dim, color.g * Dim, color.b * Dim, color.a);
         }
 
         private void RefreshHint()
         {
-            if (_pound.IsRunning)
+            if (_flow.Step == KitchenStep.Pound)
             {
-                UiBindUtil.SetText(_hint, "절구를 눌러 떡메를 치세요 " + _pound.Taps + "/" + _pound.TotalTaps);
-                UiBindUtil.SetLabel(_poundButton, "치는 중");
-                _poundButton.interactable = false;
+                UiBindUtil.SetText(_hint, "절구를 치세요 " + _flow.PoundTaps + "/" + _flow.TotalTaps);
                 return;
             }
 
-            UiBindUtil.SetText(_hint, ExperimentInfo());
-            UiBindUtil.SetLabel(_poundButton, "떡메 치기");
-            _poundButton.interactable = _selected.Count > 0 && _stall.CanMake(_selected);
+            if (_flow.Step == KitchenStep.Shape)
+            {
+                UiBindUtil.SetText(_hint, "빚기판을 눌러 빚으세요");
+                return;
+            }
+
+            UiBindUtil.SetText(_hint, PickInfo());
         }
 
-        private string ExperimentInfo()
+        // 고르기 단계 안내. 고른 게 있으면 「→ 찾음 / 해 본 조합 / 새 조합!」 뒤에 찜기 안내를 붙인다.
+        private string PickInfo()
         {
             if (_stall.Shelf.Count >= _stall.ShelfMax)
             {
@@ -311,7 +354,7 @@ namespace Mozzi.Game.Ui
 
             if (_selected.Count == 0)
             {
-                return "쟁반에서 재료를 1~3개 고르세요";
+                return "서랍에서 재료를 1~3개 고르세요";
             }
 
             List<string> names = new List<string>();
@@ -324,49 +367,32 @@ namespace Mozzi.Game.Ui
             RecipeRow recipe = RecipeMatchUtil.FindRecipe(_data.Recipes, _selected);
             if (recipe != null && _codex.IsRecipeOpen(recipe.Id))
             {
-                return head + " → " + recipe.Name + " (찾음)";
+                return head + " → " + recipe.Name + " (찾음) · 찜기를 누르세요";
             }
 
             if (_codex.HasTriedCombo(RecipeMatchUtil.ComboKey(_selected)))
             {
-                return head + " → 해 본 조합 · " + PlainName;
+                return head + " → 해 본 조합 · 찜기를 누르세요";
             }
 
-            return head + " → 새 조합! 떡메를 친다";
+            return head + " → 새 조합! 찜기를 눌러 찌세요";
         }
 
-        // 찾은 레시피만 표 순서대로. 재료가 모자라면 못 누른다.
-        private void RefreshMenu()
+        private bool CanStart()
         {
-            List<RecipeRow> open = new List<RecipeRow>();
-            IReadOnlyList<RecipeRow> rows = _data.Recipes.All;
-            for (int i = 0; i < rows.Count; i++)
+            return _selected.Count > 0 && _stall.CanMake(_selected);
+        }
+
+        // 해 본 조합 · 찾은 조합이면 과정을 건너뛴다.
+        private bool IsKnown()
+        {
+            if (_codex.HasTriedCombo(RecipeMatchUtil.ComboKey(_selected)))
             {
-                if (_codex.IsRecipeOpen(rows[i].Id))
-                {
-                    open.Add(rows[i]);
-                }
+                return true;
             }
 
-            UiBindUtil.SetActive(_menuEmpty, open.Count == 0);
-            for (int i = 0; i < _menuRows.Count; i++)
-            {
-                bool has = i < open.Count;
-                UiBindUtil.SetActive(_menuRows[i].gameObject, has);
-                if (has == false)
-                {
-                    _menuRowRecipes[i] = null;
-                    continue;
-                }
-
-                RecipeRow recipe = open[i];
-                _menuRowRecipes[i] = recipe.Id;
-                Sprite sprite = _resource.GetSprite(recipe.SpriteKey);
-                _menuRowIcons[i].sprite = sprite;
-                UiBindUtil.SetActive(_menuRowIcons[i].gameObject, sprite != null);
-                UiBindUtil.SetLabel(_menuRows[i], recipe.Name + " " + _stall.PreviewPrice(recipe.IngredientIds) + "G");
-                _menuRows[i].interactable = _stall.CanMake(recipe.IngredientIds);
-            }
+            RecipeRow recipe = RecipeMatchUtil.FindRecipe(_data.Recipes, _selected);
+            return recipe != null && _codex.IsRecipeOpen(recipe.Id);
         }
 
         private Sprite IngredientSprite(string ingredientId)
@@ -374,10 +400,10 @@ namespace Mozzi.Game.Ui
             return _resource.GetSprite(_data.Ingredients.Get(ingredientId).SpriteKey);
         }
 
-        // 떡메를 치는 동안은 고르기를 받지 않는다.
+        // 과정 중에는 고르기를 받지 않는다. 닫힌 칸(id 없음)은 버튼이 꺼져 있어 여기 안 온다.
         private void OnToggle(string ingredientId)
         {
-            if (_pound.IsRunning)
+            if (ingredientId == null || _flow.IsRunning)
             {
                 return;
             }
@@ -391,59 +417,100 @@ namespace Mozzi.Game.Ui
             Refresh();
         }
 
-        // 찾은 레시피 · 해 본 조합은 바로, 처음 보는 조합은 떡메 3탭으로. 목록은 복사해 넘긴다 (이벤트 중 Refresh 가 끼어든다).
-        private void OnPoundButton()
+        // 도구 누름 하나. 판정은 흐름이, 그림(통통 · 떡메)과 Make 는 여기서.
+        private void OnTool(KitchenTool tool)
         {
-            List<string> ids = new List<string>(_selected);
-            if (ids.Count == 0 || _pound.IsRunning || _stall.CanMake(ids) == false)
+            bool starting = _flow.IsRunning == false;
+            KitchenFlowResult result = _flow.Press(tool, Time.realtimeSinceStartup, _selected, CanStart(), starting && IsKnown());
+            if (result == KitchenFlowResult.Ignored)
             {
                 return;
             }
 
-            if (_codex.HasTriedCombo(RecipeMatchUtil.ComboKey(ids)))
+            PlayTool(tool);
+            if (result == KitchenFlowResult.Steamed)
             {
-                _selected.Clear();
+                ClearResult();
+            }
+
+            if (result == KitchenFlowResult.QuickMake)
+            {
                 _mortar.Play();
+            }
+
+            if (result == KitchenFlowResult.Make || result == KitchenFlowResult.QuickMake)
+            {
+                List<string> ids = new List<string>(_flow.IngredientIds);
+                _selected.Clear();
                 MakeAndShow(ids);
                 return;
             }
 
-            ClearResult();
-            _pound.Begin(ids);
             Refresh();
         }
 
-        // 치는 중이 아니면 「떡메 치기」를 누른 것과 같다.
-        private void OnMortarTap()
+        private void PlayTool(KitchenTool tool)
         {
-            if (_pound.IsRunning == false)
+            if (tool == KitchenTool.Mortar)
             {
-                OnPoundButton();
+                _mortar.Play();
                 return;
             }
 
-            PoundTapResult result = _pound.Tap(Time.realtimeSinceStartup);
-            if (result == PoundTapResult.Ignored)
+            if (tool == KitchenTool.Steamer)
             {
+                StartBounce(_steamer.rectTransform);
                 return;
             }
 
-            _mortar.Play();
-            if (result == PoundTapResult.Counted)
+            if (tool == KitchenTool.Board)
             {
-                RefreshHint();
-                return;
+                StartBounce(_board.rectTransform);
             }
-
-            List<string> ids = new List<string>(_pound.IngredientIds);
-            _selected.Clear();
-            MakeAndShow(ids);
         }
 
-        private void OnMenuRow(int rowIndex)
+        // 상자 한 번 통통 : scale 1 → BounceScale → 1 (BounceSec 동안 삼각).
+        private void StartBounce(RectTransform rect)
         {
-            string recipeId = _menuRowRecipes[rowIndex];
-            if (recipeId == null || _pound.IsRunning)
+            StopBounce();
+            _bounceRect = rect;
+            _bounceTime = 0f;
+        }
+
+        private void StopBounce()
+        {
+            if (_bounceRect != null)
+            {
+                _bounceRect.localScale = Vector3.one;
+            }
+
+            _bounceRect = null;
+        }
+
+        private void ProcessBounce(float deltaTime)
+        {
+            if (_bounceRect == null)
+            {
+                return;
+            }
+
+            _bounceTime += deltaTime;
+            float t = Mathf.Clamp01(_bounceTime / KitchenLayout.BounceSec);
+            if (t >= 1f)
+            {
+                StopBounce();
+                return;
+            }
+
+            float peak = 1f - Mathf.Abs(t * 2f - 1f);
+            float scale = Mathf.Lerp(1f, KitchenLayout.BounceScale, peak);
+            _bounceRect.localScale = new Vector3(scale, scale, 1f);
+        }
+
+        // 차림표 줄. 만드는 과정 중에는 받지 않는다 (고른 재료와 섞이지 않게).
+        private void OnMenuPick(string recipeId)
+        {
+            if (_flow.IsRunning)
             {
                 return;
             }

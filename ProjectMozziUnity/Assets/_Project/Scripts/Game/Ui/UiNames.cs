@@ -108,14 +108,19 @@ namespace Mozzi.Game.Ui
         // 깔때기 찹쌀이 둘은 찹쌀이 겹 자리, 창 연출은 WindowFx 밑, 서랍 속 결과 그림자는 OutletResult.
         public const string SynthesisInletA = "InletA";
         public const string SynthesisInletB = "InletB";
+        // 깔때기 찹쌀이를 그릇 앞 가장자리 아래로 안 보이게 자르는 칸 (RectMask2D). InletA · InletB 가 이 안에 있다.
+        public const string SynthesisInletClipA = "InletClipA";
+        public const string SynthesisInletClipB = "InletClipB";
         // 깔때기 위의 보이지 않는 누름 칸. 빈 입구에는 그 안의 Plus 말풍선이 켜진다.
         public const string SynthesisInletAButton = "InletAButton";
         public const string SynthesisInletBButton = "InletBButton";
         public const string SynthesisInletPlus = "Plus";
         public const string SynthesisWindowFx = "WindowFx";
-        public const string SynthesisYinRoot = "YinRoot";
-        public const string SynthesisYinHalfA = "YinHalfA";
-        public const string SynthesisYinHalfB = "YinHalfB";
+        // 창 유리 모양 가림판(Mask) 과 그 안의 반죽 소용돌이 세 겹 (아래부터 첫째 반죽 · 둘째 반죽 · 외곽선과 반짝이).
+        public const string SynthesisWindowMask = "WindowMask";
+        public const string SynthesisSwirlA = "SwirlA";
+        public const string SynthesisSwirlB = "SwirlB";
+        public const string SynthesisSwirlTop = "SwirlTop";
         public const string SynthesisMergeFlash = "MergeFlash";
         public const string SynthesisSparklePrefix = "Sparkle_";
         public const int SynthesisSparkleCount = 5;
@@ -156,11 +161,15 @@ namespace Mozzi.Game.Ui
         public const string StorageSellAllButton = "SellAllButton";
         public const string StorageEmptyText = "EmptyText";
 
-        // 주방 (Prefabs/UI/KitchenScreen). 쟁반 칸은 "TrayCell_" + 부재료 id, 칸 안에 Icon · CountText.
-        public const string KitchenTrayCellPrefix = "TrayCell_";
+        // 주방 (Prefabs/UI/KitchenScreen). 서랍장 칸은 "DrawerCell_" + 0~11, 칸 안에 Icon · CountText.
+        // 앞 칸부터 부재료 표 순서로 차고, 남는 칸은 닫힌 「?」 칸이다.
+        public const string KitchenDrawerCellPrefix = "DrawerCell_";
+        public const int KitchenDrawerCellCount = 12;
         public const string KitchenTrayCountText = "CountText";
-        // 절구 + 떡메 (누르면 떡메 한 번). 고른 재료 그림은 "MortarSlot_" + 0~2.
+        // 작업대 도구 셋 (찜기 · 절구 + 떡메 · 빚기판). 고른 재료 그림은 그릇 위 "MortarSlot_" + 0~2.
+        public const string KitchenSteamer = "Steamer";
         public const string KitchenMortar = "Mortar";
+        public const string KitchenBoard = "Board";
         public const string KitchenMortarSlotPrefix = "MortarSlot_";
         public const int KitchenMortarSlotCount = 3;
         // 접시 위 결과 묶음. 떡 그림은 CakeIcon.
@@ -170,11 +179,11 @@ namespace Mozzi.Game.Ui
         public const string KitchenResultFlash = "ResultFlash";
         public const string KitchenHintText = "HintText";
         public const string KitchenDoorButton = "DoorButton";
-        public const string KitchenPoundButton = "PoundButton";
         public const string KitchenMenuButton = "MenuButton";
-        // 차림표 판 : 찾은 떡을 한 번에 만드는 목록. 줄은 "MenuRow_" + 번호, 판 뒤 Blocker 를 누르면 닫힌다.
+        // 차림표 판 : 찾은 떡을 한 번에 만드는 목록. 줄은 "MenuRow_" + 번호, 판 뒤 Blocker 를 누르면 닫힌다. 가판대 화면에도 같은 판이 있다.
         public const string KitchenMenuPanel = "MenuPanel";
         public const string KitchenMenuBlocker = "Blocker";
+        public const string KitchenMenuBox = "Box";
         public const string KitchenMenuTitleText = "MenuTitle";
         public const string KitchenMenuRowPrefix = "MenuRow_";
         public const int KitchenMenuRowCount = 12;

@@ -79,8 +79,8 @@ namespace Mozzi.Editor
             FormalUiBuild.SetImage(art, Color.white, false).sprite = FormalUiBuild.LoadSprite(SpriteKeys.ScreenSynthesisMachine);
 
             MakeWindow(machine);
-            MakeMozziIcon(machine, UiNames.SynthesisInletA, SynthesisRoomLayout.InletAX, SynthesisRoomLayout.InletIconY);
-            MakeMozziIcon(machine, UiNames.SynthesisInletB, SynthesisRoomLayout.InletBX, SynthesisRoomLayout.InletIconY);
+            MakeInlet(machine, UiNames.SynthesisInletClipA, UiNames.SynthesisInletA, SynthesisRoomLayout.InletAX);
+            MakeInlet(machine, UiNames.SynthesisInletClipB, UiNames.SynthesisInletB, SynthesisRoomLayout.InletBX);
             MakeOutlet(machine);
 
             MakeInletButton(machine, UiNames.SynthesisInletAButton, SynthesisRoomLayout.InletAX);
@@ -90,19 +90,34 @@ namespace Mozzi.Editor
             MakePlate(machine);
         }
 
-        // 둥근 창 가운데의 음양 · 번쩍 · 반짝이. 처음엔 꺼 두고 SynthesisMachineView 가 켠다.
+        // 깔때기에 앉는 찹쌀이와 그 가림 칸. 칸은 찹쌀이 겹 자리의 위끝부터 그릇 앞 가장자리(InletClipBottom)까지라
+        // 평소 모습은 그대로고, 합성을 시작해 아래로 내려갈 때만 가장자리 아래가 잘려 그릇 속으로 들어가 보인다.
+        private static void MakeInlet(RectTransform machine, string clipName, string iconName, float x)
+        {
+            float size = LayoutConstUi.MozziIconSize;
+            RectTransform clip = FormalUiBuild.NewNode(machine, clipName);
+            FormalUiBuild.TopLeft(clip, x - size * 0.5f, SynthesisRoomLayout.InletIconY - size * 0.5f, size, SynthesisRoomLayout.InletClipHeight);
+            clip.gameObject.AddComponent<RectMask2D>();
+            MakeMozziIcon(clip, iconName, size * 0.5f, size * 0.5f);
+        }
+
+        // 둥근 창 유리 자리의 가림판(반죽 소용돌이 세 겹이 그 안에서 돈다) · 번쩍 · 반짝이. 처음엔 꺼 두고 SynthesisMachineView 가 켠다.
+        // 가림판은 유리 모양 흰 원을 Mask 로만 쓰고 그리지 않는다. 번쩍 · 반짝이는 창 밖으로 퍼지므로 가림판 바깥에 둔다.
         private static void MakeWindow(RectTransform machine)
         {
             float d = SynthesisRoomLayout.WindowRadius * 2f;
             RectTransform window = FormalUiBuild.NewNode(machine, UiNames.SynthesisWindowFx);
             FormalUiBuild.PivotAt(window, SynthesisRoomLayout.WindowX, SynthesisRoomLayout.WindowY, new Vector2(0.5f, 0.5f), d, d);
 
-            RectTransform yinRoot = Middle(window, UiNames.SynthesisYinRoot, SynthesisRoomLayout.YinSize);
-            FormalUiBuild.SetImage(Middle(yinRoot, UiNames.SynthesisYinHalfA, SynthesisRoomLayout.YinSize), Color.white, false);
-            RectTransform halfB = Middle(yinRoot, UiNames.SynthesisYinHalfB, SynthesisRoomLayout.YinSize);
-            halfB.localEulerAngles = new Vector3(0f, 0f, 180f);
-            FormalUiBuild.SetImage(halfB, Color.white, false);
-            yinRoot.gameObject.SetActive(false);
+            float maskSize = SynthesisRoomLayout.MaskSize;
+            RectTransform mask = Middle(window, UiNames.SynthesisWindowMask, maskSize);
+            FormalUiBuild.SetImage(mask, Color.white, false).sprite = FormalUiBuild.LoadSprite(SpriteKeys.FxWindowMask);
+            mask.gameObject.AddComponent<Mask>().showMaskGraphic = false;
+            // 겹 순서 = 형제 순서 (첫째 반죽 → 둘째 반죽 → 외곽선과 반짝이). 그림과 색은 코드가 끼운다.
+            FormalUiBuild.SetImage(Middle(mask, UiNames.SynthesisSwirlA, maskSize), Color.white, false);
+            FormalUiBuild.SetImage(Middle(mask, UiNames.SynthesisSwirlB, maskSize), Color.white, false);
+            FormalUiBuild.SetImage(Middle(mask, UiNames.SynthesisSwirlTop, maskSize), Color.white, false);
+            mask.gameObject.SetActive(false);
 
             RectTransform flash = Middle(window, UiNames.SynthesisMergeFlash, SynthesisRoomLayout.FlashSize);
             FormalUiBuild.SetImage(flash, Color.white, false);

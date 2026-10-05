@@ -16,7 +16,6 @@ namespace Mozzi.Editor
         private static readonly string[,] KitchenTable =
         {
             { "주방/out/kitchen_bg", "Screen/kitchen_bg" },
-            { "주방/out/kitchen_tray", "Screen/kitchen_tray" },
             { "주방/out/kitchen_plate", "Screen/kitchen_plate" },
             { "주방/out/kitchen_pound_0", "Screen/kitchen_pound_0" },
             { "주방/out/kitchen_pound_1", "Screen/kitchen_pound_1" },
@@ -80,6 +79,32 @@ namespace Mozzi.Editor
             { "합성소/out/synthesis_slot_buy", "Screen/synthesis_slot_buy" },
             { "합성소/out/synthesis_slot_locked", "Screen/synthesis_slot_locked" },
             { "합성소/화풍통일/out/synthesis_plate", "Screen/synthesis_plate" },
+            { "합성소/화풍통일/out/Fx/fx_window_mask", "Fx/fx_window_mask" },
+            // 창 안 반죽 소용돌이 세 겹 × 8장 (낱장). 섞임 단계 그림(fx_mix_*)은 안 쓰기로 해서 들이지 않는다.
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_a_0", "Fx/fx_swirl_a_0" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_a_1", "Fx/fx_swirl_a_1" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_a_2", "Fx/fx_swirl_a_2" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_a_3", "Fx/fx_swirl_a_3" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_a_4", "Fx/fx_swirl_a_4" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_a_5", "Fx/fx_swirl_a_5" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_a_6", "Fx/fx_swirl_a_6" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_a_7", "Fx/fx_swirl_a_7" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_b_0", "Fx/fx_swirl_b_0" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_b_1", "Fx/fx_swirl_b_1" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_b_2", "Fx/fx_swirl_b_2" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_b_3", "Fx/fx_swirl_b_3" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_b_4", "Fx/fx_swirl_b_4" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_b_5", "Fx/fx_swirl_b_5" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_b_6", "Fx/fx_swirl_b_6" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_b_7", "Fx/fx_swirl_b_7" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_top_0", "Fx/fx_swirl_top_0" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_top_1", "Fx/fx_swirl_top_1" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_top_2", "Fx/fx_swirl_top_2" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_top_3", "Fx/fx_swirl_top_3" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_top_4", "Fx/fx_swirl_top_4" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_top_5", "Fx/fx_swirl_top_5" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_top_6", "Fx/fx_swirl_top_6" },
+            { "합성소/반죽소용돌이/out/Fx/frames/fx_swirl_top_7", "Fx/fx_swirl_top_7" },
         };
 
         // 농장 그림 가운데 손질한 판이 있는 것만 (찹쌀이 몸 넷 · 풀 · 꽃 장식 일곱).

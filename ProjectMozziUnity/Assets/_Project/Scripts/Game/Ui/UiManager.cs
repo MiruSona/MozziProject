@@ -257,12 +257,6 @@ namespace Mozzi.Game.Ui
             OpenOver(_kitchenScreen);
         }
 
-        public void OpenKitchenMenu()
-        {
-            OpenOver(_kitchenScreen);
-            _kitchenScreen.OpenMenu();
-        }
-
         // 가판대 · 주방 화면의 「레시피 도감」 버튼에서도 온다. 닫으면 연 화면으로 돌아간다.
         public void OpenRecipeCodex()
         {
@@ -271,6 +265,12 @@ namespace Mozzi.Game.Ui
 
         public void CloseTop()
         {
+            // 화면 안 판(차림표 등)이 열려 있으면 그것부터 닫는다.
+            if (_open != null && _open.CloseInner())
+            {
+                return;
+            }
+
             if (_returnStack.Count == 0)
             {
                 CloseAll();

@@ -3,7 +3,7 @@
 저장소 뿌리에서 :
   Tools/ArtTool/.venv/Scripts/python.exe Docs/Reference/Art/정식/가판대/화풍통일/scripts/run_all.py
 
-차례가 있다 : b1(선) → b2(귀 · 볼, b1 결과를 읽는다) → b3 → b4 → b5 → b6 → 비교판 → 검사.
+차례가 있다 : b1(선) → b2(귀 · 볼, b1 결과를 읽는다) → b3 → b4 → b5 → b6 → b7(계산대 넓히기, b3 결과를 읽는다) → 비교판 → 검사.
 읽는 원본은 Resources/Art (읽기만), 쓰는 곳은 화풍통일/out · out_alt · compare · check 뿐이다.
 """
 import os
@@ -12,7 +12,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 STEPS = ["b1_reline.py", "b2_ear_cheek.py", "b3_counter_vase.py", "b4_ui_merge.py", "b5_case_glass.py",
-         "b6_badge.py", "compare.py", "verify.py"]
+         "b6_badge.py", "b7_counter_wide.py", "compare.py", "verify.py"]
 
 if __name__ == "__main__":
     env = dict(os.environ, PYTHONIOENCODING="utf-8")

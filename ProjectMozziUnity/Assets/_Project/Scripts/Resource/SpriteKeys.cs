@@ -23,13 +23,17 @@ namespace Mozzi.Resource
         public const string ScreenStallBg = "Screen/stall_bg";
         public const string ScreenSynthesisBg = "Screen/synthesis_bg";
         public const string ScreenSynthesisMachine = "Screen/synthesis_machine";
-        public const string FxYinYangHalf = "Fx/fx_yinyang_half";
+        // 합성 창 유리 모양(60×60 흰 원). 창 안에서 도는 반죽 소용돌이를 이 모양으로 자르는 Mask 그림이다.
+        public const string FxWindowMask = "Fx/fx_window_mask";
+        // 창 안 반죽 소용돌이 세 겹 (60×60 낱장, 뒤에 프레임 번호). a · b 는 회색 반죽이라 종 색을 곱하고, top 은 외곽선 + 반짝이라 그대로 얹는다.
+        public const string FxSwirlAPrefix = "Fx/fx_swirl_a_";
+        public const string FxSwirlBPrefix = "Fx/fx_swirl_b_";
+        public const string FxSwirlTopPrefix = "Fx/fx_swirl_top_";
         public const string FxMergeFlash = "Fx/fx_merge_flash";
         public const string FxSparkle = "Fx/fx_sparkle";
 
-        // 주방 화면 (540×1200 배경 · 쟁반 · 접시 · 절구+떡메 7장). FormalArtCopy 가 정식 out 에서 들인다.
+        // 주방 화면 (540×1200 배경 · 접시 · 절구+떡메 7장). FormalArtCopy 가 정식 out 에서 들인다.
         public const string ScreenKitchenBg = "Screen/kitchen_bg";
-        public const string ScreenKitchenTray = "Screen/kitchen_tray";
         public const string ScreenKitchenPlate = "Screen/kitchen_plate";
         public const string ScreenKitchenPoundPrefix = "Screen/kitchen_pound_";
         public const int KitchenPoundFrameCount = 7;

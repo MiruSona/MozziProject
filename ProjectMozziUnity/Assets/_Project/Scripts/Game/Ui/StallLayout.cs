@@ -14,7 +14,7 @@ namespace Mozzi.Game.Ui
         public const float BoardRight = 319f;
         public const float BoardBottom = 475f;
 
-        // 계산대 왼쪽 위. 왼끝이 화면 밖(−17)이라 화면 왼쪽부터 이어져 보인다.
+        // 계산대 왼쪽 위. 왼끝이 화면 밖(−17)이라 화면 왼쪽부터 이어져 보인다. 그림(585 폭)은 오른끝도 화면 밖(568)까지 가고 Stage 의 RectMask2D 가 자른다.
         public const float CounterX = -17f;
         public const float CounterY = 660f;
 
@@ -46,17 +46,23 @@ namespace Mozzi.Game.Ui
         public static readonly float[][] PlateStackX = { new float[] { 0f }, new float[] { -7f, 7f }, new float[] { -9f, 9f, 0f } };
         public static readonly float[][] PlateStackY = { new float[] { 0f }, new float[] { 2f, 0f }, new float[] { 0f, 0f, 8f } };
 
-        // 앞 손님 셋의 발끝 x (줄 번호 순서)와 왼쪽을 보는지. 넷째부터는 「뒤에 N명」 글자로만 센다.
-        // 오른쪽을 보는 손님 몸은 발끝에서 왼쪽 51 · 오른쪽 44, 머리 폭은 약 90 이라 왼쪽 둘은 112 떨어뜨린다.
-        public static readonly float[] QueueFootX = { 190f, 410f, 78f };
-        public static readonly bool[] QueueFacesLeft = { false, true, false };
+        // 앞 손님 셋의 발끝 x (줄 번호 순서). 맨 앞이 등록기 앞이고 뒤로 갈수록 왼쪽, 모두 오른쪽(주인 쪽)을 본다.
+        // 손님 몸은 발끝에서 왼쪽 51 · 오른쪽 44, 머리 폭은 약 90 이라 112 씩 띄운다. 넷째부터는 「뒤에 N명」 글자로만 센다.
+        public static readonly float[] QueueFootX = { 300f, 188f, 76f };
         public const float QueueFootY = 1060f;
         public const int QueueShown = 3;
+
+        // 새 손님은 화면 왼쪽 밖 발끝 x QueueEnterX 에서 제 자리로 걸어오고, 앞 손님이 빠지면 남은 손님이 한 칸씩 당겨진다.
+        // 걷는 동안 QueueWalkHops 번 QueueHopHeight px 통통 뛴다.
+        public const float QueueEnterX = -60f;
+        public const float QueueWalkSec = 0.35f;
+        public const float QueueHopHeight = 2f;
+        public const int QueueWalkHops = 2;
 
         // 손님 겹 캔버스(120×240) 안 발끝 비율. 넷 다 같은 캔버스 · 같은 피벗이다.
         public const float CustomerPivotX = 0.55f;
 
-        // 머리 꼭대기 = 발끝 − 215, 머리 가운데 = 발끝 x 에서 보는 쪽 반대로 3.
+        // 머리 꼭대기 = 발끝 − 215, 머리 가운데 = 발끝 x − 3 (보는 쪽 반대).
         public const float HeadHeight = 215f;
         public const float HeadCenterOffset = 3f;
 
@@ -71,10 +77,10 @@ namespace Mozzi.Game.Ui
         // 떡 그림(캔버스 바닥 1줄 위)의 가운데가 풍선 안쪽 가운데에 오는 값. 외곽선 꼴 ① (떡 높이 20) 은 19, 꼴 ② (높이 18) 는 20.
         public const float BubbleIconBottom = 19f;
 
-        // 「뒤에 N명」 글자 (가운데 · 높이). 오른쪽 손님 발밑과 버튼 줄 사이.
-        public const float QueueMoreX = 410f;
+        // 「뒤에 N명」 글자 (가운데 · 높이). 줄 맨 끝(왼쪽) 손님 발밑과 버튼 줄 사이. 폭 140 이라 x 6~146 이다.
+        public const float QueueMoreX = 76f;
         public const float QueueMoreY = 1078f;
-        public const float QueueMoreWidth = 220f;
+        public const float QueueMoreWidth = 140f;
         public const float QueueMoreHeight = 30f;
 
         // 윗줄 손님 · 영업 상태 판 (골드 판 오른쪽 · 내용 칸 위끝 기준). 문(x 364~)·칠판 장식(y 328~)을 안 가린다.

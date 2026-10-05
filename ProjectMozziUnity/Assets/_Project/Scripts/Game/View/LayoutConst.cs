@@ -44,7 +44,7 @@ namespace Mozzi.Game.View
         // 하늘 맨 윗줄 색 = 카메라 배경색. 하늘 그림의 하늘 면 전체가 이 한 색(#D4EEFA)이라 더 긴 폰에서도 이음새가 없다.
         public static readonly Color SkyTopColor = new Color32(212, 238, 250, 255);
 
-        // 땅 층 정렬. 찹쌀이가 쓰는 132~548(MozziSortBase 100 - 발 y) 의 위아래로 뺐다. 하늘은 바닥보다 뒤다.
+        // 땅 층 정렬. 찹쌀이가 쓰는 132~566(MozziSortBase 100 - 발 y) 의 위아래로 뺐다. 하늘은 바닥보다 뒤다.
         public const int SkySortOrder = -20;
         public const int GroundSortOrder = -10;
         public const int PathSortOrder = -9;
@@ -60,6 +60,16 @@ namespace Mozzi.Game.View
         // 사용자 판정 대기 값이라 이 한 줄만 바꾸면 된다 (예 : 40 이면 ×1.143). 밀어내기 반지름도 이 값을 따른다.
         public const float MozziSizePx = MozziBodyHeightPx;
 
+        // 몸 그림 피벗이 캔버스 가운데(32)라 발(몸 bbox 아래끝 50)이 루트보다 이만큼 아래다 (64 캔버스 px).
+        // 앞뒤 정렬은 루트가 아니라 발 y 로 센다 — 장식 · 바닥 물건의 기준(칸 바닥)과 맞추려는 것이다.
+        public const float MozziFootBelowCenterPx = 18f;
+
+        // 루트에서 발까지 월드 길이 (유닛). 몸 크기를 바꾸면 같은 비로 따라간다.
+        public static float MozziFootBelowUnits
+        {
+            get { return ToUnits(MozziFootBelowCenterPx * MozziSizePx / MozziBodyHeightPx); }
+        }
+
         // 변종 테두리는 몸보다 이만큼 큰 네모다 (배율).
         public const float ShinyBorderScale = 1.2f;
 
@@ -69,18 +79,38 @@ namespace Mozzi.Game.View
         // 찹쌀이 뜀 높이 (px). 뜨는 것은 Visual 자식뿐이라 콜라이더·담장 판정은 그대로다.
         public const float MozziHopHeightPx = 24f;
 
-        // 찹쌀이 정렬 기준. 아래쪽 마리가 앞에 오게 y 를 빼서 쓴다. 농장 안쪽(월드 y −32~−448px)이 132~548 이 되게 잡았다.
-        // 앞 겹 장식(FarmDecor Front)도 같은 식으로 정렬해 찹쌀이와 앞뒤가 맞는다.
+        // 찹쌀이 정렬 기준. 아래쪽이 앞에 오게 발 y 를 빼서 쓴다. 농장 안쪽(월드 y −32~−448px)이 132~548,
+        // 발이 루트보다 18px 아래라 찹쌀이는 최대 566 이다 — 앞 담장 600 보다 뒤. 앞 겹 장식(FarmDecor Front)도 같은 식이다.
         public const int MozziSortBase = 100;
 
         // 들고 있는 찹쌀이. 앞 담장(600)보다 앞에 두고 Visual 을 이만큼 띄운다.
         public const int MozziDragSortOrder = 700;
         public const float MozziDragLiftPx = 20f;
 
+        // 담장 밖에 놓았을 때 걷는 칸으로 미끄러져 돌아오는 시간 (초).
+        public const float MozziDropSlideSec = 0.15f;
+
+        // 보관함 궤짝에 넣을 때 입구로 폴짝 뛰어 들어가는 시간 · 뜀 높이 · 끝 크기 배율.
+        // 궤짝 그림(정렬 0) 바로 앞에 그린다 — 이름표(5) · 알림 점(20)보다는 뒤다.
+        public const float MozziStoreSec = 0.3f;
+        public const float MozziStoreJumpPx = 24f;
+        public const float MozziStoreEndScale = 0.2f;
+        public const int MozziStoreSortOrder = 1;
+
         // 탭으로 바뀐 표정이 기본으로 돌아가기까지 (초).
         public const float FaceHoldSec = 1.5f;
 
         public const float PilePx = 28f;
+
+        // 바닥 재료(낱개 · 꾸러미). back 장식(-8) 바로 위 · 찹쌀이(132~)보다 뒤에 고정한다. 수량 글자는 그림보다 한 칸 앞.
+        public const int FloorItemSortOrder = -7;
+        public const int FloorItemLabelSortOrder = -6;
+
+        // 바닥에 보이는 재료 수 상한. 넘으면 가까운 같은 재료끼리 꾸러미로 뭉친다 (04-수치표).
+        public const int FloorItemMax = 30;
+
+        // 훑기 손가락 반지름 (px). 재료 그림 반쪽(PilePx / 2)까지 닿으면 줍는다.
+        public const float SweepRadiusPx = 12f;
 
         // 수량 글자를 더미 한가운데에서 이만큼 아래로 내린다 (px). 그림 절반 14 + 사이 6 이다.
         public const float PileLabelBelowPx = 20f;

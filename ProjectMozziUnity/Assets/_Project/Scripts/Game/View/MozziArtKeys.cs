@@ -47,13 +47,9 @@ namespace Mozzi.Game.View
         }
 
         // 지금 표정(except)을 뺀 나머지에서 하나 고른다. 같은 표정이 다시 나오면 바뀐 티가 안 난다.
+        // FaceCount 는 상수 10 이라 「하나뿐」 경우를 따로 막지 않는다 (막으면 CS0162 경고가 뜬다).
         public static int RandomFaceIndex(int except)
         {
-            if (FaceCount <= 1)
-            {
-                return BaseFaceIndex;
-            }
-
             int pick = Random.Range(1, FaceCount);
             if (pick >= except)
             {

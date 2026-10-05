@@ -144,7 +144,7 @@ namespace Mozzi.Game.Farm
                 int pile = PileOf(species.IngredientId);
                 for (int d = dropped - 1; d >= 0; d--)
                 {
-                    EventBus.Publish(new IngredientDroppedEvent(species.IngredientId, pile - d));
+                    EventBus.Publish(new IngredientDroppedEvent(species.IngredientId, pile - d, species.Id));
                 }
             }
 
@@ -178,13 +178,20 @@ namespace Mozzi.Game.Farm
 
         public int PickUp(string ingredientId)
         {
+            return PickUp(ingredientId, PileOf(ingredientId));
+        }
+
+        // 더미에서 amount 개까지만 창고로 옮긴다. 더미보다 많이 청하면 더미만큼, 창고가 차면 들어간 만큼이다.
+        public int PickUp(string ingredientId, int amount)
+        {
             int pile = PileOf(ingredientId);
-            if (pile <= 0)
+            int want = Math.Min(pile, amount);
+            if (want <= 0)
             {
                 return 0;
             }
 
-            int moved = _inventory.Add(ingredientId, pile);
+            int moved = _inventory.Add(ingredientId, want);
             _piles[ingredientId] = pile - moved;
             if (moved > 0)
             {

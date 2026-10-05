@@ -4,6 +4,7 @@ using Mozzi.Data;
 using Mozzi.Events;
 using Mozzi.Game.Clock;
 using Mozzi.Game.Farm;
+using Mozzi.Game.Inventory;
 using Mozzi.Game.Stall;
 using Mozzi.Game.Storage;
 using Mozzi.Game.Synthesis;
@@ -11,24 +12,24 @@ using Mozzi.Game.Ui;
 using Mozzi.Hubs;
 using Mozzi.Resource;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Mozzi.Game.View
 {
-    // 농장 화면의 월드 쪽. IFarmHub 의 찹쌀이 · 더미를 Object 와 맞추고 건물 셋을 놓고 탭을 받는다.
-    // 찹쌀이 · 더미는 매 프레임 목록 대조로 Rent · Return 하고, 건물 알림 점만 이벤트로 갱신한다.
-    // 찹쌀이 탭·드래그 판정은 MozziDragAgent 가 하고, 놓았을 때 할 일(보관함 넣기 · 농장에 놓기)은 여기서 한다.
+    // 농장 화면의 월드 쪽. IFarmHub 의 찹쌀이를 Object 와 맞추고 건물 셋을 놓고 누르기를 받는다.
+    // 찹쌀이는 매 프레임 목록 대조로 Rent · Return 하고, 건물 알림 점만 이벤트로 갱신한다.
+    // 바닥 재료는 FloorItemsAgent, 누르기 · 훑기는 FarmSweepAgent, 찹쌀이 탭·드래그는 MozziDragAgent 가 맡고
+    // 놓았을 때 할 일(보관함 넣기 · 농장에 놓기)은 여기서 한다.
     public sealed class FarmViewManager : IManager, IProcess, IFarmViewHub
     {
-        private const int GridColumns = 5;
         // 보관함에서 끌어낸 임시 마리의 id. 농장 id 는 1부터라 안 겹친다.
         private const int GhostMozziId = -1;
-        private const float GridJitter = 0.35f;
-        // 더미 줄이 울타리 안쪽 바닥에서 뜨는 높이. 그림 아래 수량 글자가 앞 울타리에 안 걸리게 잡았다.
-        private const float PileRowUnits = 1.2f;
-        // 찹쌀이가 걷는 자리를 울타리 안쪽에서 이만큼 줄인다 (유닛). 아래는 더미 줄 위, 옆은 앞 울타리에 반쯤 걸치게.
-        private const float WanderBottomUnits = 1.7f;
+        // 시작 자리를 뽑을 때 다른 마리와 이만큼(반지름 합 배율) 떨어뜨린다. 이 횟수 안에 못 찾으면 마지막 자리를 쓴다.
+        private const float StartGapMargin = 1.2f;
+        private const int StartPickTries = 20;
+        // 찹쌀이가 걷는 자리를 울타리 안쪽에서 이만큼 줄인다 (유닛). 옆은 앞 울타리에 반쯤 걸치게.
+        // 아래 0.6 은 발(루트 −18px)이 아래 울타리 줄 바로 위에 닿는 값이다.
+        private const float WanderBottomUnits = 0.6f;
         private const float WanderSideUnits = 0.3f;
         private const float WanderTopUnits = 0.1f;
         // 변종 테두리(1.2배)까지 안 겹치게 반지름 합에 이만큼 곱한다.
@@ -37,11 +38,10 @@ namespace Mozzi.Game.View
         private readonly List<EventSubscription> _subscriptions = new List<EventSubscription>();
 
         private readonly Dictionary<int, MozziObject> _mozziObjects = new Dictionary<int, MozziObject>();
-        private readonly Dictionary<string, PileObject> _pileObjects = new Dictionary<string, PileObject>();
         private readonly List<MozziObject> _mozziList = new List<MozziObject>();
+        // 보관함 궤짝으로 뛰어 들어가는 중인 마리. 데이터는 이미 빠져 목록 대조에서 떼어 두고 연출이 끝나면 반납한다.
+        private readonly List<MozziObject> _leaving = new List<MozziObject>();
         private readonly List<int> _removeIds = new List<int>();
-        private readonly List<string> _removePiles = new List<string>();
-        private readonly Dictionary<string, Vector2> _pileSpots = new Dictionary<string, Vector2>();
 
         // 종 id → 레이어 그림 묶음. 24종이 스프라이트를 찾는 일을 한 번씩만 하게 담아 둔다.
         private readonly Dictionary<string, MozziSpriteSet> _spriteSets = new Dictionary<string, MozziSpriteSet>();
@@ -53,6 +53,7 @@ namespace Mozzi.Game.View
         private ISynthesisHub _synthesis;
         private IStallHub _stall;
         private IStorageHub _storage;
+        private IInventoryHub _inventory;
 
         private Transform _root;
         private Camera _camera;
@@ -60,7 +61,8 @@ namespace Mozzi.Game.View
         private int _fitHeight;
         private Rect _fitSafeArea;
         private MozziDragAgent _drag;
-        private bool _pressWasDown;
+        private FarmSweepAgent _sweep;
+        private FloorItemsAgent _floor;
         private MozziObject _ghost;
         // 다음에 새로 놓이는 마리가 설 자리. 드래그로 놓은 것이 그 자리에 나오게.
         private bool _hasPendingStart;
@@ -71,7 +73,6 @@ namespace Mozzi.Game.View
         private BuildingObject _synthesisBuilding;
         private BuildingObject _stallBuilding;
         private BuildingObject _storageBuilding;
-        private int _placedCount;
 
         public void Init()
         {
@@ -80,6 +81,7 @@ namespace Mozzi.Game.View
             FitCamera();
             _resource = GlobalHub.Get<IResourceHub>();
             _drag = new MozziDragAgent(this, _camera);
+            _sweep = new FarmSweepAgent(this, _camera);
 
             _groundPainter = new SpriteFarmGroundPainter();
             _groundPainter.Paint(_root, _resource);
@@ -96,15 +98,16 @@ namespace Mozzi.Game.View
             _synthesis = InGameHub.Get<ISynthesisHub>();
             _stall = InGameHub.Get<IStallHub>();
             _storage = InGameHub.Get<IStorageHub>();
+            _inventory = InGameHub.Get<IInventoryHub>();
 
             // 장식은 표가 있어야 놓을 수 있어 땅(Init)과 달리 여기서 깐다.
             _decor = new FarmDecorView();
             _decor.Build(_root, _resource, _data.FarmDecors.All);
 
-            LayoutPileSpots();
+            _floor = new FloorItemsAgent(this, _resource, _farm, _data, _root, FloorRect());
+
             PlaceBuildings();
             SyncMozzis();
-            SyncPiles();
             RefreshBadges();
 
             _subscriptions.Add(EventBus.Subscribe<SynthesisDoneEvent>(this, OnSynthesisDone));
@@ -114,6 +117,7 @@ namespace Mozzi.Game.View
             _subscriptions.Add(EventBus.Subscribe<CustomerServedEvent>(this, OnCustomerServed));
             _subscriptions.Add(EventBus.Subscribe<NightFellEvent>(this, OnNightFell));
             _subscriptions.Add(EventBus.Subscribe<DayStartedEvent>(this, OnDayStarted));
+            _subscriptions.Add(EventBus.Subscribe<IngredientDroppedEvent>(this, OnIngredientDropped));
         }
 
         public void Process(float deltaTime)
@@ -124,7 +128,6 @@ namespace Mozzi.Game.View
             }
 
             SyncMozzis();
-            SyncPiles();
 
             for (int i = 0; i < _mozziList.Count; i++)
             {
@@ -132,11 +135,9 @@ namespace Mozzi.Game.View
             }
 
             Separate();
-
-            foreach (PileObject pile in _pileObjects.Values)
-            {
-                pile.Step(deltaTime);
-            }
+            StepLeaving(deltaTime);
+            _storageBuilding.Step(deltaTime);
+            _floor.Step(deltaTime);
 
             if (_drag.IsActive)
             {
@@ -144,7 +145,7 @@ namespace Mozzi.Game.View
             }
             else
             {
-                ReadTap();
+                _sweep.Step();
             }
         }
 
@@ -171,13 +172,24 @@ namespace Mozzi.Game.View
                 ReturnIfAlive(mozzi);
             }
 
-            foreach (PileObject pile in _pileObjects.Values)
+            for (int i = 0; i < _leaving.Count; i++)
             {
-                ReturnIfAlive(pile);
+                ReturnIfAlive(_leaving[i]);
+            }
+
+            _leaving.Clear();
+
+            if (_sweep != null)
+            {
+                _sweep.Cancel();
+            }
+
+            if (_floor != null)
+            {
+                _floor.Clear();
             }
 
             _mozziObjects.Clear();
-            _pileObjects.Clear();
             _mozziList.Clear();
             _spriteSets.Clear();
 
@@ -303,19 +315,10 @@ namespace Mozzi.Game.View
             RefreshBadges();
         }
 
-        // 더미 자리는 부재료마다 고정. 담장 아래쪽 한 줄이다.
-        private void LayoutPileSpots()
+        // 찹쌀이가 재료를 떨궜다. 그 종 마리 하나의 발밑에서 튀어 나오게 한다.
+        private void OnIngredientDropped(IngredientDroppedEvent evt)
         {
-            IReadOnlyList<IngredientRow> rows = _data.Ingredients.All;
-            Rect area = LayoutConst.FarmRect;
-            float y = area.yMin + PileRowUnits;
-            float step = area.width / (rows.Count + 1);
-
-            for (int i = 0; i < rows.Count; i++)
-            {
-                float x = area.xMin + step * (i + 1);
-                _pileSpots[rows[i].Id] = new Vector2(x, y);
-            }
+            _floor.OnDropped(evt.IngredientId, evt.SpeciesId, _mozziList);
         }
 
         private void SyncMozzis()
@@ -331,7 +334,13 @@ namespace Mozzi.Game.View
 
                 MozziSpeciesRow species = _data.Species.Get(mozzi.SpeciesId);
                 MozziObject obj = _resource.Rent<MozziObject>(PrefabKeys.Mozzi, _root);
+                bool dropped = _hasPendingStart;
                 obj.Setup(mozzi.Id, species, SpriteSetOf(species), WanderRect(), TakeStart());
+                if (dropped)
+                {
+                    obj.SettleAfterDrop();
+                }
+
                 _mozziObjects[mozzi.Id] = obj;
                 _mozziList.Add(obj);
             }
@@ -385,7 +394,7 @@ namespace Mozzi.Game.View
             return false;
         }
 
-        // 울타리 안쪽에서 더미 줄을 뺀 자리다. 보관함에서 끌어 놓을 때도 이 안이어야 놓인다.
+        // 찹쌀이가 걷는 칸. 보관함에서 끌어 놓을 때도 이 안이어야 놓인다.
         private static Rect WanderRect()
         {
             Rect area = LayoutConst.FarmRect;
@@ -396,7 +405,7 @@ namespace Mozzi.Game.View
                 area.yMax - WanderTopUnits);
         }
 
-        // 드래그로 놓은 자리가 있으면 그것을 한 번 쓰고, 없으면 격자 자리다.
+        // 드래그로 놓은 자리가 있으면 그것을 한 번 쓰고, 없으면 걷는 칸 안 무작위 자리다.
         private Vector2 TakeStart()
         {
             if (_hasPendingStart == false)
@@ -408,58 +417,45 @@ namespace Mozzi.Game.View
             return _pendingStart;
         }
 
-        // 격자 + 흔들림. 20마리가 처음부터 겹치지 않게 놓는다.
+        // 걷는 칸 안 무작위. 이미 놓인 마리와 겹치지 않는 자리를 몇 번 다시 뽑는다 — 줄 맞춰 선 것처럼 안 보이게.
+        // 다 실패해도 그대로 쓴다. 밀어내기(Separate)가 다음 프레임부터 떼어 놓는다.
         private Vector2 NextStart()
         {
             Rect area = WanderRect();
-            int col = _placedCount % GridColumns;
-            int row = (_placedCount / GridColumns) % 4;
-            _placedCount++;
+            float minDist = LayoutConst.ToUnits(LayoutConst.MozziSizePx) * StartGapMargin;
+            Vector2 pick = area.center;
 
-            float cellW = area.width / GridColumns;
-            float cellH = area.height / 4f;
-            float x = area.xMin + cellW * (col + 0.5f) + Random.Range(-GridJitter, GridJitter);
-            float y = area.yMax - cellH * (row + 0.5f) + Random.Range(-GridJitter, GridJitter);
-            return new Vector2(x, y);
+            for (int i = 0; i < StartPickTries; i++)
+            {
+                pick = new Vector2(Random.Range(area.xMin, area.xMax), Random.Range(area.yMin, area.yMax));
+                if (IsNearOther(pick, minDist) == false)
+                {
+                    break;
+                }
+            }
+
+            return pick;
         }
 
-        private void SyncPiles()
+        private bool IsNearOther(Vector2 point, float minDist)
         {
-            foreach (KeyValuePair<string, int> pair in _farm.Piles)
+            for (int i = 0; i < _mozziList.Count; i++)
             {
-                PileObject pile;
-                bool has = _pileObjects.TryGetValue(pair.Key, out pile);
-
-                if (pair.Value <= 0)
+                if (Vector2.Distance(point, _mozziList[i].transform.position) < minDist)
                 {
-                    continue;
-                }
-
-                if (has == false)
-                {
-                    IngredientRow row = _data.Ingredients.Get(pair.Key);
-                    pile = _resource.Rent<PileObject>(PrefabKeys.IngredientPile, _root);
-                    pile.Setup(row, _resource.GetSprite(row.SpriteKey), _pileSpots[pair.Key]);
-                    _pileObjects[pair.Key] = pile;
-                }
-
-                pile.SetCount(pair.Value);
-            }
-
-            _removePiles.Clear();
-            foreach (KeyValuePair<string, PileObject> pair in _pileObjects)
-            {
-                if (_farm.PileOf(pair.Key) <= 0 && pair.Value.IsAnimating == false)
-                {
-                    _removePiles.Add(pair.Key);
+                    return true;
                 }
             }
 
-            for (int i = 0; i < _removePiles.Count; i++)
-            {
-                _resource.Return(_pileObjects[_removePiles[i]]);
-                _pileObjects.Remove(_removePiles[i]);
-            }
+            return false;
+        }
+
+        // 바닥 재료 가운데가 놓일 수 있는 자리. 울타리 안쪽에서 재료 그림 반쪽(14px)씩 줄여 울타리에 안 걸리게 한다.
+        private static Rect FloorRect()
+        {
+            Rect area = LayoutConst.FarmRect;
+            float half = LayoutConst.ToUnits(LayoutConst.PilePx * 0.5f);
+            return Rect.MinMaxRect(area.xMin + half, area.yMin + half, area.xMax - half, area.yMax - half);
         }
 
         // 반지름 합 × SeparateMargin 보다 가까우면 서로 반씩 밀어낸다. 20마리라 n² 이어도 가볍다.
@@ -471,7 +467,7 @@ namespace Mozzi.Game.View
                 {
                     MozziObject a = _mozziList[i];
                     MozziObject b = _mozziList[j];
-                    if (a.IsDragging || b.IsDragging)
+                    if (a.IsDragging || b.IsDragging || a.IsSliding || b.IsSliding)
                     {
                         continue;
                     }
@@ -501,35 +497,24 @@ namespace Mozzi.Game.View
             }
         }
 
-        // 마우스 · 터치 둘 다 Pointer 로 받는다. UI 위 탭은 EventSystem 이 먹는다.
-        // 누름 가장자리는 isPressed 를 지난 프레임과 견줘 직접 잡는다 — wasPressedThisFrame 은 에디터에서 입력 갱신이
-        // 한 프레임에 두 번 돌면(파이프라인 simulate_pointer 등) Process 가 보기 전에 꺼진다.
-        private void ReadTap()
+        // 궤짝에 다 들어간 마리는 풀에 돌리고 궤짝을 들썩인다.
+        private void StepLeaving(float deltaTime)
         {
-            Pointer pointer = Pointer.current;
-            if (pointer == null)
+            for (int i = _leaving.Count - 1; i >= 0; i--)
             {
-                return;
-            }
+                MozziObject mozzi = _leaving[i];
+                if (mozzi.StepLeaving(deltaTime) == false)
+                {
+                    continue;
+                }
 
-            bool down = pointer.press.isPressed;
-            bool justPressed = down && _pressWasDown == false;
-            _pressWasDown = down;
-            if (justPressed == false)
-            {
-                return;
+                _leaving.RemoveAt(i);
+                _resource.Return(mozzi);
+                _storageBuilding.PlayBump();
             }
-
-            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
-
-            Vector2 screen = pointer.position.ReadValue();
-            TapAtScreen(screen);
         }
 
-        // 디버그·시험에서도 부를 수 있게 화면 좌표를 받는다.
+        // 디버그·시험에서도 부를 수 있게 화면 좌표를 받는다. 판정 순서는 FarmSweepAgent.PressAt 이 정본이다.
         public void TapAtScreen(Vector2 screen)
         {
             Vector3 world = _camera.ScreenToWorldPoint(new Vector3(screen.x, screen.y, 0f));
@@ -538,31 +523,29 @@ namespace Mozzi.Game.View
 
         public void TapAtWorld(Vector2 world)
         {
-            Collider2D hit = Physics2D.OverlapPoint(world);
-            if (hit == null)
-            {
-                return;
-            }
+            _sweep.PressAt(world);
+        }
 
-            PileObject pile = hit.GetComponent<PileObject>();
-            if (pile != null)
-            {
-                OnPileTapped(pile);
-                return;
-            }
+        // FarmSweepAgent 가 찹쌀이 위 누르기를 넘긴다. 탭이 될지 드래그가 될지는 MozziDragAgent 가 정한다.
+        public void PressMozzi(MozziObject mozzi, Vector2 world)
+        {
+            _drag.Press(mozzi, _camera.WorldToScreenPoint(new Vector3(world.x, world.y, 0f)));
+        }
 
-            BuildingObject building = hit.GetComponent<BuildingObject>();
-            if (building != null)
-            {
-                OnBuildingTapped(building);
-                return;
-            }
+        // 그 재료를 지금 하나라도 주울 수 있나 (창고 상한이 안 찼나). 꽉 찼으면 FarmSweepAgent 가 누름 순서를 뒤로 민다.
+        public bool HasRoomFor(FloorItemObject item)
+        {
+            return _inventory.IsFull(item.IngredientId) == false;
+        }
 
-            MozziObject mozzi = hit.GetComponent<MozziObject>();
-            if (mozzi != null)
-            {
-                _drag.Press(mozzi, _camera.WorldToScreenPoint(new Vector3(world.x, world.y, 0f)));
-            }
+        public void PickFloorItem(FloorItemObject item)
+        {
+            _floor.Pick(item);
+        }
+
+        public void SweepFloor(Vector2 from, Vector2 to)
+        {
+            _floor.PickAlong(from, to);
         }
 
         // 누르고 안 움직이고 뗐다. 표정이 잠깐 바뀌고 팝업이 뜬다 (피드백 5 · 팝업은 그대로).
@@ -577,8 +560,9 @@ namespace Mozzi.Game.View
             _ui.OpenMozziPopup(mozzi.MozziId);
         }
 
-        // 농장 찹쌀이를 놓았다. 보관함 궤짝 위면 넣고, 아니면 담장 안 가장 가까운 자리에 둔다 (피드백 6·7).
-        // 합성 기계 · 가게 위에 놓는 판정은 아직 없다 — 그 자리도 담장 안으로 돌아온다.
+        // 농장 찹쌀이를 놓았다. 보관함 궤짝 위면 넣고 입구로 뛰어 들어가는 연출을 튼다.
+        // 궤짝 밖이거나 못 넣었으면 담장 안 가장 가까운 자리로 돌아온다. 합성 기계 · 가게 위에 놓는 판정은 아직 없다.
+        // 궤짝 판정을 EndDrag 보다 먼저 한다 — EndDrag 가 걷는 칸으로 끌어내린 뒤 지우면 아래로 순간이동해 보인다.
         public void OnFarmMozziDropped(MozziObject mozzi, Vector2 screen)
         {
             if (mozzi == null || mozzi.IsDead)
@@ -586,12 +570,19 @@ namespace Mozzi.Game.View
                 return;
             }
 
-            mozzi.EndDrag();
             Vector3 world = _camera.ScreenToWorldPoint(new Vector3(screen.x, screen.y, 0f));
-            if (_storageBuilding.ContainsWorld(new Vector2(world.x, world.y)))
+            bool overStorage = _storageBuilding.ContainsWorld(new Vector2(world.x, world.y));
+            if (overStorage == false || _storage.TakeFromFarm(mozzi.MozziId) == false)
             {
-                _storage.TakeFromFarm(mozzi.MozziId);
+                mozzi.EndDrag();
+                return;
             }
+
+            // 데이터는 이미 보관함으로 갔다. 목록 대조가 바로 반납하지 않게 떼어 연출 목록으로 옮긴다.
+            _mozziObjects.Remove(mozzi.MozziId);
+            _mozziList.Remove(mozzi);
+            _leaving.Add(mozzi);
+            mozzi.PlayStore(BuildingLayout.For(BuildingKind.Storage).MouthWorld);
         }
 
         // 보관함에서 끌어낸 임시 마리를 놓았다. 담장 안이면 그 자리에 진짜 마리가 놓이고, 밖이면 보관함 화면으로 돌아간다.
@@ -599,18 +590,23 @@ namespace Mozzi.Game.View
         {
             ReturnGhost(ghost);
 
+            // 놓은 자리는 SyncMozzis 가 새 마리를 만들 때 TakeStart 로 한 번 쓴다. 그 뒤에 지워야 한다.
             bool placed = false;
             if (WanderRect().Contains(world))
             {
                 _hasPendingStart = true;
                 _pendingStart = world;
                 placed = _storage.PlaceToFarm(speciesId);
-                _hasPendingStart = false;
             }
 
             if (placed)
             {
                 SyncMozzis();
+            }
+
+            _hasPendingStart = false;
+            if (placed)
+            {
                 return;
             }
 
@@ -672,20 +668,6 @@ namespace Mozzi.Game.View
             }
 
             _ui.OpenStall();
-        }
-
-        public void OnPileTapped(PileObject pile)
-        {
-            if (pile.IsAnimating)
-            {
-                return;
-            }
-
-            int moved = _farm.PickUp(pile.IngredientId);
-            if (moved > 0)
-            {
-                pile.PlayPicked();
-            }
         }
     }
 }

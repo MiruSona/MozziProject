@@ -9,31 +9,25 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 합성소 기계 한 대(칸 하나)의 연출 : 깔때기의 재료 둘 · 창 안의 음양 연출 · 서랍 속 결과 그림자.
+    // 합성소 기계 한 대(칸 하나)의 연출 : 깔때기의 재료 둘 · 창 안에서 도는 두 색 반죽 소용돌이 · 서랍 속 결과 그림자.
     // 기계 몸 그림(상태별 스프라이트)은 화면이 갈아 끼우고, 여기는 그 위에 얹는 것만 맡는다.
     // 모션은 전부 _motions 에 모아 두고, 상태가 바뀌거나 화면이 닫히면 StopFx 가 한 번에 끊는다.
     public sealed class SynthesisMachineView
     {
-        // 시작 연출 : 빨려 들어감 → 두 바퀴 돌며 줄어듦 → 번쩍 + 반짝이 → 대기 회전.
-        private const float SuckSec = 0.25f;
-        private const float SuckEndScale = 0.25f;
-        private const float SpinSec = 0.8f;
-        private const float SpinTurns = 2f;
-        private const float SpinEndScale = 0.35f;
+        // 시작 연출 : 깔때기 속으로 쏙 → 창 안 소용돌이가 돌기 시작 + 번쩍 + 반짝이 → 대기.
+        private const float DropSec = 0.3f;
         private const float FlashSec = 0.15f;
         private const float FlashStartScale = 0.3f;
         private const float FlashEndScale = 1.2f;
         private const float SparkleSec = 0.3f;
         private const float SparkleRadiusMin = 30f;
         private const float SparkleRadiusMax = 40f;
-        private const float RecoverSec = 0.3f;
 
-        // 대기 중 한 바퀴 도는 시간 · 결과 그림자가 숨 쉬는 주기.
-        private const float LoopTurnSec = 4f;
+        // 결과 그림자가 숨 쉬는 주기.
         private const float PulseSec = 0.6f;
         private const float PulseScale = 1.08f;
 
-        // 재료 둘이 같은 색이면 음양이 한 덩어리로 보인다. 둘째 반쪽을 이만큼 어둡게 한다.
+        // 재료 둘이 같은 색이면 한 덩어리로 보인다. 둘째 반죽을 이만큼 어둡게 한다.
         private const float SameColorDarken = 0.72f;
         private const float SameColorThreshold = 0.06f;
 
@@ -47,11 +41,15 @@ namespace Mozzi.Game.Ui
         private readonly MozziIconView _inletB;
         private readonly Vector2 _inletAHome;
         private readonly Vector2 _inletBHome;
-        private readonly Vector2 _windowPos;
 
-        private readonly RectTransform _yinRoot;
-        private readonly Image _halfA;
-        private readonly Image _halfB;
+        // 창 안 소용돌이 : 가림판 밑 세 겹(첫째 반죽 · 둘째 반죽 · 외곽선과 반짝이)과 겹마다 프레임 그림.
+        private readonly GameObject _mask;
+        private readonly Image _swirlA;
+        private readonly Image _swirlB;
+        private readonly Image _swirlTop;
+        private readonly Sprite[] _swirlASprites;
+        private readonly Sprite[] _swirlBSprites;
+        private readonly Sprite[] _swirlTopSprites;
         private readonly Image _flash;
         private readonly List<Image> _sparkles = new List<Image>();
         private readonly List<Vector2> _sparkleEnds = new List<Vector2>();
@@ -61,6 +59,12 @@ namespace Mozzi.Game.Ui
 
         private SynthesisMachineMode _mode = SynthesisMachineMode.None;
         private int _slot = -1;
+
+        // 두 반죽의 제 색(넣은 두 마리 몸 색, 같은 색이면 둘째를 어둡게 한 값) · 지금 물든 정도(0 ~ MixBlendMax) · 지금 보이는 프레임.
+        private Color _colorA;
+        private Color _colorB;
+        private float _blend;
+        private int _swirlFrame = -1;
 
         // 넷이 같은 자식 이름을 쓰므로 반드시 기계 뿌리(Machine_i) 밑에서만 찾는다.
         public SynthesisMachineView(Transform machineRoot, string prefabName, IResourceHub resource, IVfxHub vfx)
@@ -75,15 +79,14 @@ namespace Mozzi.Game.Ui
             _inletBHome = _inletB.Root.anchoredPosition;
 
             RectTransform window = UiBindUtil.Find<RectTransform>(machineRoot, UiNames.SynthesisWindowFx, prefabName);
-            _windowPos = window.anchoredPosition;
-            _yinRoot = UiBindUtil.Find<RectTransform>(window, UiNames.SynthesisYinRoot, prefabName);
-            _halfA = UiBindUtil.Find<Image>(window, UiNames.SynthesisYinHalfA, prefabName);
-            _halfB = UiBindUtil.Find<Image>(window, UiNames.SynthesisYinHalfB, prefabName);
+            _mask = UiBindUtil.FindObject(window, UiNames.SynthesisWindowMask, prefabName);
+            _swirlA = UiBindUtil.Find<Image>(_mask.transform, UiNames.SynthesisSwirlA, prefabName);
+            _swirlB = UiBindUtil.Find<Image>(_mask.transform, UiNames.SynthesisSwirlB, prefabName);
+            _swirlTop = UiBindUtil.Find<Image>(_mask.transform, UiNames.SynthesisSwirlTop, prefabName);
+            _swirlASprites = LoadSwirl(resource, SpriteKeys.FxSwirlAPrefix);
+            _swirlBSprites = LoadSwirl(resource, SpriteKeys.FxSwirlBPrefix);
+            _swirlTopSprites = LoadSwirl(resource, SpriteKeys.FxSwirlTopPrefix);
             _flash = UiBindUtil.Find<Image>(window, UiNames.SynthesisMergeFlash, prefabName);
-
-            Sprite half = resource.GetSprite(SpriteKeys.FxYinYangHalf);
-            _halfA.sprite = half;
-            _halfB.sprite = half;
             _flash.sprite = resource.GetSprite(SpriteKeys.FxMergeFlash);
 
             Sprite sparkle = resource.GetSprite(SpriteKeys.FxSparkle);
@@ -125,7 +128,8 @@ namespace Mozzi.Game.Ui
             ShowInlet(_inletB, _inletBHome, b);
         }
 
-        // 대기 중. 같은 칸의 시작 연출이나 대기 회전이 이미 돌고 있으면 건드리지 않는다.
+        // 대기 중. 같은 칸의 시작 연출이나 소용돌이가 이미 돌고 있으면 건드리지 않는다.
+        // 화면을 다시 열었을 때는 들어가는 장면 없이 바로 소용돌이부터 돈다.
         public void ShowRunning(int slot, MozziSpeciesRow a, MozziSpeciesRow b)
         {
             bool playing = _mode == SynthesisMachineMode.Merging || _mode == SynthesisMachineMode.Running;
@@ -137,9 +141,14 @@ namespace Mozzi.Game.Ui
             StopFx();
             _mode = SynthesisMachineMode.Running;
             _slot = slot;
-            SetHalfColors(a, b);
-            ShowHalves(1f);
-            StartLoop();
+            SetColors(a, b);
+            StartSwirl();
+        }
+
+        // 합성 진행률 p(0 → 1). 두 반죽이 서로의 색으로 MixBlendMax·p 만큼 물든다. 화면이 매 프레임 부른다.
+        public void SetProgress(float progress)
+        {
+            _blend = Mathf.Clamp01(progress) * SynthesisRoomLayout.MixBlendMax;
         }
 
         // 다 됨. 받기 전이라 무엇이 나왔는지는 그림자로만 보인다.
@@ -163,21 +172,23 @@ namespace Mozzi.Game.Ui
                 .Bind(this, ApplyPulse));
         }
 
-        // 합성 시작 순간. 투입구의 두 마리가 창으로 빨려 들어가고 음양이 합쳐진다. 끝나면 대기 회전으로 이어진다.
+        // 합성 시작 순간. 깔때기의 두 마리가 제자리에서 아래로 내려가 그릇 속으로 사라지고(가림 칸이 가장자리 아래를 자른다),
+        // 다 들어가면 창 안에서 두 색 반죽이 돌기 시작한다. 찹쌀이 그림은 기계 몸통 앞을 지나지 않는다.
         public void PlayMerge(int slot, MozziSpeciesRow a, MozziSpeciesRow b)
         {
             StopFx();
             _mode = SynthesisMachineMode.Merging;
             _slot = slot;
-            SetHalfColors(a, b);
+            _blend = 0f;
+            SetColors(a, b);
             ShowInlet(_inletA, _inletAHome, a);
             ShowInlet(_inletB, _inletBHome, b);
 
-            Add(LMotion.Create(0f, 1f, SuckSec)
+            Add(LMotion.Create(0f, 1f, DropSec)
                 .WithEase(Ease.InQuad)
-                .WithOnComplete(BeginSpin)
+                .WithOnComplete(BeginSwirl)
                 .WithScheduler(_scheduler)
-                .Bind(this, ApplySuck));
+                .Bind(this, ApplyDrop));
         }
 
         // 화면을 닫을 때 · 풀로 돌아갈 때. 도는 모션을 다 끊고 그림을 치운다.
@@ -188,20 +199,12 @@ namespace Mozzi.Game.Ui
             _slot = -1;
         }
 
-        private void BeginSpin()
+        // 두 마리가 다 들어간 순간. 소용돌이를 켜고, 갑자기 나타나는 티가 안 나게 번쩍 + 반짝이를 같이 터뜨린다.
+        private void BeginSwirl()
         {
             HideInlets();
-            ShowHalves(1f);
+            StartSwirl();
 
-            Add(LMotion.Create(0f, 1f, SpinSec)
-                .WithEase(Ease.InQuad)
-                .WithOnComplete(BeginFlash)
-                .WithScheduler(_scheduler)
-                .Bind(this, ApplySpin));
-        }
-
-        private void BeginFlash()
-        {
             UiBindUtil.SetActive(_flash.gameObject, true);
             Add(LMotion.Create(0f, 1f, FlashSec)
                 .WithOnComplete(HideFlash)
@@ -213,57 +216,56 @@ namespace Mozzi.Game.Ui
                 UiBindUtil.SetActive(_sparkles[i].gameObject, true);
             }
 
+            // 반짝이가 다 퍼지면 시작 연출이 끝난다. 소용돌이는 그대로 돈다.
             Add(LMotion.Create(0f, 1f, SparkleSec)
                 .WithEase(Ease.OutQuad)
-                .WithOnComplete(HideSparkles)
-                .WithScheduler(_scheduler)
-                .Bind(this, ApplySparkles));
-
-            Add(LMotion.Create(SpinEndScale, 1f, RecoverSec)
-                .WithEase(Ease.OutBack)
                 .WithOnComplete(EndMerge)
                 .WithScheduler(_scheduler)
-                .Bind(this, ApplyHalfScale));
+                .Bind(this, ApplySparkles));
         }
 
         private void EndMerge()
         {
+            HideSparkles();
             _mode = SynthesisMachineMode.Running;
-            StartLoop();
         }
 
-        private void StartLoop()
+        // 소용돌이 세 겹을 켜고 프레임 고리를 돌린다. 값은 0 → 장수로 흐르고 정수 부분이 프레임 번호다.
+        private void StartSwirl()
         {
-            _yinRoot.localEulerAngles = Vector3.zero;
-            Add(LMotion.Create(0f, -360f, LoopTurnSec)
+            UiBindUtil.SetActive(_mask, true);
+            _swirlFrame = -1;
+            ApplySwirl(0f, this);
+
+            int count = SynthesisRoomLayout.SwirlFrameCount;
+            Add(LMotion.Create(0f, (float)count, count * SynthesisRoomLayout.SwirlFrameSec)
                 .WithLoops(-1, LoopType.Restart)
                 .WithScheduler(_scheduler)
-                .Bind(this, ApplyRotation));
+                .Bind(this, ApplySwirl));
         }
 
-        private static void ApplySuck(float t, SynthesisMachineView self)
+        // 깔때기 자리에서 가림 칸 높이만큼 곧장 아래로. 자리는 정수 px.
+        private static void ApplyDrop(float t, SynthesisMachineView self)
         {
-            float scale = Mathf.Lerp(1f, SuckEndScale, t);
-            self._inletA.Root.anchoredPosition = Vector2.Lerp(self._inletAHome, self._windowPos, t);
-            self._inletB.Root.anchoredPosition = Vector2.Lerp(self._inletBHome, self._windowPos, t);
-            self._inletA.Root.localScale = new Vector3(scale, scale, 1f);
-            self._inletB.Root.localScale = new Vector3(scale, scale, 1f);
+            Vector2 offset = new Vector2(0f, -Mathf.Round(SynthesisRoomLayout.InletClipHeight * t));
+            self._inletA.Root.anchoredPosition = self._inletAHome + offset;
+            self._inletB.Root.anchoredPosition = self._inletBHome + offset;
         }
 
-        private static void ApplySpin(float t, SynthesisMachineView self)
+        // 프레임이 바뀔 때만 그림을 갈고, 색은 매번 다시 낸다 (진행률이 화면 쪽에서 계속 바뀐다).
+        private static void ApplySwirl(float value, SynthesisMachineView self)
         {
-            ApplyRotation(-360f * SpinTurns * t, self);
-            ApplyHalfScale(Mathf.Lerp(1f, SpinEndScale, t), self);
-        }
+            int frame = Mathf.Min((int)value, SynthesisRoomLayout.SwirlFrameCount - 1);
+            if (frame != self._swirlFrame)
+            {
+                self._swirlFrame = frame;
+                self._swirlA.sprite = self._swirlASprites[frame];
+                self._swirlB.sprite = self._swirlBSprites[frame];
+                self._swirlTop.sprite = self._swirlTopSprites[frame];
+            }
 
-        private static void ApplyRotation(float degrees, SynthesisMachineView self)
-        {
-            self._yinRoot.localEulerAngles = new Vector3(0f, 0f, degrees);
-        }
-
-        private static void ApplyHalfScale(float scale, SynthesisMachineView self)
-        {
-            self._yinRoot.localScale = new Vector3(scale, scale, 1f);
+            self._swirlA.color = Color.Lerp(self._colorA, self._colorB, self._blend);
+            self._swirlB.color = Color.Lerp(self._colorB, self._colorA, self._blend);
         }
 
         private static void ApplyFlash(float t, SynthesisMachineView self)
@@ -288,6 +290,17 @@ namespace Mozzi.Game.Ui
             self._outlet.Root.localScale = new Vector3(scale, scale, 1f);
         }
 
+        private static Sprite[] LoadSwirl(IResourceHub resource, string prefix)
+        {
+            Sprite[] sprites = new Sprite[SynthesisRoomLayout.SwirlFrameCount];
+            for (int i = 0; i < sprites.Length; i++)
+            {
+                sprites[i] = resource.GetSprite(prefix + i);
+            }
+
+            return sprites;
+        }
+
         private void Add(MotionHandle handle)
         {
             _motions.Add(handle);
@@ -303,9 +316,7 @@ namespace Mozzi.Game.Ui
         private void HideAll()
         {
             HideInlets();
-            _yinRoot.localEulerAngles = Vector3.zero;
-            _yinRoot.localScale = Vector3.one;
-            UiBindUtil.SetActive(_yinRoot.gameObject, false);
+            UiBindUtil.SetActive(_mask, false);
             HideFlash();
             HideSparkles();
             _outlet.Root.localScale = Vector3.one;
@@ -349,25 +360,15 @@ namespace Mozzi.Game.Ui
             }
         }
 
-        private void ShowHalves(float scale)
+        private void SetColors(MozziSpeciesRow a, MozziSpeciesRow b)
         {
-            _yinRoot.localEulerAngles = Vector3.zero;
-            _yinRoot.localScale = new Vector3(scale, scale, 1f);
-            UiBindUtil.SetActive(_yinRoot.gameObject, true);
-        }
-
-        private void SetHalfColors(MozziSpeciesRow a, MozziSpeciesRow b)
-        {
-            Color colorA = MozziArtKeys.BodyColorOf(a);
-            Color colorB = MozziArtKeys.BodyColorOf(b);
-            float gap = Mathf.Abs(colorA.r - colorB.r) + Mathf.Abs(colorA.g - colorB.g) + Mathf.Abs(colorA.b - colorB.b);
+            _colorA = MozziArtKeys.BodyColorOf(a);
+            _colorB = MozziArtKeys.BodyColorOf(b);
+            float gap = Mathf.Abs(_colorA.r - _colorB.r) + Mathf.Abs(_colorA.g - _colorB.g) + Mathf.Abs(_colorA.b - _colorB.b);
             if (gap < SameColorThreshold)
             {
-                colorB = new Color(colorB.r * SameColorDarken, colorB.g * SameColorDarken, colorB.b * SameColorDarken, 1f);
+                _colorB = new Color(_colorB.r * SameColorDarken, _colorB.g * SameColorDarken, _colorB.b * SameColorDarken, 1f);
             }
-
-            _halfA.color = colorA;
-            _halfB.color = colorB;
         }
     }
 }

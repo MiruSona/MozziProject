@@ -878,3 +878,50 @@
 - 들어옴 20261005-78618f6e `진열장은 한 종류에 접시 하나로 확정` (mem/0.3.0)
 - 덮음 20260922-ec7fcb9b → 20261005-78618f6e
 - 덮음 20260922-ccdec504 → 20261005-78618f6e
+- 들어옴 20261005-d42883e2 `찹쌀이 모션·표정 여러 벌 만들기` (mem/0.3.0)
+- 들어옴 20261005-510bb1ff `가판대 계산대·손님 줄·칠판 정함 (반복 06)` (mem/0.3.0)
+- 들어옴 20261005-d81bc93c `합성 연출은 찹쌀이 둘이 창 안에서 엉켜 돈다` (mem/0.3.0)
+- 들어옴 20261005-86c28661 `주방 갈아엎기 — 손 단계 넷, 과정은 결과 무관` (mem/0.3.0)
+- 들어옴 20261005-197b5b8c `농장 작은 고침 셋 · 줍기 작은 안 · 세션 범위` (mem/0.3.0)
+- 들어옴 20261005-1200070c `찹쌀이 정렬은 루트가 아니라 발 y 로` (mem/0.3.0)
+- 거절 title-shape tag-standard severity sources-shape body-thin duplicate-soft `PowerShell 에서 unity eval 인라인 코드는 따옴표가 깨진다`
+- 거절 summary-len title-shape tag-standard sources-shape body-thin `합성 창 중심 상수는 새로 안 만들고 WindowX/Y/Radius 를 95/116/30 으로 바꿨다`
+- 거절 summary-len title-shape tag-standard sources-shape body-thin `화면 안 판은 OverlayScreen.CloseInner 로 먼저 닫는다`
+- 들어옴 20261005-9bdc0544 `합성 창 상수는 95·116·30 으로 바꿨다` (mem/0.3.0)
+- 들어옴 20261005-5ca91e32 `화면 안 판은 CloseInner 로 먼저 닫는다` (mem/0.3.0)
+- 들어옴 20261005-add5fde3 `농장 누르기는 OverlapPointAll 순서` (mem/0.3.0)
+- 들어옴 20261005-422eca85 `주방 흐름 KitchenFlowAgent 규칙 세부` (mem/0.3.0)
+- 거절 tag-standard `차림표 판 위끝은 열 때 보이는 영역에 맞춘다`
+- 들어옴 20261005-415d4292 `차림표 판 위끝은 열 때 보이는 영역에 맞춘다` (mem/0.3.0)
+- 거절 summary-len tag-standard sources-shape body-thin duplicate-soft `에디터 일시정지 중 Game 뷰 캡처는 옛 화면이다`
+- 들어옴 20261005-ca9dc4b8 `일시정지 중 Game 뷰 캡처는 옛 화면이다` (mem/0.3.0)
+- 거절 howto-numbered duplicate-soft `Play 모드 입력 흉내와 프레임 찍기`
+- 들어옴 20261005-69fb763f `Play 모드 입력 흉내와 프레임 찍기` (mem/0.3.0)
+- 들어옴 20261005-8e1bad18 `반복 06 — 미룬 피드백 셋과 주방 상자 판` (mem/0.3.0)
+- 거절 title-shape duplicate-soft `농장 강화 — 수집기·먹이 공급기·창고`
+- 들어옴 20261005-721dfa86 `반복 06 사용자 판정 여덟 가지` (mem/0.3.0)
+- 들어옴 20261005-04bd5585 `농장 강화 만들기 (v15 피드백 6)` (mem/0.3.0)
+- 거절 body-thin duplicate-soft `차림표 판은 버튼 줄 바로 위에 아래끝을 붙인다`
+- 거절 tag-standard body-thin `창고가 찬 바닥 재료는 누름 순서 맨 뒤`
+- 들어옴 20261005-475ec825 `차림표 판은 버튼 줄 바로 위에 아래끝을 붙인다` (mem/0.3.0)
+- 거절 tag-count `창고가 찬 바닥 재료는 누름 순서 맨 뒤`
+- 들어옴 20261005-bcee377a `창고가 찬 바닥 재료는 누름 순서 맨 뒤` (mem/0.3.0)
+- 덮음 20261005-415d4292 → 20261005-475ec825
+- 거절 tag-standard body-thin `합성 창 연출은 두 색 반죽 소용돌이 프레임 애니`
+- 들어옴 20261005-cfedd962 `합성 창 연출은 두 색 반죽 소용돌이 프레임 애니` (mem/0.3.0) --new
+- 들어옴 20261005-87b6c842 `도는 애니는 animate_image_pixminimax 로 뽑는다` (mem/0.3.0)
+- 거절 duplicate-hard `소용돌이 정본은 빈틈을 그늘로 채운 판`
+- 들어옴 20261005-dfe9dfe7 `소용돌이 정본은 빈틈을 그늘로 채운 판` (mem/0.3.0) --new
+- 거절 summary-len summary-body-match `합성 연출은 깔때기 속으로 쏙 + 창 안 반죽 소용돌이 프레임 애니`
+- 들어옴 20261005-0e762054 `합성 연출은 깔때기 속으로 쏙 + 창 안 반죽 소용돌이 프레임 애니` (mem/0.3.0)
+- 덮음 20261005-d81bc93c → 20261005-0e762054
+- 거절 duplicate-soft decision-gate `주방은 네 단계와 지금 배치로 확정`
+- 거절 duplicate-hard `소용돌이 정본은 다시 뽑은 regen 판`
+- 들어옴 20261005-80263b44 `주방은 네 단계와 지금 배치로 확정` (mem/0.3.0) --new
+- 들어옴 20261005-150cbc8b `소용돌이 정본은 다시 뽑은 regen 판` (mem/0.3.0) --new
+- 덮음 20261005-dfe9dfe7 → 20261005-150cbc8b
+- 덮음 20261005-cfedd962 → 20261005-150cbc8b
+- 들어옴 20261005-1a1f4a1a `반복 06 추가 피드백 네 판과 마무리 공수` (mem/0.3.0) --new
+- 거절 summary-len issue-sections `check_all.py 가 준비 단계에서 종료 2 로 멈춘다`
+- 거절 summary-len body-thin first-line-conclusion issue-sections summary-body-match no-value `check_all.py 가 준비 단계에서 종료 2 로 멈춘다`
+- 들어옴 20261005-4772cc80 `check_all.py 준비 표 세 줄 더하기` (mem/0.3.0) --new

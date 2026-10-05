@@ -33,6 +33,8 @@ namespace Mozzi.Game.Ui
         private readonly List<SynthesisSlotView> _slots = new List<SynthesisSlotView>();
         // 칸마다 마지막으로 적은 남은 초. 초가 바뀔 때만 글자를 고친다.
         private readonly List<int> _shownSec = new List<int>();
+        // 칸마다 이번 합성의 전체 대기 초 (지금 단축률 기준). 창 안 두 반죽이 물드는 진행률을 낸다.
+        private readonly List<double> _waitSec = new List<double>();
         private readonly List<string> _pickA = new List<string>();
         private readonly List<string> _pickB = new List<string>();
         private readonly List<Button> _pickRows = new List<Button>();
@@ -158,6 +160,7 @@ namespace Mozzi.Game.Ui
                     delegate { OnDrawer(index); },
                     OnBuySlot));
                 _shownSec.Add(-1);
+                _waitSec.Add(0);
                 _pickA.Add(null);
                 _pickB.Add(null);
             }
@@ -172,6 +175,7 @@ namespace Mozzi.Game.Ui
 
             _slots.Clear();
             _shownSec.Clear();
+            _waitSec.Clear();
             _pickA.Clear();
             _pickB.Clear();
             _pickRows.Clear();
@@ -224,6 +228,8 @@ namespace Mozzi.Game.Ui
                 {
                     _slots[i].MachineArt.sprite = _runSprites[frame];
                 }
+
+                _slots[i].Machine.SetProgress(Progress(i, slot));
 
                 int sec = CeilSec(slot.remainingSec);
                 if (sec == _shownSec[i])
@@ -315,6 +321,9 @@ namespace Mozzi.Game.Ui
                 view.PlateText.color = PlateTextOn;
                 _shownSec[index] = CeilSec(slot.remainingSec);
                 UiBindUtil.SetText(view.PlateText, FormatSec(slot.remainingSec));
+                // 남은 초는 단축을 사면 같은 비율로 줄어드니, 전체 초도 지금 단축률로 다시 잰다.
+                _waitSec[index] = _synthesis.Preview(slot.speciesA, slot.speciesB).WaitSec;
+                view.Machine.SetProgress(Progress(index, slot));
                 view.Machine.ShowRunning(index, _data.Species.Get(slot.speciesA), _data.Species.Get(slot.speciesB));
                 return;
             }
@@ -703,6 +712,18 @@ namespace Mozzi.Game.Ui
         private static string Percent(float rate)
         {
             return Mathf.RoundToInt(rate * 100f) + "%";
+        }
+
+        // 대기 진행률 0 → 1. 전체 초를 아직 모르면 0.
+        private float Progress(int index, SynthesisSlot slot)
+        {
+            double wait = _waitSec[index];
+            if (wait <= 0)
+            {
+                return 0f;
+            }
+
+            return Mathf.Clamp01((float)(1.0 - slot.remainingSec / wait));
         }
 
         private static int CeilSec(double seconds)
