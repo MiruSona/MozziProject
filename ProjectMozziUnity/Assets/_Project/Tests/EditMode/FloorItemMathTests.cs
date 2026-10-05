@@ -37,7 +37,7 @@ namespace Mozzi.Tests
 
             int keep;
             int drop;
-            Assert.That(FloorItemMath.FindMergePair(items, out keep, out drop), Is.True);
+            Assert.That(FloorItemMath.FindMergePair(items, 99, out keep, out drop), Is.True);
             Assert.That(keep, Is.EqualTo(0));
             Assert.That(drop, Is.EqualTo(3));
         }
@@ -53,7 +53,7 @@ namespace Mozzi.Tests
 
             int keep;
             int drop;
-            FloorItemMath.FindMergePair(items, out keep, out drop);
+            FloorItemMath.FindMergePair(items, 99, out keep, out drop);
 
             Assert.That(keep, Is.EqualTo(1));
             Assert.That(drop, Is.EqualTo(0));
@@ -70,7 +70,7 @@ namespace Mozzi.Tests
 
             int keep;
             int drop;
-            Assert.That(FloorItemMath.FindMergePair(items, out keep, out drop), Is.False);
+            Assert.That(FloorItemMath.FindMergePair(items, 99, out keep, out drop), Is.False);
         }
 
         [Test]
@@ -124,6 +124,47 @@ namespace Mozzi.Tests
             Assert.That(FloorItemMath.ChoosePressTarget(false, true, false, true), Is.EqualTo(FarmPressTarget.Building));
             // 겹친 것이 없으면 그 재료가 받는다 (못 줍는다는 흔들림).
             Assert.That(FloorItemMath.ChoosePressTarget(false, true, false, false), Is.EqualTo(FarmPressTarget.FloorItem));
+        }
+
+        [Test]
+        public void FindMergePair_SkipsPairsOverPileMax()
+        {
+            // 0 과 1 이 가장 가깝지만 합이 6 이라 꾸러미 한도 5 를 넘는다. 합 5 인 짝 중 가장 가까운 1 과 2 가 뭉친다.
+            List<FloorItemEntry> items = new List<FloorItemEntry>
+            {
+                Entry("bean", 3, 0f, 0f),
+                Entry("bean", 3, 0.1f, 0f),
+                Entry("bean", 2, 1f, 0f),
+                Entry("bean", 5, 0.05f, 0f),
+            };
+
+            int keep;
+            int drop;
+            Assert.That(FloorItemMath.FindMergePair(items, 5, out keep, out drop), Is.True);
+            Assert.That(keep, Is.EqualTo(1));
+            Assert.That(drop, Is.EqualTo(2));
+
+            List<FloorItemEntry> full = new List<FloorItemEntry>
+            {
+                Entry("bean", 5, 0f, 0f),
+                Entry("bean", 1, 0.1f, 0f),
+            };
+            Assert.That(FloorItemMath.FindMergePair(full, 5, out keep, out drop), Is.False);
+        }
+
+        [Test]
+        public void SplitIntoPiles_NeverOverPileMax()
+        {
+            List<int> parts = new List<int>();
+
+            FloorItemMath.SplitIntoPiles(12, 5, parts);
+            Assert.That(parts, Is.EqualTo(new List<int> { 5, 5, 2 }));
+
+            FloorItemMath.SplitIntoPiles(5, 5, parts);
+            Assert.That(parts, Is.EqualTo(new List<int> { 5 }));
+
+            FloorItemMath.SplitIntoPiles(0, 5, parts);
+            Assert.That(parts, Is.Empty);
         }
 
         [Test]

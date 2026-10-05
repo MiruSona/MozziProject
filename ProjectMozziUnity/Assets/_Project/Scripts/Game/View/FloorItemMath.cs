@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Mozzi.Game.View
 {
-    // 바닥 재료의 셈 (맞추기 · 뭉치기 · 훑기 판정). Unity 오브젝트를 안 만들어 EditMode 시험이 바로 부른다.
+    // 바닥 재료의 셈 (맞추기 · 꾸러미 나누기 · 뭉치기 · 훑기 판정). Unity 오브젝트를 안 만들어 EditMode 시험이 바로 부른다.
     // 목록 순서는 놓인 순서다 — 앞이 오래된 것, 뒤가 새것.
     public static class FloorItemMath
     {
@@ -22,9 +22,9 @@ namespace Mozzi.Game.View
             return sum;
         }
 
-        // 같은 재료 가운데 가장 가까운 둘. keep 은 양이 많은 쪽(같으면 먼저 놓인 쪽)이고 그 자리에 합친다.
-        // 같은 재료 둘이 없으면 false.
-        public static bool FindMergePair(IReadOnlyList<FloorItemEntry> items, out int keep, out int drop)
+        // 같은 재료 가운데 합쳐도 maxAmount 를 안 넘는 가장 가까운 둘. keep 은 양이 많은 쪽(같으면 먼저 놓인 쪽)이고 그 자리에 합친다.
+        // 그런 둘이 없으면 false.
+        public static bool FindMergePair(IReadOnlyList<FloorItemEntry> items, int maxAmount, out int keep, out int drop)
         {
             keep = -1;
             drop = -1;
@@ -35,6 +35,11 @@ namespace Mozzi.Game.View
                 for (int j = i + 1; j < items.Count; j++)
                 {
                     if (items[i].IngredientId != items[j].IngredientId)
+                    {
+                        continue;
+                    }
+
+                    if (items[i].Amount + items[j].Amount > maxAmount)
                     {
                         continue;
                     }
@@ -57,6 +62,19 @@ namespace Mozzi.Game.View
             }
 
             return keep >= 0;
+        }
+
+        // amount 를 꾸러미 하나에 pileMax 개까지 나눠 담는다. 예 : 12, 5 → 5 · 5 · 2.
+        public static void SplitIntoPiles(int amount, int pileMax, List<int> into)
+        {
+            into.Clear();
+            int size = Mathf.Max(1, pileMax);
+            while (amount > 0)
+            {
+                int part = Mathf.Min(amount, size);
+                into.Add(part);
+                amount -= part;
+            }
         }
 
         // 화면이 모델보다 need 만큼 많을 때 깎을 양. 새것(뒤)부터 깎아 각 칸의 남을 양을 amounts 에 적는다.

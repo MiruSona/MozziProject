@@ -1,7 +1,7 @@
 namespace Mozzi.Game.Ui
 {
-    // 주방 화면 자리 (Stage 세계 좌표 540×1200 · 왼쪽 위 원점). 배경 · 절구 · 접시 그림은 Docs/Reference/Art/정식/주방/README.md 가 정본이다.
-    // 반복 06 「네 단계 상자 판」 : 서랍장 · 찜기 · 빚기판 · 그릇은 그림 없이 단색 상자로 짓는다 (정식 그림 전에 단계 수와 배치를 손으로 느껴 보는 판).
+    // 주방 화면 자리 (Stage 세계 좌표 540×1200 · 왼쪽 위 원점). 그림 정본은 Docs/Reference/Art/정식/주방/v3/README.md (반복 07).
+    // 서랍장 · 찜기 · 빚기판 · 그릇은 반복 06 상자 판의 자리 그대로 정식 그림을 얹었다 (그림 크기가 상자 크기에 맞춰 나왔다).
     public static class KitchenLayout
     {
         // 서랍장 (오른쪽 벽~마루) : 4열 × 3줄. 틀은 칸을 Pad 만큼 둘러싼 어두운 상자다.
@@ -52,7 +52,8 @@ namespace Mozzi.Game.Ui
         // 결과 접시는 빚기판 위에 얹고, 떡 · 이름 · NEW 는 그 위로 쌓는다.
         // 떡 그림은 캔버스 바닥에 붙어 있어 ResultIconBottom 이 곧 접시 면 위 떡 밑이다 (접시 바닥에서 23 위).
         public const float PlateX = 452f;
-        public const float PlateY = BoardTop - 2f;
+        // 빚기판은 다리 달린 낮은 상이라 윗면이 BoardTop 보다 아래에 있다 (반복 07 정식 그림 · v3 README).
+        public const float PlateY = BoardTop + 14f;
         public const float ResultIconSize = 32f;
         public const float ResultIconBottom = PlateY - 23f;
         public const float ResultNewY = 822f;
@@ -93,5 +94,48 @@ namespace Mozzi.Game.Ui
         // 떡메 한 번 치기 프레임 간격(초). 4번이 맞는 순간이다.
         public static readonly float[] PoundFrameSec = { 0.06f, 0.05f, 0.05f, 0.04f, 0.12f, 0.06f, 0.06f };
         public const int PoundHitFrame = 4;
+
+        // 떡메 단계 (반죽 모습) : 0 쌀 · 1 거친 반죽 · 2 매끈한 떡 (반복 07).
+        // 친 수만큼 한 단계씩 나아가고 마지막 단계에서 멈춘다. 반죽은 맞는 순간(PoundHitFrame)에 다음 단계로 바뀐다
+        // — 친 덕에 반죽이 변한 것으로 읽히게. 그래서 k 번째 타는 앞 3장이 (k−1) 단계, 맞는 장부터가 k 단계다.
+        public const int PoundStageLast = 2;
+
+        public static int PoundStageAfter(int taps)
+        {
+            if (taps <= 0)
+            {
+                return 0;
+            }
+
+            if (taps >= PoundStageLast)
+            {
+                return PoundStageLast;
+            }
+
+            return taps;
+        }
+
+        // 한 번 치기 안에서 frame 장이 쓸 단계. 맞는 장 앞은 from, 맞는 장부터는 to.
+        public static int PoundFrameStage(int frame, int from, int to)
+        {
+            if (frame < PoundHitFrame)
+            {
+                return from;
+            }
+
+            return to;
+        }
+
+        // 김 : 찜기 뚜껑 손잡이 바로 위 (64×64 그림의 왼쪽 위 자리). 흰 한 색 그림에 알파를 곱한다. 누름 한 번에 4장 한 바퀴.
+        public const float SteamLeft = 73f;
+        public const float SteamTop = 842f;
+        public const float SteamAlpha = 200f / 255f;
+        public static readonly float[] SteamFrameSec = { 0.15f, 0.15f, 0.15f, 0.15f };
+
+        // 빚기 : 64×48 그림의 떡 바닥 가운데 (32, 42) 를 접시 자리 (PlateX, PlateY) 에. 3장 한 바퀴 뒤 접시 · 결과가 뜬다.
+        public const float ShapeSpriteWidth = 64f;
+        public const float ShapeSpriteHeight = 48f;
+        public const float ShapeSpriteBaseY = 42f;
+        public static readonly float[] ShapeFrameSec = { 0.25f, 0.25f, 0.6f };
     }
 }

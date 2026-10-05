@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Mozzi.Core;
+using Mozzi.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -35,15 +36,18 @@ namespace Mozzi.Game.Ui
         private IUiHub _ui;
         private GameObject _upgradePanel;
         private GameObject _menuPanel;
-        private TMP_Text _upgradeFenceText;
-        private Button _upgradeFenceButton;
+
+        // 강화 판 줄. 열쇠는 GrowthUtil 의 kind 다 (fence · floor · collector · feeder · storage).
+        private readonly Dictionary<string, TMP_Text> _upgradeTexts = new Dictionary<string, TMP_Text>();
+        private readonly Dictionary<string, Button> _upgradeButtons = new Dictionary<string, Button>();
         private float _nightAlpha;
         private float _dawnTime;
         private bool _dawning;
         private bool _bound;
 
-        // 도감 아이콘 · ☰ 판의 레시피 도감은 IUiHub 로 열고, 「다음날로」 · 담장 늘리기는 넘겨받은 콜백을 부른다.
-        public void Bind(IReadOnlyList<string> ingredientIds, IUiHub ui, UnityAction onNextDay, UnityAction onBuyFence)
+        // 도감 아이콘 · ☰ 판의 레시피 도감은 IUiHub 로 열고, 「다음날로」 · 강화 줄의 사기는 넘겨받은 콜백을 부른다.
+        // onBuyUpgrade 에는 그 줄의 kind 가 간다.
+        public void Bind(IReadOnlyList<string> ingredientIds, IUiHub ui, UnityAction onNextDay, UnityAction<string> onBuyUpgrade)
         {
             if (_bound)
             {
@@ -72,7 +76,11 @@ namespace Mozzi.Game.Ui
             _ui = ui;
             _upgradePanel = UiBindUtil.FindObject(transform, UiNames.FarmUpgradePanel, PrefabName);
             _menuPanel = UiBindUtil.FindObject(transform, UiNames.FarmMenuPanel, PrefabName);
-            _upgradeFenceText = UiBindUtil.Find<TMP_Text>(_upgradePanel.transform, UiNames.FarmUpgradeFenceText, PrefabName);
+            BindUpgradeRow(GrowthUtil.KindFence, UiNames.FarmUpgradeFenceText, UiNames.FarmUpgradeFenceButton, onBuyUpgrade);
+            BindUpgradeRow(GrowthUtil.KindFloor, UiNames.FarmUpgradeFloorText, UiNames.FarmUpgradeFloorButton, onBuyUpgrade);
+            BindUpgradeRow(GrowthUtil.KindCollector, UiNames.FarmUpgradeCollectorText, UiNames.FarmUpgradeCollectorButton, onBuyUpgrade);
+            BindUpgradeRow(GrowthUtil.KindFeeder, UiNames.FarmUpgradeFeederText, UiNames.FarmUpgradeFeederButton, onBuyUpgrade);
+            BindUpgradeRow(GrowthUtil.KindStorage, UiNames.FarmUpgradeStorageText, UiNames.FarmUpgradeStorageButton, onBuyUpgrade);
             UiBindUtil.SetText(UiBindUtil.Find<TMP_Text>(_upgradePanel.transform, UiNames.FarmPanelTitle, PrefabName), "농장 강화");
             UiBindUtil.SetText(UiBindUtil.Find<TMP_Text>(_menuPanel.transform, UiNames.FarmPanelTitle, PrefabName), "메뉴");
 
@@ -81,7 +89,6 @@ namespace Mozzi.Game.Ui
             UiBindUtil.BindButton(transform, UiNames.FarmMenuButton, PrefabName, delegate { TogglePanel(_menuPanel); });
             UiBindUtil.BindButton(_upgradePanel.transform, UiNames.FarmPanelBlocker, PrefabName, ClosePanels);
             UiBindUtil.BindButton(_menuPanel.transform, UiNames.FarmPanelBlocker, PrefabName, ClosePanels);
-            _upgradeFenceButton = UiBindUtil.BindButton(_upgradePanel.transform, UiNames.FarmUpgradeFenceButton, PrefabName, onBuyFence);
             UiBindUtil.BindButton(_menuPanel.transform, UiNames.FarmRecipeCodexButton, PrefabName, OnRecipeCodex);
             _nextDayButton = UiBindUtil.BindButton(transform, UiNames.FarmNextDayButton, PrefabName, onNextDay).gameObject;
             ClosePanels();
@@ -123,19 +130,26 @@ namespace Mozzi.Game.Ui
             UiBindUtil.SetActive(_menuPanel, false);
         }
 
-        // 강화 판의 담장 줄. price 가 음수면 최대 단계라 잠근다.
-        public void SetUpgradeFence(int count, int max, int price, bool canPay)
+        // 강화 판 한 줄. 글은 부르는 쪽이 만든다 (FarmUpgradeText). price 가 음수면 최대 단계라 잠근다.
+        public void SetUpgrade(string kind, string text, int price, bool canPay)
         {
-            UiBindUtil.SetText(_upgradeFenceText, "담장 " + count + "/" + max);
+            UiBindUtil.SetText(_upgradeTexts[kind], text);
+            Button button = _upgradeButtons[kind];
             if (price < 0)
             {
-                UiBindUtil.SetLabel(_upgradeFenceButton, "담장 최대");
-                _upgradeFenceButton.interactable = false;
+                UiBindUtil.SetLabel(button, "최대");
+                button.interactable = false;
                 return;
             }
 
-            UiBindUtil.SetLabel(_upgradeFenceButton, "늘리기 " + price + "G");
-            _upgradeFenceButton.interactable = canPay;
+            UiBindUtil.SetLabel(button, price + "G");
+            button.interactable = canPay;
+        }
+
+        private void BindUpgradeRow(string kind, string textName, string buttonName, UnityAction<string> onBuy)
+        {
+            _upgradeTexts[kind] = UiBindUtil.Find<TMP_Text>(_upgradePanel.transform, textName, PrefabName);
+            _upgradeButtons[kind] = UiBindUtil.BindButton(_upgradePanel.transform, buttonName, PrefabName, delegate { onBuy(kind); });
         }
 
         // 띠를 화면 끝까지 잇는다. 뒤판은 옛 카메라 배경색(BarBackColor)으로 띠 밑을 막아 월드(풀밭)가 비치지 않게 하고,
@@ -204,8 +218,8 @@ namespace Mozzi.Game.Ui
             _ui = null;
             _upgradePanel = null;
             _menuPanel = null;
-            _upgradeFenceText = null;
-            _upgradeFenceButton = null;
+            _upgradeTexts.Clear();
+            _upgradeButtons.Clear();
             _bound = false;
         }
 

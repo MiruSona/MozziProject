@@ -9,6 +9,10 @@ namespace Mozzi.Data
         public const string KindShortcut = "shortcut";
         public const string KindPair = "pair";
         public const string KindFence = "fence";
+        public const string KindFloor = "floor";
+        public const string KindCollector = "collector";
+        public const string KindFeeder = "feeder";
+        public const string KindStorage = "storage";
 
         public static GrowthRow Find(DataTable<GrowthRow> table, string kind, int level)
         {

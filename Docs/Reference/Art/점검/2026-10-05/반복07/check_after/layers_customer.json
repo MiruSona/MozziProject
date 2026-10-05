@@ -1,0 +1,29 @@
+{
+ "version": 1,
+ "status": "ok",
+ "in": "(임시) layers/customer.json + Resources/Art",
+ "canvas": [
+  120,
+  240
+ ],
+ "layers": [
+  "body",
+  "shirt",
+  "bottom",
+  "face",
+  "hair"
+ ],
+ "items": [
+  "hair_01_black",
+  "hair_01_brown",
+  "hair_01_orange",
+  "hair_01_purple",
+  "hair_02_black",
+  "hair_02_brown",
+  "hair_02_orange",
+  "hair_02_purple"
+ ],
+ "failed": [],
+ "rules": [],
+ "warnings": []
+}

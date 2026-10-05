@@ -102,7 +102,7 @@ namespace Mozzi.Game.Ui
             _farmScreen = _resource.Rent<FarmScreen>(PrefabKeys.UiFarmScreen, _contentRoot);
             StretchToParent(_farmScreen.transform as RectTransform);
             _farmScreen.transform.SetAsFirstSibling();
-            _farmScreen.Bind(_inventory.IngredientIds, this, _clock.AdvanceDay, OnBuyFence);
+            _farmScreen.Bind(_inventory.IngredientIds, this, _clock.AdvanceDay, OnBuyUpgrade);
             BindIngredientIcons();
 
             // 540 기준 전용 화면은 내용 칸에, 옛 360 기준 화면은 껍데기 안에 붙인다.
@@ -141,6 +141,10 @@ namespace Mozzi.Game.Ui
             _subscriptions.Add(EventBus.Subscribe<MozziPlacedEvent>(this, OnMozziPlaced));
             _subscriptions.Add(EventBus.Subscribe<MozziRemovedEvent>(this, OnMozziRemoved));
             _subscriptions.Add(EventBus.Subscribe<FenceUpgradedEvent>(this, OnFenceUpgraded));
+            _subscriptions.Add(EventBus.Subscribe<FarmUpgradedEvent>(this, OnFarmUpgraded));
+            _subscriptions.Add(EventBus.Subscribe<StorageUpgradedEvent>(this, OnStorageUpgraded));
+            _subscriptions.Add(EventBus.Subscribe<IngredientDroppedEvent>(this, OnIngredientDropped));
+            _subscriptions.Add(EventBus.Subscribe<IngredientPickedEvent>(this, OnIngredientPicked));
             _subscriptions.Add(EventBus.Subscribe<DayStartedEvent>(this, OnDayStarted));
             _subscriptions.Add(EventBus.Subscribe<NightFellEvent>(this, OnNightFell));
             _subscriptions.Add(EventBus.Subscribe<StorageChangedEvent>(this, OnStorageChanged));
@@ -316,17 +320,113 @@ namespace Mozzi.Game.Ui
             return null;
         }
 
-        // 메인 화면 강화 판의 「담장 늘리기」. 값이 바뀌면 FenceUpgradedEvent · GoldChangedEvent 가 판을 되읽는다.
-        private void OnBuyFence()
+        // 메인 화면 강화 판의 사기. 담장 · 창고는 제 Manager 가, 바닥 · 수집기 · 공급기는 FarmManager 가 판다.
+        // 값이 바뀌면 각 Upgraded 이벤트 · GoldChangedEvent 가 판을 되읽는다.
+        private void OnBuyUpgrade(string kind)
         {
-            _farm.BuyFence();
+            if (kind == GrowthUtil.KindFence)
+            {
+                _farm.BuyFence();
+            }
+            else if (kind == GrowthUtil.KindStorage)
+            {
+                _inventory.BuyStorage();
+            }
+            else
+            {
+                _farm.BuyUpgrade(kind);
+            }
+
             RefreshUpgrade();
         }
 
+        // 강화 판 다섯 줄. 다음 효과는 Growth 표 다음 단계 행으로 미리 셈한다 (rate 는 누적값이라 기본값에 한 행만 더한다).
         private void RefreshUpgrade()
         {
-            int price = _farm.NextFencePrice;
-            _farmScreen.SetUpgradeFence(_farm.MozziCount, _farm.FenceMax, price, price >= 0 && _wallet.CanPay(price));
+            FarmRow farmRow = _data.Farms.Get(DataKeys.DefaultRowId);
+
+            string next = null;
+            double rate = NextRate(GrowthUtil.KindFence, _farm.FenceLevel);
+            if (rate >= 0)
+            {
+                next = (farmRow.FenceMax + (int)rate) + "마리";
+            }
+
+            string now = _farm.MozziCount + "/" + _farm.FenceMax + "마리";
+            SetUpgradeRow(GrowthUtil.KindFence, FarmUpgradeText.Line("담장", _farm.FenceLevel, _farm.MaxFenceLevel, now, next),
+                _farm.NextFencePrice);
+
+            int level = _farm.UpgradeLevel(GrowthUtil.KindFloor);
+            next = null;
+            rate = NextRate(GrowthUtil.KindFloor, level);
+            if (rate >= 0)
+            {
+                next = (farmRow.FloorMax + (int)rate) + "개";
+            }
+
+            now = "바닥 " + _farm.FloorTotal + "/" + _farm.FloorMax;
+            if (_farm.FloorTotal >= _farm.FloorMax)
+            {
+                now += " 꽉 참";
+            }
+
+            SetUpgradeRow(GrowthUtil.KindFloor, FarmUpgradeText.Line("바닥 넓히기", level, _farm.MaxUpgradeLevel(GrowthUtil.KindFloor), now, next),
+                _farm.NextUpgradePrice(GrowthUtil.KindFloor));
+
+            level = _farm.UpgradeLevel(GrowthUtil.KindCollector);
+            next = null;
+            rate = NextRate(GrowthUtil.KindCollector, level);
+            if (rate >= 0)
+            {
+                next = FarmUpgradeText.Collector(rate);
+            }
+
+            now = FarmUpgradeText.Collector(_farm.CollectorPeriodSec);
+            SetUpgradeRow(GrowthUtil.KindCollector, FarmUpgradeText.Line("수집기", level, _farm.MaxUpgradeLevel(GrowthUtil.KindCollector), now, next),
+                _farm.NextUpgradePrice(GrowthUtil.KindCollector));
+
+            level = _farm.UpgradeLevel(GrowthUtil.KindFeeder);
+            next = null;
+            rate = NextRate(GrowthUtil.KindFeeder, level);
+            if (rate >= 0)
+            {
+                next = FarmUpgradeText.Feeder(rate);
+            }
+
+            now = FarmUpgradeText.Feeder(_farm.FeederBonus);
+            SetUpgradeRow(GrowthUtil.KindFeeder, FarmUpgradeText.Line("먹이 공급기", level, _farm.MaxUpgradeLevel(GrowthUtil.KindFeeder), now, next),
+                _farm.NextUpgradePrice(GrowthUtil.KindFeeder));
+
+            level = _inventory.StorageLevel;
+            // 재료 cap 은 지금 모두 같아(100) 첫 행으로 보여 준다. 재료마다 달라지면 이 줄 글을 바꾼다.
+            int baseCap = _data.Ingredients.All[0].Cap;
+            next = null;
+            rate = NextRate(GrowthUtil.KindStorage, level);
+            if (rate >= 0)
+            {
+                next = (baseCap + (int)rate) + "칸";
+            }
+
+            now = "재료마다 " + (baseCap + _inventory.StorageBonus) + "칸";
+            SetUpgradeRow(GrowthUtil.KindStorage, FarmUpgradeText.Line("창고 넓히기", level, _inventory.MaxStorageLevel, now, next),
+                _inventory.NextStoragePrice);
+        }
+
+        // 그 kind 의 level + 1 행 rate. 다음 단계가 없으면 -1.
+        private double NextRate(string kind, int level)
+        {
+            GrowthRow row = GrowthUtil.Find(_data.Growths, kind, level + 1);
+            if (row == null)
+            {
+                return -1;
+            }
+
+            return row.Rate;
+        }
+
+        private void SetUpgradeRow(string kind, string text, int price)
+        {
+            _farmScreen.SetUpgrade(kind, text, price, price >= 0 && _wallet.CanPay(price));
         }
 
         // 「보관함으로」. 옮기고 나면 팝업을 닫는다 — 농장 Object 는 FarmViewManager 가 목록 대조로 거둔다.
@@ -593,6 +693,28 @@ namespace Mozzi.Game.Ui
         private void OnFenceUpgraded(FenceUpgradedEvent evt)
         {
             _farmScreen.SetFence(_farm.MozziCount, evt.FenceMax);
+            RefreshUpgrade();
+        }
+
+        private void OnFarmUpgraded(FarmUpgradedEvent evt)
+        {
+            RefreshUpgrade();
+        }
+
+        // 모든 재료 상한이 같이 바뀌므로 자원바 「n/상한」 을 통째로 되읽는다.
+        private void OnStorageUpgraded(StorageUpgradedEvent evt)
+        {
+            RefreshAll();
+        }
+
+        // 바닥 줄의 「바닥 n/한도」 를 맞춘다.
+        private void OnIngredientDropped(IngredientDroppedEvent evt)
+        {
+            RefreshUpgrade();
+        }
+
+        private void OnIngredientPicked(IngredientPickedEvent evt)
+        {
             RefreshUpgrade();
         }
 

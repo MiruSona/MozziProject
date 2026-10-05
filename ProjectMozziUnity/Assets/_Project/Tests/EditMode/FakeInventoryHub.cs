@@ -15,6 +15,31 @@ namespace Mozzi.Tests
             get { return new List<string>(_counts.Keys); }
         }
 
+        public int StorageLevel
+        {
+            get { return 0; }
+        }
+
+        public int MaxStorageLevel
+        {
+            get { return 0; }
+        }
+
+        public int NextStoragePrice
+        {
+            get { return -1; }
+        }
+
+        public int StorageBonus
+        {
+            get { return 0; }
+        }
+
+        public bool BuyStorage()
+        {
+            return false;
+        }
+
         public int Count(string ingredientId)
         {
             int count;

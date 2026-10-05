@@ -27,8 +27,13 @@ namespace Mozzi.Editor
 
         // 아이콘 왼쪽에 뜨는 작은 판. 오른쪽 끝을 아이콘에서 8 띄우고, 아래끝을 누른 아이콘 아래끝에 맞춘다.
         private const float PanelGap = 8f;
-        private const float UpgradeBoxWidth = 240f;
-        private const float UpgradeBoxHeight = 124f;
+        // 강화 판은 다섯 줄. 줄마다 왼쪽에 두 줄 글(이름 · 단계 / 지금 → 다음), 오른쪽에 값 버튼.
+        private const int UpgradeRowCount = 5;
+        private const float UpgradeRowPitch = 54f;
+        private const float UpgradeTextHeight = 48f;
+        private const float UpgradeButtonWidth = 104f;
+        private const float UpgradeBoxWidth = 380f;
+        private const float UpgradeBoxHeight = BoxTitleHeight + 6f + UpgradeRowCount * UpgradeRowPitch + 6f;
         private const float MenuBoxWidth = 200f;
         private const float MenuBoxHeight = 96f;
         private const float BoxPad = 12f;
@@ -74,11 +79,11 @@ namespace Mozzi.Editor
             MakeIcon(t, UiNames.FarmMenuButton, SpriteKeys.UiIconMenu, IconMenuTop);
 
             RectTransform upgradeBox = MakePanel(t, UiNames.FarmUpgradePanel, UpgradeBoxWidth, UpgradeBoxHeight, IconUpgradeTop, sample);
-            TMP_Text fenceText = EnsureText(upgradeBox, UiNames.FarmUpgradeFenceText, sample);
-            TopLeft(fenceText.rectTransform, BoxPad, BoxTitleHeight + 4f, UpgradeBoxWidth - BoxPad * 2f, 26f);
-            StyleText(fenceText, 18f, TextDark, TextAlignmentOptions.Left);
-            RectTransform fenceButton = EnsureButton(upgradeBox, UiNames.FarmUpgradeFenceButton, nextDay, "담장 늘리기");
-            TopLeft(fenceButton, BoxPad, BoxTitleHeight + 34f, UpgradeBoxWidth - BoxPad * 2f, BoxRowHeight);
+            PlaceUpgradeRow(upgradeBox, 0, UiNames.FarmUpgradeFenceText, UiNames.FarmUpgradeFenceButton, nextDay, sample);
+            PlaceUpgradeRow(upgradeBox, 1, UiNames.FarmUpgradeFloorText, UiNames.FarmUpgradeFloorButton, nextDay, sample);
+            PlaceUpgradeRow(upgradeBox, 2, UiNames.FarmUpgradeCollectorText, UiNames.FarmUpgradeCollectorButton, nextDay, sample);
+            PlaceUpgradeRow(upgradeBox, 3, UiNames.FarmUpgradeFeederText, UiNames.FarmUpgradeFeederButton, nextDay, sample);
+            PlaceUpgradeRow(upgradeBox, 4, UiNames.FarmUpgradeStorageText, UiNames.FarmUpgradeStorageButton, nextDay, sample);
 
             RectTransform menuBox = MakePanel(t, UiNames.FarmMenuPanel, MenuBoxWidth, MenuBoxHeight, IconMenuTop, sample);
             RectTransform recipeButton = EnsureButton(menuBox, UiNames.FarmRecipeCodexButton, nextDay, "레시피 도감");
@@ -199,6 +204,24 @@ namespace Mozzi.Editor
 
             panel.gameObject.SetActive(false);
             return box;
+        }
+
+        // 강화 판 index 번째 줄. 글은 왼쪽 두 줄, 버튼은 오른쪽에 세로 가운데로 붙인다.
+        private static void PlaceUpgradeRow(RectTransform box, int index, string textName, string buttonName, RectTransform template,
+            TMP_Text sample)
+        {
+            float top = BoxTitleHeight + 6f + index * UpgradeRowPitch;
+            float textWidth = UpgradeBoxWidth - BoxPad * 3f - UpgradeButtonWidth;
+
+            TMP_Text text = EnsureText(box, textName, sample);
+            TopLeft(text.rectTransform, BoxPad, top, textWidth, UpgradeTextHeight);
+            StyleText(text, 15f, TextDark, TextAlignmentOptions.Left);
+            text.lineSpacing = -10f;
+            text.textWrappingMode = TextWrappingModes.NoWrap;
+
+            RectTransform button = EnsureButton(box, buttonName, template, "-");
+            TopLeft(button, UpgradeBoxWidth - BoxPad - UpgradeButtonWidth, top + (UpgradeTextHeight - BoxRowHeight) * 0.5f,
+                UpgradeButtonWidth, BoxRowHeight);
         }
 
         // template(「다음날로」)을 복제해 같은 바탕 · 글꼴의 버튼을 만든다. 있으면 그대로 쓴다.

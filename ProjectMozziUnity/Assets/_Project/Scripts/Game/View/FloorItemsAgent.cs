@@ -9,6 +9,7 @@ namespace Mozzi.Game.View
 {
     // 바닥 재료(낱개 · 꾸러미)를 맡는다. 모델은 IFarmHub 의 재료별 더미 수 하나뿐이고 바닥 자리는 화면만의 것이다.
     // 떨굼 이벤트가 오면 그 종 찹쌀이 발밑에서 낱개를 튀어 나오게 하고, 매 프레임 화면 합계를 모델에 맞춘 뒤 30 을 넘으면 뭉친다.
+    // 꾸러미 하나는 PileMax(5) 개까지다 — 맞추기도 뭉치기도 그 수를 안 넘긴다.
     // 셈은 FloorItemMath 가 하고 여기서는 오브젝트만 빌리고 돌린다.
     public sealed class FloorItemsAgent : AgentBase<FarmViewManager>
     {
@@ -154,7 +155,7 @@ namespace Mozzi.Game.View
             _vanishing.Clear();
         }
 
-        // 화면 합계를 모델에 맞춘다. 모델이 많으면(오프라인 · 디버그 Skip · 떨군 마리를 못 찾음) 차이를 꾸러미 하나로 깔고,
+        // 화면 합계를 모델에 맞춘다. 모델이 많으면(오프라인 · 디버그 Skip · 떨군 마리를 못 찾음) 차이를 PileMax 개씩 꾸러미로 깔고,
         // 적으면(다른 곳에서 주움) 새것부터 깎는다.
         private void Reconcile()
         {
@@ -173,7 +174,11 @@ namespace Mozzi.Game.View
 
                 if (model > shown)
                 {
-                    Spawn(id, RandomFloorSpot(), model - shown);
+                    FloorItemMath.SplitIntoPiles(model - shown, _farm.PileMax, _amounts);
+                    for (int i = 0; i < _amounts.Count; i++)
+                    {
+                        Spawn(id, RandomFloorSpot(), _amounts[i]);
+                    }
                 }
                 else
                 {
@@ -185,7 +190,8 @@ namespace Mozzi.Game.View
             }
         }
 
-        // 보이는 수가 상한을 넘으면 가장 가까운 같은 재료 둘을 하나로 합친다. 양은 더하고 자리는 큰 쪽이다.
+        // 보이는 수가 상한을 넘으면 합쳐도 꾸러미 한도(PileMax)를 안 넘는 가장 가까운 같은 재료 둘을 합친다.
+        // 양은 더하고 자리는 큰 쪽이다. 합칠 짝이 없으면(모두 꽉 찬 꾸러미) 상한을 넘은 채로 둔다.
         private void MergeOverflow()
         {
             while (_items.Count > LayoutConst.FloorItemMax)
@@ -193,7 +199,7 @@ namespace Mozzi.Game.View
                 BuildEntries();
                 int keep;
                 int drop;
-                if (FloorItemMath.FindMergePair(_entries, out keep, out drop) == false)
+                if (FloorItemMath.FindMergePair(_entries, _farm.PileMax, out keep, out drop) == false)
                 {
                     return;
                 }

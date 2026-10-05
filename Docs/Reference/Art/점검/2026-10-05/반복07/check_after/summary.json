@@ -1,0 +1,444 @@
+{
+ "label": "반복07",
+ "files": 171,
+ "groups": [
+  {
+   "group": "bg",
+   "kind": "bg",
+   "profile": "mozzi_bg",
+   "files": 5,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {},
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 183
+  },
+  {
+   "group": "bldg",
+   "kind": "bldg",
+   "profile": "mozzi_prop",
+   "files": 22,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "outline": [
+     "kitchen_pound_0.png",
+     "kitchen_pound_1.png",
+     "kitchen_pound_2.png",
+     "kitchen_pound_3.png",
+     "kitchen_pound_4.png",
+     "kitchen_pound_5.png",
+     "kitchen_pound_6.png",
+     "stall_main.png",
+     "storage_main.png",
+     "synthesis_machine_done.png",
+     "synthesis_main.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 226
+  },
+  {
+   "group": "char_mozzi",
+   "kind": "char_mozzi",
+   "profile": "mozzi_char",
+   "files": 17,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "outline": [
+     "acc_crown.png",
+     "cheek.png",
+     "face_02.png",
+     "face_03.png",
+     "face_05.png",
+     "face_07.png",
+     "face_10.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 18
+  },
+  {
+   "group": "char_people",
+   "kind": "char_people",
+   "profile": "mozzi_people",
+   "files": 17,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "outline": [
+     "body.png",
+     "face_01.png",
+     "face_02.png",
+     "face_03.png",
+     "hair_01_black.png",
+     "hair_01_brown.png",
+     "hair_01_orange.png",
+     "hair_01_purple.png",
+     "hair_02_black.png",
+     "hair_02_brown.png",
+     "hair_02_orange.png",
+     "hair_02_purple.png",
+     "shirt_blue.png",
+     "shirt_green.png",
+     "shirt_red.png",
+     "shirt_yellow.png"
+    ],
+    "color_cap": [
+     "face_03.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 144
+  },
+  {
+   "group": "fx",
+   "kind": "fx",
+   "profile": "mozzi_fx",
+   "files": 7,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {},
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 1
+  },
+  {
+   "group": "fx_prop",
+   "kind": "fx",
+   "profile": "mozzi_prop",
+   "files": 24,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "outline": [
+     "fx_swirl_a_0.png",
+     "fx_swirl_a_1.png",
+     "fx_swirl_a_2.png",
+     "fx_swirl_a_3.png",
+     "fx_swirl_a_4.png",
+     "fx_swirl_a_5.png",
+     "fx_swirl_a_6.png",
+     "fx_swirl_a_7.png",
+     "fx_swirl_b_0.png",
+     "fx_swirl_b_1.png",
+     "fx_swirl_b_2.png",
+     "fx_swirl_b_3.png",
+     "fx_swirl_b_4.png",
+     "fx_swirl_b_5.png",
+     "fx_swirl_b_6.png",
+     "fx_swirl_b_7.png",
+     "fx_swirl_top_0.png",
+     "fx_swirl_top_1.png",
+     "fx_swirl_top_2.png",
+     "fx_swirl_top_3.png",
+     "fx_swirl_top_4.png",
+     "fx_swirl_top_5.png",
+     "fx_swirl_top_6.png",
+     "fx_swirl_top_7.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 3
+  },
+  {
+   "group": "icon",
+   "kind": "icon",
+   "profile": "mozzi_icon",
+   "files": 28,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "outline": [
+     "bean.png",
+     "bean_cake.png",
+     "bean_cake_one.png",
+     "jujube_cake.png",
+     "mugwort.png",
+     "mugwort_cake.png",
+     "mugwort_cake_one.png",
+     "mugwort_sesame_cake.png",
+     "mugwort_sesame_cake_one.png",
+     "pinenut.png",
+     "pinenut_cake.png",
+     "pinenut_cake_one.png",
+     "pinenut_jujube_cake.png",
+     "plain_cake.png",
+     "plain_cake_one.png",
+     "redbean_bean_cake.png",
+     "redbean_bean_cake_one.png",
+     "redbean_cake.png",
+     "redbean_cake_one.png",
+     "redbean_mugwort_sesame_cake.png",
+     "redbean_mugwort_sesame_cake_one.png",
+     "sesame.png",
+     "sesame_cake.png",
+     "sesame_cake_one.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 39
+  },
+  {
+   "group": "piece",
+   "kind": "piece",
+   "profile": "mozzi_prop",
+   "files": 29,
+   "status": "fail",
+   "exit": 4,
+   "failed": [
+    "alpha"
+   ],
+   "failed_detail": {
+    "alpha": "반투명 픽셀이 있는 프레임 1개"
+   },
+   "failed_files": {
+    "alpha": [
+     "display_case.png"
+    ]
+   },
+   "warnings": {
+    "integer_scale": [
+     "kitchen_drawer_frame.png",
+     "kitchen_shape_1.png"
+    ],
+    "outline": [
+     "kitchen_board.png",
+     "kitchen_bowl.png",
+     "kitchen_pound_rough_0.png",
+     "kitchen_pound_rough_1.png",
+     "kitchen_pound_rough_2.png",
+     "kitchen_pound_rough_3.png",
+     "kitchen_pound_rough_4.png",
+     "kitchen_pound_rough_5.png",
+     "kitchen_pound_rough_6.png",
+     "kitchen_pound_smooth_0.png",
+     "kitchen_pound_smooth_1.png",
+     "kitchen_pound_smooth_2.png",
+     "kitchen_pound_smooth_3.png",
+     "kitchen_pound_smooth_4.png",
+     "kitchen_pound_smooth_5.png",
+     "kitchen_pound_smooth_6.png",
+     "kitchen_steamer.png",
+     "stall_board_topper.png",
+     "stall_counter.png",
+     "stall_prop_vase.png"
+    ],
+    "isolated": [
+     "kitchen_shape_0.png",
+     "kitchen_shape_1.png",
+     "stall_prop_register.png",
+     "stall_prop_vase.png"
+    ],
+    "color_cap": [
+     "stall_prop_register.png",
+     "stall_prop_vase.png"
+    ],
+    "near_colors": [
+     "kitchen_drawer_frame.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 453
+  },
+  {
+   "group": "tile",
+   "kind": "tile",
+   "profile": "mozzi_prop",
+   "files": 14,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "integer_scale": [
+     "fence_h.png",
+     "fence_post.png"
+    ],
+    "outline": [
+     "decor_07.png",
+     "decor_08.png",
+     "decor_09.png",
+     "decor_10.png",
+     "fence_v.png"
+    ],
+    "isolated": [
+     "decor_01.png",
+     "decor_03.png",
+     "decor_04.png",
+     "decor_05.png",
+     "decor_06.png",
+     "fence_h.png",
+     "fence_post.png",
+     "fence_v.png"
+    ],
+    "color_cap": [
+     "decor_04.png",
+     "decor_05.png",
+     "decor_06.png",
+     "fence_v.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 55
+  },
+  {
+   "group": "tile_bg",
+   "kind": "tile",
+   "profile": "mozzi_bg",
+   "files": 1,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "near_colors": [
+     "grass_base.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 33
+  },
+  {
+   "group": "ui",
+   "kind": "ui",
+   "profile": "mozzi_prop",
+   "files": 7,
+   "status": "ok",
+   "exit": 0,
+   "failed": [],
+   "failed_detail": {},
+   "failed_files": {},
+   "warnings": {
+    "outline": [
+     "ui_badge_alert.png",
+     "ui_bubble_c.png",
+     "ui_button.png"
+    ],
+    "color_cap": [
+     "icon_codex.png",
+     "icon_upgrade.png"
+    ]
+   },
+   "palette_warnings": {
+    "ramp_shape": 12
+   },
+   "ramp_outside_colors": 181
+  }
+ ],
+ "layers": [
+  {
+   "set": "mozzi",
+   "status": "ok",
+   "exit": 0,
+   "items": 10,
+   "layers": [
+    "body",
+    "cheek",
+    "face",
+    "acc"
+   ],
+   "warnings": {}
+  },
+  {
+   "set": "customer",
+   "status": "ok",
+   "exit": 0,
+   "items": 8,
+   "layers": [
+    "body",
+    "shirt",
+    "bottom",
+    "face",
+    "hair"
+   ],
+   "warnings": {}
+  }
+ ],
+ "not_in_kinds": [
+  "CakeOne/bean_cake_one.png",
+  "CakeOne/jujube_cake_one.png",
+  "CakeOne/mugwort_cake_one.png",
+  "CakeOne/mugwort_sesame_cake_one.png",
+  "CakeOne/pinenut_cake_one.png",
+  "CakeOne/pinenut_jujube_cake_one.png",
+  "CakeOne/plain_cake_one.png",
+  "CakeOne/redbean_bean_cake_one.png",
+  "CakeOne/redbean_cake_one.png",
+  "CakeOne/redbean_mugwort_sesame_cake_one.png",
+  "CakeOne/sesame_cake_one.png",
+  "Fx/fx_swirl_a_0.png",
+  "Fx/fx_swirl_a_1.png",
+  "Fx/fx_swirl_a_2.png",
+  "Fx/fx_swirl_a_3.png",
+  "Fx/fx_swirl_a_4.png",
+  "Fx/fx_swirl_a_5.png",
+  "Fx/fx_swirl_a_6.png",
+  "Fx/fx_swirl_a_7.png",
+  "Fx/fx_swirl_b_0.png",
+  "Fx/fx_swirl_b_1.png",
+  "Fx/fx_swirl_b_2.png",
+  "Fx/fx_swirl_b_3.png",
+  "Fx/fx_swirl_b_4.png",
+  "Fx/fx_swirl_b_5.png",
+  "Fx/fx_swirl_b_6.png",
+  "Fx/fx_swirl_b_7.png",
+  "Fx/fx_swirl_top_0.png",
+  "Fx/fx_swirl_top_1.png",
+  "Fx/fx_swirl_top_2.png",
+  "Fx/fx_swirl_top_3.png",
+  "Fx/fx_swirl_top_4.png",
+  "Fx/fx_swirl_top_5.png",
+  "Fx/fx_swirl_top_6.png",
+  "Fx/fx_swirl_top_7.png",
+  "Fx/fx_window_mask.png",
+  "Mozzi/acc_none.png",
+  "UI/ui_badge_alert.png"
+ ],
+ "new_failures": [],
+ "new_warnings": [],
+ "known_count": 138
+}

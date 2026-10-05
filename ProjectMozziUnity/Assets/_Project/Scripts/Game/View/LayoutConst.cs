@@ -106,7 +106,7 @@ namespace Mozzi.Game.View
         public const int FloorItemSortOrder = -7;
         public const int FloorItemLabelSortOrder = -6;
 
-        // 바닥에 보이는 재료 수 상한. 넘으면 가까운 같은 재료끼리 꾸러미로 뭉친다 (04-수치표).
+        // 바닥에 보이는 재료 수 상한. 넘으면 가까운 같은 재료끼리 꾸러미(PileMax 개까지)로 뭉친다 (04-수치표).
         public const int FloorItemMax = 30;
 
         // 훑기 손가락 반지름 (px). 재료 그림 반쪽(PilePx / 2)까지 닿으면 줍는다.

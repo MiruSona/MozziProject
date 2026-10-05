@@ -46,10 +46,10 @@
     ] },
     { "name": "growth", "columns": [
       { "name": "id", "type": "string" },
-      { "name": "kind", "type": "string", "desc": "slot · shortcut · pair · fence" },
+      { "name": "kind", "type": "string", "desc": "slot · shortcut · pair · fence · floor · collector · feeder · storage" },
       { "name": "level", "type": "int", "min": 1 },
       { "name": "price", "type": "int", "min": 0 },
-      { "name": "rate", "type": "float", "desc": "shortcut 은 대기 배율, fence 는 담장에 더해지는 마리 수(누적). slot · pair 는 안 쓴다" }
+      { "name": "rate", "type": "float", "desc": "shortcut 은 대기 배율, fence 는 담장에 더해지는 마리 수(누적), floor 는 바닥 합계 한도에 더하는 수(누적), collector 는 걷는 주기(초), feeder 는 생산 속도에 더하는 비율(누적, 0.1 = +10%), storage 는 창고 상한에 더하는 수(누적). slot · pair 는 안 쓴다" }
     ] },
     { "name": "stall", "columns": [
       { "name": "id", "type": "string", "desc": "설정 한 줄짜리 표다. id 는 default 하나" },
@@ -79,6 +79,8 @@
       { "name": "breed_period_sec", "type": "float", "min": 0 },
       { "name": "storage_sell_price", "type": "int", "min": 0 },
       { "name": "storage_max", "type": "int", "min": 0, "desc": "0 은 상한 없음" },
+      { "name": "floor_max", "type": "int", "min": 0, "desc": "바닥 재료 합계 한도 (모든 재료 합). 닿으면 생산이 멈춘다" },
+      { "name": "pile_max", "type": "int", "min": 1, "desc": "화면 꾸러미 하나에 담기는 최대 수" },
       { "name": "start_species_id", "type": "ref", "ref": "mozzi_species" },
       { "name": "start_count", "type": "int", "min": 0 }
     ] },

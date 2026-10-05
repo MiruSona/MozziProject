@@ -64,7 +64,7 @@ namespace Mozzi.Game.Ui
         public const string FarmMenuButton = "MenuButton";
 
         // 아이콘을 누르면 뜨는 작은 판 둘. 판 뒤 가림막(Blocker)을 누르면 닫힌다.
-        // 강화 판 : 농장 강화 목록 (지금은 담장 한 줄). ☰ 판 : 레시피 도감 (설정 화면이 생기면 줄을 더한다).
+        // 강화 판 : 농장 강화 다섯 줄 (담장 · 바닥 넓히기 · 수집기 · 먹이 공급기 · 창고 넓히기). ☰ 판 : 레시피 도감.
         public const string FarmUpgradePanel = "UpgradePanel";
         public const string FarmMenuPanel = "MenuPanel";
         public const string FarmPanelBlocker = "Blocker";
@@ -72,6 +72,14 @@ namespace Mozzi.Game.Ui
         public const string FarmPanelTitle = "PanelTitle";
         public const string FarmUpgradeFenceText = "UpgradeFenceText";
         public const string FarmUpgradeFenceButton = "UpgradeFenceButton";
+        public const string FarmUpgradeFloorText = "UpgradeFloorText";
+        public const string FarmUpgradeFloorButton = "UpgradeFloorButton";
+        public const string FarmUpgradeCollectorText = "UpgradeCollectorText";
+        public const string FarmUpgradeCollectorButton = "UpgradeCollectorButton";
+        public const string FarmUpgradeFeederText = "UpgradeFeederText";
+        public const string FarmUpgradeFeederButton = "UpgradeFeederButton";
+        public const string FarmUpgradeStorageText = "UpgradeStorageText";
+        public const string FarmUpgradeStorageButton = "UpgradeStorageButton";
         public const string FarmRecipeCodexButton = "RecipeCodexButton";
 
         // 부재료 칸은 "Ingredient_" + 부재료 id (예 Ingredient_redbean).
@@ -172,6 +180,10 @@ namespace Mozzi.Game.Ui
         public const string KitchenBoard = "Board";
         public const string KitchenMortarSlotPrefix = "MortarSlot_";
         public const int KitchenMortarSlotCount = 3;
+        // 찜기 위 김 · 빚기판 위 빚는 떡 (한 바퀴 연출, 쉴 때는 꺼짐) · 빚는 동안 숨기는 접시 (반복 07).
+        public const string KitchenSteam = "Steam";
+        public const string KitchenShape = "Shape";
+        public const string KitchenPlate = "Plate";
         // 접시 위 결과 묶음. 떡 그림은 CakeIcon.
         public const string KitchenResult = "Result";
         public const string KitchenResultNameText = "ResultNameText";

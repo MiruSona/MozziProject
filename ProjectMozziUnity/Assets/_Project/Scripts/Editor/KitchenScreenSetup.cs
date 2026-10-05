@@ -9,7 +9,7 @@ namespace Mozzi.Editor
 {
     // 주방 화면 프리팹을 빈 뿌리에서 새로 짓는 손질기. 자리는 KitchenLayout 이 정본이다.
     // 프리팹을 손으로 고치면 다음에 돌릴 때 덮이니 고칠 것은 여기서 고친다. 그림은 FormalArtCopy.CopyKitchen 을 먼저 돌린다.
-    // 반복 06 「네 단계 상자 판」 : 서랍장 · 찜기 · 빚기판 · 그릇은 그림 없이 ui_button 틀 상자 + 글자다. 색은 KitchenScreen 이 단계마다 넣는다.
+    // 반복 07 : 서랍장 틀 · 칸 · 그릇 · 찜기 · 빚기판을 정식 그림(주방/v3)으로 바꾸고 김 · 빚기 연출 자리를 더했다. 색 곱하기는 KitchenScreen 이 단계마다 넣는다.
     // 부르는 법 : 메뉴 「Mozzi/정식 화면 540 배치/주방」 또는 eval 로 KitchenScreenSetup.Apply().
     public static class KitchenScreenSetup
     {
@@ -17,10 +17,6 @@ namespace Mozzi.Editor
 
         // 배경 맨 윗줄 색. 1200 보다 긴 화면의 위와 넓적한 화면 옆을 이 색으로 채운다.
         private static readonly Color FillTop = new Color32(0x9C, 0x6E, 0x51, 0xFF);
-
-        // 서랍장 틀 · 그릇 색 (상자 판 임시 색).
-        private static readonly Color DrawerFrame = new Color(0.42f, 0.28f, 0.19f, 1f);
-        private static readonly Color BowlColor = new Color(0.96f, 0.94f, 0.88f, 1f);
 
         [MenuItem("Mozzi/정식 화면 540 배치/주방")]
         public static void Apply()
@@ -62,7 +58,7 @@ namespace Mozzi.Editor
             button.transition = Selectable.Transition.None;
         }
 
-        // 서랍장 : 어두운 틀 + 칸 열둘(4열 × 3줄). 칸은 틀 상자 버튼이고 앞면에 재료 아이콘 · 남은 수. 채우기 · 색은 코드가 한다.
+        // 서랍장 : 틀 그림 + 칸 열둘(4열 × 3줄). 칸은 서랍 앞판 그림 버튼이고 앞면에 재료 아이콘 · 남은 수. 채우기 · 색은 코드가 한다.
         private static void MakeDrawers(RectTransform stage)
         {
             int rows = UiNames.KitchenDrawerCellCount / KitchenLayout.DrawerColumns;
@@ -70,9 +66,10 @@ namespace Mozzi.Editor
             float height = rows * KitchenLayout.DrawerCellHeight + (rows - 1) * KitchenLayout.DrawerGapY;
             float pad = KitchenLayout.DrawerFramePad;
 
-            RectTransform frame = FormalUiBuild.NewNode(stage, "DrawerFrame");
-            FormalUiBuild.TopLeft(frame, KitchenLayout.DrawerLeft - pad, KitchenLayout.DrawerTop - pad, width + pad * 2f, height + pad * 2f);
-            FormalUiBuild.SetImage(frame, DrawerFrame, false);
+            // 틀 그림(238×284)은 칸 판을 Pad 만큼 둘러싼 크기로 나왔다. 다르면 알린다.
+            Image frame = FormalUiBuild.PlaceSprite(stage, "DrawerFrame", SpriteKeys.ScreenKitchenDrawerFrame,
+                KitchenLayout.DrawerLeft - pad, KitchenLayout.DrawerTop - pad, new Vector2(0f, 1f));
+            WarnSize(frame, width + pad * 2f, height + pad * 2f);
 
             for (int i = 0; i < UiNames.KitchenDrawerCellCount; i++)
             {
@@ -83,7 +80,7 @@ namespace Mozzi.Editor
 
                 RectTransform cell = FormalUiBuild.NewNode(stage, UiNames.KitchenDrawerCellPrefix + i);
                 FormalUiBuild.TopLeft(cell, left, top, KitchenLayout.DrawerCellWidth, KitchenLayout.DrawerCellHeight);
-                FormalUiBuild.MakeSliced(cell, SpriteKeys.UiButtonFrame, Color.white, true);
+                FormalUiBuild.SetImage(cell, Color.white, true).sprite = FormalUiBuild.LoadSprite(SpriteKeys.ScreenKitchenDrawerCell);
                 Button button = cell.gameObject.AddComponent<Button>();
                 button.transition = Selectable.Transition.None;
 
@@ -99,12 +96,11 @@ namespace Mozzi.Editor
             }
         }
 
-        // 고른 재료 그릇 : 밝은 상자 위에 칸 셋 (처음엔 꺼 둔다).
+        // 고른 재료 그릇 : 그릇 그림 위에 칸 셋 (처음엔 꺼 둔다).
         private static void MakeBowl(RectTransform stage)
         {
-            RectTransform bowl = FormalUiBuild.NewNode(stage, "Bowl");
-            FormalUiBuild.PivotAt(bowl, KitchenLayout.BowlX, KitchenLayout.BowlY, new Vector2(0.5f, 0.5f), KitchenLayout.BowlWidth, KitchenLayout.BowlHeight);
-            FormalUiBuild.MakeSliced(bowl, SpriteKeys.UiButtonFrame, BowlColor, false);
+            Image bowl = FormalUiBuild.PlaceSprite(stage, "Bowl", SpriteKeys.ScreenKitchenBowl, KitchenLayout.BowlX, KitchenLayout.BowlY, new Vector2(0.5f, 0.5f));
+            WarnSize(bowl, KitchenLayout.BowlWidth, KitchenLayout.BowlHeight);
 
             float slot = KitchenLayout.MortarSlotSize;
             float total = slot * UiNames.KitchenMortarSlotCount + KitchenLayout.MortarSlotGap * (UiNames.KitchenMortarSlotCount - 1);
@@ -119,32 +115,50 @@ namespace Mozzi.Editor
             }
         }
 
+        // 찜기 + 그 위 김 (흰 한 색 4장 · 쉴 때는 꺼짐).
         private static void MakeSteamer(RectTransform stage)
         {
-            MakeToolBox(stage, UiNames.KitchenSteamer, "찜기", KitchenLayout.SteamerLeft, KitchenLayout.SteamerTop,
+            MakeTool(stage, UiNames.KitchenSteamer, SpriteKeys.ScreenKitchenSteamer, KitchenLayout.SteamerLeft, KitchenLayout.SteamerTop,
                 KitchenLayout.SteamerRight, KitchenLayout.WorkBottom);
+
+            Image steam = FormalUiBuild.PlaceSprite(stage, UiNames.KitchenSteam, SpriteKeys.KitchenSteam(0),
+                KitchenLayout.SteamLeft, KitchenLayout.SteamTop, new Vector2(0f, 1f));
+            steam.color = new Color(1f, 1f, 1f, KitchenLayout.SteamAlpha);
+            steam.gameObject.SetActive(false);
         }
 
         private static void MakeBoard(RectTransform stage)
         {
-            MakeToolBox(stage, UiNames.KitchenBoard, "빚기", KitchenLayout.BoardLeft, KitchenLayout.BoardTop,
+            MakeTool(stage, UiNames.KitchenBoard, SpriteKeys.ScreenKitchenBoard, KitchenLayout.BoardLeft, KitchenLayout.BoardTop,
                 KitchenLayout.BoardRight, KitchenLayout.WorkBottom);
         }
 
-        // 도구 상자 : ui_button 틀 + 가운데 이름. 통통(scale)이 가운데에서 커지게 피벗은 가운데다.
-        private static void MakeToolBox(RectTransform stage, string name, string label, float left, float top, float right, float bottom)
+        // 도구 그림 버튼 : 자리 상자 가운데에 그림을 제 크기로. 통통(scale)이 가운데에서 커지게 피벗은 가운데다.
+        private static void MakeTool(RectTransform stage, string name, string spriteKey, float left, float top, float right, float bottom)
         {
             float width = right - left;
             float height = bottom - top;
-            RectTransform box = FormalUiBuild.MakeButton(stage, name, label, 26f);
-            FormalUiBuild.PivotAt(box, left + width * 0.5f, top + height * 0.5f, new Vector2(0.5f, 0.5f), width, height);
-            box.GetComponent<Button>().transition = Selectable.Transition.None;
+            Image tool = FormalUiBuild.PlaceSprite(stage, name, spriteKey, left + width * 0.5f, top + height * 0.5f, new Vector2(0.5f, 0.5f));
+            WarnSize(tool, width, height);
+            tool.raycastTarget = true;
+            Button button = tool.gameObject.AddComponent<Button>();
+            button.transition = Selectable.Transition.None;
+        }
+
+        // 그림 크기가 KitchenLayout 자리와 다르면 알린다 (그림은 제 크기로 놓으니 자리가 어긋난다).
+        private static void WarnSize(Image image, float width, float height)
+        {
+            Vector2 size = image.rectTransform.sizeDelta;
+            if (Mathf.Approximately(size.x, width) == false || Mathf.Approximately(size.y, height) == false)
+            {
+                Debug.LogWarning("[KitchenScreenSetup] " + image.name + " 그림 " + size + " 이 자리 " + width + "×" + height + " 와 다르다");
+            }
         }
 
         // 절구 + 떡메 조각 (프레임 0). 누르면 떡메 한 번.
         private static void MakeMortar(RectTransform stage)
         {
-            Sprite frame = FormalUiBuild.LoadSprite(SpriteKeys.KitchenPound(0));
+            Sprite frame = FormalUiBuild.LoadSprite(SpriteKeys.KitchenPound(0, 0));
             float width = 212f;
             float height = 241f;
             if (frame != null)
@@ -153,7 +167,7 @@ namespace Mozzi.Editor
                 height = frame.rect.height;
             }
 
-            Image mortar = FormalUiBuild.PlaceSprite(stage, UiNames.KitchenMortar, SpriteKeys.KitchenPound(0),
+            Image mortar = FormalUiBuild.PlaceSprite(stage, UiNames.KitchenMortar, SpriteKeys.KitchenPound(0, 0),
                 KitchenLayout.MortarPivotX, KitchenLayout.MortarPivotY, new Vector2(KitchenLayout.MortarSpritePivotX / width, 0f));
             mortar.raycastTarget = true;
             Button button = mortar.gameObject.AddComponent<Button>();
@@ -162,10 +176,14 @@ namespace Mozzi.Editor
             Debug.Log("[KitchenScreenSetup] 절구 조각 " + width + "×" + height);
         }
 
-        // 접시(빚기판 위) + 결과 떡 · NEW · 이름. 흰 번쩍은 화면 전체를 덮되 누름은 막지 않는다.
+        // 접시(빚기판 위) + 빚는 떡(꺼 둠) + 결과 떡 · NEW · 이름. 흰 번쩍은 화면 전체를 덮되 누름은 막지 않는다.
         private static void MakeResult(RectTransform stage, Transform root)
         {
-            FormalUiBuild.PlaceSprite(stage, "Plate", SpriteKeys.ScreenKitchenPlate, KitchenLayout.PlateX, KitchenLayout.PlateY, new Vector2(0.5f, 0f));
+            FormalUiBuild.PlaceSprite(stage, UiNames.KitchenPlate, SpriteKeys.ScreenKitchenPlate, KitchenLayout.PlateX, KitchenLayout.PlateY, new Vector2(0.5f, 0f));
+
+            Vector2 shapePivot = new Vector2(0.5f, (KitchenLayout.ShapeSpriteHeight - KitchenLayout.ShapeSpriteBaseY) / KitchenLayout.ShapeSpriteHeight);
+            Image shape = FormalUiBuild.PlaceSprite(stage, UiNames.KitchenShape, SpriteKeys.KitchenShape(0), KitchenLayout.PlateX, KitchenLayout.PlateY, shapePivot);
+            shape.gameObject.SetActive(false);
 
             RectTransform result = FormalUiBuild.NewNode(stage, UiNames.KitchenResult);
             FormalUiBuild.Stretch(result, 0f);

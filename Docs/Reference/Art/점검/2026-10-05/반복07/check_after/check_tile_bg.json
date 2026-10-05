@@ -1,0 +1,498 @@
+{
+  "version": 1,
+  "profile": "mozzi_bg",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 1
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 48가지를 넘은 그림 0개 (배경 그림은 68가지)",
+      "items": [
+        {
+          "where": "grass_base.png",
+          "colors": 33,
+          "background": true
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 33가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#54774A",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#5B7F4A",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#5F8152",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#638657",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#658750",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#678B54",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#688A5A",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#688E5E",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#698F58",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#6C8F53",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#6E925E",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#6F905D",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#709059",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#719458",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#779860",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#78985B",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#7B9B60",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#81A062",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#88A268",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#90A570",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#9BAB7A",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#ABC072",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#B2C677",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#B7CA7B",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#BBCC75",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#BDCB7B",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#BECE7B",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#BFCE7C",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#BFCF73",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#C0CF7D",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#C1D27E",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#C2CF7B",
+          "first": "grass_base.png"
+        },
+        {
+          "color": "#C6D67F",
+          "first": "grass_base.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "near_colors",
+      "ok": false,
+      "detail": "비슷한 색 쌍이 있는 그림 1장",
+      "items": [
+        {
+          "where": "grass_base.png",
+          "why": [
+            "비슷한 색 쌍 21개 (합치기 후보)"
+          ],
+          "count": 21,
+          "pairs": [
+            {
+              "from": "#BFCE7C",
+              "to": "#C0CF7D",
+              "from_count": 21566,
+              "to_count": 30962,
+              "delta": 1
+            },
+            {
+              "from": "#BECE7B",
+              "to": "#BFCE7C",
+              "from_count": 6269,
+              "to_count": 21566,
+              "delta": 1
+            },
+            {
+              "from": "#BECE7B",
+              "to": "#C0CF7D",
+              "from_count": 6269,
+              "to_count": 30962,
+              "delta": 2
+            },
+            {
+              "from": "#C2CF7B",
+              "to": "#BECE7B",
+              "from_count": 2555,
+              "to_count": 6269,
+              "delta": 4
+            },
+            {
+              "from": "#C2CF7B",
+              "to": "#BFCE7C",
+              "from_count": 2555,
+              "to_count": 21566,
+              "delta": 3
+            },
+            {
+              "from": "#C2CF7B",
+              "to": "#C0CF7D",
+              "from_count": 2555,
+              "to_count": 30962,
+              "delta": 2
+            },
+            {
+              "from": "#C1D27E",
+              "to": "#BECE7B",
+              "from_count": 983,
+              "to_count": 6269,
+              "delta": 4
+            },
+            {
+              "from": "#C1D27E",
+              "to": "#BFCE7C",
+              "from_count": 983,
+              "to_count": 21566,
+              "delta": 4
+            },
+            {
+              "from": "#C1D27E",
+              "to": "#C0CF7D",
+              "from_count": 983,
+              "to_count": 30962,
+              "delta": 3
+            },
+            {
+              "from": "#C1D27E",
+              "to": "#C2CF7B",
+              "from_count": 983,
+              "to_count": 2555,
+              "delta": 3
+            },
+            {
+              "from": "#BDCB7B",
+              "to": "#BECE7B",
+              "from_count": 219,
+              "to_count": 6269,
+              "delta": 3
+            },
+            {
+              "from": "#BDCB7B",
+              "to": "#BFCE7C",
+              "from_count": 219,
+              "to_count": 21566,
+              "delta": 3
+            },
+            {
+              "from": "#BDCB7B",
+              "to": "#C0CF7D",
+              "from_count": 219,
+              "to_count": 30962,
+              "delta": 4
+            },
+            {
+              "from": "#678B54",
+              "to": "#698F58",
+              "from_count": 155,
+              "to_count": 181,
+              "delta": 4
+            },
+            {
+              "from": "#658750",
+              "to": "#678B54",
+              "from_count": 139,
+              "to_count": 155,
+              "delta": 4
+            },
+            {
+              "from": "#779860",
+              "to": "#7B9B60",
+              "from_count": 116,
+              "to_count": 122,
+              "delta": 4
+            },
+            {
+              "from": "#709059",
+              "to": "#719458",
+              "from_count": 89,
+              "to_count": 177,
+              "delta": 4
+            },
+            {
+              "from": "#688E5E",
+              "to": "#688A5A",
+              "from_count": 84,
+              "to_count": 170,
+              "delta": 4
+            },
+            {
+              "from": "#6F905D",
+              "to": "#6E925E",
+              "from_count": 66,
+              "to_count": 128,
+              "delta": 2
+            },
+            {
+              "from": "#6F905D",
+              "to": "#709059",
+              "from_count": 66,
+              "to_count": 89,
+              "delta": 4
+            }
+          ],
+          "background": true
+        }
+      ]
+    },
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            19.71,
+            3.89
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ]
+        }
+      ]
+    }
+  ]
+}

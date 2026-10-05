@@ -32,11 +32,31 @@ namespace Mozzi.Resource
         public const string FxMergeFlash = "Fx/fx_merge_flash";
         public const string FxSparkle = "Fx/fx_sparkle";
 
-        // 주방 화면 (540×1200 배경 · 접시 · 절구+떡메 7장). FormalArtCopy 가 정식 out 에서 들인다.
+        // 주방 화면 (540×1200 배경 · 접시 · 서랍장 · 그릇 · 찜기 · 빚기판 · 절구+떡메 단계 셋 × 7장 · 빚기 3장 · 김 4장).
+        // FormalArtCopy 가 정식 주방/v3/out 에서 들인다 (반복 07).
         public const string ScreenKitchenBg = "Screen/kitchen_bg";
         public const string ScreenKitchenPlate = "Screen/kitchen_plate";
-        public const string ScreenKitchenPoundPrefix = "Screen/kitchen_pound_";
+        public const string ScreenKitchenDrawerFrame = "Screen/kitchen_drawer_frame";
+        public const string ScreenKitchenDrawerCell = "Screen/kitchen_drawer_cell";
+        public const string ScreenKitchenBowl = "Screen/kitchen_bowl";
+        public const string ScreenKitchenSteamer = "Screen/kitchen_steamer";
+        public const string ScreenKitchenBoard = "Screen/kitchen_board";
         public const int KitchenPoundFrameCount = 7;
+        public const string ScreenKitchenShapePrefix = "Screen/kitchen_shape_";
+        public const int KitchenShapeFrameCount = 3;
+        public const string FxKitchenSteamPrefix = "Fx/kitchen_steam_";
+        public const int KitchenSteamFrameCount = 4;
+
+        // 떡메 단계 (반죽 모습) : 0 쌀 · 1 거친 반죽 · 2 매끈한 떡. 단계마다 7장 묶음이 따로 있다.
+        private static readonly string[] KitchenPoundStagePrefixes =
+        {
+            "Screen/kitchen_pound_", "Screen/kitchen_pound_rough_", "Screen/kitchen_pound_smooth_",
+        };
+
+        public static int KitchenPoundStageCount
+        {
+            get { return KitchenPoundStagePrefixes.Length; }
+        }
 
         // 가판대 화면 부품 (계산대 · 주인 · 진열장 · 소품 둘 · 칠판 머리 장식). FormalArtCopy.CopyStall 이 정식 out 에서 들인다.
         public const string ScreenStallCounter = "Screen/stall_counter";
@@ -51,9 +71,19 @@ namespace Mozzi.Resource
         public const string UiBubbleFrame = "UI/ui_bubble";
         public const string UiBubbleSmall = "UI/ui_bubble_c";
 
-        public static string KitchenPound(int frame)
+        public static string KitchenPound(int stage, int frame)
         {
-            return ScreenKitchenPoundPrefix + frame;
+            return KitchenPoundStagePrefixes[stage] + frame;
+        }
+
+        public static string KitchenShape(int frame)
+        {
+            return ScreenKitchenShapePrefix + frame;
+        }
+
+        public static string KitchenSteam(int frame)
+        {
+            return FxKitchenSteamPrefix + frame;
         }
 
         // 합성소 화면 (540×1200 배경 · 기계 조각 208×220 상태별 · 나무 표 9-slice). FormalArtCopy 가 정식 out 에서 들인다.

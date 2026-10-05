@@ -60,6 +60,18 @@ KIND_FOLDERS = {
    "tile": ["Farm"],
    "ui": ["UI"],
 }
+# 종류 표 뒤에 더한 그림의 종류 — (폴더, 파일 무늬, 종류). 여기 맞는 그림은 「종류 표에 없던 그림」 목록에 안 넣는다.
+# 반복 07 주방 정식 그림(주방/v3) : 소품은 piece(mozzi_prop), 흰 김은 fx(mozzi_fx). 떡메 단계 둘도 첫 단계(bldg)와 같은 소품이다.
+ADDED_KIND = [
+   ("Screen", "kitchen_drawer_*.png", "piece"),
+   ("Screen", "kitchen_bowl.png", "piece"),
+   ("Screen", "kitchen_steamer.png", "piece"),
+   ("Screen", "kitchen_board.png", "piece"),
+   ("Screen", "kitchen_shape_*.png", "piece"),
+   ("Screen", "kitchen_pound_rough_*.png", "piece"),
+   ("Screen", "kitchen_pound_smooth_*.png", "piece"),
+   ("Fx", "kitchen_steam_*.png", "fx"),
+]
 # 종류 표에 없는 그림이 갈 기본 종류
 FOLDER_KIND = {
    "Mozzi": "char_mozzi", "Customer": "char_people", "Fx": "fx", "Cake": "icon", "Ingredient": "icon",
@@ -75,8 +87,6 @@ REMOVED = {
 # 알고 두는 경고 · 실패 — (묶음, 규칙, 파일 무늬, 까닭). 요약은 이 목록에 없는 것만 「새로 생긴 것」 으로 따로 센다.
 # 까닭의 긴 설명은 README 「알고 두는 경고 · 실패」 표. 줄을 더하거나 뺄 때 그 표도 같이 고친다.
 KNOWN = [
-   ("bldg", "max_colors", "kitchen_pound_*.png", "떡메 — 주방 갈아엎기 때 바뀐다"),
-   ("bldg", "color_cap", "kitchen_pound_*.png", "떡메 — 주방 갈아엎기 때 바뀐다"),
    ("piece", "alpha", "display_case.png", "진열장 뒤 유리 반투명 50% — 반투명 없음 규칙의 예외 (유리 고르기 사용자 확인 대기)"),
    ("*", "outline", "*", "갈색 한 색 선을 툴이 solid, 빛 쪽 옅은 선을 selout+light 로 읽는다. 프로필은 값 하나만 받는다"),
    ("char_people", "color_cap", "face_03.png", "머리통 한도 16 — 겹마다 다른 한도를 툴이 못 가른다"),
@@ -86,6 +96,10 @@ KNOWN = [
    ("tile", "color_cap", "decor_0[4-6].png", "꽃 장식 — 꽃잎 잡색 합치기는 다음 판"),
    ("tile", "color_cap", "fence_*.png", "울타리 — 설계 상한 32 안이다. fence_v(32px)는 표의 32px 칸(16)으로 잰다"),
    ("tile", "isolated", "*", "풀잎 점 · 통나무 결"),
+   ("piece", "integer_scale", "kitchen_drawer_frame.png", "주방 서랍장 틀 — 기둥 · 띠 줄을 빼서 맞춘 판. 부드러움 0.18 (주방/v3 README 검사)"),
+   ("piece", "integer_scale", "kitchen_shape_1.png", "빚기 가운데 장 — 누른 덩이의 부드러운 결 (주방/v3 README 검사)"),
+   ("piece", "isolated", "kitchen_shape_[01].png", "빚기 덩이의 잔 점 — 1배에서 안 보인다 (주방/v3 README 검사)"),
+   ("piece", "near_colors", "kitchen_drawer_frame.png", "감나무 틀의 가까운 색 65쌍 — 48색 한도 안 (주방/v3 README 검사)"),
    ("tile", "integer_scale", "fence_*.png", "통나무 결이 부드러운 확대처럼 읽힌다 — 1배에서 안 깨져 보인다"),
    ("tile_bg", "near_colors", "grass_base.png", "이음 없는 잔디 판의 색 번짐"),
    ("ui", "color_cap", "icon_*.png", "메뉴 아이콘 43 · 45색 > 32 — 이번 범위 밖"),
@@ -138,6 +152,10 @@ def plan_groups() -> tuple[dict[str, dict], list[str]]:
       if path in taken:
          continue
       folder = path.parent.name
+      added = [kind for f, pattern, kind in ADDED_KIND if f == folder and fnmatch.fnmatch(path.name, pattern)]
+      if added:
+         put(added[0], path)
+         continue
       if folder not in FOLDER_KIND:
          fail(f"모르는 폴더 {folder} — FOLDER_KIND 에 기본 종류를 정한다")
       put(FOLDER_KIND[folder], path)

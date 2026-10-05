@@ -925,3 +925,24 @@
 - 거절 summary-len issue-sections `check_all.py 가 준비 단계에서 종료 2 로 멈춘다`
 - 거절 summary-len body-thin first-line-conclusion issue-sections summary-body-match no-value `check_all.py 가 준비 단계에서 종료 2 로 멈춘다`
 - 들어옴 20261005-4772cc80 `check_all.py 준비 표 세 줄 더하기` (mem/0.3.0) --new
+- 거절 tag-standard keys-echo `바닥 재료 상한 — 더미 5 · 전체 50`
+- 들어옴 20261005-b2d91e36 `바닥 재료 상한 — 더미 5 · 전체 50` (mem/0.3.0) --origin stop
+- 덮음 20261004-7735ed05 → 20261005-b2d91e36
+- 덮음 20260918-756b4011 → 20261005-b2d91e36
+- 들어옴 20261005-e1e92507 `주방 기구 시안 v1 — 서랍장·찜기·절구·빚기판·그릇 12장` (mem/0.3.0)
+- 거절 summary-len body-thin duplicate-soft `pro_flash 밝은 그림 바탕 지우기 실패와 그러데이션 바탕`
+- 들어옴 20261005-625d6814 `pro_flash 밝은 그림 바탕 지우기 실패와 그러데이션 바탕` (mem/0.3.0)
+- 들어옴 20261005-bc3d381a `반복 07 농장 강화 코드 끝` (mem/0.3.0)
+- 들어옴 20261005-ff37b8d9 `창고 넓히기 단계는 창고가 갖는다` (mem/0.3.0)
+- 들어옴 20261005-edb55993 `Play 확인 중 eval 로 바꾼 값은 세이브에 남는다` (mem/0.3.0)
+- 들어옴 20261005-e4a7ff2d `PixelLab 입력은 base64 대신 job 주소` (mem/0.3.0)
+- 들어옴 20261005-82d8f19c `pro_flash 는 틀을 비우고 꽉 채우면 자른다` (mem/0.3.0)
+- 들어옴 20261005-d692aa19 `inpaint 는 면 두 개 만나는 자리에 약하다` (mem/0.3.0)
+- 들어옴 20261005-385e42cf `반복07 주방 정식 그림 공수와 크레딧` (mem/0.3.0)
+- 들어옴 20261005-ba81348a `떡메 반죽 묶음은 맞는 장에서 바꾼다` (mem/0.3.0)
+- 거절 severity sources-note-only keys-echo duplicate-soft `Game 뷰 캡처는 프로젝트 안에만 저장된다`
+- 거절 severity `주방 Play 시험은 진열대 빈칸부터 본다`
+- 들어옴 20261005-6871b280 `Game 뷰 캡처는 프로젝트 안에만 저장된다` (mem/0.3.0)
+- 들어옴 20261005-49228c7f `주방 Play 시험은 진열대 빈칸부터 본다` (mem/0.3.0)
+- 들어옴 20261005-9ffd217e `주방 정식 그림 배선 끝 (반복 07)` (mem/0.3.0)
+- 들어옴 20261005-012962a6 `반복 07 — 농장 강화와 주방 정식 그림` (mem/0.3.0)

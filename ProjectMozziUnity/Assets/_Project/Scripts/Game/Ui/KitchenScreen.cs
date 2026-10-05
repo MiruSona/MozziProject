@@ -12,7 +12,8 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 주방 화면 — 네 단계 상자 판 (반복 06). 서랍장에서 재료 1~3개를 고르고 찜기 → 절구 3탭 → 빚기판 순서로 누르면 만든다.
+    // 주방 화면 — 네 단계 (반복 06 상자 판 → 반복 07 정식 그림). 서랍장에서 재료 1~3개를 고르고 찜기 → 절구 3탭 → 빚기판 순서로 누르면 만든다.
+    // 연출 : 찜기를 누르면 김 한 바퀴 · 칠 때마다 반죽이 쌀 → 거친 반죽 → 매끈한 떡 · 빚기판에서 빚는 떡 3장 뒤 접시에 결과.
     // 단계 규칙(다음 도구 · 연타 건너뛰기 · 해 본 조합 건너뛰기)은 KitchenFlowAgent, 여기는 고르기 · 그림 · Make 호출만 든다.
     // 과정은 결과를 안 바꾼다 — StallManager.Make 는 그대로 부르고 부르는 때만 마지막 단계 끝이다.
     // 차림표 판에서는 찾은 떡을 한 번에 만든다. 결과는 빚기판 위 접시에 보인다. 배치는 KitchenScreenSetup · KitchenLayout.
@@ -24,13 +25,11 @@ namespace Mozzi.Game.Ui
         private const float FlashDuration = 0.4f;
         private const int MaxSelected = 3;
 
-        // 서랍 칸 앞면 · 고른 칸 · 닫힌 칸 색. 도구는 다음 차례만 제 색이고 나머지는 Dim 을 곱한다.
-        private static readonly Color DrawerFront = new Color(0.86f, 0.68f, 0.48f, 1f);
+        // 서랍 칸 그림에 곱하는 색 : 기본(그림 그대로) · 고른 칸(노랑) · 닫힌 칸(어둡게). 도구는 다음 차례만 제 색이고 나머지는 Dim 을 곱한다.
+        private static readonly Color DrawerFront = Color.white;
         private static readonly Color DrawerOn = new Color(1f, 0.85f, 0.3f, 1f);
         private static readonly Color DrawerLocked = new Color(0.45f, 0.36f, 0.28f, 1f);
         private static readonly Color IconEmpty = new Color(0.35f, 0.35f, 0.35f, 1f);
-        private static readonly Color SteamerColor = new Color(0.72f, 0.86f, 0.92f, 1f);
-        private static readonly Color BoardColor = new Color(0.96f, 0.84f, 0.62f, 1f);
         private const float Dim = 0.5f;
 
         private readonly List<Button> _drawerCells = new List<Button>();
@@ -53,6 +52,11 @@ namespace Mozzi.Game.Ui
         private Image _mortarImage;
         private Image _steamer;
         private Image _board;
+        private KitchenOnceView _steam;
+        private KitchenOnceView _shape;
+        private GameObject _plate;
+        private MakeResult _shapedResult;
+        private bool _shapedPending;
         private TMP_Text _hint;
 
         private RectTransform _bounceRect;
@@ -146,13 +150,35 @@ namespace Mozzi.Game.Ui
             Button mortar = UiBindUtil.BindButton(transform, UiNames.KitchenMortar, PrefabName,
                 delegate { OnTool(KitchenTool.Mortar); });
             _mortarImage = mortar.image;
-            Sprite[] frames = new Sprite[SpriteKeys.KitchenPoundFrameCount];
-            for (int i = 0; i < frames.Length; i++)
+            Sprite[][] stages = new Sprite[SpriteKeys.KitchenPoundStageCount][];
+            for (int s = 0; s < stages.Length; s++)
             {
-                frames[i] = _resource.GetSprite(SpriteKeys.KitchenPound(i));
+                stages[s] = new Sprite[SpriteKeys.KitchenPoundFrameCount];
+                for (int i = 0; i < SpriteKeys.KitchenPoundFrameCount; i++)
+                {
+                    stages[s][i] = _resource.GetSprite(SpriteKeys.KitchenPound(s, i));
+                }
             }
 
-            _mortar = new KitchenMortarView(_mortarImage, frames, KitchenLayout.PoundFrameSec);
+            _mortar = new KitchenMortarView(_mortarImage, stages, KitchenLayout.PoundFrameSec);
+            _mortar.SetIdle(0);
+
+            Sprite[] steam = new Sprite[SpriteKeys.KitchenSteamFrameCount];
+            for (int i = 0; i < steam.Length; i++)
+            {
+                steam[i] = _resource.GetSprite(SpriteKeys.KitchenSteam(i));
+            }
+
+            _steam = new KitchenOnceView(UiBindUtil.Find<Image>(transform, UiNames.KitchenSteam, PrefabName), steam, KitchenLayout.SteamFrameSec);
+
+            Sprite[] shape = new Sprite[SpriteKeys.KitchenShapeFrameCount];
+            for (int i = 0; i < shape.Length; i++)
+            {
+                shape[i] = _resource.GetSprite(SpriteKeys.KitchenShape(i));
+            }
+
+            _shape = new KitchenOnceView(UiBindUtil.Find<Image>(transform, UiNames.KitchenShape, PrefabName), shape, KitchenLayout.ShapeFrameSec);
+            _plate = UiBindUtil.FindObject(transform, UiNames.KitchenPlate, PrefabName);
 
             for (int i = 0; i < UiNames.KitchenMortarSlotCount; i++)
             {
@@ -175,6 +201,10 @@ namespace Mozzi.Game.Ui
             _mortarImage = null;
             _steamer = null;
             _board = null;
+            _steam = null;
+            _shape = null;
+            _plate = null;
+            _shapedPending = false;
             _menu = null;
 
             _resource = null;
@@ -231,6 +261,12 @@ namespace Mozzi.Game.Ui
         public override void Process(float deltaTime)
         {
             _mortar.Process(deltaTime);
+            _steam.Process(deltaTime);
+            if (_shape.Process(deltaTime))
+            {
+                ShowShaped();
+            }
+
             ProcessBounce(deltaTime);
             if (_flashing == false)
             {
@@ -250,7 +286,9 @@ namespace Mozzi.Game.Ui
         public override void OnClosed()
         {
             _flow.Reset();
+            _mortar.SetIdle(0);
             _mortar.Stop();
+            _steam.Stop();
             StopBounce();
             _selected.Clear();
             _flashing = false;
@@ -312,8 +350,8 @@ namespace Mozzi.Game.Ui
         private void RefreshTools()
         {
             KitchenTool next = _flow.NextTool(CanStart());
-            _steamer.color = Lit(SteamerColor, next == KitchenTool.Steamer);
-            _board.color = Lit(BoardColor, next == KitchenTool.Board);
+            _steamer.color = Lit(Color.white, next == KitchenTool.Steamer);
+            _board.color = Lit(Color.white, next == KitchenTool.Board);
             _mortarImage.color = Lit(Color.white, next == KitchenTool.Mortar);
         }
 
@@ -417,7 +455,7 @@ namespace Mozzi.Game.Ui
             Refresh();
         }
 
-        // 도구 누름 하나. 판정은 흐름이, 그림(통통 · 떡메)과 Make 는 여기서.
+        // 도구 누름 하나. 판정은 흐름이, 그림(통통 · 김 · 떡메 · 빚기)과 Make 는 여기서.
         private void OnTool(KitchenTool tool)
         {
             bool starting = _flow.IsRunning == false;
@@ -433,16 +471,18 @@ namespace Mozzi.Game.Ui
                 ClearResult();
             }
 
+            // 해 본 조합 : 떡메를 한 번만 — 쌀에서 맞는 순간 바로 매끈한 떡이 된다. 결과는 빚기 없이 곧바로.
             if (result == KitchenFlowResult.QuickMake)
             {
-                _mortar.Play();
+                _mortar.Play(0, KitchenLayout.PoundStageLast);
             }
 
             if (result == KitchenFlowResult.Make || result == KitchenFlowResult.QuickMake)
             {
                 List<string> ids = new List<string>(_flow.IngredientIds);
                 _selected.Clear();
-                MakeAndShow(ids);
+                _mortar.SetIdle(0);
+                MakeAndShow(ids, result == KitchenFlowResult.Make);
                 return;
             }
 
@@ -451,15 +491,18 @@ namespace Mozzi.Game.Ui
 
         private void PlayTool(KitchenTool tool)
         {
+            // 흐름이 이미 이번 탭을 셌다 : k 번째 타는 (k-1) 단계에서 쳐서 맞는 순간 k 단계가 된다.
             if (tool == KitchenTool.Mortar)
             {
-                _mortar.Play();
+                int taps = _flow.PoundTaps;
+                _mortar.Play(KitchenLayout.PoundStageAfter(taps - 1), KitchenLayout.PoundStageAfter(taps));
                 return;
             }
 
             if (tool == KitchenTool.Steamer)
             {
                 StartBounce(_steamer.rectTransform);
+                _steam.Play();
                 return;
             }
 
@@ -515,17 +558,41 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            MakeAndShow(_data.Recipes.Get(recipeId).IngredientIds);
+            MakeAndShow(_data.Recipes.Get(recipeId).IngredientIds, false);
         }
 
-        private void MakeAndShow(IReadOnlyList<string> ids)
+        // 만들기는 바로 하고(재료 · 진열대가 곧 바뀐다), shaping 이면 빚는 떡 3장이 다 돈 뒤에 접시 · 결과를 보인다.
+        private void MakeAndShow(IReadOnlyList<string> ids, bool shaping)
         {
+            ClearResult();
             MakeResult made = _stall.Make(ids);
             Refresh();
-            if (made.Succeeded)
+            if (made.Succeeded == false)
+            {
+                return;
+            }
+
+            if (shaping == false)
             {
                 ShowResult(made);
+                return;
             }
+
+            _shapedResult = made;
+            _shapedPending = true;
+            UiBindUtil.SetActive(_plate, false);
+            _shape.Play();
+        }
+
+        private void ShowShaped()
+        {
+            UiBindUtil.SetActive(_plate, true);
+            if (_shapedPending)
+            {
+                ShowResult(_shapedResult);
+            }
+
+            _shapedPending = false;
         }
 
         // 접시 위에 떡 그림 · 이름 · 값. 새 레시피면 「NEW」 와 흰 번쩍(알파 1→0).
@@ -558,9 +625,13 @@ namespace Mozzi.Game.Ui
             _flash.color = new Color(1f, 1f, 1f, alpha);
         }
 
+        // 빚는 중이면 빚기도 거둔다 (접시는 다시 보인다).
         private void ClearResult()
         {
             UiBindUtil.SetActive(_result, false);
+            _shape.Stop();
+            _shapedPending = false;
+            UiBindUtil.SetActive(_plate, true);
         }
     }
 }

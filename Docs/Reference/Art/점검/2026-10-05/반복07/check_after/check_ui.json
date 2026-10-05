@@ -1,0 +1,1030 @@
+{
+  "version": 1,
+  "profile": "mozzi_prop",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 7
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 48가지를 넘은 그림 0개",
+      "items": [
+        {
+          "where": "icon_codex.png",
+          "colors": 43
+        },
+        {
+          "where": "icon_menu.png",
+          "colors": 30
+        },
+        {
+          "where": "icon_upgrade.png",
+          "colors": 45
+        },
+        {
+          "where": "ui_badge_alert.png",
+          "colors": 5
+        },
+        {
+          "where": "ui_bubble.png",
+          "colors": 29
+        },
+        {
+          "where": "ui_bubble_c.png",
+          "colors": 24
+        },
+        {
+          "where": "ui_button.png",
+          "colors": 20
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 181가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#0F0803",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#120D08",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#161B10",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#1A100B",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#1A1A14",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#1A433D",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#1B1310",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#211A15",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#222019",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#261D1E",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#272517",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#2A221E",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#2A2A24",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#2B291E",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#2C2318",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#30231C",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#302923",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#32231A",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#351610",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#352B27",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#361E1F",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#371415",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#3A281E",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#3D2C35",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#3E2320",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#401E1E",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#402017",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#40281F",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#422926",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#422E22",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#44282D",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#472923",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#481E18",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#482627",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#492C21",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#4A291F",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#4C291C",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#4C2A24",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#4D2822",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#4E2C20",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#4E3124",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#4F1A13",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#4F2D25",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#512D20",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#522E22",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#542A1C",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#542D21",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#552520",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#552D1D",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#553526",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#562E21",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#563123",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#563223",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#583C2F",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#592E20",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#592F21",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#593124",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#59352A",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#5A3123",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#5A3223",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#5D3224",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#5D3426",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#5E2E20",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#5E2E26",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#5E3223",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#613325",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#613425",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#632A16",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#633627",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#653626",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#68585C",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#693726",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#6D3327",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#6E3A28",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#6E412F",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#6F493F",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#732412",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#74402A",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#753A2E",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#7A4E46",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#814E43",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#81553E",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#82452D",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#824630",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#844A34",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#896C53",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#8A6047",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#8B4B33",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#955336",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#973E50",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#975438",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#9A593C",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#9B5538",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#9B5A39",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#A25935",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#A25E3D",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#A36341",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#A5633F",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#A64726",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#A96541",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#AB6944",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#AB6A45",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#AD6943",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#AD6D47",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#AF6325",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#AF6E48",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#B16D46",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#B17149",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#B2653A",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#B4734A",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#B74E60",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#B78E75",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#B87749",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#BA7A4C",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#BA7B4D",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#BB5424",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#BB754C",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#BC7245",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#BC9076",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#BF8052",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#BF9D7C",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#C2733D",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#C3A17F",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#C58460",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#C65D6B",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#C67741",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#CD7881",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#CD7F46",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#CDB0A3",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#CE9776",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#CE9C78",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#D1854B",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#D2A983",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#D2B18F",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#D3A593",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#D3B08E",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#D5A170",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#D78C4D",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#D8AF85",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#DA9254",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#DBBB9E",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#DE6228",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#DF6B26",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#DFC3A3",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#E17F27",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#E1985B",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#E1C6A6",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#E5B687",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#E9BE8F",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#EA949A",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#EDC28F",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#EDCFB6",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#EDE3C0",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#EFC692",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#F08A29",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#F0C694",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#F0C695",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#F0D7B8",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#F1C996",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#F1CA98",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#F1CA99",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#F2D1A6",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#F3CC9A",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#F3CD9D",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#F3CE9E",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#F3E1BF",
+          "first": "ui_bubble_c.png"
+        },
+        {
+          "color": "#F4DEB8",
+          "first": "icon_codex.png"
+        },
+        {
+          "color": "#F5D6B2",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#F5D9B3",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#F5DDB9",
+          "first": "icon_menu.png"
+        },
+        {
+          "color": "#F6E0C7",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#F8A24F",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#F9D660",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#F9E6C5",
+          "first": "ui_button.png"
+        },
+        {
+          "color": "#FBBF7A",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#FBC36E",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#FBEAD5",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#FBEDD6",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#FBEDD9",
+          "first": "ui_bubble.png"
+        },
+        {
+          "color": "#FCB156",
+          "first": "icon_upgrade.png"
+        },
+        {
+          "color": "#FEF8E9",
+          "first": "ui_button.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "outline",
+      "ok": false,
+      "detail": "외곽선 방식이 다른 그림 3장",
+      "items": [
+        {
+          "where": "ui_badge_alert.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 1.0,
+          "lit": 0.837
+        },
+        {
+          "where": "ui_bubble_c.png",
+          "why": [
+            "외곽선 판정 selout+light 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "selout+light",
+          "black": 0.1984,
+          "dark": 1.0,
+          "lit": 1.197
+        },
+        {
+          "where": "ui_button.png",
+          "why": [
+            "외곽선 판정 solid 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "solid",
+          "black": 0.0,
+          "dark": 1.0,
+          "lit": 0.502
+        }
+      ]
+    },
+    {
+      "rule": "color_cap",
+      "ok": false,
+      "detail": "권장 색 수를 넘은 그림 2장",
+      "items": [
+        {
+          "where": "icon_codex.png",
+          "why": [
+            "색 43가지 > 권장 32가지 (크기 48)"
+          ],
+          "size": 48,
+          "colors": 43,
+          "cap": 32
+        },
+        {
+          "where": "icon_upgrade.png",
+          "why": [
+            "색 45가지 > 권장 32가지 (크기 48)"
+          ],
+          "size": 48,
+          "colors": 45,
+          "cap": 32
+        }
+      ]
+    },
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            19.71,
+            3.89
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": []
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ]
+        }
+      ]
+    }
+  ],
+  "info": [
+    {
+      "rule": "outline.small",
+      "detail": "작은 그림의 외곽선 몫",
+      "items": [
+        {
+          "where": "ui_badge_alert.png",
+          "note": "16px 그림에서 외곽선 몫 0.21 (크기 기준 0.23) — 작은 그림은 외곽선을 빼는 길도 있다"
+        }
+      ]
+    }
+  ]
+}
