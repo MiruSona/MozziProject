@@ -174,17 +174,19 @@ namespace Mozzi.Game.Ui
         public const string KitchenDrawerCellPrefix = "DrawerCell_";
         public const int KitchenDrawerCellCount = 12;
         public const string KitchenTrayCountText = "CountText";
-        // 작업대 도구 셋 (찜기 · 절구 + 떡메 · 빚기판). 고른 재료 그림은 그릇 위 "MortarSlot_" + 0~2.
+        // 작업대 도구 넷 (맷돌 · 절구 + 떡메 · 빚기판 · 찜기 몸통). 찜기는 누르지 않고 뚜껑(SteamerLid)이 몸통 위에 겹친다.
+        // 고른 재료 그림은 그릇 위 "MortarSlot_" + 0~2.
+        public const string KitchenMill = "Mill";
         public const string KitchenSteamer = "Steamer";
+        public const string KitchenSteamerLid = "SteamerLid";
         public const string KitchenMortar = "Mortar";
         public const string KitchenBoard = "Board";
         public const string KitchenMortarSlotPrefix = "MortarSlot_";
         public const int KitchenMortarSlotCount = 3;
-        // 찜기 위 김 · 빚기판 위 빚는 떡 (한 바퀴 연출, 쉴 때는 꺼짐) · 빚는 동안 숨기는 접시 (반복 07).
+        // 찜기 위 김 (찌는 동안 되풀이) · 빚기판 위 빚는 떡 (한 바퀴). 쉴 때는 꺼짐.
         public const string KitchenSteam = "Steam";
         public const string KitchenShape = "Shape";
-        public const string KitchenPlate = "Plate";
-        // 접시 위 결과 묶음. 떡 그림은 CakeIcon.
+        // 찜기 위 결과 묶음 (반복 08 — 접시 없음). 떡 그림은 CakeIcon.
         public const string KitchenResult = "Result";
         public const string KitchenResultNameText = "ResultNameText";
         public const string KitchenResultNewText = "ResultNewText";
@@ -192,6 +194,8 @@ namespace Mozzi.Game.Ui
         public const string KitchenHintText = "HintText";
         public const string KitchenDoorButton = "DoorButton";
         public const string KitchenMenuButton = "MenuButton";
+        // 서랍장 틀 (입체 서랍장 그림 한 장). 칸 밖을 누르면 「재료 전체 팔기」 팝업이 뜬다.
+        public const string KitchenDrawerFrame = "DrawerFrame";
         // 차림표 판 : 찾은 떡을 한 번에 만드는 목록. 줄은 "MenuRow_" + 번호, 판 뒤 Blocker 를 누르면 닫힌다. 가판대 화면에도 같은 판이 있다.
         public const string KitchenMenuPanel = "MenuPanel";
         public const string KitchenMenuBlocker = "Blocker";
@@ -208,6 +212,8 @@ namespace Mozzi.Game.Ui
         public const string StallClerkButton = "ClerkButton";
         public const string StallRecipeCodexButton = "RecipeCodexButton";
         public const string StallKitchenButton = "KitchenButton";
+        // 진열장 위를 덮는 투명 누름 칸. 누르면 「진열 비우기」 팝업이 뜬다.
+        public const string StallShelfTapArea = "ShelfTapArea";
 
         // 진열장 안 접시 칸은 "ShelfCell_" + 번호(0~5, 윗단 왼→오 · 아랫단 왼→오). 칸 안에 쌓는 떡 그림은 "Cake_" + 번호(0~2, 뒤 번호가 앞).
         public const string StallShelfCellPrefix = "ShelfCell_";

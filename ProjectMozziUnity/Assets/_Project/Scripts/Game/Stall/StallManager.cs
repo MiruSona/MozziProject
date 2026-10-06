@@ -263,6 +263,30 @@ namespace Mozzi.Game.Stall
             return true;
         }
 
+        // 진열을 비운 뒤에 골드를 넣는다 — 골드 이벤트에서 화면이 되읽을 때 진열대가 이미 비어 있게.
+        public int ClearShelf()
+        {
+            int gold = ClearShelfPrice();
+            _state.shelf.Clear();
+            if (gold > 0)
+            {
+                _wallet.Earn(gold);
+            }
+
+            return gold;
+        }
+
+        public int ClearShelfPrice()
+        {
+            int gold = 0;
+            for (int i = 0; i < _state.shelf.Count; i++)
+            {
+                gold += PriceUtil.ClearPrice(_state.shelf[i].price, _row);
+            }
+
+            return gold;
+        }
+
         public void Skip(double seconds)
         {
             _offlineReport = ApplyOffline(seconds);

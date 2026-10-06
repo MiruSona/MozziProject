@@ -1,0 +1,746 @@
+{
+  "version": 1,
+  "profile": "mozzi_prop",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 11
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 48가지를 넘은 그림 0개",
+      "items": [
+        {
+          "where": "farm_collector_0.png",
+          "colors": 44,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "farm_collector_1.png",
+          "colors": 47,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "farm_collector_2.png",
+          "colors": 47,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "farm_collector_3.png",
+          "colors": 47,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "farm_collector_4.png",
+          "colors": 47,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "farm_collector_5.png",
+          "colors": 45,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "farm_collector_6.png",
+          "colors": 44,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "farm_feeder_0.png",
+          "colors": 44,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "farm_feeder_1.png",
+          "colors": 44,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "farm_feeder_2.png",
+          "colors": 44,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "farm_feeder_3.png",
+          "colors": 44,
+          "limit": 48,
+          "ok": true
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 92가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#000000",
+          "first": "farm_collector_1.png"
+        },
+        {
+          "color": "#23120B",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#2A1B14",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#2E180E",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#361E12",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#372C25",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#381913",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#3B2019",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#3E1A12",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#3F2316",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#411A13",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#423836",
+          "first": "farm_collector_1.png"
+        },
+        {
+          "color": "#431F17",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#481415",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#481E15",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#492617",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#4F2317",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#512C1B",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#563E32",
+          "first": "farm_collector_1.png"
+        },
+        {
+          "color": "#566343",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#59271A",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#5F311E",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#612F1F",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#673622",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#6F3B24",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#713522",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#746056",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#798453",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#7A4127",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#7B3922",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#7F4529",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#803E24",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#864A2B",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#884126",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#8D4729",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#8F562E",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#914829",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#925230",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#959F9D",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#974D2B",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#9A5733",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#9B6332",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#9C522E",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#A2552F",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#A34540",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#A35E36",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#A45B32",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#A56A35",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#AA5D33",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#AB5A5E",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#AC6135",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#AE653D",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#AE7237",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#B26638",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#B46939",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#B86D3A",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#B87E3F",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#BE656C",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#BE763D",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#C0B393",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#C28540",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#C37C40",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#C5D2D0",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#CD9249",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#CE8B48",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#D3944E",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#D6AF74",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#D6DEDD",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#D79B4B",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#D89D53",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#DD837C",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#DFA654",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#DFBC83",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#E0C88E",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#E0D3B9",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#E59288",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#E5B76B",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#E6B05D",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#E7949F",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#E9C178",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#EA9E93",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#EBBD70",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#EEB041",
+          "first": "farm_collector_4.png"
+        },
+        {
+          "color": "#EFCF8E",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#EFD7A5",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#F0CC87",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#F2B1A5",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#F3E0B8",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#F3E4C6",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#F4DBA8",
+          "first": "farm_feeder_0.png"
+        },
+        {
+          "color": "#F7E7C6",
+          "first": "farm_collector_0.png"
+        },
+        {
+          "color": "#FCFAF5",
+          "first": "farm_feeder_0.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "outline",
+      "ok": false,
+      "detail": "외곽선 방식이 다른 그림 3장",
+      "items": [
+        {
+          "where": "farm_collector_2.png",
+          "why": [
+            "외곽선 판정 selout+light 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "selout+light",
+          "black": 0.0,
+          "dark": 0.991,
+          "lit": 1.164,
+          "solid_share": 0.3829,
+          "inner_share": 0.0811,
+          "hue_diff": 9.11
+        },
+        {
+          "where": "farm_collector_3.png",
+          "why": [
+            "외곽선 판정 selout+light 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "selout+light",
+          "black": 0.0044,
+          "dark": 0.9912,
+          "lit": 1.868,
+          "solid_share": 0.3296,
+          "inner_share": 0.0819,
+          "hue_diff": 8.89
+        },
+        {
+          "where": "farm_collector_4.png",
+          "why": [
+            "외곽선 판정 selout+light 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "selout+light",
+          "black": 0.0,
+          "dark": 0.958,
+          "lit": 1.999,
+          "solid_share": 0.3252,
+          "inner_share": 0.073,
+          "hue_diff": 8.47
+        }
+      ]
+    },
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            19.71,
+            3.89
+          ],
+          "luma": [
+            29.4,
+            47.29,
+            48.31,
+            48.56,
+            83.27
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ],
+          "luma": [
+            191.28,
+            218.81,
+            231.28,
+            237.29,
+            251.5
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ],
+          "luma": [
+            139.87,
+            173.23,
+            190.18,
+            205.81
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ],
+          "luma": [
+            47.55,
+            57.98,
+            80.21
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ],
+          "luma": [
+            124.89,
+            188.89,
+            231.59
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ],
+          "luma": [
+            153.5,
+            186.19,
+            201.37,
+            220.64
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ],
+          "luma": [
+            59.92,
+            81.1,
+            121.47
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ],
+          "luma": [
+            85.85,
+            122.58,
+            209.76
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ],
+          "luma": [
+            153.33,
+            198.03,
+            228.01
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [],
+          "luma": [
+            234.21,
+            251.17
+          ]
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": [],
+          "luma": [
+            99.11
+          ]
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ],
+          "luma": [
+            73.06,
+            100.13
+          ]
+        }
+      ]
+    }
+  ]
+}

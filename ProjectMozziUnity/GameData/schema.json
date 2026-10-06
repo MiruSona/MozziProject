@@ -23,6 +23,7 @@
       { "name": "tier", "type": "int", "min": 1 },
       { "name": "value", "type": "int", "min": 0 },
       { "name": "cap", "type": "int", "min": 0, "desc": "창고(주운 것) 기준 상한" },
+      { "name": "sell_price", "type": "int", "min": 0, "desc": "주방 「재료 팔기」 로 팔 때 개당 골드" },
       { "name": "color_hex", "type": "string" },
       { "name": "sprite_key", "type": "string", "desc": "Art/ 뒤에 붙는 그림 자리. 비면 color_hex 네모" }
     ] },
@@ -49,7 +50,7 @@
       { "name": "kind", "type": "string", "desc": "slot · shortcut · pair · fence · floor · collector · feeder · storage" },
       { "name": "level", "type": "int", "min": 1 },
       { "name": "price", "type": "int", "min": 0 },
-      { "name": "rate", "type": "float", "desc": "shortcut 은 대기 배율, fence 는 담장에 더해지는 마리 수(누적), floor 는 바닥 합계 한도에 더하는 수(누적), collector 는 걷는 주기(초), feeder 는 생산 속도에 더하는 비율(누적, 0.1 = +10%), storage 는 창고 상한에 더하는 수(누적). slot · pair 는 안 쓴다" }
+      { "name": "rate", "type": "float", "desc": "shortcut 은 대기 배율, fence 는 담장에 더해지는 마리 수(누적), floor 는 바닥 합계 한도에 더하는 수(누적), collector 는 한 주기(farm collector_period_sec)에 걷는 수, feeder 는 생산 속도에 더하는 비율(누적, 0.1 = +10%), storage 는 창고 상한에 더하는 수(누적). slot · pair 는 안 쓴다" }
     ] },
     { "name": "stall", "columns": [
       { "name": "id", "type": "string", "desc": "설정 한 줄짜리 표다. id 는 default 하나" },
@@ -67,7 +68,8 @@
       { "name": "clerk_speed_sec", "type": "float", "min": 0 },
       { "name": "pound_taps", "type": "int", "min": 0 },
       { "name": "pound_gap_ms", "type": "int", "min": 0 },
-      { "name": "double_tap_ms", "type": "int", "min": 0 }
+      { "name": "double_tap_ms", "type": "int", "min": 0 },
+      { "name": "clear_rate", "type": "float", "min": 0, "max": 1, "desc": "진열대 비우기 때 떡 하나를 정가의 몇 배에 파나 (0.3 = 30%)" }
     ] },
     { "name": "farm", "columns": [
       { "name": "id", "type": "string", "desc": "설정 한 줄짜리 표다. id 는 default 하나" },
@@ -81,6 +83,7 @@
       { "name": "storage_max", "type": "int", "min": 0, "desc": "0 은 상한 없음" },
       { "name": "floor_max", "type": "int", "min": 0, "desc": "바닥 재료 합계 한도 (모든 재료 합). 닿으면 생산이 멈춘다" },
       { "name": "pile_max", "type": "int", "min": 1, "desc": "화면 꾸러미 하나에 담기는 최대 수" },
+      { "name": "collector_period_sec", "type": "float", "min": 0, "desc": "수집기가 걷는 주기 (초). 한 번에 걷는 수는 growth collector 행의 rate" },
       { "name": "start_species_id", "type": "ref", "ref": "mozzi_species" },
       { "name": "start_count", "type": "int", "min": 0 }
     ] },

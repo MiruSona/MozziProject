@@ -20,6 +20,26 @@ namespace Mozzi.Game.Farm
             return Math.Min(dropped, room);
         }
 
+        // 수집기가 다음에 걷을 재료 = 가장 많이 쌓인 재료. skip 에 든 것과 0 개인 것은 뺀다. 없으면 null.
+        // 같은 수면 먼저 든 것이다.
+        public static string BiggestPile(IReadOnlyDictionary<string, int> piles, List<string> skip)
+        {
+            string best = null;
+            int bestCount = 0;
+            foreach (KeyValuePair<string, int> pair in piles)
+            {
+                if (pair.Value <= bestCount || skip.Contains(pair.Key))
+                {
+                    continue;
+                }
+
+                best = pair.Key;
+                bestCount = pair.Value;
+            }
+
+            return best;
+        }
+
         // 합계가 max 를 넘으면 각 칸을 비율대로 줄이고, 버림으로 남는 몫은 앞 칸부터 하나씩 되돌린다.
         // 옛 세이브의 바닥 재료가 한도를 넘을 때 쓴다. counts 를 그 자리에서 고친다.
         public static void TrimToMax(List<int> counts, int max)

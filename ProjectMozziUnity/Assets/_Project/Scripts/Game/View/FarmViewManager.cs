@@ -69,6 +69,10 @@ namespace Mozzi.Game.View
         private Vector2 _pendingStart;
         private IFarmGroundPainter _groundPainter;
         private FarmDecorView _decor;
+        private FarmDeviceView _collector;
+        private FarmDeviceView _feeder;
+        // 공급기가 다음 한 바퀴를 돌 때까지 (게임 시간 초).
+        private float _feederClock;
         private SkyView _sky;
         private BuildingObject _synthesisBuilding;
         private BuildingObject _stallBuilding;
@@ -106,6 +110,8 @@ namespace Mozzi.Game.View
 
             _floor = new FloorItemsAgent(this, _resource, _farm, _data, _root, FloorRect());
 
+            BuildDevices();
+            RefreshDevices();
             PlaceBuildings();
             SyncMozzis();
             RefreshBadges();
@@ -118,6 +124,8 @@ namespace Mozzi.Game.View
             _subscriptions.Add(EventBus.Subscribe<NightFellEvent>(this, OnNightFell));
             _subscriptions.Add(EventBus.Subscribe<DayStartedEvent>(this, OnDayStarted));
             _subscriptions.Add(EventBus.Subscribe<IngredientDroppedEvent>(this, OnIngredientDropped));
+            _subscriptions.Add(EventBus.Subscribe<FarmUpgradedEvent>(this, OnFarmUpgraded));
+            _subscriptions.Add(EventBus.Subscribe<CollectorSweptEvent>(this, OnCollectorSwept));
         }
 
         public void Process(float deltaTime)
@@ -137,6 +145,7 @@ namespace Mozzi.Game.View
             Separate();
             StepLeaving(deltaTime);
             _storageBuilding.Step(deltaTime);
+            StepDevices(deltaTime);
             _floor.Step(deltaTime);
 
             if (_drag.IsActive)
@@ -205,6 +214,16 @@ namespace Mozzi.Game.View
             if (_decor != null)
             {
                 _decor.Clear();
+            }
+
+            if (_collector != null)
+            {
+                _collector.Clear();
+            }
+
+            if (_feeder != null)
+            {
+                _feeder.Clear();
             }
 
             if (_sky != null)
@@ -319,6 +338,77 @@ namespace Mozzi.Game.View
         private void OnIngredientDropped(IngredientDroppedEvent evt)
         {
             _floor.OnDropped(evt.IngredientId, evt.SpeciesId, _mozziList);
+        }
+
+        // 수집기(오른쪽 울타리) · 먹이 공급기(왼쪽 울타리). 처음엔 숨겨 두고 RefreshDevices 가 산 것만 켠다.
+        private void BuildDevices()
+        {
+            _collector = new FarmDeviceView();
+            _collector.Build(_root, _resource, "Collector", SpriteKeys.FarmCollectorPrefix, FarmDeviceLayout.CollectorFrameCount,
+                FarmDeviceLayout.CollectorLeftPx, FarmDeviceLayout.CollectorWidthPx, FarmDeviceLayout.CollectorBottomPx,
+                FarmDeviceLayout.CollectorFrameSec, new Vector2(FarmDeviceLayout.CollectorSquashX, FarmDeviceLayout.CollectorSquashY));
+
+            _feeder = new FarmDeviceView();
+            _feeder.Build(_root, _resource, "Feeder", SpriteKeys.FarmFeederPrefix, FarmDeviceLayout.FeederFrameCount,
+                FarmDeviceLayout.FeederLeftPx, FarmDeviceLayout.FeederWidthPx, FarmDeviceLayout.FeederBottomPx,
+                FarmDeviceLayout.FeederFrameSec, Vector2.one);
+        }
+
+        // 장치는 산 뒤(단계 1 이상)에만 보이고, 보이면 그 자리 울타리 세로 칸을 뺀다. 세이브를 불러온 뒤에도 PostInit 이 한 번 부른다.
+        private void RefreshDevices()
+        {
+            bool collector = FarmDeviceLayout.IsBought(_farm.UpgradeLevel(GrowthUtil.KindCollector));
+            bool feeder = FarmDeviceLayout.IsBought(_farm.UpgradeLevel(GrowthUtil.KindFeeder));
+
+            _collector.SetShown(collector);
+            _feeder.SetShown(feeder);
+            SetFenceGap(FenceSide.Right, FarmDeviceLayout.CollectorBottomPx, FarmDeviceLayout.CollectorHeightPx, collector);
+            SetFenceGap(FenceSide.Left, FarmDeviceLayout.FeederBottomPx, FarmDeviceLayout.FeederHeightPx, feeder);
+        }
+
+        private void SetFenceGap(FenceSide side, float bottomPx, float heightPx, bool open)
+        {
+            int fromRow;
+            int toRow;
+            if (FarmDeviceLayout.FenceRowsCovered(bottomPx, heightPx, out fromRow, out toRow))
+            {
+                _groundPainter.SetSideGap(side, fromRow, toRow, open);
+            }
+        }
+
+        // 공급기는 FeederPuffIntervalSec 마다 한 바퀴 돈다. 수집기는 걷을 때(OnCollectorSwept)만 돈다.
+        private void StepDevices(float deltaTime)
+        {
+            _collector.Step(deltaTime);
+            _feeder.Step(deltaTime);
+
+            if (_feeder.IsShown == false)
+            {
+                _feederClock = 0f;
+                return;
+            }
+
+            _feederClock += deltaTime;
+            if (_feederClock >= FarmDeviceLayout.FeederPuffIntervalSec)
+            {
+                _feederClock -= FarmDeviceLayout.FeederPuffIntervalSec;
+                _feeder.Play();
+            }
+        }
+
+        private void OnFarmUpgraded(FarmUpgradedEvent evt)
+        {
+            RefreshDevices();
+        }
+
+        // 수집기가 걷었다. 한 바퀴 빨아들이고, 걷힌 바닥 재료는 나팔 입으로 날아간다.
+        private void OnCollectorSwept(CollectorSweptEvent evt)
+        {
+            _collector.Play();
+            Vector2 mouth = new Vector2(
+                LayoutConst.XFromLeft(FarmDeviceLayout.CollectorLeftPx + FarmDeviceLayout.CollectorMouthXPx),
+                LayoutConst.YFromTop(FarmDeviceLayout.CollectorBottomPx - FarmDeviceLayout.CollectorMouthYPx));
+            _floor.OnCollected(evt.IngredientId, evt.Moved, mouth);
         }
 
         private void SyncMozzis()

@@ -13,37 +13,11 @@ namespace Mozzi.Editor
         private const string ArtRoot = "Assets/_Project/Resources/Art/";
 
         // { 정식 폴더 안 out 경로, Resources/Art 아래 경로 } (확장자 .png 생략).
-        // 반복 07 : 정본은 주방/v3/out (README 「코드에 넘길 것」). 접시만 v3 에 없어 옛 주방/out 것을 쓴다.
+        // 반복 07 : 정본은 주방/v3/out (README 「코드에 넘길 것」). 반복 08 에 바뀐 그림(배경 · 서랍장 · 찜기 · 떡메 반죽)은 Iter08Table 이 맡는다.
         private static readonly string[,] KitchenTable =
         {
-            { "주방/v3/out/kitchen_bg", "Screen/kitchen_bg" },
-            { "주방/out/kitchen_plate", "Screen/kitchen_plate" },
-            { "주방/v3/out/kitchen_drawer_frame", "Screen/kitchen_drawer_frame" },
-            { "주방/v3/out/kitchen_drawer_cell", "Screen/kitchen_drawer_cell" },
             { "주방/v3/out/kitchen_bowl", "Screen/kitchen_bowl" },
-            { "주방/v3/out/kitchen_steamer", "Screen/kitchen_steamer" },
             { "주방/v3/out/kitchen_board", "Screen/kitchen_board" },
-            { "주방/v3/out/kitchen_pound_0", "Screen/kitchen_pound_0" },
-            { "주방/v3/out/kitchen_pound_1", "Screen/kitchen_pound_1" },
-            { "주방/v3/out/kitchen_pound_2", "Screen/kitchen_pound_2" },
-            { "주방/v3/out/kitchen_pound_3", "Screen/kitchen_pound_3" },
-            { "주방/v3/out/kitchen_pound_4", "Screen/kitchen_pound_4" },
-            { "주방/v3/out/kitchen_pound_5", "Screen/kitchen_pound_5" },
-            { "주방/v3/out/kitchen_pound_6", "Screen/kitchen_pound_6" },
-            { "주방/v3/out/kitchen_pound_rough_0", "Screen/kitchen_pound_rough_0" },
-            { "주방/v3/out/kitchen_pound_rough_1", "Screen/kitchen_pound_rough_1" },
-            { "주방/v3/out/kitchen_pound_rough_2", "Screen/kitchen_pound_rough_2" },
-            { "주방/v3/out/kitchen_pound_rough_3", "Screen/kitchen_pound_rough_3" },
-            { "주방/v3/out/kitchen_pound_rough_4", "Screen/kitchen_pound_rough_4" },
-            { "주방/v3/out/kitchen_pound_rough_5", "Screen/kitchen_pound_rough_5" },
-            { "주방/v3/out/kitchen_pound_rough_6", "Screen/kitchen_pound_rough_6" },
-            { "주방/v3/out/kitchen_pound_smooth_0", "Screen/kitchen_pound_smooth_0" },
-            { "주방/v3/out/kitchen_pound_smooth_1", "Screen/kitchen_pound_smooth_1" },
-            { "주방/v3/out/kitchen_pound_smooth_2", "Screen/kitchen_pound_smooth_2" },
-            { "주방/v3/out/kitchen_pound_smooth_3", "Screen/kitchen_pound_smooth_3" },
-            { "주방/v3/out/kitchen_pound_smooth_4", "Screen/kitchen_pound_smooth_4" },
-            { "주방/v3/out/kitchen_pound_smooth_5", "Screen/kitchen_pound_smooth_5" },
-            { "주방/v3/out/kitchen_pound_smooth_6", "Screen/kitchen_pound_smooth_6" },
             { "주방/v3/out/kitchen_shape_0", "Screen/kitchen_shape_0" },
             { "주방/v3/out/kitchen_shape_1", "Screen/kitchen_shape_1" },
             { "주방/v3/out/kitchen_shape_2", "Screen/kitchen_shape_2" },
@@ -51,6 +25,58 @@ namespace Mozzi.Editor
             { "주방/v3/out/kitchen_steam_1", "Fx/kitchen_steam_1" },
             { "주방/v3/out/kitchen_steam_2", "Fx/kitchen_steam_2" },
             { "주방/v3/out/kitchen_steam_3", "Fx/kitchen_steam_3" },
+        };
+
+        // 반복 08 정식 그림 (정식/반복08/README.md 「코드에 넘길 것」). out/Screen · out/Farm 을 Resources/Art 의 같은 하위 폴더로.
+        // 농장 장치는 v2 판(수집기 136×107 7장 · 공급기 116×147 4장)이다. 공급기는 4장이라 옛 farm_feeder_4 는 지웠다.
+        private static readonly string[,] Iter08Table =
+        {
+            { "반복08/out/Screen/kitchen_bg", "Screen/kitchen_bg" },
+            { "반복08/out/Screen/kitchen_drawer_3d", "Screen/kitchen_drawer_3d" },
+            { "반복08/out/Screen/kitchen_steamer_body", "Screen/kitchen_steamer_body" },
+            { "반복08/out/Screen/kitchen_steamer_lid", "Screen/kitchen_steamer_lid" },
+            { "반복08/out/Screen/kitchen_mill_0", "Screen/kitchen_mill_0" },
+            { "반복08/out/Screen/kitchen_mill_1", "Screen/kitchen_mill_1" },
+            { "반복08/out/Screen/kitchen_mill_2", "Screen/kitchen_mill_2" },
+            { "반복08/out/Screen/kitchen_mill_3", "Screen/kitchen_mill_3" },
+            { "반복08/out/Screen/kitchen_mill_4", "Screen/kitchen_mill_4" },
+            { "반복08/out/Screen/kitchen_pound_0", "Screen/kitchen_pound_0" },
+            { "반복08/out/Screen/kitchen_pound_1", "Screen/kitchen_pound_1" },
+            { "반복08/out/Screen/kitchen_pound_2", "Screen/kitchen_pound_2" },
+            { "반복08/out/Screen/kitchen_pound_3", "Screen/kitchen_pound_3" },
+            { "반복08/out/Screen/kitchen_pound_4", "Screen/kitchen_pound_4" },
+            { "반복08/out/Screen/kitchen_pound_5", "Screen/kitchen_pound_5" },
+            { "반복08/out/Screen/kitchen_pound_6", "Screen/kitchen_pound_6" },
+            { "반복08/out/Screen/kitchen_pound_rough_0", "Screen/kitchen_pound_rough_0" },
+            { "반복08/out/Screen/kitchen_pound_rough_1", "Screen/kitchen_pound_rough_1" },
+            { "반복08/out/Screen/kitchen_pound_rough_2", "Screen/kitchen_pound_rough_2" },
+            { "반복08/out/Screen/kitchen_pound_rough_3", "Screen/kitchen_pound_rough_3" },
+            { "반복08/out/Screen/kitchen_pound_rough_4", "Screen/kitchen_pound_rough_4" },
+            { "반복08/out/Screen/kitchen_pound_rough_5", "Screen/kitchen_pound_rough_5" },
+            { "반복08/out/Screen/kitchen_pound_rough_6", "Screen/kitchen_pound_rough_6" },
+            { "반복08/out/Screen/kitchen_pound_smooth_0", "Screen/kitchen_pound_smooth_0" },
+            { "반복08/out/Screen/kitchen_pound_smooth_1", "Screen/kitchen_pound_smooth_1" },
+            { "반복08/out/Screen/kitchen_pound_smooth_2", "Screen/kitchen_pound_smooth_2" },
+            { "반복08/out/Screen/kitchen_pound_smooth_3", "Screen/kitchen_pound_smooth_3" },
+            { "반복08/out/Screen/kitchen_pound_smooth_4", "Screen/kitchen_pound_smooth_4" },
+            { "반복08/out/Screen/kitchen_pound_smooth_5", "Screen/kitchen_pound_smooth_5" },
+            { "반복08/out/Screen/kitchen_pound_smooth_6", "Screen/kitchen_pound_smooth_6" },
+            { "반복08/out/Screen/stall_decor_frame", "Screen/stall_decor_frame" },
+            { "반복08/out/Screen/stall_decor_shelf", "Screen/stall_decor_shelf" },
+            { "반복08/out/Screen/stall_decor_wreath", "Screen/stall_decor_wreath" },
+            { "반복08/out/Screen/stall_decor_plant", "Screen/stall_decor_plant" },
+            { "반복08/out/Screen/stall_decor_sign", "Screen/stall_decor_sign" },
+            { "반복08/out/Farm/farm_collector_0", "Farm/farm_collector_0" },
+            { "반복08/out/Farm/farm_collector_1", "Farm/farm_collector_1" },
+            { "반복08/out/Farm/farm_collector_2", "Farm/farm_collector_2" },
+            { "반복08/out/Farm/farm_collector_3", "Farm/farm_collector_3" },
+            { "반복08/out/Farm/farm_collector_4", "Farm/farm_collector_4" },
+            { "반복08/out/Farm/farm_collector_5", "Farm/farm_collector_5" },
+            { "반복08/out/Farm/farm_collector_6", "Farm/farm_collector_6" },
+            { "반복08/out/Farm/farm_feeder_0", "Farm/farm_feeder_0" },
+            { "반복08/out/Farm/farm_feeder_1", "Farm/farm_feeder_1" },
+            { "반복08/out/Farm/farm_feeder_2", "Farm/farm_feeder_2" },
+            { "반복08/out/Farm/farm_feeder_3", "Farm/farm_feeder_3" },
         };
 
         private static readonly string[,] UiTable =
@@ -184,10 +210,11 @@ namespace Mozzi.Editor
             { "아이콘/out/CakeOne/redbean_mugwort_sesame_cake_one", "CakeOne/redbean_mugwort_sesame_cake_one" },
         };
 
-        [MenuItem("Mozzi/정식 그림 들이기/주방 + UI 틀")]
+        [MenuItem("Mozzi/정식 그림 들이기/주방 + 반복08 + UI 틀")]
         public static void CopyKitchen()
         {
             Copy(KitchenTable);
+            Copy(Iter08Table);
             Copy(UiTable);
             AssetDatabase.Refresh();
         }

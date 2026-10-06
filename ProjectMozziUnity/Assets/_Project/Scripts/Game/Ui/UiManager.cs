@@ -14,6 +14,7 @@ using Mozzi.Hubs;
 using Mozzi.Resource;
 using Mozzi.Save;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
@@ -63,6 +64,9 @@ namespace Mozzi.Game.Ui
         private readonly List<OverlayScreen> _returnStack = new List<OverlayScreen>();
         private OfflinePopup _offlinePopup;
         private MozziPopup _mozziPopup;
+        // 할 일 팝업은 찹쌀이 팝업 프리팹을 하나 더 빌려 쓴다. _actionHost 는 반납용.
+        private MozziPopup _actionHost;
+        private ActionPopupView _actionPopup;
 #if UNITY_EDITOR || MOZZI_DEBUG
         private DebugPanel _debugPanel;
         // 팝업보다 위에 두는 두 번째 내용 칸. 디버그 패널이 팝업에 안 가리게.
@@ -122,6 +126,11 @@ namespace Mozzi.Game.Ui
             StretchToParent(_mozziPopup.transform as RectTransform);
             _mozziPopup.Bind(OnMozziPopupStore, _mozziPopup.Hide);
             _mozziPopup.Hide();
+
+            _actionHost = _resource.Rent<MozziPopup>(PrefabKeys.UiMozziPopup, _legacyPopup);
+            StretchToParent(_actionHost.transform as RectTransform);
+            _actionPopup = new ActionPopupView(_actionHost.transform, RefreshOpen);
+            _actionPopup.Hide();
 
 #if UNITY_EDITOR || MOZZI_DEBUG
             _debugRoot = CreateContentRoot(UiNames.DebugRoot);
@@ -221,6 +230,14 @@ namespace Mozzi.Game.Ui
 
             _mozziPopup = null;
 
+            if (_actionHost != null)
+            {
+                _resource.Return(_actionHost);
+            }
+
+            _actionHost = null;
+            _actionPopup = null;
+
 #if UNITY_EDITOR || MOZZI_DEBUG
             if (_debugPanel != null)
             {
@@ -306,6 +323,12 @@ namespace Mozzi.Game.Ui
             KeepTopmost();
         }
 
+        public void OpenActionPopup(string title, string body, string actionLabel, bool actionOn, UnityAction onAction)
+        {
+            _actionPopup.Show(title, body, actionLabel, actionOn, onAction);
+            KeepTopmost();
+        }
+
         private string FindFarmSpecies(int mozziId)
         {
             IReadOnlyList<FarmMozzi> mozzis = _farm.Mozzis;
@@ -378,10 +401,10 @@ namespace Mozzi.Game.Ui
             rate = NextRate(GrowthUtil.KindCollector, level);
             if (rate >= 0)
             {
-                next = FarmUpgradeText.Collector(rate);
+                next = FarmUpgradeText.Collector(farmRow.CollectorPeriodSec, (int)rate);
             }
 
-            now = FarmUpgradeText.Collector(_farm.CollectorPeriodSec);
+            now = FarmUpgradeText.Collector(farmRow.CollectorPeriodSec, _farm.CollectorAmount);
             SetUpgradeRow(GrowthUtil.KindCollector, FarmUpgradeText.Line("수집기", level, _farm.MaxUpgradeLevel(GrowthUtil.KindCollector), now, next),
                 _farm.NextUpgradePrice(GrowthUtil.KindCollector));
 
@@ -478,6 +501,11 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
+            if (_actionPopup != null)
+            {
+                _actionPopup.Hide();
+            }
+
             _open.OnClosed();
             _open.gameObject.SetActive(false);
             _open = null;
@@ -498,6 +526,7 @@ namespace Mozzi.Game.Ui
             _legacyPopup.SetAsLastSibling();
             _offlinePopup.transform.SetAsLastSibling();
             _mozziPopup.transform.SetAsLastSibling();
+            _actionHost.transform.SetAsLastSibling();
 #if UNITY_EDITOR || MOZZI_DEBUG
             _debugRoot.SetAsLastSibling();
 #endif

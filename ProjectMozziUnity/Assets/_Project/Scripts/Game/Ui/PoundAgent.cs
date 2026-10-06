@@ -1,14 +1,13 @@
-using System.Collections.Generic;
 using Mozzi.Core;
 using Mozzi.Data;
 
 namespace Mozzi.Game.Ui
 {
-    // 떡메 3탭의 규칙만 든다 (세로조각1판설계 4-4). 「치기」 단계 안에서 KitchenFlowAgent 가 쓴다 — 그림 · Make 호출은 KitchenScreen 몫이다.
+    // 누름 N번의 규칙만 든다 (세로조각1판설계 4-4). 「갈기」(맷돌) · 「치기」(절구) 단계 안에서 KitchenFlowAgent 가 하나씩 쓴다.
+    // 순수 탭 카운터다 — 재료 목록 · 그림 · Make 호출은 흐름 · 화면 몫이다.
     // doubleTapMs 안 연타는 남은 탭을 건너뛰고, 그보다 느리되 poundGapMs 안이면 무시, 그 뒤면 한 번 센다. Begin 뒤 첫 탭은 늘 1타로 센다.
     public sealed class PoundAgent : AgentBase<KitchenFlowAgent>
     {
-        private readonly List<string> _ingredientIds = new List<string>();
         private readonly int _totalTaps;
         private readonly float _gapSec;
         private readonly float _doubleTapSec;
@@ -44,15 +43,8 @@ namespace Mozzi.Game.Ui
             get { return _totalTaps; }
         }
 
-        public IReadOnlyList<string> IngredientIds
+        public void Begin()
         {
-            get { return _ingredientIds; }
-        }
-
-        public void Begin(IReadOnlyList<string> ingredientIds)
-        {
-            _ingredientIds.Clear();
-            _ingredientIds.AddRange(ingredientIds);
             _taps = 0;
             _lastTapTime = float.NegativeInfinity;
             _running = true;

@@ -182,6 +182,42 @@ namespace Mozzi.Game.Inventory
             return true;
         }
 
+        // 수량을 다 뺀 뒤에 골드를 넣는다 — 골드 이벤트에서 화면이 되읽을 때 창고가 이미 비어 있게.
+        public int SellAll()
+        {
+            int gold = SellAllPrice();
+            for (int i = 0; i < _ids.Count; i++)
+            {
+                string id = _ids[i];
+                int count = _counts[id];
+                if (count <= 0)
+                {
+                    continue;
+                }
+
+                _counts[id] = 0;
+                EventBus.Publish(new IngredientChangedEvent(id, 0, -count));
+            }
+
+            if (gold > 0)
+            {
+                _wallet.Earn(gold);
+            }
+
+            return gold;
+        }
+
+        public int SellAllPrice()
+        {
+            int gold = 0;
+            for (int i = 0; i < _ids.Count; i++)
+            {
+                gold += _counts[_ids[i]] * _data.Ingredients.Get(_ids[i]).SellPrice;
+            }
+
+            return gold;
+        }
+
         public string CaptureJson()
         {
             InventoryState state = new InventoryState();

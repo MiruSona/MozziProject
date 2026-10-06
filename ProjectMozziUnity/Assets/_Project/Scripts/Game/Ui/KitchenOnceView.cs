@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 그림 몇 장을 한 바퀴만 돌리고 숨는 작은 연출 (주방 김 · 빚기). 쉴 때는 꺼 둔다.
-    // 그림이 하나라도 없으면 Play 해도 안 켜지고, 시간만 흘러 같은 때에 끝난다 (빚기 뒤 결과가 늦게라도 뜨게).
+    // 그림 몇 장을 한 바퀴만 돌리고 숨는 작은 연출 (주방 빚기). 쉴 때는 꺼 둔다.
+    // PlayLoop 로 틀면 Stop 할 때까지 되풀이한다 (찌는 동안의 김, 반복 08).
+    // 그림이 하나라도 없으면 Play 해도 안 켜지고, 시간만 흘러 같은 때에 끝난다.
     public sealed class KitchenOnceView
     {
         private readonly Image _image;
@@ -15,6 +16,7 @@ namespace Mozzi.Game.Ui
         private int _frame;
         private float _time;
         private bool _playing;
+        private bool _loop;
 
         public KitchenOnceView(Image image, Sprite[] frames, float[] frameSec)
         {
@@ -41,6 +43,17 @@ namespace Mozzi.Game.Ui
         // 도는 중에 또 부르면 처음부터 다시 돈다.
         public void Play()
         {
+            Begin(false);
+        }
+
+        public void PlayLoop()
+        {
+            Begin(true);
+        }
+
+        private void Begin(bool loop)
+        {
+            _loop = loop;
             _frame = 0;
             _time = 0f;
             _playing = true;
@@ -57,7 +70,7 @@ namespace Mozzi.Game.Ui
             Hide();
         }
 
-        // 한 바퀴를 다 돈 그 틀에만 true.
+        // 한 바퀴를 다 돈 그 틀에만 true. 되풀이 중이면 늘 false.
         public bool Process(float deltaTime)
         {
             if (_playing == false)
@@ -70,7 +83,11 @@ namespace Mozzi.Game.Ui
             {
                 _time -= _frameSec[_frame];
                 _frame++;
-                if (_frame >= _frameSec.Length)
+                if (_frame >= _frameSec.Length && _loop)
+                {
+                    _frame = 0;
+                }
+                else if (_frame >= _frameSec.Length)
                 {
                     Stop();
                     return true;

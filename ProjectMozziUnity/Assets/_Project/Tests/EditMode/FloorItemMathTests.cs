@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Mozzi.Tests
 {
-    // 바닥 재료 셈 검사. 화면 합계 · 30 넘을 때 뭉칠 짝 · 모델이 줄었을 때 깎는 순서 · 훑기 거리.
+    // 바닥 재료 셈 검사. 화면 합계 · 떨군 낱개가 합쳐질 더미 · 30 넘을 때 뭉칠 짝 · 모델이 줄었을 때 깎는 순서 · 훑기 거리.
     public sealed class FloorItemMathTests
     {
         [Test]
@@ -21,6 +21,24 @@ namespace Mozzi.Tests
             Assert.That(FloorItemMath.ShownOf(items, "bean"), Is.EqualTo(4));
             Assert.That(FloorItemMath.ShownOf(items, "rice"), Is.EqualTo(5));
             Assert.That(FloorItemMath.ShownOf(items, "none"), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void FindDropTarget_NearestSameIngredientUnderMaxInsideRadius()
+        {
+            // 0 은 꽉 찼고(5) 1 은 재료가 다르다. 2 와 3 가운데 가까운 3 을 고른다. 4 는 반지름 밖이다.
+            List<FloorItemEntry> items = new List<FloorItemEntry>
+            {
+                Entry("bean", 5, 0.1f, 0f),
+                Entry("rice", 1, 0.1f, 0f),
+                Entry("bean", 2, 0.8f, 0f),
+                Entry("bean", 4, 0.3f, 0f),
+                Entry("bean", 1, 5f, 0f),
+            };
+
+            Assert.That(FloorItemMath.FindDropTarget(items, "bean", Vector2.zero, 1f, 5), Is.EqualTo(3));
+            Assert.That(FloorItemMath.FindDropTarget(items, "bean", Vector2.zero, 0.2f, 5), Is.EqualTo(-1));
+            Assert.That(FloorItemMath.FindDropTarget(items, "mugwort", Vector2.zero, 9f, 5), Is.EqualTo(-1));
         }
 
         [Test]

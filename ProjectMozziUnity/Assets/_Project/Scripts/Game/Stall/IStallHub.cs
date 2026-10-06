@@ -43,6 +43,12 @@ namespace Mozzi.Game.Stall
 
         bool BuyClerk();
 
+        // 진열대 비우기. 진열된 떡을 모두 정가 × clearRate(Stall 표)에 판다. 판 골드를 준다 (비었으면 0).
+        int ClearShelf();
+
+        // 지금 비우면 받을 골드.
+        int ClearShelfPrice();
+
         // 디버그용. 안 켠 것처럼 seconds 만큼 점원이 팔고 OfflineReport 를 갈아 끼운다. 골드 · 밤 이벤트는 난다.
         void Skip(double seconds);
     }

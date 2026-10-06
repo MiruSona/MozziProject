@@ -3,14 +3,16 @@ using UnityEngine.UI;
 
 namespace Mozzi.Game.Ui
 {
-    // 절구 + 떡메 조각을 프레임으로 돌린다. Play 한 번에 0→끝을 한 바퀴 돌고 쉬는 장(0)에서 멈춘다.
-    // 반죽 단계(쌀 · 거친 반죽 · 매끈한 떡)마다 7장 묶음이 따로 있다 — 맞는 장 앞은 from 묶음, 맞는 장부터는 to 묶음 (KitchenLayout.PoundFrameStage).
+    // 절구 + 떡메 조각 · 맷돌을 프레임으로 돌린다. Play 한 번에 0→끝을 한 바퀴 돌고 쉬는 장(0)에서 멈춘다.
+    // 떡메는 반죽 단계(가루 · 거친 반죽 · 매끈한 떡)마다 7장 묶음이 따로 있다 — 맞는 장(hitFrame) 앞은 from 묶음, 맞는 장부터는 to 묶음 (KitchenLayout.FrameStage).
+    // 맷돌은 묶음 하나(5장)라 from · to 가 늘 0 이다.
     // 쉬는 장은 _idleStage 묶음의 0번이다. 그림이 하나라도 없으면 아무것도 안 바꾼다 (자리표 그림 그대로).
     public sealed class KitchenMortarView
     {
         private readonly Image _image;
         private readonly Sprite[][] _stages;
         private readonly float[] _frameSec;
+        private readonly int _hitFrame;
         private readonly bool _ready;
 
         private int _frame;
@@ -20,8 +22,9 @@ namespace Mozzi.Game.Ui
         private int _to;
         private int _idleStage;
 
-        public KitchenMortarView(Image image, Sprite[][] stages, float[] frameSec)
+        public KitchenMortarView(Image image, Sprite[][] stages, float[] frameSec, int hitFrame)
         {
+            _hitFrame = hitFrame;
             _image = image;
             _stages = stages;
             _frameSec = frameSec;
@@ -92,7 +95,7 @@ namespace Mozzi.Game.Ui
                     return;
                 }
 
-                Show(KitchenLayout.PoundFrameStage(_frame, _from, _to), _frame);
+                Show(KitchenLayout.FrameStage(_frame, _hitFrame, _from, _to), _frame);
             }
         }
 

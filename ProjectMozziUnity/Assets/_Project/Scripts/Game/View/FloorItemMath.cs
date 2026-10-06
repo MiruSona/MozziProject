@@ -64,6 +64,31 @@ namespace Mozzi.Game.View
             return keep >= 0;
         }
 
+        // 떨군 낱개가 합쳐질 더미. from 에서 radius 안의 같은 재료 가운데 1개를 더해도 maxAmount 를 안 넘는 가장 가까운 것. 없으면 -1.
+        public static int FindDropTarget(IReadOnlyList<FloorItemEntry> items, string ingredientId, Vector2 from, float radius, int maxAmount)
+        {
+            int best = -1;
+            float bestSq = radius * radius;
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].IngredientId != ingredientId || items[i].Amount + 1 > maxAmount)
+                {
+                    continue;
+                }
+
+                float sq = (items[i].Position - from).sqrMagnitude;
+                if (sq > bestSq)
+                {
+                    continue;
+                }
+
+                best = i;
+                bestSq = sq;
+            }
+
+            return best;
+        }
+
         // amount 를 꾸러미 하나에 pileMax 개까지 나눠 담는다. 예 : 12, 5 → 5 · 5 · 2.
         public static void SplitIntoPiles(int amount, int pileMax, List<int> into)
         {

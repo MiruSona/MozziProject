@@ -32,22 +32,23 @@ namespace Mozzi.Resource
         public const string FxMergeFlash = "Fx/fx_merge_flash";
         public const string FxSparkle = "Fx/fx_sparkle";
 
-        // 주방 화면 (540×1200 배경 · 접시 · 서랍장 · 그릇 · 찜기 · 빚기판 · 절구+떡메 단계 셋 × 7장 · 빚기 3장 · 김 4장).
-        // FormalArtCopy 가 정식 주방/v3/out 에서 들인다 (반복 07).
+        // 주방 화면 (540×1200 배경 · 입체 서랍장 · 그릇 · 맷돌 5장 · 찜기 몸통+뚜껑 · 빚기판 · 절구+떡메 단계 셋 × 7장 · 빚기 3장 · 김 4장).
+        // FormalArtCopy 가 정식 주방/v3/out (반복 07) · 반복08/out (반복 08) 에서 들인다.
         public const string ScreenKitchenBg = "Screen/kitchen_bg";
-        public const string ScreenKitchenPlate = "Screen/kitchen_plate";
-        public const string ScreenKitchenDrawerFrame = "Screen/kitchen_drawer_frame";
-        public const string ScreenKitchenDrawerCell = "Screen/kitchen_drawer_cell";
+        public const string ScreenKitchenDrawer3d = "Screen/kitchen_drawer_3d";
         public const string ScreenKitchenBowl = "Screen/kitchen_bowl";
-        public const string ScreenKitchenSteamer = "Screen/kitchen_steamer";
+        public const string ScreenKitchenSteamerBody = "Screen/kitchen_steamer_body";
+        public const string ScreenKitchenSteamerLid = "Screen/kitchen_steamer_lid";
         public const string ScreenKitchenBoard = "Screen/kitchen_board";
+        public const string ScreenKitchenMillPrefix = "Screen/kitchen_mill_";
+        public const int KitchenMillFrameCount = 5;
         public const int KitchenPoundFrameCount = 7;
         public const string ScreenKitchenShapePrefix = "Screen/kitchen_shape_";
         public const int KitchenShapeFrameCount = 3;
         public const string FxKitchenSteamPrefix = "Fx/kitchen_steam_";
         public const int KitchenSteamFrameCount = 4;
 
-        // 떡메 단계 (반죽 모습) : 0 쌀 · 1 거친 반죽 · 2 매끈한 떡. 단계마다 7장 묶음이 따로 있다.
+        // 떡메 단계 (반죽 모습) : 0 간 가루 · 1 거친 반죽 · 2 매끈한 떡. 단계마다 7장 묶음이 따로 있다 (반복 08 새 그림, 5번이 때림).
         private static readonly string[] KitchenPoundStagePrefixes =
         {
             "Screen/kitchen_pound_", "Screen/kitchen_pound_rough_", "Screen/kitchen_pound_smooth_",
@@ -74,6 +75,11 @@ namespace Mozzi.Resource
         public static string KitchenPound(int stage, int frame)
         {
             return KitchenPoundStagePrefixes[stage] + frame;
+        }
+
+        public static string KitchenMill(int frame)
+        {
+            return ScreenKitchenMillPrefix + frame;
         }
 
         public static string KitchenShape(int frame)
@@ -121,5 +127,16 @@ namespace Mozzi.Resource
         public const string FarmFenceH = "Farm/fence_h";
         public const string FarmFenceV = "Farm/fence_v";
         public const string FarmFencePost = "Farm/fence_post";
+
+        // 농장 장치 (뒤에 프레임 번호, 0 = 쉼). 장 수는 FarmDeviceLayout 에 있다. FormalArtCopy 가 반복08/out 에서 들인다.
+        public const string FarmCollectorPrefix = "Farm/farm_collector_";
+        public const string FarmFeederPrefix = "Farm/farm_feeder_";
+
+        // 가판대 장식 다섯 (그림만, 누름 없음). StallScreenSetup 이 프리팹에 넣는다.
+        public const string ScreenStallDecorFrame = "Screen/stall_decor_frame";
+        public const string ScreenStallDecorShelf = "Screen/stall_decor_shelf";
+        public const string ScreenStallDecorWreath = "Screen/stall_decor_wreath";
+        public const string ScreenStallDecorPlant = "Screen/stall_decor_plant";
+        public const string ScreenStallDecorSign = "Screen/stall_decor_sign";
     }
 }

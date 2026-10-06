@@ -27,6 +27,9 @@ namespace Mozzi.Game.Farm
         // 수집기가 걷는 주기 (초). 없으면 0.
         double CollectorPeriodSec { get; }
 
+        // 수집기가 한 주기에 걷는 수. 없으면 0.
+        int CollectorAmount { get; }
+
         // 먹이 공급기가 더하는 생산 속도 비율 (0.1 = +10%).
         double FeederBonus { get; }
 

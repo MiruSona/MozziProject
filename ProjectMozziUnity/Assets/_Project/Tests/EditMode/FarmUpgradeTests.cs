@@ -11,8 +11,8 @@ using UnityEngine;
 
 namespace Mozzi.Tests
 {
-    // 바닥 한도 · 농장 강화(바닥 넓히기 · 수집기 · 먹이 공급기) · 창고 넓히기 검사.
-    // 표는 구운 것을 그대로 쓴다 (바닥 한도 50 · 수집기 1단계 60초 · 5단계 10초 · 공급기 5단계 +50% · 창고 2단계 +100).
+    // 바닥 한도 · 창고 상한에서 생산 멈춤 · 농장 강화(바닥 넓히기 · 수집기 · 먹이 공급기) · 창고 넓히기 · 재료 팔기 검사.
+    // 표는 구운 것을 그대로 쓴다 (바닥 한도 50 · 수집기 30초마다 1단계 5개 · 5단계 50개 · 공급기 5단계 +50% · 창고 2단계 +100).
     // 시간은 Skip(오프라인 진행)으로 흘린다. grass1 은 redbean 을 떨군다.
     public sealed class FarmUpgradeTests
     {
@@ -79,6 +79,8 @@ namespace Mozzi.Tests
         {
             FarmState state = State(2, 0);
             state.floorLevel = 3;
+            // 창고 + 바닥이 창고 상한에서도 멈추니 창고를 바닥 한도보다 넉넉히 둔다.
+            _inventory.Room = 200;
             FarmManager farm = Build(state);
 
             farm.Skip(24 * 3600);
@@ -88,32 +90,95 @@ namespace Mozzi.Tests
         }
 
         [Test]
-        public void Collector_PicksUpOnPeriod()
+        public void Collector_PicksAmountOnPeriod()
         {
-            FarmState state = State(0, 10);
+            FarmState state = State(0, 12);
             state.collectorLevel = 1;
             FarmManager farm = Build(state);
 
-            farm.Skip(59);
-            Assert.That(farm.PileOf(Ingredient), Is.EqualTo(10));
+            Assert.That(farm.CollectorPeriodSec, Is.EqualTo(30).Within(1e-9));
+            Assert.That(farm.CollectorAmount, Is.EqualTo(5));
+
+            farm.Skip(29);
+            Assert.That(farm.PileOf(Ingredient), Is.EqualTo(12));
 
             farm.Skip(1.5);
+            Assert.That(farm.PileOf(Ingredient), Is.EqualTo(7));
+            Assert.That(_inventory.Count(Ingredient), Is.EqualTo(5));
+
+            farm.Skip(60);
             Assert.That(farm.PileOf(Ingredient), Is.EqualTo(0));
-            Assert.That(_inventory.Count(Ingredient), Is.EqualTo(10));
+            Assert.That(_inventory.Count(Ingredient), Is.EqualTo(12));
         }
 
         [Test]
-        public void Collector_FullStorageLeavesRestOnFloor()
+        public void Collector_TakesBiggestPileFirst()
         {
-            FarmState state = State(0, 10);
+            FarmState state = State(0, 3);
+            state.piles.Add(new CountEntry(OtherIngredient, 4));
             state.collectorLevel = 1;
-            _inventory.Room = 4;
             FarmManager farm = Build(state);
 
-            farm.Skip(61);
+            farm.Skip(31);
+
+            Assert.That(farm.PileOf(OtherIngredient), Is.EqualTo(0));
+            Assert.That(farm.PileOf(Ingredient), Is.EqualTo(2));
+            Assert.That(_inventory.Count(OtherIngredient), Is.EqualTo(4));
+            Assert.That(_inventory.Count(Ingredient), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Collector_FullStorageSkipsToNextPile()
+        {
+            FarmState state = State(0, 10);
+            state.piles.Add(new CountEntry(OtherIngredient, 3));
+            state.collectorLevel = 1;
+            _inventory.Room = 4;
+            _inventory.Add(Ingredient, 3);
+            FarmManager farm = Build(state);
+
+            farm.Skip(31);
 
             Assert.That(_inventory.Count(Ingredient), Is.EqualTo(4));
-            Assert.That(farm.PileOf(Ingredient), Is.EqualTo(6));
+            Assert.That(farm.PileOf(Ingredient), Is.EqualTo(9));
+            Assert.That(farm.PileOf(OtherIngredient), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void StorageAndFloor_ReachCap_StopsProduction()
+        {
+            _inventory.Room = 20;
+            _inventory.Add(Ingredient, 15);
+            FarmManager farm = Build(State(2, 0));
+
+            farm.Skip(600);
+
+            Assert.That(farm.PileOf(Ingredient), Is.EqualTo(5));
+            Assert.That(farm.FloorTotal, Is.LessThan(farm.FloorMax));
+        }
+
+        [Test]
+        public void StorageCapStop_ResumesAfterSelling()
+        {
+            _inventory.Room = 20;
+            _inventory.Add(Ingredient, 20);
+            FarmManager farm = Build(State(2, 0));
+
+            farm.Skip(600);
+            Assert.That(farm.PileOf(Ingredient), Is.EqualTo(0));
+
+            Assert.That(_inventory.SellAll(), Is.EqualTo(20));
+            farm.Skip(600);
+            Assert.That(farm.PileOf(Ingredient), Is.EqualTo(20));
+        }
+
+        [Test]
+        public void BiggestPile_SkipsListedAndEmpty()
+        {
+            Dictionary<string, int> piles = new Dictionary<string, int> { { "a", 3 }, { "b", 9 }, { "c", 0 } };
+            Assert.That(FarmUpgradeMath.BiggestPile(piles, new List<string>()), Is.EqualTo("b"));
+            Assert.That(FarmUpgradeMath.BiggestPile(piles, new List<string> { "b" }), Is.EqualTo("a"));
+            Assert.That(FarmUpgradeMath.BiggestPile(piles, new List<string> { "a", "b" }), Is.Null);
         }
 
         [Test]
@@ -125,7 +190,7 @@ namespace Mozzi.Tests
 
             farm.Skip(3600);
 
-            Assert.That(farm.CollectorPeriodSec, Is.EqualTo(10).Within(1e-9));
+            Assert.That(farm.CollectorAmount, Is.EqualTo(50));
             Assert.That(_inventory.Count(Ingredient), Is.EqualTo(_inventory.Room));
             Assert.That(farm.FloorTotal, Is.LessThanOrEqualTo(farm.FloorMax));
         }
@@ -224,6 +289,20 @@ namespace Mozzi.Tests
             Assert.That(saved.floorLevel, Is.EqualTo(2));
             Assert.That(saved.collectorLevel, Is.EqualTo(3));
             Assert.That(saved.feederLevel, Is.EqualTo(5));
+        }
+
+        [Test]
+        public void Inventory_SellAll_PaysSellPriceAndEmpties()
+        {
+            InventoryManager inventory = BuildInventory(null);
+            inventory.Add(Ingredient, 30);
+            inventory.Add(OtherIngredient, 7);
+
+            Assert.That(inventory.SellAllPrice(), Is.EqualTo(37));
+            Assert.That(inventory.SellAll(), Is.EqualTo(37));
+            Assert.That(_wallet.Money, Is.EqualTo(37));
+            Assert.That(inventory.Count(Ingredient), Is.EqualTo(0));
+            Assert.That(inventory.SellAll(), Is.EqualTo(0));
         }
 
         [Test]

@@ -24,6 +24,12 @@ namespace Mozzi.Game.Stall
             return RoundHalfUp(basePrice * stall.OrderMult);
         }
 
+        // 진열대 비우기로 팔 때 떡 하나 값 = 정가 × clearRate.
+        public static int ClearPrice(int price, StallRow stall)
+        {
+            return RoundHalfUp(price * stall.ClearRate);
+        }
+
         public static int RoundHalfUp(float value)
         {
             return Mathf.FloorToInt(value + 0.5f);

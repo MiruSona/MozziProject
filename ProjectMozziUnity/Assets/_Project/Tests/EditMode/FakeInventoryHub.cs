@@ -74,6 +74,25 @@ namespace Mozzi.Tests
             return Count(ingredientId) >= amount;
         }
 
+        // 시험용이라 개당 1 골드로 센다.
+        public int SellAll()
+        {
+            int gold = SellAllPrice();
+            _counts.Clear();
+            return gold;
+        }
+
+        public int SellAllPrice()
+        {
+            int gold = 0;
+            foreach (KeyValuePair<string, int> pair in _counts)
+            {
+                gold += pair.Value;
+            }
+
+            return gold;
+        }
+
         public bool Take(string ingredientId, int amount)
         {
             if (Has(ingredientId, amount) == false)

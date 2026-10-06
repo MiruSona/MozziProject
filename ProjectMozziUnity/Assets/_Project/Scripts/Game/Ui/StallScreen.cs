@@ -113,6 +113,8 @@ namespace Mozzi.Game.Ui
 
             _openButton = UiBindUtil.BindButton(transform, UiNames.StallOpenButton, PrefabName, OnOpenOrNextDay);
             _clerkButton = UiBindUtil.BindButton(transform, UiNames.StallClerkButton, PrefabName, OnBuyClerk);
+            // 진열장을 누르면 「진열 비우기」 팝업이 뜬다 (찹쌀이 팝업과 같은 모양).
+            UiBindUtil.BindButton(transform, UiNames.StallShelfTapArea, PrefabName, OnShelfTap);
             UiBindUtil.BindButton(transform, UiNames.StallRecipeCodexButton, PrefabName, _ui.OpenRecipeCodex);
             UiBindUtil.BindButton(transform, UiNames.StallKitchenButton, PrefabName, _ui.OpenKitchen);
         }
@@ -474,6 +476,26 @@ namespace Mozzi.Game.Ui
             }
 
             Refresh();
+        }
+
+        // 진열장 팝업. 팝업 자체가 확인이라 버튼 한 번에 판다. 비었으면 버튼을 끈다. 다시 그리기는 UiManager 가 한다.
+        private void OnShelfTap()
+        {
+            int count = _stall.Shelf.Count;
+            if (count == 0)
+            {
+                _ui.OpenActionPopup("진열대", "진열된 떡이 없어요", "비어 있음", false, null);
+                return;
+            }
+
+            int percent = Mathf.RoundToInt(_data.Stalls.Get(DataKeys.DefaultRowId).ClearRate * 100f);
+            string body = "떡 " + count + "개 · 정가 " + percent + "%";
+            _ui.OpenActionPopup("진열대", body, "진열 비우기 +" + _stall.ClearShelfPrice() + "G", true, OnClearShelf);
+        }
+
+        private void OnClearShelf()
+        {
+            _stall.ClearShelf();
         }
 
         private void OnBuyClerk()

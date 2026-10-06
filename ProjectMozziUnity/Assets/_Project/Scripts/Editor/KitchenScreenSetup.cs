@@ -10,6 +10,7 @@ namespace Mozzi.Editor
     // 주방 화면 프리팹을 빈 뿌리에서 새로 짓는 손질기. 자리는 KitchenLayout 이 정본이다.
     // 프리팹을 손으로 고치면 다음에 돌릴 때 덮이니 고칠 것은 여기서 고친다. 그림은 FormalArtCopy.CopyKitchen 을 먼저 돌린다.
     // 반복 07 : 서랍장 틀 · 칸 · 그릇 · 찜기 · 빚기판을 정식 그림(주방/v3)으로 바꾸고 김 · 빚기 연출 자리를 더했다. 색 곱하기는 KitchenScreen 이 단계마다 넣는다.
+    // 반복 08 : 입체 서랍장(칸 덧그림 없음) · 맷돌 · 찜기 몸통+뚜껑 · 두 줄 작업대 · 결과는 서랍장 왼쪽 바닥의 남색 판(접시 없음).
     // 부르는 법 : 메뉴 「Mozzi/정식 화면 540 배치/주방」 또는 eval 로 KitchenScreenSetup.Apply().
     public static class KitchenScreenSetup
     {
@@ -17,6 +18,11 @@ namespace Mozzi.Editor
 
         // 배경 맨 윗줄 색. 1200 보다 긴 화면의 위와 넓적한 화면 옆을 이 색으로 채운다.
         private static readonly Color FillTop = new Color32(0x9C, 0x6E, 0x51, 0xFF);
+
+        // 결과 판 — 코드가 찾지 않는 모양 노드라 UiNames 에 안 둔다. 색은 찹쌀이 팝업 상자(0.16, 0.16, 0.22)를 반투명으로.
+        private const string ResultPanelName = "ResultPanel";
+        private const string BuiltinRoundSprite = "UI/Skin/UISprite.psd";
+        private static readonly Color ResultPanelColor = new Color(0.16f, 0.16f, 0.22f, 0.85f);
 
         [MenuItem("Mozzi/정식 화면 540 배치/주방")]
         public static void Apply()
@@ -33,6 +39,8 @@ namespace Mozzi.Editor
             MakeDoor(stage);
             MakeDrawers(stage);
             MakeBowl(stage);
+            // 뒷줄(맷돌 · 찜기)을 먼저, 앞줄(절구 · 빚기판)을 뒤에 그린다.
+            MakeMill(stage);
             MakeSteamer(stage);
             MakeMortar(stage);
             MakeBoard(stage);
@@ -58,39 +66,37 @@ namespace Mozzi.Editor
             button.transition = Selectable.Transition.None;
         }
 
-        // 서랍장 : 틀 그림 + 칸 열둘(4열 × 3줄). 칸은 서랍 앞판 그림 버튼이고 앞면에 재료 아이콘 · 남은 수. 채우기 · 색은 코드가 한다.
+        // 서랍장 : 입체 서랍장 그림 한 장(틀) + 칸 열둘(4열 × 3줄, 반복 08). 칸 앞판은 그림에 들어 있어 칸 Image 는 투명 누름 칸이고
+        // 그 위에 재료 아이콘 · 남은 수만 얹는다. 고른 칸 · 닫힌 칸의 반투명 덧칠은 코드가 한다.
         private static void MakeDrawers(RectTransform stage)
         {
-            int rows = UiNames.KitchenDrawerCellCount / KitchenLayout.DrawerColumns;
-            float width = KitchenLayout.DrawerColumns * KitchenLayout.DrawerCellWidth + (KitchenLayout.DrawerColumns - 1) * KitchenLayout.DrawerGapX;
-            float height = rows * KitchenLayout.DrawerCellHeight + (rows - 1) * KitchenLayout.DrawerGapY;
-            float pad = KitchenLayout.DrawerFramePad;
-
-            // 틀 그림(238×284)은 칸 판을 Pad 만큼 둘러싼 크기로 나왔다. 다르면 알린다.
-            Image frame = FormalUiBuild.PlaceSprite(stage, "DrawerFrame", SpriteKeys.ScreenKitchenDrawerFrame,
-                KitchenLayout.DrawerLeft - pad, KitchenLayout.DrawerTop - pad, new Vector2(0f, 1f));
-            WarnSize(frame, width + pad * 2f, height + pad * 2f);
+            Image frame = FormalUiBuild.PlaceSprite(stage, UiNames.KitchenDrawerFrame, SpriteKeys.ScreenKitchenDrawer3d,
+                KitchenLayout.DrawerLeft, KitchenLayout.DrawerTop, new Vector2(0f, 1f));
+            WarnSize(frame, KitchenLayout.DrawerWidth, KitchenLayout.DrawerHeight);
+            // 틀(칸 밖)을 누르면 재료 팔기 팝업. 칸이 뒤 형제라 위에 있어 칸 누름은 그대로 재료 고르기다. 배선은 KitchenScreen 이 한다.
+            frame.raycastTarget = true;
+            frame.gameObject.AddComponent<Button>().transition = Selectable.Transition.None;
 
             for (int i = 0; i < UiNames.KitchenDrawerCellCount; i++)
             {
                 int column = i % KitchenLayout.DrawerColumns;
                 int line = i / KitchenLayout.DrawerColumns;
-                float left = KitchenLayout.DrawerLeft + column * (KitchenLayout.DrawerCellWidth + KitchenLayout.DrawerGapX);
-                float top = KitchenLayout.DrawerTop + line * (KitchenLayout.DrawerCellHeight + KitchenLayout.DrawerGapY);
+                float left = KitchenLayout.DrawerLeft + KitchenLayout.DrawerCellX[column];
+                float top = KitchenLayout.DrawerTop + KitchenLayout.DrawerCellY[line];
 
                 RectTransform cell = FormalUiBuild.NewNode(stage, UiNames.KitchenDrawerCellPrefix + i);
                 FormalUiBuild.TopLeft(cell, left, top, KitchenLayout.DrawerCellWidth, KitchenLayout.DrawerCellHeight);
-                FormalUiBuild.SetImage(cell, Color.white, true).sprite = FormalUiBuild.LoadSprite(SpriteKeys.ScreenKitchenDrawerCell);
+                FormalUiBuild.SetImage(cell, FormalUiBuild.Clear, true);
                 Button button = cell.gameObject.AddComponent<Button>();
                 button.transition = Selectable.Transition.None;
 
                 RectTransform icon = FormalUiBuild.NewNode(cell, UiNames.IngredientIcon);
-                FormalUiBuild.PivotAt(icon, KitchenLayout.DrawerCellWidth * 0.5f, KitchenLayout.DrawerIconY, new Vector2(0.5f, 0.5f),
+                FormalUiBuild.PivotAt(icon, KitchenLayout.DrawerIconX, KitchenLayout.DrawerIconY, new Vector2(0.5f, 0.5f),
                     KitchenLayout.DrawerIconSize, KitchenLayout.DrawerIconSize);
                 FormalUiBuild.SetImage(icon, Color.white, false).preserveAspect = true;
 
                 TextMeshProUGUI count = FormalUiBuild.MakeText(cell, UiNames.KitchenTrayCountText, 16f, FormalUiBuild.TextDark, TextAlignmentOptions.Center);
-                FormalUiBuild.PivotAt(count.rectTransform, KitchenLayout.DrawerCellWidth * 0.5f, KitchenLayout.DrawerCountY, new Vector2(0.5f, 0.5f),
+                FormalUiBuild.PivotAt(count.rectTransform, KitchenLayout.DrawerIconX, KitchenLayout.DrawerCountY, new Vector2(0.5f, 0.5f),
                     KitchenLayout.DrawerCellWidth, KitchenLayout.DrawerCountHeight);
                 count.text = "0";
             }
@@ -115,11 +121,24 @@ namespace Mozzi.Editor
             }
         }
 
-        // 찜기 + 그 위 김 (흰 한 색 4장 · 쉴 때는 꺼짐).
+        // 맷돌 (프레임 0 쉼). 누르면 한 바퀴 돈다.
+        private static void MakeMill(RectTransform stage)
+        {
+            MakeTool(stage, UiNames.KitchenMill, SpriteKeys.KitchenMill(0), KitchenLayout.MillLeft, KitchenLayout.MillTop,
+                KitchenLayout.MillRight, KitchenLayout.BackBottom);
+        }
+
+        // 찜기 몸통 + 뚜껑(같은 자리에 겹침) + 그 위 김 (흰 한 색 4장 · 쉴 때는 꺼짐). 찜기는 누르지 않아 버튼이 없다.
         private static void MakeSteamer(RectTransform stage)
         {
-            MakeTool(stage, UiNames.KitchenSteamer, SpriteKeys.ScreenKitchenSteamer, KitchenLayout.SteamerLeft, KitchenLayout.SteamerTop,
-                KitchenLayout.SteamerRight, KitchenLayout.WorkBottom);
+            float width = KitchenLayout.SteamerRight - KitchenLayout.SteamerLeft;
+            float height = KitchenLayout.BackBottom - KitchenLayout.SteamerTop;
+            Image body = FormalUiBuild.PlaceSprite(stage, UiNames.KitchenSteamer, SpriteKeys.ScreenKitchenSteamerBody,
+                KitchenLayout.SteamerLeft, KitchenLayout.SteamerTop, new Vector2(0f, 1f));
+            WarnSize(body, width, height);
+            Image lid = FormalUiBuild.PlaceSprite(stage, UiNames.KitchenSteamerLid, SpriteKeys.ScreenKitchenSteamerLid,
+                KitchenLayout.SteamerLeft, KitchenLayout.SteamerTop, new Vector2(0f, 1f));
+            WarnSize(lid, width, height);
 
             Image steam = FormalUiBuild.PlaceSprite(stage, UiNames.KitchenSteam, SpriteKeys.KitchenSteam(0),
                 KitchenLayout.SteamLeft, KitchenLayout.SteamTop, new Vector2(0f, 1f));
@@ -176,32 +195,41 @@ namespace Mozzi.Editor
             Debug.Log("[KitchenScreenSetup] 절구 조각 " + width + "×" + height);
         }
 
-        // 접시(빚기판 위) + 빚는 떡(꺼 둠) + 결과 떡 · NEW · 이름. 흰 번쩍은 화면 전체를 덮되 누름은 막지 않는다.
+        // 빚기판 위 빚는 떡(꺼 둠) + 서랍장 왼쪽 바닥의 결과 판(떡 · 이름/값 · NEW, 반복 08 — 접시 없음). 흰 번쩍은 화면 전체를 덮되 누름은 막지 않는다.
         private static void MakeResult(RectTransform stage, Transform root)
         {
-            FormalUiBuild.PlaceSprite(stage, UiNames.KitchenPlate, SpriteKeys.ScreenKitchenPlate, KitchenLayout.PlateX, KitchenLayout.PlateY, new Vector2(0.5f, 0f));
-
             Vector2 shapePivot = new Vector2(0.5f, (KitchenLayout.ShapeSpriteHeight - KitchenLayout.ShapeSpriteBaseY) / KitchenLayout.ShapeSpriteHeight);
-            Image shape = FormalUiBuild.PlaceSprite(stage, UiNames.KitchenShape, SpriteKeys.KitchenShape(0), KitchenLayout.PlateX, KitchenLayout.PlateY, shapePivot);
+            Image shape = FormalUiBuild.PlaceSprite(stage, UiNames.KitchenShape, SpriteKeys.KitchenShape(0), KitchenLayout.BoardX, KitchenLayout.BoardSurfaceY, shapePivot);
             shape.gameObject.SetActive(false);
 
             RectTransform result = FormalUiBuild.NewNode(stage, UiNames.KitchenResult);
             FormalUiBuild.Stretch(result, 0f);
 
+            // 판 : 찹쌀이 팝업 상자와 같은 남색을 반투명으로, 모서리는 Unity 기본 둥근 UISprite 로 둥글린다. 누름은 막지 않는다.
+            RectTransform panel = FormalUiBuild.NewNode(result, ResultPanelName);
+            FormalUiBuild.PivotAt(panel, KitchenLayout.ResultPanelLeft, KitchenLayout.ResultPanelTop, new Vector2(0f, 1f),
+                KitchenLayout.ResultPanelWidth, KitchenLayout.ResultPanelHeight);
+            Image panelImage = FormalUiBuild.SetImage(panel, ResultPanelColor, false);
+            panelImage.sprite = AssetDatabase.GetBuiltinExtraResource<Sprite>(BuiltinRoundSprite);
+            panelImage.type = Image.Type.Sliced;
+
             RectTransform icon = FormalUiBuild.NewNode(result, UiNames.CakeIcon);
-            FormalUiBuild.PivotAt(icon, KitchenLayout.PlateX, KitchenLayout.ResultIconBottom, new Vector2(0.5f, 0f),
+            FormalUiBuild.PivotAt(icon, KitchenLayout.ResultIconLeft, KitchenLayout.ResultPanelMidY, new Vector2(0f, 0.5f),
                 KitchenLayout.ResultIconSize, KitchenLayout.ResultIconSize);
             FormalUiBuild.SetImage(icon, Color.white, false).preserveAspect = true;
 
-            TextMeshProUGUI isNew = FormalUiBuild.MakeText(result, UiNames.KitchenResultNewText, 30f, new Color(0.95f, 0.35f, 0.4f, 1f), TextAlignmentOptions.Center);
-            FormalUiBuild.PivotAt(isNew.rectTransform, KitchenLayout.PlateX, KitchenLayout.ResultNewY, new Vector2(0.5f, 0.5f), KitchenLayout.ResultTextWidth, 40f);
+            // 이름 · 값 두 줄 (KitchenScreen 이 「이름\n값G」 로 채운다).
+            TextMeshProUGUI name = FormalUiBuild.MakeText(result, UiNames.KitchenResultNameText, 22f, FormalUiBuild.TextLight, TextAlignmentOptions.Left);
+            FormalUiBuild.PivotAt(name.rectTransform, KitchenLayout.ResultTextLeft, KitchenLayout.ResultPanelMidY, new Vector2(0f, 0.5f),
+                KitchenLayout.ResultTextRight - KitchenLayout.ResultTextLeft, KitchenLayout.ResultTextHeight);
+            name.textWrappingMode = TextWrappingModes.NoWrap;
+            name.text = "";
+
+            TextMeshProUGUI isNew = FormalUiBuild.MakeText(result, UiNames.KitchenResultNewText, 22f, new Color(1f, 0.45f, 0.5f, 1f), TextAlignmentOptions.Right);
+            FormalUiBuild.PivotAt(isNew.rectTransform, KitchenLayout.ResultTextRight, KitchenLayout.ResultNewY, new Vector2(1f, 0.5f),
+                KitchenLayout.ResultNewWidth, KitchenLayout.ResultNewHeight);
             isNew.fontStyle = FontStyles.Bold;
             isNew.text = "NEW!";
-
-            TextMeshProUGUI name = FormalUiBuild.MakeText(result, UiNames.KitchenResultNameText, 22f, FormalUiBuild.TextDark, TextAlignmentOptions.Top);
-            FormalUiBuild.PivotAt(name.rectTransform, KitchenLayout.PlateX, KitchenLayout.ResultNameTop, new Vector2(0.5f, 1f), KitchenLayout.ResultTextWidth, 56f);
-            name.textWrappingMode = TextWrappingModes.Normal;
-            name.text = "";
             result.gameObject.SetActive(false);
 
             RectTransform flash = FormalUiBuild.NewNode(root, UiNames.KitchenResultFlash);

@@ -1,3 +1,3 @@
 [
-{"id":"default","customers_per_day":10,"customer_gap_sec":2.5,"queue_max":5,"shelf_max":30,"hint_every":5,"order_mult":1.5,"plain_rate":0.5,"count_mult1":1.5,"count_mult2":2,"count_mult3":3,"clerk_price":200,"clerk_speed_sec":0.5,"pound_taps":3,"pound_gap_ms":250,"double_tap_ms":175}
+{"id":"default","customers_per_day":10,"customer_gap_sec":2.5,"queue_max":5,"shelf_max":30,"hint_every":5,"order_mult":1.5,"plain_rate":0.5,"count_mult1":1.5,"count_mult2":2,"count_mult3":3,"clerk_price":200,"clerk_speed_sec":0.5,"pound_taps":3,"pound_gap_ms":250,"double_tap_ms":175,"clear_rate":0.3}
 ]

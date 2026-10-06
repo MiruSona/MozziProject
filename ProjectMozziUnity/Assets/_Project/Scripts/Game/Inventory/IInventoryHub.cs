@@ -34,5 +34,11 @@ namespace Mozzi.Game.Inventory
 
         // 모자라면 false 를 주고 아무것도 안 뺀다.
         bool Take(string ingredientId, int amount);
+
+        // 창고의 모든 재료를 개당 Ingredient 표 sellPrice 에 판다. 판 골드를 준다 (없으면 0).
+        int SellAll();
+
+        // 지금 다 팔면 받을 골드.
+        int SellAllPrice();
     }
 }

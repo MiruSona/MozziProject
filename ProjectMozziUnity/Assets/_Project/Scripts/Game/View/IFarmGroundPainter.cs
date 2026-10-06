@@ -9,5 +9,8 @@ namespace Mozzi.Game.View
         void Paint(Transform parent, IResourceHub resource);
 
         void Clear();
+
+        // 옆 울타리 세로 칸 fromRow ~ toRow 를 빼거나(open) 되돌린다. 장치를 산 뒤 그 자리에 장치가 선다.
+        void SetSideGap(FenceSide side, int fromRow, int toRow, bool open);
     }
 }

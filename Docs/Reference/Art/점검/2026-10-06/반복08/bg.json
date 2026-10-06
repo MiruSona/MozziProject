@@ -1,0 +1,509 @@
+{
+  "version": 1,
+  "profile": "mozzi_bg",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 1
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 48가지를 넘은 그림 0개 (배경 그림은 68가지)",
+      "items": [
+        {
+          "where": "kitchen_bg.png",
+          "colors": 62,
+          "background": true,
+          "limit": 68,
+          "ok": true
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 59가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#301A1F",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#330E1E",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#351027",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#3E1523",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#3F182A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#451A24",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#4D262B",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#4E1E27",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#5B3533",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#5C645A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#622C2F",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#662D3D",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#6D4039",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#703D41",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#7A4A45",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#7B4047",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#859079",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#8A534E",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#8C97A0",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#8D5750",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#956451",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#965C53",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#975F53",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#9C6E51",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#9E747A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#A16A57",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#A4604E",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#AD755B",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#AEB177",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#B1684C",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#B4816C",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#B5CFE1",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#BBB4A9",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#BD8575",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#BE846A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#C27D57",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#C48473",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#C5DEEA",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#CA9073",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#CE8381",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#CEA389",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#D1E7ED",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#D7DEE1",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#D8B097",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#D9A180",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#DC8D52",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#DDA381",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#E29B62",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#E3C5B7",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#E4BBA7",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#EAAD75",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#EDC8B3",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F1DDC0",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F4B67F",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F5C8A6",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F5DDC9",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F6E8D0",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F8C898",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#FFFFFC",
+          "first": "kitchen_bg.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            19.71,
+            3.89
+          ],
+          "luma": [
+            29.4,
+            47.29,
+            48.31,
+            48.56,
+            83.27
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ],
+          "luma": [
+            191.28,
+            218.81,
+            231.28,
+            237.29,
+            251.5
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ],
+          "luma": [
+            139.87,
+            173.23,
+            190.18,
+            205.81
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ],
+          "luma": [
+            47.55,
+            57.98,
+            80.21
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ],
+          "luma": [
+            124.89,
+            188.89,
+            231.59
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ],
+          "luma": [
+            153.5,
+            186.19,
+            201.37,
+            220.64
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ],
+          "luma": [
+            59.92,
+            81.1,
+            121.47
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ],
+          "luma": [
+            85.85,
+            122.58,
+            209.76
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ],
+          "luma": [
+            153.33,
+            198.03,
+            228.01
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [],
+          "luma": [
+            234.21,
+            251.17
+          ]
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": [],
+          "luma": [
+            99.11
+          ]
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ],
+          "luma": [
+            73.06,
+            100.13
+          ]
+        }
+      ]
+    }
+  ]
+}

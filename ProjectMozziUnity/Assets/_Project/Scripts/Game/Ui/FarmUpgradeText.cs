@@ -15,14 +15,15 @@ namespace Mozzi.Game.Ui
             return head + "\n" + now + " → " + next;
         }
 
-        public static string Collector(double periodSec)
+        // 예 : 「30초마다 5개」. 걷는 수가 0 이면(안 삼) 「없음」.
+        public static string Collector(double periodSec, int amount)
         {
-            if (periodSec <= 0)
+            if (amount <= 0)
             {
                 return "없음";
             }
 
-            return (int)periodSec + "초마다";
+            return (int)periodSec + "초마다 " + amount + "개";
         }
 
         public static string Feeder(double bonus)

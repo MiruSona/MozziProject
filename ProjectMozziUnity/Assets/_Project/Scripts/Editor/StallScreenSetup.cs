@@ -42,7 +42,7 @@ namespace Mozzi.Editor
             Debug.Log("[StallScreenSetup] 저장 " + PrefabPath);
         }
 
-        // 겹 순서 (뒤 → 앞) : 배경 → 칠판 장식 · 칠판 글자 → 주인 → 계산대 → 진열장 · 떡 · 소품 → 손님 → 말풍선 → 윗줄 · 버튼 줄 → 차림표 판.
+        // 겹 순서 (뒤 → 앞) : 배경 → 벽 장식 셋 → 칠판 장식 · 칠판 글자 → 주인 → 계산대 → 바닥 장식 둘 → 진열장 · 떡 · 진열장 누름 칸 · 소품 → 손님 → 말풍선 → 윗줄 · 버튼 줄 → 차림표 판.
         private static void Build(GameObject root)
         {
             root.AddComponent<StallScreen>();
@@ -55,11 +55,19 @@ namespace Mozzi.Editor
             Image bg = FormalUiBuild.PlaceSprite(stage, UiNames.SceneBg, SpriteKeys.ScreenStallBg, 0f, 0f, new Vector2(0f, 1f));
             bg.raycastTarget = true;
 
+            Vector2 bottomLeft = new Vector2(0f, 0f);
+            FormalUiBuild.PlaceSprite(stage, "DecorFrame", SpriteKeys.ScreenStallDecorFrame, StallLayout.DecorFrameX, StallLayout.DecorFrameY, bottomLeft);
+            FormalUiBuild.PlaceSprite(stage, "DecorShelf", SpriteKeys.ScreenStallDecorShelf, StallLayout.DecorShelfX, StallLayout.DecorShelfY, bottomLeft);
+            FormalUiBuild.PlaceSprite(stage, "DecorWreath", SpriteKeys.ScreenStallDecorWreath, StallLayout.DecorWreathX, StallLayout.DecorWreathY, bottomLeft);
+
             MakeBoard(stage);
             FormalUiBuild.PlaceSprite(stage, "Owner", SpriteKeys.ScreenStallOwner, StallLayout.OwnerX, StallLayout.OwnerY, new Vector2(0f, 1f));
             FormalUiBuild.PlaceSprite(stage, "Counter", SpriteKeys.ScreenStallCounter, StallLayout.CounterX, StallLayout.CounterY, new Vector2(0f, 1f));
-            FormalUiBuild.PlaceSprite(stage, "DisplayCase", SpriteKeys.ScreenStallDisplayCase, StallLayout.CaseX, StallLayout.ItemLineY, new Vector2(0.5f, 0f));
+            FormalUiBuild.PlaceSprite(stage, "DecorPlant", SpriteKeys.ScreenStallDecorPlant, StallLayout.DecorPlantX, StallLayout.DecorPlantY, bottomLeft);
+            FormalUiBuild.PlaceSprite(stage, "DecorSign", SpriteKeys.ScreenStallDecorSign, StallLayout.DecorSignX, StallLayout.DecorSignY, bottomLeft);
+            Image displayCase = FormalUiBuild.PlaceSprite(stage, "DisplayCase", SpriteKeys.ScreenStallDisplayCase, StallLayout.CaseX, StallLayout.ItemLineY, new Vector2(0.5f, 0f));
             MakeShelfCells(stage);
+            MakeShelfTapArea(stage, displayCase.rectTransform);
 
             Vector2 bottomCenter = new Vector2(0.5f, 0f);
             FormalUiBuild.PlaceSprite(stage, "Vase", SpriteKeys.ScreenStallVase, StallLayout.VaseX, StallLayout.ItemLineY, bottomCenter);
@@ -81,6 +89,19 @@ namespace Mozzi.Editor
             MakeBottomRow(t);
             // 칠판을 누르면 뜨는 차림표 판. 가림막이 버튼 줄까지 덮도록 맨 위에 둔다 (상자는 버튼 줄 위).
             FormalUiBuild.MakeRecipeMenuPanel(t);
+        }
+
+        // 진열장 그림과 같은 자리 · 크기의 투명 누름 칸. 떡 그림 위에 둬서 어디를 눌러도 진열대 팝업이 뜬다. 배선은 StallScreen 이 한다.
+        private static void MakeShelfTapArea(RectTransform stage, RectTransform displayCase)
+        {
+            RectTransform tap = FormalUiBuild.NewNode(stage, UiNames.StallShelfTapArea);
+            tap.anchorMin = displayCase.anchorMin;
+            tap.anchorMax = displayCase.anchorMax;
+            tap.pivot = displayCase.pivot;
+            tap.anchoredPosition = displayCase.anchoredPosition;
+            tap.sizeDelta = displayCase.sizeDelta;
+            FormalUiBuild.SetImage(tap, FormalUiBuild.Clear, true);
+            tap.gameObject.AddComponent<Button>().transition = Selectable.Transition.None;
         }
 
         // 칠판 머리 장식 + 그 위 「오늘의 떡」, 녹색 면 = 누름 칸 + 진열 요약 글자.

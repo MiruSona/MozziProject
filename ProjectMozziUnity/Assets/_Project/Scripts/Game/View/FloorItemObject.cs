@@ -16,6 +16,11 @@ namespace Mozzi.Game.View
         private const float DropDuration = 0.35f;
         private const float DropArcPx = 16f;
 
+        // 수집기에 빨려 드는 시간 · 끝 크기 배율 · 가운데서 살짝 뜨는 높이.
+        private const float SuckDuration = 0.45f;
+        private const float SuckEndScale = 0.3f;
+        private const float SuckArcPx = 10f;
+
         private const float ShakeDuration = 0.25f;
         private const float ShakePx = 2f;
         private const float ShakeTurns = 2f;
@@ -42,6 +47,11 @@ namespace Mozzi.Game.View
         private bool _picking;
         private float _pickTime;
 
+        // 사라지는 반응이 「수집기로 빨려 듦」이면 true. 줍기와 같은 _picking · _pickTime 을 쓴다.
+        private bool _sucking;
+        private Vector3 _suckTo;
+        private Vector3 _suckBaseScale;
+
         private bool _shaking;
         private float _shakeTime;
 
@@ -53,6 +63,12 @@ namespace Mozzi.Game.View
         public bool IsPickable
         {
             get { return _picking == false && IsDead == false; }
+        }
+
+        // 발밑에서 튀어 나오는 중. 다 내려앉으면 false.
+        public bool IsDropping
+        {
+            get { return _dropping; }
         }
 
         // 사라지는 반응까지 끝났다. Agent 가 풀에 돌린다.
@@ -97,6 +113,7 @@ namespace Mozzi.Game.View
             gameObject.name = "FloorItem_" + ingredient.Id;
             _dropping = false;
             _picking = false;
+            _sucking = false;
             _shaking = false;
             IsGone = false;
 
@@ -182,6 +199,15 @@ namespace Mozzi.Game.View
             _pickTime = 0f;
         }
 
+        // 수집기가 걷었다. 지금 자리에서 to(나팔 입)로 점점 빨라지며 날아가고 작아지며, 끝나면 IsGone 이다.
+        public void PlaySucked(Vector2 to)
+        {
+            PlayPicked();
+            _sucking = true;
+            _suckTo = new Vector3(to.x, to.y, 0f);
+            _suckBaseScale = transform.localScale;
+        }
+
         // 창고가 차서 못 주웠다. 훑는 손가락이 매 프레임 불러도 처음부터 다시 흔들지 않는다.
         public void PlayShake()
         {
@@ -229,8 +255,32 @@ namespace Mozzi.Game.View
             transform.position = pos;
         }
 
+        // 끌려가듯 처음엔 느리고 끝에서 빠르다 (t²). 끝 2할 동안 흐려진다.
+        private void StepSuck(float deltaTime)
+        {
+            _pickTime += deltaTime;
+            float t = Mathf.Clamp01(_pickTime / SuckDuration);
+            float e = t * t;
+            Vector3 pos = Vector3.Lerp(_basePosition, _suckTo, e);
+            pos.y += Mathf.Sin(t * Mathf.PI) * LayoutConst.ToUnits(SuckArcPx);
+            transform.position = pos;
+            transform.localScale = _suckBaseScale * Mathf.Lerp(1f, SuckEndScale, e);
+            SetAlpha(Mathf.Clamp01((1f - t) / 0.2f));
+
+            if (t >= 1f)
+            {
+                IsGone = true;
+            }
+        }
+
         private void StepPick(float deltaTime)
         {
+            if (_sucking)
+            {
+                StepSuck(deltaTime);
+                return;
+            }
+
             _pickTime += deltaTime;
             float t = Mathf.Clamp01(_pickTime / PickDuration);
             float jump = Mathf.Sin(t * Mathf.PI) * PickJump;
@@ -248,6 +298,7 @@ namespace Mozzi.Game.View
             base.OnReturn();
             _dropping = false;
             _picking = false;
+            _sucking = false;
             _shaking = false;
             IsGone = false;
             IngredientId = null;

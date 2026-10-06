@@ -29,7 +29,7 @@ namespace Mozzi.Game.Farm
         private readonly Dictionary<string, double> _produceAcc = new Dictionary<string, double>();
         private readonly Dictionary<string, double> _breedClock = new Dictionary<string, double>();
         private readonly Dictionary<string, int> _piles = new Dictionary<string, int>();
-        private readonly List<string> _pileIds = new List<string>();
+        private readonly List<string> _collectorSkip = new List<string>();
 
         // 농장 강화 셋(바닥 넓히기 · 수집기 · 먹이 공급기)의 단계와 최대 단계. 담장은 따로 둔다.
         private readonly Dictionary<string, int> _levels = new Dictionary<string, int>();
@@ -118,10 +118,23 @@ namespace Mozzi.Game.Farm
             get { return _row.PileMax; }
         }
 
-        // 수집기가 걷는 주기 (초). 수집기가 없으면 0.
+        // 수집기가 걷는 주기 (초). 주기는 Farm 표 하나이고 단계는 걷는 수만 올린다. 수집기가 없으면 0.
         public double CollectorPeriodSec
         {
-            get { return RateOf(GrowthUtil.KindCollector); }
+            get
+            {
+                if (CollectorAmount <= 0)
+                {
+                    return 0;
+                }
+
+                return _row.CollectorPeriodSec;
+            }
+        }
+
+        public int CollectorAmount
+        {
+            get { return (int)RateOf(GrowthUtil.KindCollector); }
         }
 
         // 먹이 공급기가 더하는 생산 속도 비율 (0.1 = +10%).
@@ -194,7 +207,7 @@ namespace Mozzi.Game.Farm
                 }
             }
 
-            StepCollector(deltaTime);
+            StepCollector(deltaTime, true);
 
             for (int i = 0; i < _speciesOrder.Count; i++)
             {
@@ -518,7 +531,8 @@ namespace Mozzi.Game.Farm
         }
 
         // 생산 한 걸음. 이번 걸음에 더미로 떨어진 개수를 준다. 이벤트는 부르는 쪽 몫이다.
-        // 창고가 찼거나 바닥 합계가 한도에 닿으면 시계가 0 으로 돌아가고 멈춘다 (농장 문서 5절). 늪처럼 부재료가 없는 종은 생산이 없다.
+        // 창고 + 바닥 그 재료가 창고 상한에 닿았거나 바닥 합계가 한도에 닿으면 시계가 0 으로 돌아가고 멈춘다 (농장 문서 5절).
+        // 창고 상한까지만 떨궈 못 줍는 재료가 바닥에 남지 않게 한다. 늪처럼 부재료가 없는 종은 생산이 없다.
         private int StepProduce(MozziSpeciesRow species, double deltaTime)
         {
             int count = _countBySpecies[species.Id];
@@ -528,7 +542,9 @@ namespace Mozzi.Game.Farm
             }
 
             int floorTotal = FloorTotal;
-            if (_inventory.IsFull(species.IngredientId) || floorTotal >= FloorMax)
+            int held = _inventory.Count(species.IngredientId) + PileOf(species.IngredientId);
+            int cap = _inventory.Cap(species.IngredientId);
+            if (held >= cap || floorTotal >= FloorMax)
             {
                 _produceAcc[species.Id] = 0;
                 return 0;
@@ -543,6 +559,7 @@ namespace Mozzi.Game.Farm
             }
 
             int fit = FarmUpgradeMath.ClampDrop(dropped, floorTotal, FloorMax);
+            fit = FarmUpgradeMath.ClampDrop(fit, held, cap);
             if (fit < dropped)
             {
                 acc = 0;
@@ -558,8 +575,9 @@ namespace Mozzi.Game.Farm
             return dropped;
         }
 
-        // 수집기 한 걸음. 주기가 차면 바닥 재료를 모두 창고로 걷는다. 창고가 찬 재료는 바닥에 남는다.
-        private void StepCollector(double deltaTime)
+        // 수집기 한 걸음. 주기가 차면 바닥 재료를 CollectorAmount 개까지 많이 쌓인 재료부터 창고로 걷는다. 창고가 찬 재료는 건너뛴다.
+        // publish 면 걷은 재료마다 CollectorSweptEvent 를 낸다 — 화면이 수집기를 돌린다. 오프라인 처리는 false 다.
+        private void StepCollector(double deltaTime, bool publish)
         {
             double period = CollectorPeriodSec;
             if (period <= 0)
@@ -576,12 +594,28 @@ namespace Mozzi.Game.Farm
             }
 
             _collectorClock = clock % period;
-            // PickUp 이 _piles 값을 고치므로 id 를 따로 떠 놓고 돈다.
-            _pileIds.Clear();
-            _pileIds.AddRange(_piles.Keys);
-            for (int i = 0; i < _pileIds.Count; i++)
+            // 창고가 차서 하나도 못 옮긴 재료는 _collectorSkip 에 넣어 다음 고르기에서 뺀다.
+            _collectorSkip.Clear();
+            int left = CollectorAmount;
+            while (left > 0)
             {
-                PickUp(_pileIds[i]);
+                string id = FarmUpgradeMath.BiggestPile(_piles, _collectorSkip);
+                if (id == null)
+                {
+                    return;
+                }
+
+                int moved = PickUp(id, left);
+                if (moved <= 0)
+                {
+                    _collectorSkip.Add(id);
+                }
+                else if (publish)
+                {
+                    EventBus.Publish(new CollectorSweptEvent(id, moved));
+                }
+
+                left -= moved;
             }
         }
 
@@ -643,7 +677,7 @@ namespace Mozzi.Game.Farm
                     }
                 }
 
-                StepCollector(step);
+                StepCollector(step, false);
 
                 for (int i = 0; i < _speciesOrder.Count; i++)
                 {

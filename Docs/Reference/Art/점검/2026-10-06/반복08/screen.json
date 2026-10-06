@@ -1,0 +1,3368 @@
+{
+  "version": 1,
+  "profile": "mozzi_prop",
+  "status": "fail",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 35
+  },
+  "failed": [
+    "max_colors"
+  ],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": false,
+      "detail": "한도 48가지를 넘은 그림 1개",
+      "items": [
+        {
+          "where": "kitchen_bg.png",
+          "colors": 62,
+          "background": true,
+          "limit": 48,
+          "ok": false
+        },
+        {
+          "where": "kitchen_drawer_3d.png",
+          "colors": 25,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_mill_0.png",
+          "colors": 44,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_mill_1.png",
+          "colors": 46,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_mill_2.png",
+          "colors": 46,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_mill_3.png",
+          "colors": 47,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_mill_4.png",
+          "colors": 46,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_0.png",
+          "colors": 23,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_1.png",
+          "colors": 24,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_2.png",
+          "colors": 24,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_3.png",
+          "colors": 24,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_4.png",
+          "colors": 24,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_5.png",
+          "colors": 24,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_6.png",
+          "colors": 24,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_rough_0.png",
+          "colors": 16,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_rough_1.png",
+          "colors": 17,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_rough_2.png",
+          "colors": 17,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_rough_3.png",
+          "colors": 17,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_rough_4.png",
+          "colors": 17,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_rough_5.png",
+          "colors": 17,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_rough_6.png",
+          "colors": 17,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_smooth_0.png",
+          "colors": 32,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_smooth_1.png",
+          "colors": 33,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_smooth_2.png",
+          "colors": 33,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_smooth_3.png",
+          "colors": 34,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_smooth_4.png",
+          "colors": 34,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_smooth_5.png",
+          "colors": 34,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_pound_smooth_6.png",
+          "colors": 34,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_steamer_body.png",
+          "colors": 47,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "kitchen_steamer_lid.png",
+          "colors": 32,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "stall_decor_frame.png",
+          "colors": 48,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "stall_decor_plant.png",
+          "colors": 47,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "stall_decor_shelf.png",
+          "colors": 47,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "stall_decor_sign.png",
+          "colors": 47,
+          "limit": 48,
+          "ok": true
+        },
+        {
+          "where": "stall_decor_wreath.png",
+          "colors": 40,
+          "limit": 48,
+          "ok": true
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 431가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#000000",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#010205",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#020101",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#040403",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#100116",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#100B0B",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#150016",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#160412",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#1A0019",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#1A0116",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#1C0313",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#1D0019",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#1E001F",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#1F0712",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#211014",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#22001E",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#23021B",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#240815",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#251216",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#252B18",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#260A17",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#290918",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#2D0B1A",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#2D101B",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#2F0E1F",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#2F341D",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#300F1D",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#30171B",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#301A1F",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#330E1E",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#333B21",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#343927",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#351027",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#351F17",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#371A1D",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#391D20",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#3A3F27",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#3C1921",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#3C2019",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#3C343C",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#3C4529",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#3E1523",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#3E1E21",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#3E2E24",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#3F182A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#40211A",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#412222",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#41261E",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#434830",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#44423D",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#444E55",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#451A24",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#453931",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#462627",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#47251D",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#472F25",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#482920",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#495035",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#4A1E2B",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#4B2A2A",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#4B2E24",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#4B4C53",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#4C2725",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#4C2B25",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#4C4343",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#4D262B",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#4D2721",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#4D2920",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#4D2A20",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#4E1E27",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#4E2C29",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#4F4A46",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#514938",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#51493B",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#523025",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#525741",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#552C22",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#573734",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#584845",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#592933",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#594947",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#595E3F",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#5A322D",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#5A3832",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#5A3D36",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#5B3533",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#5B4C49",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#5C645A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#5D3428",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#5D4F4C",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#5D5732",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#5E423B",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#5E433C",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#5F514E",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#603933",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#606848",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#614740",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#622C2F",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#63463E",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#635451",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#643C32",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#653E37",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#662D3D",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#665854",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#673A2D",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#67463D",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#67473E",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#674A42",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#675E38",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#685856",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#695A56",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#6B3C2E",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#6B5C58",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#6C3E2E",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#6C3F36",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#6C664E",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#6C724D",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#6D4039",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#6D5040",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#6D5E5A",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#6F605B",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#703D41",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#704A3E",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#704C42",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#70554E",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#714E43",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#716962",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#73625D",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#744232",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#744433",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#744939",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#74493B",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#745856",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#753D41",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#757A53",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#764838",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#764D40",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#79463B",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#7A4A45",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#7A4C3E",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#7B4047",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#7B4244",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#7C4837",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#7C6A63",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#7D5346",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#7F4C39",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#7F5548",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#804F3F",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#805548",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#806456",
+          "first": "kitchen_mill_1.png"
+        },
+        {
+          "color": "#828255",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#834D3B",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#83513E",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#835140",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#845849",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#846944",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#85746E",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#857C5A",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#859079",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#865F4C",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#874B41",
+          "first": "stall_decor_wreath.png"
+        },
+        {
+          "color": "#875745",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#887456",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#89513E",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#895540",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#895D4C",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#898676",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#8A534E",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#8A5B49",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#8A8655",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#8B4F49",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#8B5845",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#8C97A0",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#8D5750",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#8E5642",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#8E604F",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#905A42",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#91614E",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#918A55",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#929D9E",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#955B45",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#956046",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#956049",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#95634E",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#956451",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#965C53",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#96624A",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#96986D",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#975F53",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#97877F",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#97938F",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#979E9D",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#98664D",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#995549",
+          "first": "stall_decor_wreath.png"
+        },
+        {
+          "color": "#9B6853",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#9B6D53",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#9B9563",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#9C6149",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#9C6E51",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#9E5833",
+          "first": "kitchen_mill_1.png"
+        },
+        {
+          "color": "#9E674C",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#9E6F5B",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#9E747A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#9E9155",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#9F6950",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#9F725B",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#A07858",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#A0928A",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#A16A57",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#A16D4F",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#A26D56",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#A35C4F",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#A35F50",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#A3654D",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#A36E52",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#A4604E",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#A46849",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#A6612D",
+          "first": "kitchen_mill_2.png"
+        },
+        {
+          "color": "#A6A06B",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#A7725A",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#A7725B",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#A77657",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#A79756",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#A79B91",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#A96B50",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#A96B55",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#A9755D",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#A97F69",
+          "first": "stall_decor_wreath.png"
+        },
+        {
+          "color": "#AA6B4F",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#AA765C",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#AB7456",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#AB7C60",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#AC6055",
+          "first": "stall_decor_wreath.png"
+        },
+        {
+          "color": "#AD755B",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#AE765B",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#AE8978",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#AEB177",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#AF7254",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#AF795F",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#B06F4A",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#B07A5F",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#B1684C",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#B1775C",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#B2724E",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#B36F62",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#B3734E",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#B37D62",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#B47350",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#B4816C",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#B4846B",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#B4A49A",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#B58161",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#B5CFE1",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#B67148",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#B67859",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#B7735B",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#B77A56",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#B78062",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#B7815F",
+          "first": "stall_decor_wreath.png"
+        },
+        {
+          "color": "#B97C63",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#B98162",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#BA6E61",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#BA7A53",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#BBB4A9",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#BD7D56",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#BD8575",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#BE7D5C",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#BE846A",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#BE9F85",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#BF8258",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#BF835C",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#BF8360",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#BF8567",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#BF8C68",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#C0826A",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#C0845D",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#C0855E",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#C1825F",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#C18768",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#C27C72",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#C27D57",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#C38C6D",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#C48473",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#C48860",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#C48D6D",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#C58554",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#C58C6B",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#C5DEEA",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#C68C62",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#C78D71",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#C88161",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#C88C64",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#C98049",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#C98473",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#C98E63",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#C98E6B",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#C99670",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#CA9073",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#CA916F",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#CABCAC",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#CBBFB1",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#CC8765",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#CC9270",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#CC9366",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#CC9569",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#CC9574",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#CC9D80",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#CCBDB2",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#CD8074",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#CD8B6A",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#CE8381",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#CE9572",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#CE976A",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#CEA389",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#CF9775",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#D09364",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#D0996A",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#D09D6B",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#D1927E",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#D19975",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#D1A178",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#D1E7ED",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#D2B7A7",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#D3935B",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#D39D70",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#D49E6F",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#D49F71",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#D58A71",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#D59D78",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#D5C5B9",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#D7DEE1",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#D8B097",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#D9A180",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#D9A377",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#D9A37E",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#D9A676",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#D9AA76",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#D9AB81",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#DAA479",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#DAA58D",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#DAAA7B",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#DAAA7C",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#DACCC0",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#DBAA7A",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#DC8D52",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#DC9B64",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#DDA381",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#DDAD88",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#DEA760",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#DEA982",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#DEC7AF",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#DF9389",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#DFB08B",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#DFB282",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#DFB383",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#E09892",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#E0AE86",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#E0B58B",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#E1974D",
+          "first": "kitchen_mill_1.png"
+        },
+        {
+          "color": "#E1AD7C",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#E1B28B",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#E29B62",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#E29E8D",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#E2BA8F",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#E3A264",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#E3C5B7",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#E3D1BD",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#E3E0CE",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#E4B68F",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#E4B88A",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#E4BBA7",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#E5BAA5",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#E5BC8C",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#E5CFB6",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#E7C097",
+          "first": "stall_decor_wreath.png"
+        },
+        {
+          "color": "#E7C59D",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#E7DBCF",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#E8C19F",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#E9A499",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#E9C2AE",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#E9CFBE",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#EAAD75",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#EAB3A4",
+          "first": "stall_decor_sign.png"
+        },
+        {
+          "color": "#EABC64",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#EACFB0",
+          "first": "kitchen_steamer_body.png"
+        },
+        {
+          "color": "#ECCBAA",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#ECCDB6",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#ECD5A9",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#EDA7A2",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#EDB1A6",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#EDC8B3",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#EDCCA0",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#EDD2A8",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#EEAC62",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#EED1A6",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#EED3B4",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#EED9C2",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#F0DBC3",
+          "first": "kitchen_steamer_lid.png"
+        },
+        {
+          "color": "#F1B373",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#F1DDC0",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F3E6D2",
+          "first": "kitchen_pound_rough_0.png"
+        },
+        {
+          "color": "#F3E8DB",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#F4B67F",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F4C3B8",
+          "first": "stall_decor_wreath.png"
+        },
+        {
+          "color": "#F4CE66",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#F4D360",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#F4E4CD",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#F5C8A6",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F5DDC9",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F6D85E",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#F6E8D0",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F7E6C9",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#F8C080",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#F8C898",
+          "first": "kitchen_bg.png"
+        },
+        {
+          "color": "#F8EBD5",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#F8ECD6",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#F9F1E1",
+          "first": "kitchen_pound_smooth_0.png"
+        },
+        {
+          "color": "#F9F2E1",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#FAD395",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#FAE3A6",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#FAF0E4",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#FBEECC",
+          "first": "stall_decor_plant.png"
+        },
+        {
+          "color": "#FBF1D6",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#FBF1DA",
+          "first": "stall_decor_shelf.png"
+        },
+        {
+          "color": "#FCFCF7",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#FDFEFD",
+          "first": "kitchen_drawer_3d.png"
+        },
+        {
+          "color": "#FED14B",
+          "first": "stall_decor_frame.png"
+        },
+        {
+          "color": "#FEE9C8",
+          "first": "kitchen_pound_0.png"
+        },
+        {
+          "color": "#FEFDFC",
+          "first": "kitchen_mill_0.png"
+        },
+        {
+          "color": "#FFFEFE",
+          "first": "kitchen_pound_smooth_3.png"
+        },
+        {
+          "color": "#FFFFFC",
+          "first": "kitchen_bg.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "outline",
+      "ok": false,
+      "detail": "외곽선 방식이 다른 그림 25장",
+      "items": [
+        {
+          "where": "kitchen_drawer_3d.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.7981,
+          "dark": 0.7713,
+          "lit": 0.996,
+          "solid_share": 0.7981,
+          "inner_share": 0.6144,
+          "hue_diff": 46.11
+        },
+        {
+          "where": "kitchen_mill_0.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.7418,
+          "dark": 0.9924,
+          "lit": 0.938,
+          "solid_share": 0.2329,
+          "inner_share": 0.119,
+          "hue_diff": 73.68
+        },
+        {
+          "where": "kitchen_mill_1.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.7715,
+          "dark": 0.9866,
+          "lit": 0.861,
+          "solid_share": 0.2312,
+          "inner_share": 0.1344,
+          "hue_diff": 72.18
+        },
+        {
+          "where": "kitchen_mill_2.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 0.8099,
+          "dark": 0.9725,
+          "lit": 0.805,
+          "solid_share": 0.3113,
+          "inner_share": 0.1322,
+          "hue_diff": 71.62
+        },
+        {
+          "where": "kitchen_mill_3.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.7915,
+          "dark": 0.9849,
+          "lit": 0.819,
+          "solid_share": 0.2296,
+          "inner_share": 0.145,
+          "hue_diff": 71.64
+        },
+        {
+          "where": "kitchen_mill_4.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.7973,
+          "dark": 0.976,
+          "lit": 0.861,
+          "solid_share": 0.272,
+          "inner_share": 0.128,
+          "hue_diff": 70.61
+        },
+        {
+          "where": "kitchen_pound_1.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0234,
+          "dark": 0.8772,
+          "lit": 0.852,
+          "solid_share": 0.5821,
+          "inner_share": 0.1338,
+          "hue_diff": 44.09
+        },
+        {
+          "where": "kitchen_pound_2.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0181,
+          "dark": 0.8886,
+          "lit": 1.102,
+          "solid_share": 0.6334,
+          "inner_share": 0.1205,
+          "hue_diff": 46.08
+        },
+        {
+          "where": "kitchen_pound_3.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0286,
+          "dark": 0.8345,
+          "lit": 0.983,
+          "solid_share": 0.6417,
+          "inner_share": 0.131,
+          "hue_diff": 46.39
+        },
+        {
+          "where": "kitchen_pound_4.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0043,
+          "dark": 0.8046,
+          "lit": 0.973,
+          "solid_share": 0.5983,
+          "inner_share": 0.1336,
+          "hue_diff": 46.04
+        },
+        {
+          "where": "kitchen_pound_5.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0303,
+          "dark": 0.8216,
+          "lit": 1.046,
+          "solid_share": 0.54,
+          "inner_share": 0.1104,
+          "hue_diff": 44.87
+        },
+        {
+          "where": "kitchen_pound_6.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.0055,
+          "dark": 0.8854,
+          "lit": 0.977,
+          "solid_share": 0.5894,
+          "inner_share": 0.1405,
+          "hue_diff": 44.21
+        },
+        {
+          "where": "kitchen_pound_rough_1.png",
+          "why": [
+            "외곽선 판정 selout+light 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "selout+light",
+          "black": 0.0152,
+          "dark": 0.8841,
+          "lit": 1.16,
+          "solid_share": 0.3228,
+          "inner_share": 0.1628,
+          "hue_diff": 33.54
+        },
+        {
+          "where": "kitchen_pound_rough_2.png",
+          "why": [
+            "외곽선 판정 selout+light 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "selout+light",
+          "black": 0.0193,
+          "dark": 0.8634,
+          "lit": 1.169,
+          "solid_share": 0.3545,
+          "inner_share": 0.1766,
+          "hue_diff": 33.52
+        },
+        {
+          "where": "kitchen_pound_rough_5.png",
+          "why": [
+            "외곽선 판정 selout+light 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "selout+light",
+          "black": 0.0054,
+          "dark": 0.6344,
+          "lit": 1.161,
+          "solid_share": 0.2503,
+          "inner_share": 0.2927,
+          "hue_diff": 24.78
+        },
+        {
+          "where": "kitchen_pound_rough_6.png",
+          "why": [
+            "외곽선 판정 selout+light 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "selout+light",
+          "black": 0.0075,
+          "dark": 0.7182,
+          "lit": 1.245,
+          "solid_share": 0.283,
+          "inner_share": 0.1547,
+          "hue_diff": 27.2
+        },
+        {
+          "where": "kitchen_pound_smooth_0.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.3398,
+          "dark": 0.9436,
+          "lit": 1.045,
+          "solid_share": 0.3398,
+          "inner_share": 0.0935,
+          "hue_diff": 37.3
+        },
+        {
+          "where": "kitchen_pound_smooth_1.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.4987,
+          "dark": 0.9114,
+          "lit": 1.431,
+          "solid_share": 0.4603,
+          "inner_share": 0.0873,
+          "hue_diff": 41.71
+        },
+        {
+          "where": "kitchen_pound_smooth_2.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.5571,
+          "dark": 0.9184,
+          "lit": 0.926,
+          "solid_share": 0.5107,
+          "inner_share": 0.123,
+          "hue_diff": 42.63
+        },
+        {
+          "where": "kitchen_pound_smooth_3.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.5524,
+          "dark": 0.9077,
+          "lit": 1.043,
+          "solid_share": 0.4825,
+          "inner_share": 0.0923,
+          "hue_diff": 43.36
+        },
+        {
+          "where": "kitchen_pound_smooth_4.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.5211,
+          "dark": 0.9259,
+          "lit": 0.884,
+          "solid_share": 0.4955,
+          "inner_share": 0.1162,
+          "hue_diff": 43.95
+        },
+        {
+          "where": "kitchen_pound_smooth_5.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.5065,
+          "dark": 0.8997,
+          "lit": 1.034,
+          "solid_share": 0.4557,
+          "inner_share": 0.0794,
+          "hue_diff": 41.48
+        },
+        {
+          "where": "kitchen_pound_smooth_6.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.487,
+          "dark": 0.9003,
+          "lit": 0.989,
+          "solid_share": 0.4689,
+          "inner_share": 0.0959,
+          "hue_diff": 42.99
+        },
+        {
+          "where": "kitchen_steamer_body.png",
+          "why": [
+            "외곽선 판정 black 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "black",
+          "black": 0.9979,
+          "dark": 0.9979,
+          "lit": 0.906,
+          "solid_share": 0.7085,
+          "inner_share": 0.083,
+          "hue_diff": 35.46
+        },
+        {
+          "where": "kitchen_steamer_lid.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.5733,
+          "dark": 0.8966,
+          "lit": 0.758,
+          "solid_share": 0.444,
+          "inner_share": 0.0905,
+          "hue_diff": 32.09
+        }
+      ]
+    },
+    {
+      "rule": "isolated",
+      "ok": false,
+      "detail": "외톨이 픽셀이 많은 그림 3장",
+      "items": [
+        {
+          "where": "stall_decor_plant.png",
+          "why": [
+            "외톨이 픽셀 563개 · 비율 0.159 > 0.15"
+          ],
+          "ratio": 0.1594,
+          "points": [
+            [
+              11,
+              1
+            ],
+            [
+              16,
+              1
+            ],
+            [
+              17,
+              1
+            ],
+            [
+              9,
+              2
+            ],
+            [
+              10,
+              2
+            ],
+            [
+              17,
+              2
+            ],
+            [
+              13,
+              3
+            ],
+            [
+              16,
+              3
+            ],
+            [
+              17,
+              3
+            ],
+            [
+              20,
+              4
+            ],
+            [
+              21,
+              4
+            ],
+            [
+              24,
+              4
+            ],
+            [
+              7,
+              5
+            ],
+            [
+              12,
+              5
+            ],
+            [
+              18,
+              5
+            ],
+            [
+              19,
+              5
+            ],
+            [
+              20,
+              5
+            ],
+            [
+              24,
+              5
+            ],
+            [
+              6,
+              6
+            ],
+            [
+              7,
+              6
+            ],
+            [
+              17,
+              6
+            ],
+            [
+              18,
+              6
+            ],
+            [
+              5,
+              7
+            ],
+            [
+              19,
+              7
+            ],
+            [
+              22,
+              7
+            ],
+            [
+              9,
+              8
+            ],
+            [
+              13,
+              8
+            ],
+            [
+              15,
+              8
+            ],
+            [
+              16,
+              8
+            ],
+            [
+              14,
+              9
+            ],
+            [
+              16,
+              9
+            ],
+            [
+              19,
+              9
+            ],
+            [
+              8,
+              10
+            ],
+            [
+              12,
+              10
+            ],
+            [
+              15,
+              10
+            ],
+            [
+              32,
+              10
+            ],
+            [
+              33,
+              10
+            ],
+            [
+              38,
+              10
+            ],
+            [
+              10,
+              11
+            ],
+            [
+              34,
+              11
+            ],
+            [
+              20,
+              12
+            ],
+            [
+              32,
+              12
+            ],
+            [
+              40,
+              12
+            ],
+            [
+              39,
+              13
+            ],
+            [
+              6,
+              14
+            ],
+            [
+              15,
+              14
+            ],
+            [
+              19,
+              14
+            ],
+            [
+              24,
+              14
+            ],
+            [
+              30,
+              14
+            ],
+            [
+              6,
+              15
+            ]
+          ]
+        },
+        {
+          "where": "stall_decor_shelf.png",
+          "why": [
+            "외톨이 픽셀 194개 · 비율 0.168 > 0.15"
+          ],
+          "ratio": 0.168,
+          "points": [
+            [
+              14,
+              1
+            ],
+            [
+              14,
+              2
+            ],
+            [
+              5,
+              3
+            ],
+            [
+              11,
+              4
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              17,
+              4
+            ],
+            [
+              11,
+              5
+            ],
+            [
+              14,
+              5
+            ],
+            [
+              13,
+              6
+            ],
+            [
+              5,
+              7
+            ],
+            [
+              9,
+              7
+            ],
+            [
+              15,
+              7
+            ],
+            [
+              21,
+              7
+            ],
+            [
+              22,
+              7
+            ],
+            [
+              4,
+              8
+            ],
+            [
+              5,
+              8
+            ],
+            [
+              6,
+              8
+            ],
+            [
+              17,
+              8
+            ],
+            [
+              21,
+              8
+            ],
+            [
+              22,
+              8
+            ],
+            [
+              23,
+              8
+            ],
+            [
+              24,
+              8
+            ],
+            [
+              25,
+              8
+            ],
+            [
+              26,
+              8
+            ],
+            [
+              27,
+              8
+            ],
+            [
+              28,
+              8
+            ],
+            [
+              6,
+              9
+            ],
+            [
+              8,
+              9
+            ],
+            [
+              17,
+              9
+            ],
+            [
+              23,
+              9
+            ],
+            [
+              24,
+              9
+            ],
+            [
+              25,
+              9
+            ],
+            [
+              28,
+              9
+            ],
+            [
+              14,
+              10
+            ],
+            [
+              7,
+              11
+            ],
+            [
+              9,
+              11
+            ],
+            [
+              28,
+              11
+            ],
+            [
+              9,
+              12
+            ],
+            [
+              11,
+              12
+            ],
+            [
+              14,
+              12
+            ],
+            [
+              20,
+              12
+            ],
+            [
+              21,
+              12
+            ],
+            [
+              12,
+              13
+            ],
+            [
+              13,
+              13
+            ],
+            [
+              15,
+              13
+            ],
+            [
+              16,
+              13
+            ],
+            [
+              17,
+              13
+            ],
+            [
+              31,
+              13
+            ],
+            [
+              32,
+              13
+            ],
+            [
+              33,
+              13
+            ]
+          ]
+        },
+        {
+          "where": "stall_decor_wreath.png",
+          "why": [
+            "외톨이 픽셀 357개 · 비율 0.303 > 0.15"
+          ],
+          "ratio": 0.3028,
+          "points": [
+            [
+              16,
+              2
+            ],
+            [
+              17,
+              2
+            ],
+            [
+              16,
+              3
+            ],
+            [
+              17,
+              3
+            ],
+            [
+              18,
+              3
+            ],
+            [
+              19,
+              4
+            ],
+            [
+              10,
+              7
+            ],
+            [
+              24,
+              7
+            ],
+            [
+              7,
+              8
+            ],
+            [
+              13,
+              8
+            ],
+            [
+              20,
+              8
+            ],
+            [
+              26,
+              8
+            ],
+            [
+              27,
+              8
+            ],
+            [
+              14,
+              9
+            ],
+            [
+              20,
+              9
+            ],
+            [
+              22,
+              9
+            ],
+            [
+              9,
+              10
+            ],
+            [
+              11,
+              10
+            ],
+            [
+              14,
+              10
+            ],
+            [
+              19,
+              10
+            ],
+            [
+              22,
+              10
+            ],
+            [
+              23,
+              10
+            ],
+            [
+              25,
+              10
+            ],
+            [
+              6,
+              11
+            ],
+            [
+              7,
+              11
+            ],
+            [
+              10,
+              11
+            ],
+            [
+              14,
+              11
+            ],
+            [
+              16,
+              11
+            ],
+            [
+              20,
+              11
+            ],
+            [
+              28,
+              11
+            ],
+            [
+              5,
+              12
+            ],
+            [
+              7,
+              12
+            ],
+            [
+              15,
+              12
+            ],
+            [
+              29,
+              12
+            ],
+            [
+              7,
+              13
+            ],
+            [
+              8,
+              13
+            ],
+            [
+              11,
+              13
+            ],
+            [
+              15,
+              13
+            ],
+            [
+              20,
+              13
+            ],
+            [
+              29,
+              13
+            ],
+            [
+              3,
+              14
+            ],
+            [
+              4,
+              14
+            ],
+            [
+              5,
+              14
+            ],
+            [
+              6,
+              14
+            ],
+            [
+              7,
+              14
+            ],
+            [
+              8,
+              14
+            ],
+            [
+              9,
+              14
+            ],
+            [
+              12,
+              14
+            ],
+            [
+              13,
+              14
+            ],
+            [
+              16,
+              14
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "color_cap",
+      "ok": false,
+      "detail": "권장 색 수를 넘은 그림 4장",
+      "items": [
+        {
+          "where": "stall_decor_frame.png",
+          "why": [
+            "색 48가지 > 권장 32가지 (크기 51)"
+          ],
+          "size": 51,
+          "colors": 48,
+          "cap": 32
+        },
+        {
+          "where": "stall_decor_shelf.png",
+          "why": [
+            "색 47가지 > 권장 32가지 (크기 43)"
+          ],
+          "size": 43,
+          "colors": 47,
+          "cap": 32
+        },
+        {
+          "where": "stall_decor_sign.png",
+          "why": [
+            "색 47가지 > 권장 32가지 (크기 55)"
+          ],
+          "size": 55,
+          "colors": 47,
+          "cap": 32
+        },
+        {
+          "where": "stall_decor_wreath.png",
+          "why": [
+            "색 40가지 > 권장 32가지 (크기 47)"
+          ],
+          "size": 47,
+          "colors": 40,
+          "cap": 32
+        }
+      ]
+    },
+    {
+      "rule": "near_colors",
+      "ok": false,
+      "detail": "비슷한 색 쌍이 있는 그림 1장",
+      "items": [
+        {
+          "where": "kitchen_steamer_body.png",
+          "why": [
+            "비슷한 색 쌍 24개 (합치기 후보)"
+          ],
+          "count": 24,
+          "pairs": [
+            {
+              "from": "#5F514E",
+              "to": "#5D4F4C",
+              "from_count": 812,
+              "to_count": 840,
+              "delta": 2
+            },
+            {
+              "from": "#584845",
+              "to": "#594947",
+              "from_count": 676,
+              "to_count": 688,
+              "delta": 2
+            },
+            {
+              "from": "#6F605B",
+              "to": "#6D5E5A",
+              "from_count": 343,
+              "to_count": 612,
+              "delta": 2
+            },
+            {
+              "from": "#020101",
+              "to": "#040403",
+              "from_count": 332,
+              "to_count": 657,
+              "delta": 3
+            },
+            {
+              "from": "#DDAD88",
+              "to": "#DFB08B",
+              "from_count": 310,
+              "to_count": 501,
+              "delta": 3
+            },
+            {
+              "from": "#6B5C58",
+              "to": "#6D5E5A",
+              "from_count": 287,
+              "to_count": 612,
+              "delta": 2
+            },
+            {
+              "from": "#6B5C58",
+              "to": "#6F605B",
+              "from_count": 287,
+              "to_count": 343,
+              "delta": 4
+            },
+            {
+              "from": "#A7725B",
+              "to": "#A9755D",
+              "from_count": 260,
+              "to_count": 665,
+              "delta": 3
+            },
+            {
+              "from": "#695A56",
+              "to": "#6B5C58",
+              "from_count": 219,
+              "to_count": 287,
+              "delta": 2
+            },
+            {
+              "from": "#695A56",
+              "to": "#6D5E5A",
+              "from_count": 219,
+              "to_count": 612,
+              "delta": 4
+            },
+            {
+              "from": "#AF795F",
+              "to": "#B37D62",
+              "from_count": 218,
+              "to_count": 371,
+              "delta": 4
+            },
+            {
+              "from": "#63463E",
+              "to": "#614740",
+              "from_count": 209,
+              "to_count": 551,
+              "delta": 2
+            },
+            {
+              "from": "#CC9574",
+              "to": "#CC9270",
+              "from_count": 200,
+              "to_count": 272,
+              "delta": 4
+            },
+            {
+              "from": "#CC9574",
+              "to": "#CF9775",
+              "from_count": 200,
+              "to_count": 535,
+              "delta": 3
+            },
+            {
+              "from": "#5B4C49",
+              "to": "#584845",
+              "from_count": 193,
+              "to_count": 676,
+              "delta": 4
+            },
+            {
+              "from": "#5B4C49",
+              "to": "#594947",
+              "from_count": 193,
+              "to_count": 688,
+              "delta": 3
+            },
+            {
+              "from": "#5B4C49",
+              "to": "#5D4F4C",
+              "from_count": 193,
+              "to_count": 840,
+              "delta": 3
+            },
+            {
+              "from": "#674A42",
+              "to": "#63463E",
+              "from_count": 170,
+              "to_count": 209,
+              "delta": 4
+            },
+            {
+              "from": "#67463D",
+              "to": "#63463E",
+              "from_count": 150,
+              "to_count": 209,
+              "delta": 4
+            },
+            {
+              "from": "#665854",
+              "to": "#695A56",
+              "from_count": 135,
+              "to_count": 219,
+              "delta": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 12줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            19.71,
+            3.89
+          ],
+          "luma": [
+            29.4,
+            47.29,
+            48.31,
+            48.56,
+            83.27
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ],
+          "luma": [
+            191.28,
+            218.81,
+            231.28,
+            237.29,
+            251.5
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ],
+          "luma": [
+            139.87,
+            173.23,
+            190.18,
+            205.81
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ],
+          "luma": [
+            47.55,
+            57.98,
+            80.21
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ],
+          "luma": [
+            124.89,
+            188.89,
+            231.59
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ],
+          "luma": [
+            153.5,
+            186.19,
+            201.37,
+            220.64
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ],
+          "luma": [
+            59.92,
+            81.1,
+            121.47
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ],
+          "luma": [
+            85.85,
+            122.58,
+            209.76
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ],
+          "luma": [
+            153.33,
+            198.03,
+            228.01
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [],
+          "luma": [
+            234.21,
+            251.17
+          ]
+        },
+        {
+          "ramp": "food_sesame",
+          "why": [
+            "단 수 1 (채운 칸 4 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 1,
+          "padded": 4,
+          "hue_steps": [],
+          "luma": [
+            99.11
+          ]
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ],
+          "luma": [
+            73.06,
+            100.13
+          ]
+        }
+      ]
+    }
+  ]
+}

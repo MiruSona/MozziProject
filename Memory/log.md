@@ -954,3 +954,32 @@
 - 들어옴 20261006-d868af05 `싼값에 팔기 둘과 가판대 장식 · 주인 자리` (mem/0.3.0)
 - 들어옴 20261006-bcd4c93e `반복 08 그림 일감 — 장치 둘 · 맷돌 · 입체 서랍장` (mem/0.3.0)
 - 들어옴 20261006-bf792730 `반복 08 작업은 다음 세션에` (mem/0.3.0)
+- 거절 tag-standard duplicate-soft `pro_flash 화풍 그림은 캔버스보다 작아야 한다`
+- 거절 summary-len tag-standard howto-numbered `PixelLab 결과는 job 다운로드 주소로 바로 받는다`
+- 들어옴 20261006-c82f7295 `PixelLab 결과는 job 다운로드 주소로 바로 받는다` (mem/0.3.0)
+- 들어옴 20261006-aec8120d `떨굼 합치기 56px · 위험 버튼은 두 번 누르기` (mem/0.3.0)
+- 거절 summary-len severity `eval 시간 초과 뒤 Unity 가 죽으면 복구 창이 CLI 를 막는다`
+- 들어옴 20261006-adf2f1c6 `eval 시간 초과 뒤 Unity 가 죽으면 복구 창이 CLI 를 막는다` (mem/0.3.0)
+- 거절 tag-standard duplicate-soft decision-gate `진열 비우기 · 재료 팔기는 찹쌀이 팝업 모양 팝업으로`
+- 들어옴 20261006-2418abb8 `진열 비우기 · 재료 팔기는 찹쌀이 팝업 모양 팝업으로` (mem/0.3.0)
+- 덮음 20261006-aec8120d → 20261006-2418abb8
+- 거절 severity sources-shape body-thin duplicate-hard `PixelLab 옛 job 주소 404 — 갤러리 id 로 편집`
+- 거절 tag-count sources-shape body-thin summary-body-match `반복 08 정식 그림 완료`
+- 들어옴 20261006-74ef60ab `PixelLab 옛 job 주소 404 — 갤러리 id 로 편집` (mem/0.3.0) --new
+- 들어옴 20261006-ad84283a `반복 08 정식 그림 완료` (mem/0.3.0)
+- 덮음 20261005-80263b44 → 20261006-733ca850
+- 거절 summary-len title-shape tag-standard duplicate-soft `주방 다섯 단계 코드 — 맷돌 첫 누름이 시작, 찌기는 실제 2.5초 뒤 Make`
+- 거절 summary-len tag-standard duplicate-soft `Game 뷰 크기는 지금 빌드 대상 묶음에서 골라야 한다`
+- 들어옴 20261006-31bd16e8 `주방 다섯 단계 코드 — 찌기는 실제 2.5초` (mem/0.3.0)
+- 들어옴 20261006-c3c61f56 `Game 뷰 크기는 빌드 대상 묶음에서 고른다` (mem/0.3.0)
+- 거절 tag-standard howto-numbered duplicate-soft `확인 캡처는 Art 견줌 폴더에 세로로`
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+- 거절 자동 · stop · R8-sources · 근거(--sources)가 하나 이상 있어야 한다.
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+- 들어옴 20261006-6c5a2efb `PixelLab 큰 장치 크기 맞추기` (mem/0.3.0)
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+- 들어옴 20261006-efb3d4ac `주방 화면은 반복 09 에서 공간 구성부터 다시 짠다` (mem/0.3.0)
+- 들어옴 20261006-2f259827 `농장 장치는 산 뒤에만 울타리 칸을 빼고 선다` (mem/0.3.0)
+- 들어옴 20261006-d4a11bb8 `수집기 연출 캡처는 창고가 빈 재료로 해야 걷는다` (mem/0.3.0)
+- 거절 title-shape sources-required `반복 08 을 하루에 끝냄 — 결정 A~K 코드·그림·배선, 다음은 주방 재구성`
+- 들어옴 20261006-860c6df1 `반복 08 하루에 끝냄 · 다음은 주방 재구성` (mem/0.3.0)

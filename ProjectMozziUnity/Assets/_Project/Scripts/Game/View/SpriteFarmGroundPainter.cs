@@ -15,6 +15,10 @@ namespace Mozzi.Game.View
 
         private GameObject _root;
 
+        // 옆 세로 칸 renderer (줄 번호 = 칸 row, 0 · rows−1 은 비어 있다). 장치 자리 칸을 끄고 켠다.
+        private readonly SpriteRenderer[] _leftSide = new SpriteRenderer[LayoutConst.FarmTileRows];
+        private readonly SpriteRenderer[] _rightSide = new SpriteRenderer[LayoutConst.FarmTileRows];
+
         public void Paint(Transform parent, IResourceHub resource)
         {
             Clear();
@@ -33,6 +37,21 @@ namespace Mozzi.Game.View
             {
                 Object.Destroy(_root);
                 _root = null;
+            }
+
+            System.Array.Clear(_leftSide, 0, _leftSide.Length);
+            System.Array.Clear(_rightSide, 0, _rightSide.Length);
+        }
+
+        public void SetSideGap(FenceSide side, int fromRow, int toRow, bool open)
+        {
+            SpriteRenderer[] pieces = side == FenceSide.Left ? _leftSide : _rightSide;
+            for (int row = Mathf.Max(0, fromRow); row <= toRow && row < pieces.Length; row++)
+            {
+                if (pieces[row] != null)
+                {
+                    pieces[row].enabled = open == false;
+                }
             }
         }
 
@@ -90,8 +109,8 @@ namespace Mozzi.Game.View
             for (int row = 1; row < LayoutConst.FarmTileRows - 1; row++)
             {
                 float bottomPx = LayoutConst.FarmBottomPx - row * cell;
-                AddPiece(side, leftPx, bottomPx, LayoutConst.FenceFrontSortOrder);
-                AddPiece(side, rightColPx, bottomPx, LayoutConst.FenceFrontSortOrder);
+                _leftSide[row] = AddPiece(side, leftPx, bottomPx, LayoutConst.FenceFrontSortOrder);
+                _rightSide[row] = AddPiece(side, rightColPx, bottomPx, LayoutConst.FenceFrontSortOrder);
             }
         }
 
@@ -113,17 +132,18 @@ namespace Mozzi.Game.View
 
         // 그림의 왼쪽 아래를 (leftPx, 위에서 잰 bottomPx) 에 맞춘다. 피벗이 어디든 bounds 로 맞추니 상관없다.
         // 높이 36 그림(가로 마디 · 기둥)은 칸 위로 4px 솟는다.
-        private void AddPiece(Sprite sprite, float leftPx, float bottomPx, int sortOrder)
+        private SpriteRenderer AddPiece(Sprite sprite, float leftPx, float bottomPx, int sortOrder)
         {
             if (sprite == null)
             {
-                return;
+                return null;
             }
 
             SpriteRenderer renderer = AddRenderer(ViewNames.GroundFence, sprite, sortOrder);
             float x = LayoutConst.XFromLeft(leftPx) - sprite.bounds.min.x;
             float y = LayoutConst.YFromTop(bottomPx) - sprite.bounds.min.y;
             renderer.transform.localPosition = new Vector3(x, y, 0f);
+            return renderer;
         }
 
         private SpriteRenderer AddRenderer(string name, Sprite sprite, int sortOrder)
