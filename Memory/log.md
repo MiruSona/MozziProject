@@ -983,3 +983,5 @@
 - 들어옴 20261006-d4a11bb8 `수집기 연출 캡처는 창고가 빈 재료로 해야 걷는다` (mem/0.3.0)
 - 거절 title-shape sources-required `반복 08 을 하루에 끝냄 — 결정 A~K 코드·그림·배선, 다음은 주방 재구성`
 - 들어옴 20261006-860c6df1 `반복 08 하루에 끝냄 · 다음은 주방 재구성` (mem/0.3.0)
+- 거절 summary-len tag-standard tag-shape sources-shape body-thin `게임 서버가 떠 있으면 로컬 LLM 을 안 쓴다`
+- 들어옴 20261006-8a7717d1 `게임 서버가 떠 있으면 로컬 LLM 을 안 쓴다` (mem/0.3.0)
