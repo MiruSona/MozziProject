@@ -985,3 +985,62 @@
 - 들어옴 20261006-860c6df1 `반복 08 하루에 끝냄 · 다음은 주방 재구성` (mem/0.3.0)
 - 거절 summary-len tag-standard tag-shape sources-shape body-thin `게임 서버가 떠 있으면 로컬 LLM 을 안 쓴다`
 - 들어옴 20261006-8a7717d1 `게임 서버가 떠 있으면 로컬 LLM 을 안 쓴다` (mem/0.3.0)
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+- 거절 title-shape severity duplicate-soft `PixelLab pro_flash 는 256px 이 상한이라 540 배경을 한 장으로 못 뽑는다`
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 09-v1/build_mock.py
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+- 들어옴 20261006-f2ab9474 `주방은 현대 카페 분위기로 기구까지 전부 다시 그린다` (mem/0.3.0)
+- 들어옴 20261006-1fdee2bf `반복 09 주방 구조 B 와 기구 · 천장 확정` (mem/0.3.0)
+- 거절 tag-standard tag-shape severity sources-shape body-thin duplicate-soft `PixelLab 한 장에 여럿 뽑으면 고르게 안 놓인다`
+- 들어옴 20261006-3ab5be48 `PixelLab 한 장에 여럿 뽑으면 고르게 안 놓인다` (mem/0.3.0)
+- 거절 summary-len tag-standard tag-shape severity sources-shape body-thin summary-body-match `원근 널 천장은 널 한 줄을 뽑아 PIL 로 쌓는다`
+- 거절 tag-count `원근 널 천장은 널 한 줄을 뽑아 PIL 로 쌓는다`
+- 들어옴 20261006-90f29729 `원근 널 천장은 널 한 줄을 뽑아 PIL 로 쌓는다` (mem/0.3.0)
+- 거절 summary-len tag-count tag-shape severity sources-shape body-thin `주방 09 정식 조립 — 믹서기가 선반과 겹친다`
+- 들어옴 20261006-733d4cc9 `주방 09 정식 조립 — 믹서기가 선반과 겹친다` (mem/0.3.0)
+- 거절 tag-standard tag-shape severity sources-shape body-thin duplicate-hard `Pro Flash 는 배경 조각에도 위아래 흰 여백을 둔다`
+- 거절 title-shape tag-standard tag-shape severity sources-shape body-thin duplicate-soft `PixelLab pro_flash 는 캔버스보다 작게 그린다 — 캔버스를 목표의 1.1배로`
+- 거절 tag-shape severity sources-shape body-thin `열린 찜기 위 김이 뚜껑 앞에 덮인다`
+- 거절 tag-count `열린 찜기 위 김이 뚜껑 앞에 덮인다`
+- 들어옴 20261006-24234839 `열린 찜기 위 김이 뚜껑 앞에 덮인다` (mem/0.3.0)
+
+## 2026-10-07
+- 거절 tag-standard tag-shape sources-shape body-thin `반복09 찜기 유리 찜 칸·빚기 판 꿀색 나무로 바꿈`
+- 거절 tag-standard tag-shape severity sources-shape body-thin `절구 나무 안은 색이 갈린다`
+- 들어옴 20261007-16439fe2 `절구 나무 안은 색이 갈린다` (mem/0.3.0)
+- 거절 summary-len tag-shape sources-shape body-thin `반복 09 주방 정식 그림 확정 — 절구는 W1 호두색 나무`
+- 거절 summary-len title-shape tag-standard tag-shape body-thin howto-numbered duplicate-soft `PixelLab pro_flash 는 캔버스의 75~90% 로 그린다 — 색만 바꿀 땐 edit 에 source_image_id`
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+- 거절 자동 · stop · R8-sources · 근거(--sources)가 하나 이상 있어야 한다.
+- 들어옴 20261007-f8dbd6a7 `반복 09 주방 정식 그림 확정 — 절구는 W1` (mem/0.3.0) --origin stop
+- 거절 tag-standard severity sources-shape body-thin `반복09 주방 「아래 가운데」 자리는 보이는 픽셀 기준`
+- 들어옴 20261007-c0345c07 `반복09 주방 「아래 가운데」 자리는 보이는 픽셀 기준` (mem/0.3.0)
+- 거절 title-shape tag-standard tag-shape severity sources-shape body-thin duplicate-soft `pro_flash 에 32px 떡을 style_image 로 주면 결과도 32px 크기로 작아진다`
+- 거절 tag-count duplicate-soft `pro_flash style 그림이 작으면 결과도 작다`
+- 들어옴 20261007-f5e1d110 `pro_flash style 그림이 작으면 결과도 작다` (mem/0.3.0)
+- 거절 tag-standard tag-shape severity sources-shape body-thin `믹서기 내용물 겹: 흰 소용돌이·덩어리는 안 물든다`
+- 거절 tag-standard tag-shape severity sources-shape body-thin `믹서기 내용물 겹: 흰 소용돌이·덩어리는 안 물든다`
+- 들어옴 20261007-33d49328 `믹서기 내용물 겹: 흰 소용돌이·덩어리는 안 물든다` (mem/0.3.0)
+- 거절 tag-standard tag-shape severity sources-shape body-thin `pixminimax 프레임 받기 · 떡메 캔버스 자리`
+- 들어옴 20261007-5b2705f0 `pixminimax 프레임 받기와 떡메 캔버스 자리` (mem/0.3.0)
+- 거절 summary-len tag-standard tag-shape body-thin howto-numbered summary-body-match duplicate-soft `믹서기 갈기 애니는 pixminimax 로 통 부분만 2배로 넣어 뽑는다`
+- 들어옴 20261007-b4334719 `믹서기 갈기 애니는 pixminimax 로 통 부분만 2배로 넣어 뽑는다` (mem/0.3.0)
+- 거절 required-field tag-standard tag-shape severity sources-shape body-thin `겹 구멍 메우기는 행 run 폭 밀기 복사를 쓰지 않는다`
+- 들어옴 20261007-fc299340 `겹 구멍 메우기는 행 run 폭 밀기 복사를 쓰지 않는다` (mem/0.3.0)
+- 거절 required-field tag-shape severity sources-shape body-thin `떡메 호 운동은 손 축으로 돌리고 들 때 머리가 손보다 위(각도 음수)`
+- 거절 tag-standard `떡메 호 운동은 손 축으로 돌리고 들 때 머리가 손보다 위(각도 음수)`
+- 들어옴 20261007-c267ad8e `떡메 호 운동은 손 축으로 돌리고 들 때 머리가 손보다 위(각도 음수)` (mem/0.3.0)
+- 거절 required-field title-shape tag-standard tag-shape sources-shape body-thin howto-numbered secret-entropy `짧은 프레임 애니 캡처는 Play 중 Time.timeScale 을 0.03 으로 낮추고 장마다 찍는다`
+- 거절 required-field title-shape tag-standard tag-shape severity sources-shape body-thin `떡메 넘침(spill)은 맞는 장에만, 절구 윤곽 안으로 자르고 밝은 톤만`
+- 들어옴 20261007-0f3e0f42 `떡메 넘침은 맞는 장에만 두고 절구 윤곽 안으로 자른다` (mem/0.3.0)
+- 거절 required-field tag-shape severity sources-shape body-thin `유리 찜기 떡이 안 보인 까닭은 유리 픽셀 알파 255`
+- 거절 tag-standard `유리 찜기 떡이 안 보인 까닭은 유리 픽셀 알파 255`
+- 거절 tag-count `유리 찜기 떡이 안 보인 까닭은 유리 픽셀 알파 255`
+- 들어옴 20261007-d901ecf1 `유리 찜기 떡이 안 보인 까닭은 유리 픽셀 알파 255` (mem/0.3.0) --hold
+- 거절 required-field title-shape tag-standard tag-shape sources-shape body-thin `떡메 넘침은 튀는 연출 — 5장 터짐·6장 내려옴·7장 벽 타고 흘러내림, 방울은 허공 허용`
+- 거절 tag-standard `떡메 넘침은 터짐·내려옴·흘러내림 세 장`
+- 들어옴 20261007-0313443a `떡메 넘침은 터짐·내려옴·흘러내림 세 장` (mem/0.3.0)
+- 거절 tag-standard `반복 09 — 주방 조리대 세 칸 · 믹서기 · 떡메 · 1단 유리 찜기`
+- 들어옴 20261007-2f26c608 `반복 09 — 주방 조리대 세 칸 · 믹서기 · 떡메 · 1단 유리 찜기` (mem/0.3.0)
+- 거절 body-thin `실제 초 시계 연출은 timeScale 로 못 늦춘다`
+- 들어옴 20261007-dd998ed5 `실제 초 시계 연출은 timeScale 로 못 늦춘다` (mem/0.3.0)

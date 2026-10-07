@@ -17,6 +17,8 @@ namespace Mozzi.Game.Ui
         private float _time;
         private bool _playing;
         private bool _loop;
+        private bool _hold;
+        private int _end;
 
         public KitchenOnceView(Image image, Sprite[] frames, float[] frameSec)
         {
@@ -51,10 +53,25 @@ namespace Mozzi.Game.Ui
             Begin(true);
         }
 
+        // from ~ to 장만 한 번 돌고 마지막 장에 멈춰 둔다 (숨기지 않는다). 빚기 판 세 번 누름에 쓴다.
+        public void PlayHold(int from, int to)
+        {
+            Begin(false);
+            _frame = Mathf.Clamp(from, 0, _frameSec.Length - 1);
+            _end = Mathf.Clamp(to, _frame, _frameSec.Length - 1);
+            _hold = true;
+            if (_ready)
+            {
+                _image.sprite = _frames[_frame];
+            }
+        }
+
         private void Begin(bool loop)
         {
             _loop = loop;
             _frame = 0;
+            _end = _frameSec.Length - 1;
+            _hold = false;
             _time = 0f;
             _playing = true;
             if (_ready)
@@ -82,6 +99,12 @@ namespace Mozzi.Game.Ui
             while (_time >= _frameSec[_frame])
             {
                 _time -= _frameSec[_frame];
+                if (_hold && _frame >= _end)
+                {
+                    _playing = false;
+                    return true;
+                }
+
                 _frame++;
                 if (_frame >= _frameSec.Length && _loop)
                 {

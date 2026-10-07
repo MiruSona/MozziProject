@@ -1,0 +1,32 @@
+wall c5a553d8-8e22-4a45-8129-e6297e6f595b
+jar 27f1f48d-2a62-47e7-b9a2-b0fc4295aa4e
+counter d9c018a9-a804-48ab-810f-9e4b93be8cfe
+ceil 6772fc32-2ae7-4e4b-aa40-7b701d483a1e
+lamp a56174f0-d169-4a8d-8cf8-3100d35d25a4
+shelf bc7d8605-5938-47d7-854c-eb16137ef81d
+arrow 76518c62-5c01-446c-9bf7-3f8a2b7a3f61
+dots b692310d-86bd-48d4-9f9b-f5750ca86dab
+tray 15947517-8635-4f5d-959f-82dc1e497dfa
+rail 0937922e-e727-4cd6-9265-34d4cd6e9601
+plant 84a40b14-5eaa-4d15-bb1c-753ea63ac442
+jar2 c14de8ea-1e86-4654-b70a-a00d62e7e206
+shelf2 a5693650-ff1c-44c7-bac9-1931d8dbaa82
+arrow2 776a023b-d36b-44ec-9697-b2b9bdac544d
+ceil2 68da413b-b379-4452-b2c6-512f26029ac0
+base 95491cbf-fc89-40f0-a088-8a97f453c5d8
+plank db52e09b-78cd-42c0-9dd9-fb69e0aed410
+ceil3.png  b5558b36-d8b7-4c90-a7bb-725ba28cc822  (W2 원본 참고 · 위아래 흰 여백 커서 안 씀)
+ceil4.png  a972f6fa-756a-4d53-a98e-444bcaad9f75  (글 프롬프트 · 원근 널 천장 왼쪽 반 256×252 · 씀)
+counter2.png  2b649b99-bd31-4e08-aaaf-6b91d52fdc88  (대리석 윗면 256×132 · 씀)
+wall3.png  2e9129ff-2ca9-4797-802b-0de322a95c6d
+counter3.png  8c77849c-bcb0-4ae2-b1bf-dd1e2fb986dc
+rail2.png  5f5e08da-3820-48ea-a175-a173cc565458
+clock.png  b82d3a86-a6b7-483e-94a7-8771ce874fcf
+plantshelf.png  c7d77963-b42a-4055-a010-1ef7220303e4
+tray2.png  6a1aad31-4057-4444-8757-ba3360f7971b
+plantshelf2.png  9aed1807-5758-4123-96ec-19495102f1b3  (136x88 캔버스 · 씀)
+clock2.png  455aa08b-5fcb-4cc0-b79a-dea0b4a12d37  (84x84 캔버스 · 씀)
+wall3.png  2e9129ff-2ca9-4797-802b-0de322a95c6d  (흰 벽돌 · 씀)
+counter3.png  8c77849c-bcb0-4ae2-b1bf-dd1e2fb986dc  (크림 윗면 · 씀)
+rail2.png  5f5e08da-3820-48ea-a175-a173cc565458  (큰 레일 · 씀)
+clock.png  b82d3a86-a6b7-483e-94a7-8771ce874fcf  (작아서 안 씀)

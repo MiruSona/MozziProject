@@ -5,12 +5,11 @@ namespace Mozzi.Game.Ui
 {
     // 누름 N번의 규칙만 든다 (세로조각1판설계 4-4). 「갈기」(맷돌) · 「치기」(절구) 단계 안에서 KitchenFlowAgent 가 하나씩 쓴다.
     // 순수 탭 카운터다 — 재료 목록 · 그림 · Make 호출은 흐름 · 화면 몫이다.
-    // doubleTapMs 안 연타는 남은 탭을 건너뛰고, 그보다 느리되 poundGapMs 안이면 무시, 그 뒤면 한 번 센다. Begin 뒤 첫 탭은 늘 1타로 센다.
+    // 앞 탭에서 poundGapMs 안이면 무시, 그 뒤면 한 번 센다. Begin 뒤 첫 탭은 늘 1타로 센다. 연타로 건너뛰기는 없다 (반복 09).
     public sealed class PoundAgent : AgentBase<KitchenFlowAgent>
     {
         private readonly int _totalTaps;
         private readonly float _gapSec;
-        private readonly float _doubleTapSec;
 
         private int _taps;
         private float _lastTapTime;
@@ -25,7 +24,6 @@ namespace Mozzi.Game.Ui
             }
 
             _gapSec = row.PoundGapMs / 1000f;
-            _doubleTapSec = row.DoubleTapMs / 1000f;
         }
 
         public bool IsRunning
@@ -65,13 +63,6 @@ namespace Mozzi.Game.Ui
             }
 
             float since = now - _lastTapTime;
-            if (_taps > 0 && since < _doubleTapSec)
-            {
-                _taps = _totalTaps;
-                _running = false;
-                return PoundTapResult.Finished;
-            }
-
             if (_taps > 0 && since < _gapSec)
             {
                 return PoundTapResult.Ignored;

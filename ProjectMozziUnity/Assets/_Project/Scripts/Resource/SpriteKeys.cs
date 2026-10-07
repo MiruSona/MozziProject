@@ -37,26 +37,63 @@ namespace Mozzi.Resource
         public const string ScreenKitchenBg = "Screen/kitchen_bg";
         public const string ScreenKitchenDrawer3d = "Screen/kitchen_drawer_3d";
         public const string ScreenKitchenBowl = "Screen/kitchen_bowl";
-        public const string ScreenKitchenSteamerBody = "Screen/kitchen_steamer_body";
-        public const string ScreenKitchenSteamerLid = "Screen/kitchen_steamer_lid";
         public const string ScreenKitchenBoard = "Screen/kitchen_board";
         public const string ScreenKitchenMillPrefix = "Screen/kitchen_mill_";
         public const int KitchenMillFrameCount = 5;
-        public const int KitchenPoundFrameCount = 7;
         public const string ScreenKitchenShapePrefix = "Screen/kitchen_shape_";
         public const int KitchenShapeFrameCount = 3;
         public const string FxKitchenSteamPrefix = "Fx/kitchen_steam_";
         public const int KitchenSteamFrameCount = 4;
 
-        // 떡메 단계 (반죽 모습) : 0 간 가루 · 1 거친 반죽 · 2 매끈한 떡. 단계마다 7장 묶음이 따로 있다 (반복 08 새 그림, 5번이 때림).
-        private static readonly string[] KitchenPoundStagePrefixes =
-        {
-            "Screen/kitchen_pound_", "Screen/kitchen_pound_rough_", "Screen/kitchen_pound_smooth_",
-        };
+        // 반복 09 주방 (옆으로 세 칸 · 한 칸 540×1050). FormalArtCopy.CopyIter09Kitchen 이 정식/반복09 에서 들인다.
+        // 천장 1620×250 한 장 · 칸 배경 셋 · 선반 · 병 · 쪽 넘김 화살표 · 쪽 점 · 쟁반 · 장식 셋 · 1단 유리 찜기 겹 7(steamer2).
+        public const string ScreenKitchenCeil = "Screen/kitchen_ceil";
+        public const string ScreenKitchenBgPrefix = "Screen/kitchen_bg_";
+        public const int KitchenBgPanCount = 3;
+        public const string ScreenKitchenShelf = "Screen/kitchen_shelf";
+        public const string ScreenKitchenJar = "Screen/kitchen_jar";
+        public const string ScreenKitchenArrow = "Screen/kitchen_arrow";
+        public const string ScreenKitchenDotOn = "Screen/kitchen_dot_on";
+        public const string ScreenKitchenDotOff = "Screen/kitchen_dot_off";
+        public const string ScreenKitchenTray = "Screen/kitchen_tray";
+        public const string ScreenKitchenDecoRail = "Screen/kitchen_deco_rail";
+        public const string ScreenKitchenDecoPlantShelf = "Screen/kitchen_deco_plantshelf";
+        public const string ScreenKitchenDecoClock = "Screen/kitchen_deco_clock";
+        public const string ScreenKitchenBoard9 = "Screen/kitchen_board9";
+        public const string ScreenKitchenSteamer2Base = "Screen/kitchen_steamer2_base";
+        public const string ScreenKitchenSteamer2GlassBack = "Screen/kitchen_steamer2_glass_back";
+        public const string ScreenKitchenSteamer2Dough = "Screen/kitchen_steamer2_dough";
+        public const string ScreenKitchenSteamer2GlassFront = "Screen/kitchen_steamer2_glass_front";
+        public const string ScreenKitchenSteamer2Fog = "Screen/kitchen_steamer2_fog";
+        public const string ScreenKitchenSteamer2LidClosed = "Screen/kitchen_steamer2_lid_closed";
+        public const string ScreenKitchenSteamer2LidOpen = "Screen/kitchen_steamer2_lid_open";
 
-        public static int KitchenPoundStageCount
+        public const string FxKitchenSteam9Prefix = "Fx/kitchen_steam9_";
+        public const int KitchenSteam9FrameCount = 3;
+        // 빚기 반죽 6장 (캔버스 128×96). 그림은 다른 갈래가 그리는 중 — 들이기 전에는 프리팹 자리만 있다.
+        public const string ScreenKitchenShape9Prefix = "Screen/kitchen_shape9_";
+        public const int KitchenShape9FrameCount = 6;
+
+        // 떡메 pound15 : 440×560 겹. 단계(s1~s3) 8장 · 넘어감(t12 · t23) 4장. 겹 이름은 mallet · dough · dough_spill.
+        public const string ScreenKitchenPound15MortarBack = "Screen/kitchen_pound15_mortar_back";
+        public const string ScreenKitchenPound15MortarFront = "Screen/kitchen_pound15_mortar_front";
+        public const string KitchenPound15LayerMallet = "mallet";
+        public const string KitchenPound15LayerDough = "dough";
+        public const string KitchenPound15LayerSpill = "dough_spill";
+        public const int KitchenPound15StageCount = 3;
+        public const int KitchenPound15StageFrameCount = 8;
+        public const int KitchenPound15TurnFrameCount = 4;
+
+        // stage 0~2 → s1~s3.
+        public static string KitchenPound15Stage(string layer, int stage, int frame)
         {
-            get { return KitchenPoundStagePrefixes.Length; }
+            return "Screen/kitchen_pound15_" + layer + "_s" + (stage + 1) + "_" + frame;
+        }
+
+        // turn 0 → t12 (1→2단계), 1 → t23.
+        public static string KitchenPound15Turn(string layer, int turn, int frame)
+        {
+            return "Screen/kitchen_pound15_" + layer + "_t" + (turn + 1) + (turn + 2) + "_" + frame;
         }
 
         // 가판대 화면 부품 (계산대 · 주인 · 진열장 · 소품 둘 · 칠판 머리 장식). FormalArtCopy.CopyStall 이 정식 out 에서 들인다.
@@ -72,9 +109,37 @@ namespace Mozzi.Resource
         public const string UiBubbleFrame = "UI/ui_bubble";
         public const string UiBubbleSmall = "UI/ui_bubble_c";
 
-        public static string KitchenPound(int stage, int frame)
+        // pan 은 0~2 (칸 번호). 파일 이름은 bg_1..3 이라 1 을 더한다.
+        public static string KitchenBg(int pan)
         {
-            return KitchenPoundStagePrefixes[stage] + frame;
+            return ScreenKitchenBgPrefix + (pan + 1);
+        }
+
+        // 반복 09 믹서기 blender10 : 몸통 한 장 + 내용물 회색 겹 9장 (코드가 재료 색을 곱한다).
+        // 층 마스크는 장 0~5 에만 있다 (n = 층 수 2·3, L0 = 맨 아래 층).
+        public const string ScreenKitchenBlenderBody = "Screen/kitchen_blender10_body";
+        public const string ScreenKitchenBlenderFillPrefix = "Screen/kitchen_blender10_fill_";
+        public const int KitchenBlenderFillCount = 9;
+        public const int KitchenBlenderLayerFrameCount = 6;
+
+        public static string KitchenBlenderFill(int frame)
+        {
+            return ScreenKitchenBlenderFillPrefix + frame;
+        }
+
+        public static string KitchenBlenderLayer(int frame, int layerCount, int layer)
+        {
+            return ScreenKitchenBlenderFillPrefix + frame + "_n" + layerCount + "_L" + layer;
+        }
+
+        public static string KitchenSteam9(int frame)
+        {
+            return FxKitchenSteam9Prefix + frame;
+        }
+
+        public static string KitchenShape9(int frame)
+        {
+            return ScreenKitchenShape9Prefix + frame;
         }
 
         public static string KitchenMill(int frame)

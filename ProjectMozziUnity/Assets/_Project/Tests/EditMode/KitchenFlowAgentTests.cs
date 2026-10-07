@@ -26,14 +26,25 @@ namespace Mozzi.Tests
             Assert.That(Press(KitchenTool.Mill, 0f), Is.EqualTo(KitchenFlowResult.Ground));
             Assert.That(_flow.Step, Is.EqualTo(KitchenStep.Grind));
             Assert.That(Press(KitchenTool.Mill, 1f), Is.EqualTo(KitchenFlowResult.Ground));
-            Assert.That(Press(KitchenTool.Mill, 2f), Is.EqualTo(KitchenFlowResult.GrindDone));
+            // 마지막 타도 세기만 하고 「한 번 더」 를 기다린다.
+            Assert.That(Press(KitchenTool.Mill, 2f), Is.EqualTo(KitchenFlowResult.Ground));
+            Assert.That(_flow.IsWaitingNext, Is.True);
+            Assert.That(_flow.Step, Is.EqualTo(KitchenStep.Grind));
+            Assert.That(Press(KitchenTool.Mill, 2.5f), Is.EqualTo(KitchenFlowResult.GrindDone));
+            Assert.That(_flow.IsWaitingNext, Is.False);
             Assert.That(_flow.Step, Is.EqualTo(KitchenStep.Pound));
 
             Assert.That(Press(KitchenTool.Mortar, 3f), Is.EqualTo(KitchenFlowResult.Pounded));
             Assert.That(Press(KitchenTool.Mortar, 4f), Is.EqualTo(KitchenFlowResult.Pounded));
-            Assert.That(Press(KitchenTool.Mortar, 5f), Is.EqualTo(KitchenFlowResult.PoundDone));
+            Assert.That(Press(KitchenTool.Mortar, 5f), Is.EqualTo(KitchenFlowResult.Pounded));
+            Assert.That(_flow.Step, Is.EqualTo(KitchenStep.Pound));
+            Assert.That(Press(KitchenTool.Mortar, 5.1f), Is.EqualTo(KitchenFlowResult.PoundDone));
             Assert.That(_flow.Step, Is.EqualTo(KitchenStep.Shape));
 
+            Assert.That(Press(KitchenTool.Board, 5.2f), Is.EqualTo(KitchenFlowResult.ShapeTapped));
+            Assert.That(Press(KitchenTool.Board, 5.3f), Is.EqualTo(KitchenFlowResult.ShapeTapped));
+            Assert.That(Press(KitchenTool.Board, 5.4f), Is.EqualTo(KitchenFlowResult.ShapeTapped));
+            Assert.That(_flow.Step, Is.EqualTo(KitchenStep.Shape));
             Assert.That(Press(KitchenTool.Board, 6f), Is.EqualTo(KitchenFlowResult.Shaped));
             Assert.That(_flow.Step, Is.EqualTo(KitchenStep.Steam));
             Assert.That(_flow.IsRunning, Is.True);
@@ -94,33 +105,31 @@ namespace Mozzi.Tests
             Assert.That(_flow.NextTool(true), Is.EqualTo(KitchenTool.Mill));
             Press(KitchenTool.Mill, 1f);
             Press(KitchenTool.Mill, 2f);
+            // 셋째 탭 뒤에는 「한 번 더」 를 기다리므로 아직 같은 도구다.
+            Assert.That(_flow.NextTool(true), Is.EqualTo(KitchenTool.Mill));
+            Press(KitchenTool.Mill, 2.5f);
             Assert.That(_flow.NextTool(true), Is.EqualTo(KitchenTool.Mortar));
             Press(KitchenTool.Mortar, 3f);
             Press(KitchenTool.Mortar, 4f);
             Press(KitchenTool.Mortar, 5f);
+            Assert.That(_flow.NextTool(true), Is.EqualTo(KitchenTool.Mortar));
+            Press(KitchenTool.Mortar, 5.1f);
+            Assert.That(_flow.NextTool(true), Is.EqualTo(KitchenTool.Board));
+            Press(KitchenTool.Board, 5.2f);
+            Press(KitchenTool.Board, 5.3f);
+            Press(KitchenTool.Board, 5.4f);
             Assert.That(_flow.NextTool(true), Is.EqualTo(KitchenTool.Board));
             Press(KitchenTool.Board, 6f);
             Assert.That(_flow.NextTool(true), Is.EqualTo(KitchenTool.None));
         }
 
         [Test]
-        public void DoubleTapOnMill_SkipsToMake()
+        public void QuickTapOnMill_DoesNotSkip()
         {
             Press(KitchenTool.Mill, 0f);
 
-            Assert.That(Press(KitchenTool.Mill, 0.1f), Is.EqualTo(KitchenFlowResult.Make));
-            Assert.That(_flow.Step, Is.EqualTo(KitchenStep.Pick));
-            Assert.That(_flow.IngredientIds, Is.EqualTo(Picked));
-        }
-
-        [Test]
-        public void DoubleTapWhilePounding_SkipsToMake()
-        {
-            GrindAll(0f);
-            Press(KitchenTool.Mortar, 3f);
-
-            Assert.That(Press(KitchenTool.Mortar, 3.1f), Is.EqualTo(KitchenFlowResult.Make));
-            Assert.That(_flow.Step, Is.EqualTo(KitchenStep.Pick));
+            Assert.That(Press(KitchenTool.Mill, 0.1f), Is.EqualTo(KitchenFlowResult.Ignored));
+            Assert.That(_flow.Step, Is.EqualTo(KitchenStep.Grind));
         }
 
         [Test]
@@ -155,6 +164,18 @@ namespace Mozzi.Tests
             Assert.That(_flow.Tick(6f + SteamSec), Is.EqualTo(KitchenFlowResult.Steamed));
             // 다 찐 뒤로는 다시 Steamed 가 안 나온다 (Make 는 한 번만).
             Assert.That(_flow.Tick(20f), Is.EqualTo(KitchenFlowResult.Ignored));
+        }
+
+        // 반죽이 날아가는 1초 뒤 RestartSteam — 그때부터 SteamSec 를 다시 잰다.
+        [Test]
+        public void RestartSteam_CountsFromLanding()
+        {
+            RunToSteam();
+
+            _flow.RestartSteam(7f);
+
+            Assert.That(_flow.Tick(6f + SteamSec), Is.EqualTo(KitchenFlowResult.Ignored));
+            Assert.That(_flow.Tick(7f + SteamSec), Is.EqualTo(KitchenFlowResult.Steamed));
         }
 
         [Test]
@@ -209,15 +230,20 @@ namespace Mozzi.Tests
             Press(KitchenTool.Mill, start);
             Press(KitchenTool.Mill, start + 1f);
             Press(KitchenTool.Mill, start + 2f);
+            Press(KitchenTool.Mill, start + 2.5f);
         }
 
-        // 갈기 0~2 · 치기 3~5 · 빚기 6 → 찌기 시작 (6초).
+        // 갈기 0~2.5 · 치기 3~5.1 · 빚기 5.2~6 → 찌기 시작 (6초). 각 단계 끝에 「한 번 더」.
         private void RunToSteam()
         {
             GrindAll(0f);
             Press(KitchenTool.Mortar, 3f);
             Press(KitchenTool.Mortar, 4f);
             Press(KitchenTool.Mortar, 5f);
+            Press(KitchenTool.Mortar, 5.1f);
+            Press(KitchenTool.Board, 5.2f);
+            Press(KitchenTool.Board, 5.3f);
+            Press(KitchenTool.Board, 5.4f);
             Press(KitchenTool.Board, 6f);
         }
 

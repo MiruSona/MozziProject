@@ -179,7 +179,6 @@ namespace Mozzi.Game.Ui
         public const string KitchenMill = "Mill";
         public const string KitchenSteamer = "Steamer";
         public const string KitchenSteamerLid = "SteamerLid";
-        public const string KitchenMortar = "Mortar";
         public const string KitchenBoard = "Board";
         public const string KitchenMortarSlotPrefix = "MortarSlot_";
         public const int KitchenMortarSlotCount = 3;
@@ -196,6 +195,53 @@ namespace Mozzi.Game.Ui
         public const string KitchenMenuButton = "MenuButton";
         // 서랍장 틀 (입체 서랍장 그림 한 장). 칸 밖을 누르면 「재료 전체 팔기」 팝업이 뜬다.
         public const string KitchenDrawerFrame = "DrawerFrame";
+        // 반복 09 주방 : 창(KitchenView, RectMask2D) 안의 띠(KitchenStrip)를 옆으로 민다. 칸은 "KitchenPan" + 0~2.
+        public const string KitchenView = "KitchenView";
+        public const string KitchenStrip = "KitchenStrip";
+        public const string KitchenCeil = "KitchenCeil";
+        public const string KitchenPanPrefix = "KitchenPan";
+        public const string KitchenPanBg = "PanBg";
+        // 칸1 선반 : 병은 "Jar_" + 0~17 (6열 × 3줄, 한 쪽). 병 안에 Icon · CountText. 쪽 점은 "PageDot_" + 0~.
+        public const string KitchenShelfBoardPrefix = "ShelfBoard_";
+        public const string KitchenJarPrefix = "Jar_";
+        public const int KitchenJarCount = 18;
+        public const string KitchenArrowLeft = "ArrowLeft";
+        public const string KitchenArrowRight = "ArrowRight";
+        public const string KitchenPageDotPrefix = "PageDot_";
+        public const int KitchenPageDotCount = 4;
+        public const string KitchenTray = "Tray";
+        public const string KitchenBlender = "Blender";
+        // 믹서기 몸통(Blender) 자식 : 섞인 내용물 겹 하나 + 층 겹 BlenderLayer0~2 (몸통 위에 그려 통 안에 보인다).
+        public const string KitchenBlenderFill = "BlenderFill";
+        public const string KitchenBlenderLayerPrefix = "BlenderLayer";
+        public const int KitchenBlenderLayerMax = 3;
+        // 칸2 : 걸이 레일 · 화분 선반은 장식, 절구 치기는 Image 한 장에 프레임을 갈아 끼운다.
+        public const string KitchenDecoRail = "DecoRail";
+        public const string KitchenDecoPlantShelf = "DecoPlantShelf";
+        public const string KitchenPound = "Pound";
+        // 떡메 pound15 겹 다섯 (Pound 밑, 아래→위). 묻힘 장에서는 Dough 가 Mallet 위로 올라간다.
+        public const string KitchenPoundMortarBack = "MortarBack";
+        public const string KitchenPoundDough = "Dough";
+        public const string KitchenPoundMallet = "Mallet";
+        public const string KitchenPoundMortarFront = "MortarFront";
+        public const string KitchenPoundDoughSpill = "DoughSpill";
+        // 칸3 : 찜기는 아래 Steamer2 밑에 겹 7개. 결과 떡 자리는 벽 가운데.
+        public const string KitchenDecoClock = "DecoClock";
+        public const string KitchenBoard9 = "Board9";
+        public const string KitchenShapeDough = "KitchenShapeDough";
+        public const string KitchenSteam9 = "Steam9";
+        // 1단 유리 찜기 (반복 09 steamer2) : 부모 하나 밑에 겹 7개, 아래부터.
+        public const string KitchenSteamer2 = "Steamer2";
+        public const string KitchenSteamerBase = "SteamerBase";
+        public const string KitchenSteamerGlassBack = "SteamerGlassBack";
+        public const string KitchenSteamerDough = "SteamerDough";
+        public const string KitchenSteamerGlassFront = "SteamerGlassFront";
+        public const string KitchenSteamerFog = "SteamerFog";
+        public const string KitchenSteamerLidClosed = "SteamerLidClosed";
+        public const string KitchenSteamerLidOpen = "SteamerLidOpen";
+        public const string KitchenCakeSpot = "CakeSpot";
+        // 아래 버튼 줄 「재료 팔기」.
+        public const string KitchenSellAllButton = "SellAllButton";
         // 차림표 판 : 찾은 떡을 한 번에 만드는 목록. 줄은 "MenuRow_" + 번호, 판 뒤 Blocker 를 누르면 닫힌다. 가판대 화면에도 같은 판이 있다.
         public const string KitchenMenuPanel = "MenuPanel";
         public const string KitchenMenuBlocker = "Blocker";
