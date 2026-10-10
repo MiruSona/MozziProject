@@ -1044,3 +1044,10 @@
 - 들어옴 20261007-2f26c608 `반복 09 — 주방 조리대 세 칸 · 믹서기 · 떡메 · 1단 유리 찜기` (mem/0.3.0)
 - 거절 body-thin `실제 초 시계 연출은 timeScale 로 못 늦춘다`
 - 들어옴 20261007-dd998ed5 `실제 초 시계 연출은 timeScale 로 못 늦춘다` (mem/0.3.0)
+
+## 2026-10-09
+- 거절 summary-len title-shape tag-standard howto-numbered private-path `남에게 돌릴 APK 는 OneDrive 에 복사하고 링크는 탐색기 verb 로 뽑는다`
+- 거절 자동 · stop · R8-sources · 근거(--sources)가 하나 이상 있어야 한다.
+- 들어옴 20261009-905f3283 `APK 를 남에게 돌리는 길 — OneDrive 와 링크 verb` (mem/0.3.0) --origin stop
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
