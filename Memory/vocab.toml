@@ -35,6 +35,13 @@
 "tool" = ["editor", "cli", "install"]
 "ui" = ["hud", "localization"]
 "webgl" = []
+"research" = []
+"submodule" = []
+"claude-code" = []
+"fan" = []
+"setup" = []
+"hook" = []
+"concept" = []
 
 # 별칭 → 표준 태그. add·lint 가 조용히 바꿔 준다.
 [tag.alias]

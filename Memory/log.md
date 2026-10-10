@@ -1051,3 +1051,80 @@
 - 들어옴 20261009-905f3283 `APK 를 남에게 돌리는 길 — OneDrive 와 링크 verb` (mem/0.3.0) --origin stop
 - 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
 - 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+
+## 2026-10-10
+- 접힘 20260906-89063354 (gc --retired)
+- 접힘 20260907-1f39641b (gc --retired)
+- 접힘 20260918-146879a8 (gc --retired)
+- 접힘 20260918-57938c6b (gc --retired)
+- 접힘 20260918-756b4011 (gc --retired)
+- 접힘 20260918-7fb3582e (gc --retired)
+- 접힘 20260918-87c39e6e (gc --retired)
+- 접힘 20260920-11b31f30 (gc --retired)
+- 접힘 20260920-5a744d35 (gc --retired)
+- 접힘 20260920-68c5c1fb (gc --retired)
+- 접힘 20260920-82db27a9 (gc --retired)
+- 접힘 20260920-a0ce30f8 (gc --retired)
+- 접힘 20260920-b1f9bda3 (gc --retired)
+- 접힘 20260921-a615c471 (gc --retired)
+- 접힘 20260921-da79314a (gc --retired)
+- 접힘 20260922-1bbc2998 (gc --retired)
+- 접힘 20260922-27bcec90 (gc --retired)
+- 접힘 20260922-470f1ce1 (gc --retired)
+- 접힘 20260922-84febc07 (gc --retired)
+- 접힘 20260922-ccdec504 (gc --retired)
+- 접힘 20260922-d84efaaa (gc --retired)
+- 접힘 20260922-ec7fcb9b (gc --retired)
+- 접힘 20260923-fe44152b (gc --retired)
+- 접힘 20261003-1747743d (gc --retired)
+- 접힘 20261003-1e2259a1 (gc --retired)
+- 접힘 20261003-3db70abb (gc --retired)
+- 접힘 20261003-a07bc816 (gc --retired)
+- 접힘 20261003-b53a8f6e (gc --retired)
+- 접힘 20261003-c89810c1 (gc --retired)
+- 접힘 20261004-363f22a4 (gc --retired)
+- 접힘 20261004-3e0e140c (gc --retired)
+- 접힘 20261004-7735ed05 (gc --retired)
+- 접힘 20261004-ca9ec544 (gc --retired)
+- 접힘 20261005-415d4292 (gc --retired)
+- 접힘 20261005-80263b44 (gc --retired)
+- 접힘 20261005-cfedd962 (gc --retired)
+- 접힘 20261005-d81bc93c (gc --retired)
+- 접힘 20261005-dfe9dfe7 (gc --retired)
+- 접힘 20261006-aec8120d (gc --retired)
+- 덮음 20261007-0f3e0f42 → 20261007-0313443a
+- 접힘 20261007-0f3e0f42 (gc --retired)
+- 거절 tag-standard `기억 저장소 점검·정리 한 바퀴 순서`
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 110
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 08
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 16
+- 거절 자동 · stop · R8-sources · 근거(--sources)가 하나 이상 있어야 한다.
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 110
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 08
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 16
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 110
+- 들어옴 20261010-4b7f2a06 `기억 저장소 점검·정리 한 바퀴 순서` (mem/0.3.0) --origin stop
+- 덮음 20260912-ae6a4d35 → 20261005-86c28661
+- 덮음 20260917-c90b6fca → 20261006-d868af05
+- 거절 duplicate-hard `주인 눈 위 ＼／ 는 눈썹 아닌 앞머리 가닥 두 줄`
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 128
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 160
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 6270
+- 거절 자동 · stop · R2-fragment · 본문의 값이 대화에도 저장소에도 없다 : 49
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-hard). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+- 거절 duplicate-hard `주인 눈 위 ＼／ 는 눈썹 아닌 앞머리 가닥 두 줄`
+- 들어옴 20261010-f03c32de `주인 눈 위 ＼／ 는 눈썹 아닌 앞머리 가닥 두 줄` (mem/0.3.0) --new
+- 덮음 20261003-4885c194 → 20261010-f03c32de
+- 덮음 20261003-650ffef1 → 20261010-f03c32de
+- 승격 20260906-26afb73e
+- 승격 20261007-d901ecf1
+- 접힘 20260912-ae6a4d35 (gc --retired)
+- 접힘 20260917-c90b6fca (gc --retired)
+- 접힘 20261003-4885c194 (gc --retired)
+- 접힘 20261003-650ffef1 (gc --retired)
+- 덮음 20260920-f0abdb05 → 20261005-7ffbcfdc
+- 덮음 20260920-b1a624c1 → 20261005-7ffbcfdc
+- 접힘 20260920-b1a624c1 (gc --retired)
+- 접힘 20260920-f0abdb05 (gc --retired)
+- 거절 summary-len severity `mem review --nli 는 SemIf 단을 끄고 돌린다`
+- 들어옴 20261010-618c9a01 `mem review --nli 는 SemIf 단을 끄고 돌린다` (mem/0.3.0) --origin stop

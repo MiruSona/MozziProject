@@ -86,6 +86,8 @@ mix_k = 60
 mix_floor = 0.58
 mix_rank = 3
 mix_keep = 0
+# mix_gap 은 뜻으로만 올라온 답의 도드라짐 문턱이다 (코사인 − 뜻 후보 가운데값). 0 이면 끔.
+mix_gap = 0
 
 # 문서 품질 문턱. mem eval --quality 가 규칙을 강등하면 여기 적는다.
 [quality]
@@ -104,6 +106,8 @@ scope_skew_ratio = 0.9
 cold_days = 180
 precision_demote = 0.8
 precision_off = 0.6
+# summary_body_reject 는 B08 을 결정 종류 add 에서 거절로 올릴지다. 기본 꺼짐.
+summary_body_reject = false
 
 [synonym]
 "검색" = ["search"]
