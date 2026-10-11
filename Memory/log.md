@@ -1128,3 +1128,25 @@
 - 접힘 20260920-f0abdb05 (gc --retired)
 - 거절 summary-len severity `mem review --nli 는 SemIf 단을 끄고 돌린다`
 - 들어옴 20261010-618c9a01 `mem review --nli 는 SemIf 단을 끄고 돌린다` (mem/0.3.0) --origin stop
+
+## 2026-10-11
+- 거절 tag-shape severity sources-shape body-thin secret-entropy `Play 캡처 전에 세이브의 마지막 접속 시각을 지금으로 맞춘다`
+- 거절 body-thin secret-entropy `Play 캡처 전에 세이브의 마지막 접속 시각을 지금으로 맞춘다`
+- 거절 body-thin secret-entropy `Play 캡처 전에 세이브의 마지막 접속 시각을 지금으로 맞춘다`
+- 거절 summary-len body-thin howto-numbered duplicate-soft secret-entropy `Play 연속 캡처 도우미 VideoCapture`
+- 거절 summary-len severity body-thin `방치 보상 팝업이 연속 캡처를 덮는다`
+- 거절 summary-len howto-numbered duplicate-soft `Play 연속 캡처 도우미 VideoCapture`
+- 거절 summary-len severity duplicate-soft `방치 보상 팝업이 연속 캡처를 덮는다`
+- 거절 summary-len duplicate-soft `Play 연속 캡처 도우미 VideoCapture`
+- 거절 summary-len duplicate-soft `방치 보상 팝업이 연속 캡처를 덮는다`
+- 들어옴 20261011-c00ce2f3 `방치 보상 팝업이 연속 캡처를 덮는다` (mem/0.3.0)
+- 들어옴 20261011-f825a5c2 `Play 연속 캡처 도우미 VideoCapture` (mem/0.3.0)
+- 거절 tag-standard severity sources-shape body-thin `변천사 영상 drawtext — 줄바꿈 □ · — 글자 없음`
+- 들어옴 20261011-7ef43072 `변천사 영상 drawtext — 줄바꿈 □ · — 글자 없음` (mem/0.3.0)
+- 거절 severity `옛 판 worktree 캡처는 Farm 씬을 먼저 연다`
+- 들어옴 20261011-c0615472 `옛 판 worktree 캡처는 Farm 씬을 먼저 연다` (mem/0.3.0)
+- 들어옴 20261011-b3e56ab5 `크롬 확장 resize_window 는 최대화 창에서 안 듣는다` (mem/0.3.0)
+- 들어옴 20261011-dc97e1f5 `크롬 gif_creator 는 동작이 있을 때만 프레임을 잡는다` (mem/0.3.0)
+- 들어옴 20261011-c102d427 `옛 WebGL v9 빌드는 v10 의 index.html 을 빌려 띄운다` (mem/0.3.0)
+- 거절 sources-shape `변천사 1분 영상을 만들었다`
+- 들어옴 20261011-9930278e `변천사 1분 영상을 만들었다` (mem/0.3.0)
