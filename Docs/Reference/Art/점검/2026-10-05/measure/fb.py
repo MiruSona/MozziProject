@@ -1,8 +1,8 @@
 # v16 피드백 셋을 재는 그림 · 숫자 (원본은 읽기만)
 import os, json
 from PIL import Image, ImageDraw
-A = r"C:\Mirusona\Project\ClaudeProject\ProjectMozzi2\ProjectMozziUnity\Assets\_Project\Resources\Art"
-O = r"C:\Mirusona\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\점검\2026-10-05\feedback"
+A = r"D:\Project\ClaudeProject\ProjectMozzi2\ProjectMozziUnity\Assets\_Project\Resources\Art"
+O = r"D:\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\점검\2026-10-05\feedback"
 os.makedirs(O, exist_ok=True)
 L = lambda p: Image.open(os.path.join(A, p)).convert("RGBA")
 out = {}

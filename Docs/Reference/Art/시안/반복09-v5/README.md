@@ -1,6 +1,6 @@
 # 반복 09 v5 — 「천장으로 읽히는」 나무 천장 시안
 
-**볼 파일** : `C:\Mirusona\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복09-v5\00_견줌판.png`
+**볼 파일** : `D:\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복09-v5\00_견줌판.png`
 
 **고를 것** : W1 · W2 · W3 가운데 하나 (맨 왼쪽 C2 는 앞 판, 견주려고 둔 것이다).
 

@@ -17,7 +17,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 
 D = os.path.dirname(os.path.abspath(__file__))
-ART = r"C:\Mirusona\Project\ClaudeProject\ProjectMozzi2\ProjectMozziUnity\Assets\_Project\Resources\Art"
+ART = r"D:\Project\ClaudeProject\ProjectMozzi2\ProjectMozziUnity\Assets\_Project\Resources\Art"
 N = 32
 
 # 반쪽을 시계 방향으로 기울이는 각. 5판에서는 30 으로 정했으나, 6판에서 반쪽이 통통해지자

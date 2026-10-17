@@ -2,7 +2,7 @@
 import os, glob, colorsys, json
 from PIL import Image
 
-R = r"C:\Mirusona\Project\ClaudeProject\ProjectMozzi2"
+R = r"D:\Project\ClaudeProject\ProjectMozzi2"
 REF = os.path.join(R, r"Docs\Reference\Art")
 S = os.path.dirname(os.path.abspath(__file__))
 GAME = os.path.join(S, "refs")

@@ -14,7 +14,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 
 D = os.path.dirname(os.path.abspath(__file__))
-ART = r"C:\Mirusona\Project\ClaudeProject\ProjectMozzi2\ProjectMozziUnity\Assets\_Project\Resources\Art"
+ART = r"D:\Project\ClaudeProject\ProjectMozzi2\ProjectMozziUnity\Assets\_Project\Resources\Art"
 N = 32
 
 SKIN = {

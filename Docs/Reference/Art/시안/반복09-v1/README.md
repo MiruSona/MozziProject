@@ -1,6 +1,6 @@
 # 반복 09 — 주방 구성 시안 3안
 
-**먼저 볼 파일 : `C:\Mirusona\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복09-v1\00_견줌판.png`**
+**먼저 볼 파일 : `D:\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복09-v1\00_견줌판.png`**
 (왼쪽부터 지금 · 1 · 2 · 3. 이 한 장만 보고 번호로 고르면 된다.)
 
 시안이다. 기구 그림은 지금 것을 그대로(1배) 올렸고, 벽과 조리대만 새로 뽑았다. 정식 배경과 Unity 배선은 다음 판이다.

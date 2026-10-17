@@ -1,6 +1,6 @@
 # 반복 09 v3 — 주방 B 구조(옆으로 세 칸) 기구 · 선반 변형 시안
 
-> 볼 파일 : `C:\Mirusona\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복09-v3\00_견줌판.png`
+> 볼 파일 : `D:\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복09-v3\00_견줌판.png`
 > 이 한 장을 보고 아래 네 가지를 번호로 고른다. 시안이라 게임에는 아직 안 들어갔다.
 
 ## 사용자가 고를 것

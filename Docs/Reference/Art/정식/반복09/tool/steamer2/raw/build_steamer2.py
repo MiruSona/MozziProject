@@ -1,7 +1,7 @@
 import os, sys
 from PIL import Image, ImageDraw
 
-ROOT = r"C:\Mirusona\Project\ClaudeProject\ProjectMozzi2"
+ROOT = r"D:\Project\ClaudeProject\ProjectMozzi2"
 SCR = os.path.join(ROOT, r"ProjectMozziUnity\Assets\_Project\Resources\Art\Screen")
 FX = os.path.join(ROOT, r"ProjectMozziUnity\Assets\_Project\Resources\Art\Fx")
 OUT = os.path.join(ROOT, r"Docs\Reference\Art\정식\반복09\tool\steamer2")

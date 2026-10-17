@@ -1,6 +1,6 @@
 # 반복 09 v2 — 주방 구조 시안 A · B · C
 
-**볼 파일 한 장** : `C:\Mirusona\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복09-v2\00_견줌판.png`
+**볼 파일 한 장** : `D:\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복09-v2\00_견줌판.png`
 
 분위기는 앞 판(v1)에서 고른 「현대 카페 주방」이다. 이번에는 **기구를 전부 새로 그리고**, 같은 부품 한 벌로 **구조만 셋**으로 짰다.
 그림은 시안이다. 구조를 고르면 그 구조에 맞춰 정식으로 다시 그린다.
