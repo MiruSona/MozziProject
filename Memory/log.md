@@ -1154,3 +1154,4 @@
 ## 2026-10-17
 - 거절 title-shape tag-count tag-standard severity sources-shape body-thin `저장소 폴더를 다른 드라이브로 옮기면 저장소 밖에서 가리키는 것 6가지가 깨진다`
 - 들어옴 20261017-6e06003c `저장소를 다른 드라이브로 옮기면 밖에서 가리키는 것이 깨진다` (mem/0.3.0)
+- 들어옴 20261017-782b8162 `Unity CLI 프로젝트 목록은 Hub 와 따로 옛 경로를 쥔다` (mem/0.3.0)
