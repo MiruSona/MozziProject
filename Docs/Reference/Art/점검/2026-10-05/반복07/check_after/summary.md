@@ -1,5 +1,7 @@
 # 그림 전체 검사 요약 — 반복07
 
+> **2026-10-18 정리** : 이 문서가 가리키던 그림 중 안 쓰는 시안·견줌판·옛 판은 저장소에서 지웠다 (`(정리함 2026-10-18)` 표시). 다시 보려면 git 기록에서 꺼낸다.
+
 `check_all.py` 가 낸 표다. 그림 171장 · 묶음 11개. 숫자는 **걸린 그림 장 수**다.
 
 ## 묶음별
@@ -37,7 +39,7 @@
 
 | 묶음 | 경고 | 그림 |
 | --- | --- | --- |
-| bldg | `outline` | kitchen_pound_0.png, kitchen_pound_1.png, kitchen_pound_2.png, kitchen_pound_3.png, kitchen_pound_4.png, kitchen_pound_5.png, kitchen_pound_6.png, stall_main.png, storage_main.png, synthesis_machine_done.png, synthesis_main.png |
+| bldg | `outline` | kitchen_pound_0.png, kitchen_pound_1.png, kitchen_pound_2.png, kitchen_pound_3.png, kitchen_pound_4.png, kitchen_pound_5.png, kitchen_pound_6.png, stall_main.png, storage_main.png(정리함 2026-10-18), synthesis_machine_done.png, synthesis_main.png |
 | char_mozzi | `outline` | acc_crown.png, cheek.png, face_02.png, face_03.png, face_05.png, face_07.png, face_10.png |
 | char_people | `color_cap` | face_03.png |
 | char_people | `outline` | body.png, face_01.png, face_02.png, face_03.png, hair_01_black.png, hair_01_brown.png, hair_01_orange.png, hair_01_purple.png, hair_02_black.png, hair_02_brown.png, hair_02_orange.png, hair_02_purple.png, shirt_blue.png, shirt_green.png, shirt_red.png, shirt_yellow.png |
@@ -49,11 +51,11 @@
 | piece | `near_colors` | kitchen_drawer_frame.png |
 | piece | `outline` | kitchen_board.png, kitchen_bowl.png, kitchen_pound_rough_0.png, kitchen_pound_rough_1.png, kitchen_pound_rough_2.png, kitchen_pound_rough_3.png, kitchen_pound_rough_4.png, kitchen_pound_rough_5.png, kitchen_pound_rough_6.png, kitchen_pound_smooth_0.png, kitchen_pound_smooth_1.png, kitchen_pound_smooth_2.png, kitchen_pound_smooth_3.png, kitchen_pound_smooth_4.png, kitchen_pound_smooth_5.png, kitchen_pound_smooth_6.png, kitchen_steamer.png, stall_board_topper.png, stall_counter.png, stall_prop_vase.png |
 | tile | `color_cap` | decor_04.png, decor_05.png, decor_06.png, fence_v.png |
-| tile | `integer_scale` | fence_h.png, fence_post.png |
-| tile | `isolated` | decor_01.png, decor_03.png, decor_04.png, decor_05.png, decor_06.png, fence_h.png, fence_post.png, fence_v.png |
-| tile | `outline` | decor_07.png, decor_08.png, decor_09.png, decor_10.png, fence_v.png |
+| tile | `integer_scale` | fence_h.png, fence_post.png(정리함 2026-10-18) |
+| tile | `isolated` | decor_01.png, decor_03.png, decor_04.png, decor_05.png, decor_06.png, fence_h.png, fence_post.png(정리함 2026-10-18), fence_v.png |
+| tile | `outline` | decor_07.png(정리함 2026-10-18), decor_08.png(정리함 2026-10-18), decor_09.png(정리함 2026-10-18), decor_10.png(정리함 2026-10-18), fence_v.png |
 | tile_bg | `near_colors` | grass_base.png |
-| ui | `color_cap` | icon_codex.png, icon_upgrade.png |
+| ui | `color_cap` | icon_codex.png(정리함 2026-10-18), icon_upgrade.png |
 | ui | `outline` | ui_badge_alert.png, ui_bubble_c.png, ui_button.png |
 
 ## 겹 묶음 (`layers check`)

@@ -1,5 +1,7 @@
 # Unity 화면 캡처와 눈 확인 (2026-10-05)
 
+> **2026-10-18 정리** : 이 문서가 가리키던 그림 중 안 쓰는 시안·견줌판·옛 판은 저장소에서 지웠다 (`(정리함 2026-10-18)` 표시). 다시 보려면 git 기록에서 꺼낸다.
+
 `Docs/Research/2026-10-05-그림전체점검과화풍조사.md` 의 결론을 **실제 Play 화면**에서 다시 본 기록이다.
 조사 문서 본문은 고치지 않았다. 판정은 이 파일에만 적는다.
 
@@ -19,14 +21,14 @@
 | --- | --- | --- |
 | `a_main.png` | 메인 농장 | 찹쌀이 40/40 · 건물 셋 · 잔디 · 풀 장식 · 울타리 · 메뉴 |
 | `b_stall_a.png` | 가판대 | 손님 셋 · 말풍선 떡 셋 · 진열장 팥떡 위주 |
-| `b_stall_b.png` | 가판대 | 손님 둘(하나는 글 말풍선 · 시무룩) · 진열장에 콩떡 한 칸 더 |
-| `c_kitchen.png` | 주방 | 떡메 치기 탭(절구 · 떡메 · 재료 쟁반 · 결과 접시) |
-| `c_kitchen_menu.png` | 주방 차림표 | 떡 아이콘 7종 |
-| `d_synth_idle.png` | 합성소 | 쉼 (깔때기 「+」) |
-| `d_synth_running.png` | 합성소 | 도는 중 (창 속 음양, 14:57) |
-| `d_synth_done.png` | 합성소 | 다 됨 (서랍에 그림자 + 「?」, 반짝이) |
-| `d_synth_take_early.png` · `d_synth_take_end.png` | 합성소 | 받기 연출 — 초록 네모 · NEW! · 이름 |
-| `e_mozzi_codex.png` · `e_recipe_codex.png` · `e_storage.png` | 도감 둘 · 보관함 | 옛 360 기준 화면 |
+| `b_stall_b.png`(정리함 2026-10-18) | 가판대 | 손님 둘(하나는 글 말풍선 · 시무룩) · 진열장에 콩떡 한 칸 더 |
+| `c_kitchen.png`(정리함 2026-10-18) | 주방 | 떡메 치기 탭(절구 · 떡메 · 재료 쟁반 · 결과 접시) |
+| `c_kitchen_menu.png`(정리함 2026-10-18) | 주방 차림표 | 떡 아이콘 7종 |
+| `d_synth_idle.png`(정리함 2026-10-18) | 합성소 | 쉼 (깔때기 「+」) |
+| `d_synth_running.png`(정리함 2026-10-18) | 합성소 | 도는 중 (창 속 음양, 14:57) |
+| `d_synth_done.png`(정리함 2026-10-18) | 합성소 | 다 됨 (서랍에 그림자 + 「?」, 반짝이) |
+| `d_synth_take_early.png`(정리함 2026-10-18) · `d_synth_take_end.png`(정리함 2026-10-18) | 합성소 | 받기 연출 — 초록 네모 · NEW! · 이름 |
+| `e_mozzi_codex.png`(정리함 2026-10-18) · `e_recipe_codex.png`(정리함 2026-10-18) · `e_storage.png`(정리함 2026-10-18) | 도감 둘 · 보관함 | 옛 360 기준 화면 |
 
 **잘라 키운 그림** (nearest 정수배) : `crop_stall_case_x4` · `crop_stall_bubbles_x3` · `crop_stall_customer_heads_x3` · `crop_stall_counter_band_x2` ·
 `crop_synth_drawer_done_x4` · `crop_synth_machine_running_x3` · `crop_main_farm_grass_mozzi_x3` · `crop_main_buildings_x2` · `crop_main_mozzi_scale_x8` · `crop_main_mozzi_scale2_x8` ·

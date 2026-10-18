@@ -1,5 +1,7 @@
 # 그림 전체 검사 요약 — 개편 전 기준선 (2026-10-05)
 
+> **2026-10-18 정리** : 이 문서가 가리키던 그림 중 안 쓰는 시안·견줌판·옛 판은 저장소에서 지웠다 (`(정리함 2026-10-18)` 표시). 다시 보려면 git 기록에서 꺼낸다.
+
 `check_all.py` 가 낸 표다. 그림 111장 · 묶음 10개. 숫자는 **걸린 그림 장 수**다.
 
 ## 묶음별
@@ -32,8 +34,8 @@
 
 | 묶음 | 경고 | 그림 |
 | --- | --- | --- |
-| bldg | `color_cap` | kitchen_pound_1.png, kitchen_pound_2.png, kitchen_pound_3.png, kitchen_pound_4.png, kitchen_pound_5.png, kitchen_pound_6.png, storage_main.png |
-| bldg | `outline` | stall_main.png, storage_main.png, synthesis_machine_done.png, synthesis_main.png |
+| bldg | `color_cap` | kitchen_pound_1.png, kitchen_pound_2.png, kitchen_pound_3.png, kitchen_pound_4.png, kitchen_pound_5.png, kitchen_pound_6.png, storage_main.png(정리함 2026-10-18) |
+| bldg | `outline` | stall_main.png, storage_main.png(정리함 2026-10-18), synthesis_machine_done.png, synthesis_main.png |
 | char_mozzi | `near_colors` | body_hop3.png |
 | char_mozzi | `outline` | acc_crown.png, cheek.png, face_02.png, face_03.png, face_05.png, face_07.png, face_10.png |
 | char_people | `color_cap` | face_03.png |
@@ -43,12 +45,12 @@
 | piece | `isolated` | stall_prop_menu.png, stall_prop_register.png, stall_prop_vase.png |
 | piece | `near_colors` | synthesis_plate.png |
 | piece | `outline` | stall_board_topper.png, stall_counter.png, stall_prop_menu.png, stall_prop_vase.png |
-| tile | `color_cap` | decor_04.png, decor_05.png, decor_06.png, fence_h.png, fence_post.png, fence_v.png |
-| tile | `integer_scale` | decor_03.png, fence_h.png, fence_post.png |
-| tile | `isolated` | decor_01.png, decor_03.png, decor_04.png, decor_05.png, decor_06.png, fence_h.png, fence_post.png, fence_v.png |
-| tile | `outline` | decor_07.png, decor_08.png, decor_09.png, decor_10.png, fence_v.png |
+| tile | `color_cap` | decor_04.png, decor_05.png, decor_06.png, fence_h.png, fence_post.png(정리함 2026-10-18), fence_v.png |
+| tile | `integer_scale` | decor_03.png, fence_h.png, fence_post.png(정리함 2026-10-18) |
+| tile | `isolated` | decor_01.png, decor_03.png, decor_04.png, decor_05.png, decor_06.png, fence_h.png, fence_post.png(정리함 2026-10-18), fence_v.png |
+| tile | `outline` | decor_07.png(정리함 2026-10-18), decor_08.png(정리함 2026-10-18), decor_09.png(정리함 2026-10-18), decor_10.png(정리함 2026-10-18), fence_v.png |
 | tile_bg | `near_colors` | grass_base.png |
-| ui | `color_cap` | icon_codex.png, icon_menu.png, icon_upgrade.png, ui_bubble.png, ui_bubble_c.png, ui_button.png |
+| ui | `color_cap` | icon_codex.png(정리함 2026-10-18), icon_menu.png(정리함 2026-10-18), icon_upgrade.png, ui_bubble.png, ui_bubble_c.png, ui_button.png |
 | ui | `isolated` | ui_bubble_c.png |
 | ui | `near_colors` | ui_bubble_c.png, ui_button.png |
 | ui | `outline` | ui_bubble_c.png |

@@ -1,5 +1,7 @@
 # 가판대 그림 화풍 통일 (B 갈래 · 2026-10-05)
 
+> **2026-10-18 정리** : 이 문서가 가리키던 그림 중 안 쓰는 시안·견줌판·옛 판은 저장소에서 지웠다 (`(정리함 2026-10-18)` 표시). 다시 보려면 git 기록에서 꺼낸다.
+
 > 설계 : `Docs/Design/화풍통일/2026-10-05-그림화풍통일설계.md` 7절 B-1 ~ B-6.
 > **Unity 에는 아무것도 안 넣었다.** `out/` 을 `Resources/Art/` 로 옮기는 것은 코드 갈래 일이다.
 > 크레딧 0 — 모두 ArtTool `reline` 과 PIL 손질이다.
@@ -109,6 +111,6 @@ Tools/ArtTool/.venv/Scripts/python.exe Docs/Reference/Art/정식/가판대/화�
 | `out_alt/Screen/display_case_back.png` | (가) 와 같은 그림 (스크립트가 내는 자리) | `out/` 으로 옮긴 원본 |
 | `out_alt/Screen/display_case_glass.png` | (나) 떡 앞에 얹는 겹 — 바탕 알파 38 (15%) · 빗금 100 | 안 씀. 쓰려면 Setup 에 겹 한 줄이 더 든다 |
 
-- 견줌판 : `점검/2026-10-05/unity_after/choice/compare_case_glass2_ingame.png`.
+- 견줌판 : `점검/2026-10-05/unity_after/choice/compare_case_glass2_ingame.png`(정리함 2026-10-18).
 - **반투명은 화풍 규칙(반투명 없음)의 예외다.** `arttool check --profile mozzi_prop` 는 이 한 장에서 반투명으로 걸린다.
 - `b5_case_glass.py` · `run_all.py` 는 Resources 의 진열장을 읽으므로 그대로 다시 돌리면 유리 든 판 위에 덮어 굽는다. 다시 구울 때는 b5b 만 돌린다.

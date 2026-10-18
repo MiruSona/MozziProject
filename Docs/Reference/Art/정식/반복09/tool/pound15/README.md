@@ -1,5 +1,7 @@
 # pound15 — 떡메 치기 시안 6차 (반죽만 PixelLab 그림으로 바꿈)
 
+> **2026-10-18 정리** : 이 문서가 가리키던 그림 중 안 쓰는 시안·견줌판·옛 판은 저장소에서 지웠다 (`(정리함 2026-10-18)` 표시). 다시 보려면 git 기록에서 꺼낸다.
+
 pound14 에서 **반죽 그림만** 바꿨다. 떡메 호 운동 · 절구 두 겹 · 박자는 pound14 그대로다 (mallet_* · mortar_* 는 pound14 복사본).
 
 ## 겹과 순서 (정식 배선이 읽는다)
@@ -61,5 +63,5 @@ pound14 에서 **반죽 그림만** 바꿨다. 떡메 호 운동 · 절구 두 �
 
 ## 만들기
 
-`python build_pound15.py` — layers/ · pound15_이어서.gif · 견줌판.png · 나란히.gif(왼쪽 pound14, 오른쪽 pound15)를 만들고
+`python build_pound15.py` — layers/ · pound15_이어서.gif · 견줌판.png(정리함 2026-10-18) · 나란히.gif(왼쪽 pound14, 오른쪽 pound15)를 만들고
 `ProjectMozziUnity/Assets/_Project/Resources/Art/Screen/kitchen_pound15_<겹이름>.png` 로 98장을 복사한다.
