@@ -38,3 +38,6 @@ Memory/archive/*.jsonl.gz binary
 
 # 구운 게임 데이터 (datatool export). 줄끝 바꾸기가 닿으면 깨진다
 *.bytes binary
+
+# README 에 넣는 그림은 GitHub 첫 페이지에서 보이게 LFS 에서 뺀다
+Docs/Readme/** -filter -diff -merge
