@@ -18,7 +18,7 @@ FONT = os.path.join(ROOT, 'ProjectMozziUnity', 'Assets', '_Project', 'Fonts', 'O
 OUT = os.path.join(REF, '시안')
 # 임시 그림 (저장소 밖 · 미확정) : 가판대 주인 v9 1번, 지금 게임 화면 캡처
 OWNER = r'C:\Users\USER\AppData\Local\Temp\claude\mozzi-owner-02\v9\pick1.png'
-CAPS = r'C:\Users\USER\AppData\Local\Temp\claude\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\653c476f-f547-4ae3-a69f-180cce86dc67\scratchpad\captures'
+CAPS = r'<scratch>\captures'
 os.makedirs(PARTS_S, exist_ok=True); os.makedirs(PARTS_M, exist_ok=True)
 
 W = 540; H_TALL = 1200

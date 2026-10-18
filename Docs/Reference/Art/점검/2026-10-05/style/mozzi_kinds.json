@@ -27,7 +27,7 @@
       "hue_step": 5.8,
       "held": null,
       "warnings": [],
-      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_bg_report.json"
+      "report": "<scratch>\\art-audit\\style\\mozzi_bg_report.json"
     },
     {
       "kind": "bldg",
@@ -57,7 +57,7 @@
       "warnings": [
         "palette_cap"
       ],
-      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_bldg_report.json"
+      "report": "<scratch>\\art-audit\\style\\mozzi_bldg_report.json"
     },
     {
       "kind": "char_mozzi",
@@ -91,7 +91,7 @@
         "empty",
         "by_kind"
       ],
-      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_mozzi_report.json"
+      "report": "<scratch>\\art-audit\\style\\mozzi_char_mozzi_report.json"
     },
     {
       "kind": "char_people",
@@ -122,7 +122,7 @@
       "warnings": [
         "by_kind"
       ],
-      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_char_people_report.json"
+      "report": "<scratch>\\art-audit\\style\\mozzi_char_people_report.json"
     },
     {
       "kind": "fx",
@@ -150,7 +150,7 @@
       "warnings": [
         "few_images"
       ],
-      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_fx_report.json"
+      "report": "<scratch>\\art-audit\\style\\mozzi_fx_report.json"
     },
     {
       "kind": "icon",
@@ -185,7 +185,7 @@
       "warnings": [
         "by_kind"
       ],
-      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_icon_report.json"
+      "report": "<scratch>\\art-audit\\style\\mozzi_icon_report.json"
     },
     {
       "kind": "piece",
@@ -220,7 +220,7 @@
         "palette_cap",
         "by_kind"
       ],
-      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_piece_report.json"
+      "report": "<scratch>\\art-audit\\style\\mozzi_piece_report.json"
     },
     {
       "kind": "tile",
@@ -252,7 +252,7 @@
       "warnings": [
         "by_kind"
       ],
-      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_tile_report.json"
+      "report": "<scratch>\\art-audit\\style\\mozzi_tile_report.json"
     },
     {
       "kind": "ui",
@@ -280,11 +280,11 @@
       "hue_step": 1.6,
       "held": null,
       "warnings": [],
-      "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_ui_report.json"
+      "report": "<scratch>\\art-audit\\style\\mozzi_ui_report.json"
     }
   ],
   "warnings": [],
   "out": {
-    "kinds": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_kinds.json"
+    "kinds": "<scratch>\\art-audit\\style\\mozzi_kinds.json"
   }
 }

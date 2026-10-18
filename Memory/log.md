@@ -1160,3 +1160,8 @@
 - 거절 severity sources-shape duplicate-soft `VideoCapture 소개 캡처 함정 셋`
 - 들어옴 20261018-06772f3e `VideoCapture 소개 캡처 함정 셋` (mem/0.3.0)
 - 들어옴 20261018-8ebb15c0 `소개 영상 1분 만들기 공수` (mem/0.3.0)
+- 거절 tag-standard body-thin `저장소 공개 전환 — 이력 고쳐 쓰고 새 저장소로`
+- 거절 자동 · stop · R8-sources · 근거(--sources)가 하나 이상 있어야 한다.
+- 들어옴 20261018-b9f7d02c `저장소 공개 전환 — 이력 고쳐 쓰고 새 저장소로` (mem/0.3.0) --origin stop
+- 들어옴 20261018-d89d42b1 `저장소 공개 전환 — 원작 원본·남의 그림은 뺀다` (mem/0.3.0)
+- 덮음 20260907-78974590 → 20261018-d89d42b1

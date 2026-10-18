@@ -1384,9 +1384,9 @@
   ],
   "warnings": [],
   "out": {
-    "palette": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_ui_palette.json",
-    "swatch": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_ui_swatch.png",
-    "profile": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_ui_profile.yaml",
-    "report": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\C--Mirusona-Project-ClaudeProject-ProjectMozzi2\\c9a7a3e0-e0bf-494f-8994-bb023e6434f6\\scratchpad\\art-audit\\style\\mozzi_ui_report.json"
+    "palette": "<scratch>\\art-audit\\style\\mozzi_ui_palette.json",
+    "swatch": "<scratch>\\art-audit\\style\\mozzi_ui_swatch.png",
+    "profile": "<scratch>\\art-audit\\style\\mozzi_ui_profile.yaml",
+    "report": "<scratch>\\art-audit\\style\\mozzi_ui_report.json"
   }
 }

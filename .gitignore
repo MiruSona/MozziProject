@@ -131,3 +131,11 @@ Docs/Todo/대시보드.html
 # WebGL 빌드 출력 (Editor/WebGlBuild.cs 가 저장소 뿌리 Build/WebGL 에 낸다)
 /Build/
 ProjectMozziUnity/Captures/
+
+# ---- 공개 저장소에 두지 않는 남의 것 (2026-10-18) ----
+# 원작(고차비 님) 원본 그림·카페 자료 — 로컬에만 둔다
+Docs/Reference/Art/차비님캐릭/
+Docs/Reference/Art/찹쌀이/찹쌀이이모티콘.jpg
+# ONE 모바일 POP 원본 사본 — 원스토어 라이선스상 재배포 금지
+Docs/Resources/ONE Mobile POP.ttf
+Docs/Resources/ONE Mobile POP OTF.otf
