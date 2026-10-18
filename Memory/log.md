@@ -1182,3 +1182,4 @@
 - 거절 title-shape severity sources-note-only body-thin duplicate-soft `한글 든 .ps1 수리 스크립트는 BOM 없으면 powershell -File 에서 깨진다`
 - 들어옴 20261018-a90fed1c `한글 .ps1 은 BOM 없이 -File 로 못 돌린다` (mem/0.3.0)
 - 거절 summary-len sources-note-only `공개 저장소라 문서에 홈·스크래치 경로를 안 적는다`
+- 들어옴 20261018-57cbe162 `공개 저장소라 문서에 홈·스크래치 경로를 안 적는다` (mem/0.3.0)
