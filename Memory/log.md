@@ -1165,3 +1165,16 @@
 - 들어옴 20261018-b9f7d02c `저장소 공개 전환 — 이력 고쳐 쓰고 새 저장소로` (mem/0.3.0) --origin stop
 - 들어옴 20261018-d89d42b1 `저장소 공개 전환 — 원작 원본·남의 그림은 뺀다` (mem/0.3.0)
 - 덮음 20260907-78974590 → 20261018-d89d42b1
+- 거절 summary-len first-line-conclusion multi-heading `저장소 공개 전환 — 이력 다시 써서 MozziProject 로 옮김`
+- 거절 summary-len body-thin `Docs/Reference/Art 정리 — 1,580장 135MB 지움`
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+- 거절 body-thin `저장소 공개 전환 공수 — 현재 판만 옮겨도 2시간`
+- 거절 summary-len severity body-thin `file:// clone 은 LFS 객체를 못 받는다`
+- 거절 summary-len severity body-thin summary-body-match `서브에이전트는 filter-repo·내장 기억 수정이 막힌다`
+- 거절 body-thin duplicate-soft `Docs/Reference/Art 정리 — 1,580장 135MB 지움`
+- 거절 자동 · stop · R4-no-merge · 비슷한 기억이 이미 있다 (duplicate-soft). 자동 기억은 합치지 않는다 — 사람이 넣거나 그 기억을 고친다.
+- 들어옴 20261018-ffe37f99 `저장소 공개 전환 작업 기록` (mem/0.3.0)
+- 들어옴 20261018-5b1e99dd `file 경로 clone 은 LFS 를 못 받는다` (mem/0.3.0)
+- 들어옴 20261018-5d56e965 `서브에이전트는 이력 다시 쓰기를 못 한다` (mem/0.3.0)
+- 들어옴 20261018-2d73dbec `아트 참고 폴더 이미지 정리 기록` (mem/0.3.0)
