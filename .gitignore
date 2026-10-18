@@ -139,3 +139,8 @@ Docs/Reference/Art/찹쌀이/찹쌀이이모티콘.jpg
 # ONE 모바일 POP 원본 사본 — 원스토어 라이선스상 재배포 금지
 Docs/Resources/ONE Mobile POP.ttf
 Docs/Resources/ONE Mobile POP OTF.otf
+# ONE 모바일 POP 원본(Unity) — 재배포 금지라 로컬에만. Static SDF 자산은 이것 없이 돈다
+ProjectMozziUnity/Assets/_Project/Fonts/ONEMobilePOP.ttf
+ProjectMozziUnity/Assets/_Project/Fonts/ONEMobilePOP.ttf.meta
+ProjectMozziUnity/Assets/_Project/Fonts/ONEMobilePOP SDF Dynamic.asset
+ProjectMozziUnity/Assets/_Project/Fonts/ONEMobilePOP SDF Dynamic.asset.meta
