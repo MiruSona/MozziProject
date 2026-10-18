@@ -1,5 +1,5 @@
 schema    = 2
-name      = "ProjectMozzi2"
+name      = "MozziProject"
 tokenizer = "bigram-ko3col+word-en3col+contentless+norm"
 
 [repo]
