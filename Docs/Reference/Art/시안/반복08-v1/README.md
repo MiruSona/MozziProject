@@ -7,14 +7,14 @@
 
 ## 볼 파일 하나
 
-`D:\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복08-v1\견줌\00_모음판.png`(정리함 2026-10-18)
+`D:\Project\ClaudeProject\MozziProject\Docs\Reference\Art\시안\반복08-v1\견줌\00_모음판.png`(정리함 2026-10-18)
 
 다섯 묶음 후보를 한 장에 모았다. 오른쪽은 농장 짝 · 서랍장을 화면 위에 올린 모습이다.
 답은 「1-A · 2-A · 3-C · 4-A · 5-B」처럼 번호로 주면 된다. 묶음마다 하나씩 고르되, 5번은 여러 개를 골라도 된다(낱개를 섞어 써도 된다).
 
 ## 고를 것
 
-견줌 폴더 : `D:\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복08-v1\견줌\`
+견줌 폴더 : `D:\Project\ClaudeProject\MozziProject\Docs\Reference\Art\시안\반복08-v1\견줌\`
 
 | 묶음 | 후보 | 볼 파일 (전체 경로) | 판단할 점 | 권장 |
 | --- | --- | --- | --- | --- |

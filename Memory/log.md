@@ -1179,3 +1179,5 @@
 - 들어옴 20261018-5d56e965 `서브에이전트는 이력 다시 쓰기를 못 한다` (mem/0.3.0)
 - 들어옴 20261018-2d73dbec `아트 참고 폴더 이미지 정리 기록` (mem/0.3.0)
 - 들어옴 20261018-e0db304c `폴더 이름 바꾼 뒤 수리 넷` (mem/0.3.0)
+- 거절 title-shape severity sources-note-only body-thin duplicate-soft `한글 든 .ps1 수리 스크립트는 BOM 없으면 powershell -File 에서 깨진다`
+- 들어옴 20261018-a90fed1c `한글 .ps1 은 BOM 없이 -File 로 못 돌린다` (mem/0.3.0)

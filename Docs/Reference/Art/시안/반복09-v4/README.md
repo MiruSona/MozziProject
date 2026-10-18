@@ -6,7 +6,7 @@
 
 ## 볼 파일
 
-`D:\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복09-v4\00_견줌판.png`(정리함 2026-10-18)
+`D:\Project\ClaudeProject\MozziProject\Docs\Reference\Art\시안\반복09-v4\00_견줌판.png`(정리함 2026-10-18)
 
 - 윗줄 : 칸2(치기) 한 화면 넷 — C0 지금 · C1 · C2 · C3
 - 아랫줄 : 세 칸을 이은 긴 띠 셋 (C1 · C2 · C3)

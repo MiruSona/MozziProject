@@ -2,7 +2,7 @@
 
 > **2026-10-18 정리** : 이 문서가 가리키던 그림 중 안 쓰는 시안·견줌판·옛 판은 저장소에서 지웠다 (`(정리함 2026-10-18)` 표시). 다시 보려면 git 기록에서 꺼낸다.
 
-> 볼 파일 : `D:\Project\ClaudeProject\ProjectMozzi2\Docs\Reference\Art\시안\반복09-v3\00_견줌판.png`(정리함 2026-10-18)
+> 볼 파일 : `D:\Project\ClaudeProject\MozziProject\Docs\Reference\Art\시안\반복09-v3\00_견줌판.png`(정리함 2026-10-18)
 > 이 한 장을 보고 아래 네 가지를 번호로 고른다. 시안이라 게임에는 아직 안 들어갔다.
 
 ## 사용자가 고를 것

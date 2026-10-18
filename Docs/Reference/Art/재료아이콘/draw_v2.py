@@ -5,7 +5,7 @@ import os
 from PIL import Image
 
 D = os.path.dirname(os.path.abspath(__file__))
-ART = r"D:\Project\ClaudeProject\ProjectMozzi2\ProjectMozziUnity\Assets\_Project\Resources\Art"
+ART = r"D:\Project\ClaudeProject\MozziProject\ProjectMozziUnity\Assets\_Project\Resources\Art"
 N = 28
 NAMES = ["redbean", "bean", "mugwort", "sesame", "pinenut", "jujube"]
 
