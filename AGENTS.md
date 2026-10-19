@@ -138,6 +138,7 @@
   **②를 잊는 것이 가장 흔한 실수다** — ①만 하면 다른 사람이 받을 때 옛 커밋이 딸려 온다.
 - **툴 개선 요청·버그는 그 툴 저장소의 `Docs/Todo/` 에 남긴다.** 이 저장소 문서에 적지 않는다.
 - **툴을 쓰고 나면 피드백을 그 서브모듈에 남긴다.** 막힌 것 · 헷갈린 것 · 잘 된 것을 `Tools/<툴>/Docs/Todo/` 에 적는다. 이 저장소 문서나 mem 에는 안 적는다 — 툴 이야기는 툴 저장소 몫이다.
+  - 판정 서버(NLI) 답이 틀리거나 헷갈렸으면 그것도 `Tools/AIMemoryTool/Docs/Todo/` 피드백 파일 안에 「판정」 절로 적는다 — 근거 · 주장 · 받은 확률 · 기대 라벨 한 줄씩. 스튜디오가 모아 다음 판 라벨 자료로 쓴다.
 - 처음 받을 때는 `git clone --recurse-submodules`, 이미 받았으면 `git submodule update --init --recursive`.
 - **갱신한 뒤에는 `powershell -File Tools\setup.ps1`** 로 실행 파일을 다시 만든다. exe 와 `.venv` 는 git 에 안 올라가서 그냥 두면 옛 판이 남는다. 낡았는지만 보려면 `-Check`.
   `build.ps1` 은 실행 파일을 굽는 Go 툴(AIMemoryTool · DataTool · EffortTool · GamedesignTool)에만 있다.
