@@ -10,10 +10,9 @@ namespace Mozzi.Editor
 {
     // 원격 테스트용 안드로이드 APK 빌드. 저장소 뿌리 Build/android 에 낸다 (gitignore).
     // 부르는 법 : unity command eval_file 에 `Mozzi.Editor.AndroidBuild.SwitchPlatform();` 을 먼저 한 번,
-    // 전환이 끝난 뒤 `Mozzi.Editor.AndroidBuild.Build();` 한 줄. 판을 올릴 때는 Version 만 고친다.
+    // 전환이 끝난 뒤 `Mozzi.Editor.AndroidBuild.Build();` 한 줄. 판을 올릴 때는 BuildVersion.cs 만 고친다.
     public static class AndroidBuild
     {
-        private const int Version = 17;
         private const string PackageName = "com.mirusona.projectmozzi";
         private const string DebugDefine = "MOZZI_DEBUG";
         private const string ScenePath = "Assets/_Project/Scenes/Farm.unity";
@@ -56,7 +55,7 @@ namespace Mozzi.Editor
             // 디버그 패널 정의만 빌드용이라 finally 에서 되돌린다. 나머지 설정은 안드로이드 판의 정해진 값이라 남긴다.
             string savedDefines = PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.Android);
             string outputFolder = Path.GetFullPath(Path.Combine(Application.dataPath, OutputFolderRelative));
-            string outputPath = Path.Combine(outputFolder, string.Format(ApkNameFormat, Version));
+            string outputPath = Path.Combine(outputFolder, string.Format(ApkNameFormat, BuildVersion.Version));
 
             try
             {
@@ -88,8 +87,8 @@ namespace Mozzi.Editor
             AddDefine(NamedBuildTarget.Android, DebugDefine);
 
             PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, PackageName);
-            PlayerSettings.bundleVersion = Version.ToString();
-            PlayerSettings.Android.bundleVersionCode = Version;
+            PlayerSettings.bundleVersion = BuildVersion.Version;
+            PlayerSettings.Android.bundleVersionCode = BuildVersion.VersionCode;
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.Portrait;
             PlayerSettings.SetScriptingBackend(NamedBuildTarget.Android, ScriptingImplementation.IL2CPP);
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;

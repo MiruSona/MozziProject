@@ -42,6 +42,7 @@
 "setup" = []
 "hook" = []
 "concept" = []
+"version" = []
 
 # 별칭 → 표준 태그. add·lint 가 조용히 바꿔 준다.
 [tag.alias]
