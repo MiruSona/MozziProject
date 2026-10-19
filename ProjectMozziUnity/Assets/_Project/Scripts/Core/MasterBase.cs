@@ -1,13 +1,11 @@
 using System.Collections.Generic;
-using Mozzi.Events;
-using Mozzi.Hubs;
 using UnityEngine;
 
 namespace Mozzi.Core
 {
     // 씬 하나의 Manager 를 만들고 정리하는 자리다.
     // Update 는 없고 GameRunner 가 Process 를 부른다.
-    public abstract class MasterBase : MonoBehaviour, IProcess, IFixedProcess, ILateProcess
+    public abstract class MasterBase : MonoBehaviour, IProcess
     {
         private readonly List<IManager> _managers = new List<IManager>();
         private readonly ProcessList<IManager> _processList = new ProcessList<IManager>();
@@ -49,16 +47,6 @@ namespace Mozzi.Core
             _processList.ProcessAll(deltaTime);
         }
 
-        public void FixedProcess(float deltaTime)
-        {
-            _processList.FixedProcessAll(deltaTime);
-        }
-
-        public void LateProcess(float deltaTime)
-        {
-            _processList.LateProcessAll(deltaTime);
-        }
-
         private void OnDestroy()
         {
             if (GameMaster.IsBooted)
@@ -67,8 +55,6 @@ namespace Mozzi.Core
             }
 
             UnregisterHubs();
-            GlobalHub.UnregisterAllBy(this);
-            EventBus.UnsubscribeAllBy(this);
 
             // 거둘 때는 역순. 먼저 Init 된 것이 나중에 정리된다.
             for (int i = _managers.Count - 1; i >= 0; i--)

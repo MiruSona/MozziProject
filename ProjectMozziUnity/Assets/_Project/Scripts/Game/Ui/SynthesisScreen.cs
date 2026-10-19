@@ -17,7 +17,7 @@ namespace Mozzi.Game.Ui
 {
     // 합성소 화면 (540 정식). 기계 넷이 칸 넷이고, 칸마다 상태(쉼 · 도는 중 · 다 됨 · 살 수 있음 · 잠김)를 그림으로 보인다.
     // 누르는 곳 : 깔때기 = 찹쌀이 넣기/빼기, 나무 표 = 시작(다 되면 받기), 서랍 = 받기, 빈 받침 = 칸 사기.
-    // 고른 재료는 화면이 종 id 로만 기억하고, 시작 때 농장 것이면 보관함으로 먼저 옮긴 뒤 Manager 에 넘긴다.
+    // 고른 재료는 화면이 종 id 로만 기억한다. 시작 때 농장 것을 옮기는 일은 Manager 가 한다.
     // 배치는 Editor/SynthesisScreenSetup · SynthesisRoomLayout 이 정본이다.
     public sealed class SynthesisScreen : OverlayScreen
     {
@@ -509,8 +509,7 @@ namespace Mozzi.Game.Ui
             Refresh();
         }
 
-        // 시작이 될지(칸 · 골드 · 재료) 먼저 보고, 보관함에 모자란 만큼 농장에서 옮긴 뒤 시작한다.
-        // 그래도 Start 가 실패하면 옮긴 마리를 농장에 되돌린다 — 찹쌀이가 보관함에 남지 않게.
+        // 모자란 재료를 농장에서 옮기는 일은 StartPullingFromFarm 이 한다.
         private void OnStart(int index)
         {
             string a = _pickA[index];
@@ -520,99 +519,14 @@ namespace Mozzi.Game.Ui
                 return;
             }
 
-            if (CanStart(index, a, b) == false)
-            {
-                Debug.LogWarning("[Synthesis] 칸 · 골드 · 재료가 안 맞아 시작 못 함 : " + a + " + " + b);
-                Refresh();
-                return;
-            }
-
-            List<string> moved = new List<string>();
-            List<CountEntry> needs = CollectNeeds(a, b);
-            for (int i = 0; i < needs.Count; i++)
-            {
-                string id = needs[i].id;
-                if (MoveFromFarm(id, needs[i].count - _storage.Count(id), moved) == false)
-                {
-                    Debug.LogWarning("[Synthesis] 재료가 모자라 시작 못 함 : " + id);
-                    ReturnToFarm(moved);
-                    Refresh();
-                    return;
-                }
-            }
-
-            if (_synthesis.Start(index, a, b))
+            if (_synthesis.StartPullingFromFarm(index, a, b))
             {
                 _pickA[index] = null;
                 _pickB[index] = null;
                 _slots[index].Machine.PlayMerge(index, _data.Species.Get(a), _data.Species.Get(b));
             }
-            else
-            {
-                Debug.LogWarning("[Synthesis] Start 실패 · 옮긴 " + moved.Count + "마리를 농장에 되돌림");
-                ReturnToFarm(moved);
-            }
 
             Refresh();
-        }
-
-        // Manager 의 Start 가 보는 것과 같은 조건. 보관함 + 농장을 합쳐 재료를 센다.
-        private bool CanStart(int index, string a, string b)
-        {
-            if (_synthesis.GetSlot(index).status != SynthesisSlotStatus.Empty)
-            {
-                return false;
-            }
-
-            if (_wallet.CanPay(_synthesis.Preview(a, b).Gold) == false)
-            {
-                return false;
-            }
-
-            return HasEnough(a, b);
-        }
-
-        private bool MoveFromFarm(string speciesId, int count, List<string> moved)
-        {
-            for (int i = 0; i < count; i++)
-            {
-                int mozziId = FindFarmMozzi(speciesId);
-                if (mozziId < 0 || _storage.TakeFromFarm(mozziId) == false)
-                {
-                    return false;
-                }
-
-                moved.Add(speciesId);
-            }
-
-            return true;
-        }
-
-        private void ReturnToFarm(List<string> moved)
-        {
-            for (int i = 0; i < moved.Count; i++)
-            {
-                if (_storage.PlaceToFarm(moved[i]) == false)
-                {
-                    Debug.LogWarning("[Synthesis] 되돌리기 실패 · 보관함에 남음 : " + moved[i]);
-                }
-            }
-
-            moved.Clear();
-        }
-
-        private int FindFarmMozzi(string speciesId)
-        {
-            IReadOnlyList<FarmMozzi> mozzis = _farm.Mozzis;
-            for (int i = 0; i < mozzis.Count; i++)
-            {
-                if (mozzis[i].SpeciesId == speciesId)
-                {
-                    return mozzis[i].Id;
-                }
-            }
-
-            return -1;
         }
 
         // 연출은 UiManager 가 SynthesisTakenEvent 를 받아 PlayResult 로 띄운다.

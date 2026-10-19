@@ -6,7 +6,6 @@ namespace Mozzi.Events
     public sealed class EventSubscription : IDisposable
     {
         public readonly Type EventType;
-        public readonly object Owner;
         public readonly Delegate Handler;
 
         private bool _disposed;
@@ -16,10 +15,9 @@ namespace Mozzi.Events
             get { return _disposed; }
         }
 
-        public EventSubscription(Type eventType, object owner, Delegate handler)
+        public EventSubscription(Type eventType, Delegate handler)
         {
             EventType = eventType;
-            Owner = owner;
             Handler = handler;
         }
 
@@ -31,14 +29,8 @@ namespace Mozzi.Events
                 return;
             }
 
-            MarkDisposed();
-            EventBus.Unsubscribe(this);
-        }
-
-        // EventBus 가 owner 단위로 끊을 때는 표시만 한다.
-        internal void MarkDisposed()
-        {
             _disposed = true;
+            EventBus.Unsubscribe(this);
         }
     }
 }

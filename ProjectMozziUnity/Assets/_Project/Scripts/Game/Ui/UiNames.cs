@@ -55,9 +55,6 @@ namespace Mozzi.Game.Ui
         public const string FarmFenceText = "FenceText";
         public const string FarmIngredientRow = "IngredientRow";
 
-        // 옛 아래 띠. FarmScreenSetup 이 걷어 낼 때 찾는 이름이다 (코드는 더 안 쓴다).
-        public const string FarmBottomBar = "BottomBar";
-
         // 오른쪽 아래 메뉴 아이콘 셋 (도감 · 강화 · ☰).
         public const string FarmCodexButton = "CodexButton";
         public const string FarmUpgradeButton = "UpgradeButton";

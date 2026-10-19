@@ -8,8 +8,6 @@ namespace Mozzi.Game.View
     // 자리는 BuildingLayout 이 정본이다. 탭 · 끌어다 놓기 판정은 FarmViewManager 가 받는다.
     public sealed class BuildingObject : ObjectBase
     {
-        private const string BadgeName = "Badge";
-
         // TMP 는 월드에서 fontSize 10 이 1유닛이다. px 로 잡은 글자 크기를 이 값으로 바꿔 준다.
         private const float TmpPointsPerUnit = 10f;
 
@@ -45,7 +43,7 @@ namespace Mozzi.Game.View
             _label = GetComponentInChildren<TMP_Text>();
             _collider = GetComponent<BoxCollider2D>();
 
-            Transform badge = transform.Find(BadgeName);
+            Transform badge = transform.Find(ViewNames.BuildingBadge);
             if (badge != null)
             {
                 _badge = badge.gameObject;

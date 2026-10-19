@@ -4,12 +4,10 @@ using System.Collections.Generic;
 namespace Mozzi.Core
 {
     // 추가는 순회가 끝난 뒤 합류시키고, 삭제는 즉시 dead 표시만 해 순회가 건너뛴다.
-    // 인터페이스 검사는 추가할 때 한 번만 하고 세 목록에 나눠 담는다.
+    // IProcess 검사는 추가할 때 한 번만 한다.
     public sealed class ProcessList<T> where T : class
     {
         private readonly List<IProcess> _process = new List<IProcess>();
-        private readonly List<IFixedProcess> _fixedProcess = new List<IFixedProcess>();
-        private readonly List<ILateProcess> _lateProcess = new List<ILateProcess>();
 
         private readonly List<T> _pendingAdd = new List<T>();
         private readonly List<T> _pendingRemove = new List<T>();
@@ -73,72 +71,18 @@ namespace Mozzi.Core
             Flush();
         }
 
-        public void FixedProcessAll(float deltaTime)
-        {
-            _depth++;
-            try
-            {
-                for (int i = 0; i < _fixedProcess.Count; i++)
-                {
-                    IFixedProcess item = _fixedProcess[i];
-                    if (_dead.Contains(item)) { continue; }
-
-                    item.FixedProcess(deltaTime);
-                }
-            }
-            finally
-            {
-                _depth--;
-            }
-
-            Flush();
-        }
-
-        public void LateProcessAll(float deltaTime)
-        {
-            _depth++;
-            try
-            {
-                for (int i = 0; i < _lateProcess.Count; i++)
-                {
-                    ILateProcess item = _lateProcess[i];
-                    if (_dead.Contains(item)) { continue; }
-
-                    item.LateProcess(deltaTime);
-                }
-            }
-            finally
-            {
-                _depth--;
-            }
-
-            Flush();
-        }
-
         private void AddNow(T item)
         {
             _dead.Remove(item);
 
             IProcess process = item as IProcess;
             if (process != null) { _process.Add(process); }
-
-            IFixedProcess fixedProcess = item as IFixedProcess;
-            if (fixedProcess != null) { _fixedProcess.Add(fixedProcess); }
-
-            ILateProcess lateProcess = item as ILateProcess;
-            if (lateProcess != null) { _lateProcess.Add(lateProcess); }
         }
 
         private void RemoveNow(T item)
         {
             IProcess process = item as IProcess;
             if (process != null) { _process.Remove(process); }
-
-            IFixedProcess fixedProcess = item as IFixedProcess;
-            if (fixedProcess != null) { _fixedProcess.Remove(fixedProcess); }
-
-            ILateProcess lateProcess = item as ILateProcess;
-            if (lateProcess != null) { _lateProcess.Remove(lateProcess); }
 
             _dead.Remove(item);
         }

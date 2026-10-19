@@ -31,7 +31,7 @@ namespace Mozzi.Events
                 _subscriptions[type] = list;
             }
 
-            EventSubscription sub = new EventSubscription(type, owner, handler);
+            EventSubscription sub = new EventSubscription(type, handler);
             list.Add(sub);
             return sub;
         }
@@ -83,25 +83,6 @@ namespace Mozzi.Events
             }
 
             list.Remove(sub);
-        }
-
-        public static void UnsubscribeAllBy(object owner)
-        {
-            if (owner == null)
-            {
-                return;
-            }
-
-            // 알리는 중에 끊겨도 스냅숏이 부르지 않게 표시를 먼저 한다.
-            foreach (List<EventSubscription> list in _subscriptions.Values)
-            {
-                for (int i = 0; i < list.Count; i++)
-                {
-                    if (list[i].Owner == owner) { list[i].MarkDisposed(); }
-                }
-
-                list.RemoveAll(sub => sub.Owner == owner);
-            }
         }
 
         public static void Clear()

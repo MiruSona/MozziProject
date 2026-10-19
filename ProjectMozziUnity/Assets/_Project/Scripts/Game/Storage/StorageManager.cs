@@ -37,20 +37,6 @@ namespace Mozzi.Game.Storage
             get { return _entries; }
         }
 
-        public int Total
-        {
-            get
-            {
-                int total = 0;
-                for (int i = 0; i < _entries.Count; i++)
-                {
-                    total += _entries[i].count;
-                }
-
-                return total;
-            }
-        }
-
         public int SellPrice
         {
             get { return _row.StorageSellPrice; }
@@ -69,7 +55,7 @@ namespace Mozzi.Game.Storage
 
             _row = _data.Farms.Get(FarmRowId);
             _save.Register(this);
-            Debug.Log("[Storage] 마릿수 " + Total);
+            Debug.Log("[Storage] 종 " + _entries.Count);
         }
 
         public void Dispose()

@@ -324,18 +324,12 @@ namespace Mozzi.Editor
         // 「떡메 치기」 버튼은 없다 (반복 06) — 도구를 직접 누른다.
         private static void MakeBottomRow(Transform root)
         {
-            RectTransform row = FormalUiBuild.MakeBottomRow(root);
             // 「재료 팔기」는 반복 09 3판에 안내 글 줄에서 이 줄로 옮겼다 (배선은 KitchenScreen 이 이름으로 찾는다).
             string[] names = { UiNames.KitchenMenuButton, UiNames.StallRecipeCodexButton, UiNames.KitchenSellAllButton, UiNames.CloseButton };
             string[] labels = { "차림표", "레시피 도감", "재료 팔기", "닫기" };
             float[] widths = { KitchenLayout.MenuButtonWidth, KitchenLayout.CodexButtonWidth, KitchenLayout.SellAllButtonWidth, KitchenLayout.CloseButtonWidth };
 
-            float[] lefts = FormalUiBuild.RowLefts(widths);
-            for (int i = 0; i < names.Length; i++)
-            {
-                RectTransform button = FormalUiBuild.MakeButton(row, names[i], labels[i], FormalLayout.RowFontSize);
-                FormalUiBuild.BottomLeft(button, lefts[i], 0f, widths[i], FormalLayout.RowHeight);
-            }
+            FormalUiBuild.MakeBottomRow(root, names, labels, widths);
         }
     }
 }

@@ -35,5 +35,8 @@ namespace Mozzi.Game.View
         public const string GroundPath = "Path";
         public const string GroundFence = "Fence";
         public const string GroundDecor = "Decor";
+
+        // 건물 프리팹 (Prefabs/Building). 알림 점 자식.
+        public const string BuildingBadge = "Badge";
     }
 }

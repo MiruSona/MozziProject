@@ -51,7 +51,7 @@ namespace Mozzi.Editor
                 root.AddComponent<MozziPopup>();
             }
 
-            Transform box = FindDeep(root.transform, OldBox);
+            Transform box = UiBindUtil.FindDeep(root.transform, OldBox);
             if (box == null)
             {
                 Debug.LogError("[MozziPopupSetup] OfflineBox 가 없다");
@@ -84,10 +84,10 @@ namespace Mozzi.Editor
 
         private static Transform Rename(Transform parent, string oldName, string newName)
         {
-            Transform t = FindDeep(parent, oldName);
+            Transform t = UiBindUtil.FindDeep(parent, oldName);
             if (t == null)
             {
-                t = FindDeep(parent, newName);
+                t = UiBindUtil.FindDeep(parent, newName);
             }
 
             if (t == null)
@@ -101,7 +101,7 @@ namespace Mozzi.Editor
 
         private static void Remove(Transform parent, string childName)
         {
-            Transform t = FindDeep(parent, childName);
+            Transform t = UiBindUtil.FindDeep(parent, childName);
             if (t != null)
             {
                 Object.DestroyImmediate(t.gameObject);
@@ -158,26 +158,6 @@ namespace Mozzi.Editor
             text.alignment = TextAlignmentOptions.Center;
             text.raycastTarget = false;
             text.text = label;
-        }
-
-        private static Transform FindDeep(Transform root, string childName)
-        {
-            for (int i = 0; i < root.childCount; i++)
-            {
-                Transform child = root.GetChild(i);
-                if (child.name == childName)
-                {
-                    return child;
-                }
-
-                Transform deeper = FindDeep(child, childName);
-                if (deeper != null)
-                {
-                    return deeper;
-                }
-            }
-
-            return null;
         }
     }
 }

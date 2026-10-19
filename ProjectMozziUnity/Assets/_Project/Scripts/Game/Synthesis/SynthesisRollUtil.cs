@@ -101,7 +101,9 @@ namespace Mozzi.Game.Synthesis
                 return SynthesisBranch.Fixed;
             }
 
-            if (roll < rule.PFixed + rule.POtherFamily)
+            // float 칸에 담아 한 번 반올림한다. 식 그대로 비교하면 Mono 가 double 로 더해 경계가 어긋난다.
+            float otherFamilyEdge = rule.PFixed + rule.POtherFamily;
+            if (roll < otherFamilyEdge)
             {
                 return SynthesisBranch.OtherFamily;
             }

@@ -22,11 +22,6 @@ namespace Mozzi.Game.View
             _camera = camera;
         }
 
-        public MozziDragPhase Phase
-        {
-            get { return _phase; }
-        }
-
         public bool IsActive
         {
             get { return _phase != MozziDragPhase.None; }

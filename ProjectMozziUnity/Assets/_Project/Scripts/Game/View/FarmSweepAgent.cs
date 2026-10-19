@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Mozzi.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,6 +12,8 @@ namespace Mozzi.Game.View
     public sealed class FarmSweepAgent : AgentBase<FarmViewManager>
     {
         private readonly Camera _camera;
+        private readonly List<RaycastResult> _hits = new List<RaycastResult>();
+        private PointerEventData _uiPointer;
 
         private bool _pressWasDown;
         private bool _sweeping;
@@ -56,13 +59,33 @@ namespace Mozzi.Game.View
                 return;
             }
 
-            // UI 위 누르기는 EventSystem 이 먹는다.
-            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            Vector2 screen = pointer.position.ReadValue();
+            if (IsOverUi(screen))
             {
                 return;
             }
 
-            PressAt(ToWorld(pointer.position.ReadValue()));
+            PressAt(ToWorld(screen));
+        }
+
+        // UI 위 누르기는 농장으로 안 보낸다. IsPointerOverGameObject() 는 폰 터치에서 손가락 id 없이 부르면 못 잡아
+        // 누른 자리로 UI 를 직접 쏴 본다.
+        private bool IsOverUi(Vector2 screen)
+        {
+            EventSystem events = EventSystem.current;
+            if (events == null)
+            {
+                return false;
+            }
+
+            if (_uiPointer == null)
+            {
+                _uiPointer = new PointerEventData(events);
+            }
+
+            _uiPointer.position = screen;
+            events.RaycastAll(_uiPointer, _hits);
+            return _hits.Count > 0;
         }
 
         // 디버그 · 시험에서도 부를 수 있게 월드 자리를 받는다.

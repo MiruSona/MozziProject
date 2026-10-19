@@ -279,7 +279,6 @@ namespace Mozzi.Editor
 
         private static void MakeBottomRow(Transform root)
         {
-            RectTransform row = FormalUiBuild.MakeBottomRow(root);
             string[] names = { UiNames.SynthesisShortcutBuyButton, UiNames.SynthesisMozziCodexButton, UiNames.CloseButton };
             string[] labels = { "단축 사기", "찹쌀이 도감", "닫기" };
             float[] widths =
@@ -287,12 +286,7 @@ namespace Mozzi.Editor
                 SynthesisRoomLayout.ShortcutButtonWidth, SynthesisRoomLayout.CodexButtonWidth, SynthesisRoomLayout.CloseButtonWidth,
             };
 
-            float[] lefts = FormalUiBuild.RowLefts(widths);
-            for (int i = 0; i < names.Length; i++)
-            {
-                RectTransform button = FormalUiBuild.MakeButton(row, names[i], labels[i], FormalLayout.RowFontSize);
-                FormalUiBuild.BottomLeft(button, lefts[i], 0f, widths[i], FormalLayout.RowHeight);
-            }
+            FormalUiBuild.MakeBottomRow(root, names, labels, widths);
         }
 
         // 찹쌀이 고르기 판 : 어두운 가림막(누르면 닫힘) + 크림색 상자(버튼 줄 위) + 제목 · 닫기 + 줄 24(2열).

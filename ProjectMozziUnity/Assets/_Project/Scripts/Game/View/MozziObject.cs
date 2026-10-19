@@ -22,6 +22,7 @@ namespace Mozzi.Game.View
         private int _faceIndex = MozziArtKeys.BaseFaceIndex;
         private float _faceHoldSec;
         private bool _dragging;
+        private bool _wasHopping;
         private Collider2D _collider;
 
         // 담장 밖에 놓았을 때 걷는 칸으로 미끄러져 돌아오는 중.
@@ -123,6 +124,7 @@ namespace Mozzi.Game.View
             _visual.SetShiny(shiny, LayoutConst.ShinyBorderScale * divisor);
             _visual.SetLift(0f);
             _visual.PlayIdle(0f);
+            _wasHopping = false;
 
             // 움직임 개성은 mozziId 를 씨앗으로 뽑는다 — 재생·풀 재사용 뒤에도 같은 마리는 같은 걸음이다.
             // 시작 때 걷는 채인지 섰는지도 여기서 뽑는다 — 절반쯤은 바로 걷고 나머지는 잠깐 섰다가 걷는다.
@@ -165,14 +167,18 @@ namespace Mozzi.Game.View
 
             _hop.Step(deltaTime, _wander.IsMoving);
             _visual.SetLift(_hop.LiftUnits);
-            if (_hop.IsHopping)
+            // 서 있는 동안은 Animator 를 안 건드린다. 뜀이 끝난 프레임에만 서기로 돌린다.
+            bool hopping = _hop.IsHopping;
+            if (hopping)
             {
                 _visual.PlayHop(_hop.Progress);
             }
-            else
+            else if (_wasHopping)
             {
                 _visual.PlayIdle(0f);
             }
+
+            _wasHopping = hopping;
 
             ApplySort();
         }
@@ -194,6 +200,7 @@ namespace Mozzi.Game.View
             _hop.Reset();
             _visual.SetLift(LayoutConst.ToUnits(LayoutConst.MozziDragLiftPx));
             _visual.PlayIdle(0f);
+            _wasHopping = false;
             _sorting.sortingOrder = LayoutConst.MozziDragSortOrder;
         }
 

@@ -1,10 +1,8 @@
 namespace Mozzi.Game.Clock
 {
-    // 화면·Manager 가 시계를 보는 창구. 초는 GameRunner 가 주는 dt 의 누적이다.
+    // 화면·Manager 가 시계를 보는 창구.
     public interface IClockHub
     {
-        double ElapsedSeconds { get; }
-
         int Day { get; }
 
         bool IsNight { get; }

@@ -79,7 +79,7 @@ namespace Mozzi.Core
         // 등록 순서가 곧 실행 순서다. Service 를 더할 때 이 순서를 보고 넣는다.
         private static void RegisterServices()
         {
-            ResourceService resource = new ResourceService(new ResourcesPrefabSource(), new ResourcesSpriteSource());
+            ResourceService resource = new ResourceService();
             _services.Add(resource);
 
             for (int i = 0; i < _services.Count; i++)

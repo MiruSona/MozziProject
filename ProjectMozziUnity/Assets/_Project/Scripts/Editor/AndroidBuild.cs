@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Build;
@@ -13,9 +11,8 @@ namespace Mozzi.Editor
     // 전환이 끝난 뒤 `Mozzi.Editor.AndroidBuild.Build();` 한 줄. 판을 올릴 때는 BuildVersion.cs 만 고친다.
     public static class AndroidBuild
     {
+        private const string Tag = "[AndroidBuild] ";
         private const string PackageName = "com.mirusona.projectmozzi";
-        private const string DebugDefine = "MOZZI_DEBUG";
-        private const string ScenePath = "Assets/_Project/Scenes/Farm.unity";
         private const string OutputFolderRelative = "../../Build/android";
         private const string ApkNameFormat = "ProjectMozzi-android-v{0}.apk";
 
@@ -34,21 +31,8 @@ namespace Mozzi.Editor
 
         public static void Build()
         {
-            if (EditorApplication.isPlaying)
+            if (BuildUtil.CanBuild(Tag, BuildTarget.Android, "안드로이드가") == false)
             {
-                Debug.LogError("[AndroidBuild] Play 모드라 빌드하지 않는다. Play 를 끄고 다시 부른다.");
-                return;
-            }
-
-            if (BuildPipeline.isBuildingPlayer)
-            {
-                Debug.LogError("[AndroidBuild] 이미 빌드가 도는 중이라 빌드하지 않는다.");
-                return;
-            }
-
-            if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.Android)
-            {
-                Debug.LogError("[AndroidBuild] 플랫폼이 안드로이드가 아니다. SwitchPlatform() 을 먼저 부른다.");
                 return;
             }
 
@@ -63,7 +47,7 @@ namespace Mozzi.Editor
                 Directory.CreateDirectory(outputFolder);
 
                 BuildPlayerOptions options = new BuildPlayerOptions();
-                options.scenes = new string[] { ScenePath };
+                options.scenes = new string[] { BuildUtil.ScenePath };
                 options.target = BuildTarget.Android;
                 options.targetGroup = BuildTargetGroup.Android;
                 options.locationPathName = outputPath;
@@ -71,8 +55,8 @@ namespace Mozzi.Editor
 
                 Debug.Log("[AndroidBuild] 시작 → " + outputPath);
                 BuildReport report = BuildPipeline.BuildPlayer(options);
-                LogResult(report);
-                LogFileSize(outputPath);
+                BuildUtil.LogResult(Tag, report);
+                BuildUtil.LogFileSize(Tag, outputPath);
             }
             finally
             {
@@ -84,7 +68,7 @@ namespace Mozzi.Editor
 
         private static void ApplySettings()
         {
-            AddDefine(NamedBuildTarget.Android, DebugDefine);
+            BuildUtil.AddDefine(NamedBuildTarget.Android, BuildUtil.DebugDefine);
 
             PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, PackageName);
             PlayerSettings.bundleVersion = BuildVersion.Version;
@@ -104,70 +88,6 @@ namespace Mozzi.Editor
                 + " · " + PlayerSettings.Android.targetArchitectures
                 + " · 최소 API " + PlayerSettings.Android.minSdkVersion
                 + " · 정의 " + PlayerSettings.GetScriptingDefineSymbols(NamedBuildTarget.Android));
-        }
-
-        // 기존 정의는 남기고 없을 때만 더한다.
-        private static void AddDefine(NamedBuildTarget target, string define)
-        {
-            string current = PlayerSettings.GetScriptingDefineSymbols(target);
-            List<string> defines = new List<string>(current.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries));
-            if (defines.Contains(define))
-            {
-                return;
-            }
-
-            defines.Add(define);
-            PlayerSettings.SetScriptingDefineSymbols(target, string.Join(";", defines));
-        }
-
-        private static void LogResult(BuildReport report)
-        {
-            BuildSummary summary = report.summary;
-            string line = "[AndroidBuild] 결과 " + summary.result
-                + " · 크기 " + (summary.totalSize / (1024.0 * 1024.0)).ToString("F1") + " MB"
-                + " · 걸린 시간 " + summary.totalTime.TotalSeconds.ToString("F0") + "초"
-                + " · 오류 " + summary.totalErrors + " · 경고 " + summary.totalWarnings;
-
-            if (summary.result == BuildResult.Succeeded)
-            {
-                Debug.Log(line);
-                return;
-            }
-
-            Debug.LogError(line);
-            LogErrors(report);
-        }
-
-        // 리포트의 totalSize 는 실제 파일 크기와 다를 수 있다. 떨어진 apk 를 직접 잰다.
-        private static void LogFileSize(string outputPath)
-        {
-            if (!File.Exists(outputPath))
-            {
-                Debug.LogWarning("[AndroidBuild] apk 가 없다 → " + outputPath);
-                return;
-            }
-
-            long length = new FileInfo(outputPath).Length;
-            Debug.Log("[AndroidBuild] 파일 " + Path.GetFileName(outputPath) + " · " + length + " 바이트 · "
-                + (length / (1024.0 * 1024.0)).ToString("F2") + " MB");
-        }
-
-        private static void LogErrors(BuildReport report)
-        {
-            BuildStep[] steps = report.steps;
-            for (int i = 0; i < steps.Length; i++)
-            {
-                BuildStepMessage[] messages = steps[i].messages;
-                for (int j = 0; j < messages.Length; j++)
-                {
-                    if (messages[j].type != LogType.Error && messages[j].type != LogType.Exception)
-                    {
-                        continue;
-                    }
-
-                    Debug.LogError("[AndroidBuild] " + steps[i].name + " : " + messages[j].content);
-                }
-            }
         }
     }
 }

@@ -15,21 +15,6 @@ namespace Mozzi.Save
 
         public int version = OldestVersion;
         public long savedAtUtcTicks;
-        public SaveSettings settings = new SaveSettings();
         public List<SaveEntry> entries = new List<SaveEntry>();
-
-        // 그 key 의 칸. 없으면 null. migration 단계가 자기가 고칠 칸을 찾을 때 쓴다.
-        public SaveEntry FindEntry(string key)
-        {
-            for (int i = 0; i < entries.Count; i++)
-            {
-                if (entries[i].key == key)
-                {
-                    return entries[i];
-                }
-            }
-
-            return null;
-        }
     }
 }

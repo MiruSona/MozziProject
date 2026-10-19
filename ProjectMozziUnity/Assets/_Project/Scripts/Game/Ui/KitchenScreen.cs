@@ -373,6 +373,7 @@ namespace Mozzi.Game.Ui
             _doughImage = null;
             _backToPrep = false;
             _bowlSlots.Clear();
+            _finishTaps.Clear();
             _selected.Clear();
             _flashing = false;
             _bounceRect = null;

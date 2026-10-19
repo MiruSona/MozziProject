@@ -251,7 +251,6 @@ namespace Mozzi.Editor
         // 다섯 칸. 맨 왼쪽 「열기 / 다음날로」 를 크게 · 분홍으로 둔다. 글자는 StallScreen 이 채운다 (열기 · 점원).
         private static void MakeBottomRow(Transform root)
         {
-            RectTransform row = FormalUiBuild.MakeBottomRow(root);
             string[] names =
             {
                 UiNames.StallOpenButton, UiNames.StallKitchenButton, UiNames.StallClerkButton, UiNames.StallRecipeCodexButton, UiNames.CloseButton,
@@ -263,12 +262,7 @@ namespace Mozzi.Editor
                 StallLayout.CodexButtonWidth, StallLayout.CloseButtonWidth,
             };
 
-            float[] lefts = FormalUiBuild.RowLefts(widths);
-            for (int i = 0; i < names.Length; i++)
-            {
-                RectTransform button = FormalUiBuild.MakeButton(row, names[i], labels[i], FormalLayout.RowFontSize);
-                FormalUiBuild.BottomLeft(button, lefts[i], 0f, widths[i], FormalLayout.RowHeight);
-            }
+            RectTransform row = FormalUiBuild.MakeBottomRow(root, names, labels, widths);
 
             row.Find(UiNames.StallOpenButton).GetComponent<Image>().color = OpenTint;
         }

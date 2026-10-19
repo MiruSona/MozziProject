@@ -8,7 +8,6 @@ using UnityEngine.UI;
 namespace Mozzi.Editor
 {
     // 농장 화면 프리팹을 540 기준 메인 화면 배치로 놓는 손질기. 자리 값은 정식/메인 README 「코드에 넘길 것」이 정본이다.
-    // 옛 아래 띠(BottomBar)가 남아 있으면 360 기준으로 보고 한 번만 ×1.5 로 키운 뒤 띠를 걷는다. 그다음은 몇 번 돌려도 같다.
     // 부르는 법 : 메뉴 「Mozzi/농장 화면 540 배치」 또는 unity command eval 로 FarmScreenSetup.Apply().
     public static class FarmScreenSetup
     {
@@ -59,19 +58,8 @@ namespace Mozzi.Editor
             GameObject root = PrefabUtility.LoadPrefabContents(FarmScreenPath);
             Transform t = root.transform;
 
-            Transform bottomBar = t.Find(UiNames.FarmBottomBar);
-            if (bottomBar != null)
-            {
-                ScaleTree(t.Find(UiNames.FarmResourceBar), LayoutConstUi.Legacy360Scale);
-                ScaleTree(t.Find(UiNames.FarmNightCover), LayoutConstUi.Legacy360Scale);
-                ScaleTree(Find(bottomBar, UiNames.FarmNextDayButton), LayoutConstUi.Legacy360Scale);
-                Find(bottomBar, UiNames.FarmNextDayButton).SetParent(t, false);
-                Object.DestroyImmediate(bottomBar.gameObject);
-                Debug.Log("[FarmScreenSetup] 360 → 540 키우고 아래 띠를 걷었다");
-            }
-
-            TMP_Text sample = Find(t, UiNames.FarmGoldText).GetComponent<TMP_Text>();
-            RectTransform nextDay = Find(t, UiNames.FarmNextDayButton) as RectTransform;
+            TMP_Text sample = UiBindUtil.FindDeep(t, UiNames.FarmGoldText).GetComponent<TMP_Text>();
+            RectTransform nextDay = UiBindUtil.FindDeep(t, UiNames.FarmNextDayButton) as RectTransform;
             PlaceNight(t, nextDay);
 
             MakeIcon(t, UiNames.FarmCodexButton, SpriteKeys.UiIconCodex, IconCodexTop);
@@ -87,16 +75,16 @@ namespace Mozzi.Editor
 
             RectTransform menuBox = MakePanel(t, UiNames.FarmMenuPanel, MenuBoxWidth, MenuBoxHeight, IconMenuTop, sample);
             RectTransform recipeButton = EnsureButton(menuBox, UiNames.FarmRecipeCodexButton, nextDay, "레시피 도감");
-            TopLeft(recipeButton, BoxPad, BoxTitleHeight + 8f, MenuBoxWidth - BoxPad * 2f, BoxRowHeight + 4f);
+            FormalUiBuild.TopLeft(recipeButton, BoxPad, BoxTitleHeight + 8f, MenuBoxWidth - BoxPad * 2f, BoxRowHeight + 4f);
 
             // 뒤에서 앞으로 : 밤 덮개 · 자원바 · 「다음날로」 · 아이콘 셋 · 판 둘.
-            Find(t, UiNames.FarmNightCover).SetAsFirstSibling();
+            UiBindUtil.FindDeep(t, UiNames.FarmNightCover).SetAsFirstSibling();
             nextDay.SetAsLastSibling();
-            Find(t, UiNames.FarmCodexButton).SetAsLastSibling();
-            Find(t, UiNames.FarmUpgradeButton).SetAsLastSibling();
-            Find(t, UiNames.FarmMenuButton).SetAsLastSibling();
-            Find(t, UiNames.FarmUpgradePanel).SetAsLastSibling();
-            Find(t, UiNames.FarmMenuPanel).SetAsLastSibling();
+            UiBindUtil.FindDeep(t, UiNames.FarmCodexButton).SetAsLastSibling();
+            UiBindUtil.FindDeep(t, UiNames.FarmUpgradeButton).SetAsLastSibling();
+            UiBindUtil.FindDeep(t, UiNames.FarmMenuButton).SetAsLastSibling();
+            UiBindUtil.FindDeep(t, UiNames.FarmUpgradePanel).SetAsLastSibling();
+            UiBindUtil.FindDeep(t, UiNames.FarmMenuPanel).SetAsLastSibling();
 
             PrefabUtility.SaveAsPrefabAsset(root, FarmScreenPath);
             PrefabUtility.UnloadPrefabContents(root);
@@ -104,34 +92,10 @@ namespace Mozzi.Editor
             Debug.Log("[FarmScreenSetup] 끝");
         }
 
-        // 자리 · 크기 · 글자 크기를 scale 배 한다. 앵커가 늘어난 칸은 offset 이 같이 커진다.
-        private static void ScaleTree(Transform node, float scale)
-        {
-            RectTransform rect = node as RectTransform;
-            if (rect != null)
-            {
-                rect.anchoredPosition *= scale;
-                rect.sizeDelta *= scale;
-            }
-
-            TMP_Text text = node.GetComponent<TMP_Text>();
-            if (text != null)
-            {
-                text.fontSize *= scale;
-                text.fontSizeMin *= scale;
-                text.fontSizeMax *= scale;
-            }
-
-            for (int i = 0; i < node.childCount; i++)
-            {
-                ScaleTree(node.GetChild(i), scale);
-            }
-        }
-
         // 덮개는 자원바 아래 전부와 안전 영역 아래 바깥까지. 글귀와 「다음날로」는 가운데 줄에 위아래로 놓는다.
         private static void PlaceNight(Transform root, RectTransform nextDay)
         {
-            RectTransform cover = Find(root, UiNames.FarmNightCover) as RectTransform;
+            RectTransform cover = UiBindUtil.FindDeep(root, UiNames.FarmNightCover) as RectTransform;
             cover.anchorMin = Vector2.zero;
             cover.anchorMax = Vector2.one;
             cover.pivot = new Vector2(0.5f, 0.5f);
@@ -139,7 +103,7 @@ namespace Mozzi.Editor
             cover.offsetMax = new Vector2(0f, -ResourceBarHeight);
 
             // 글귀는 덮개 자식이고 덮개 아래끝은 화면 아래끝보다 BarBleedLength 아래라 그만큼 더 올린다.
-            RectTransform text = Find(cover, UiNames.FarmNightText) as RectTransform;
+            RectTransform text = UiBindUtil.FindDeep(cover, UiNames.FarmNightText) as RectTransform;
             BottomCenter(text, ReferenceHeight - NightTextY + LayoutConstUi.BarBleedLength, 450f, 60f);
             text.GetComponent<TMP_Text>().alignment = TextAlignmentOptions.Center;
 
@@ -151,7 +115,7 @@ namespace Mozzi.Editor
         private static void MakeIcon(Transform root, string name, string spriteKey, float top)
         {
             RectTransform rect = Ensure(root, name);
-            BottomLeft(rect, IconLeft, ReferenceHeight - top - IconSize, IconSize, IconSize);
+            FormalUiBuild.BottomLeft(rect, IconLeft, ReferenceHeight - top - IconSize, IconSize, IconSize);
 
             Image image = rect.GetComponent<Image>();
             if (image == null)
@@ -177,11 +141,11 @@ namespace Mozzi.Editor
         private static RectTransform MakePanel(Transform root, string name, float width, float height, float iconTop, TMP_Text sample)
         {
             RectTransform panel = Ensure(root, name);
-            Stretch(panel, 0f);
+            FormalUiBuild.Stretch(panel, 0f);
 
             RectTransform blocker = Ensure(panel, UiNames.FarmPanelBlocker);
-            Stretch(blocker, -LayoutConstUi.BarBleedLength);
-            SetImage(blocker, Clear, true);
+            FormalUiBuild.Stretch(blocker, -LayoutConstUi.BarBleedLength);
+            FormalUiBuild.SetImage(blocker, Clear, true);
             if (blocker.GetComponent<Button>() == null)
             {
                 blocker.gameObject.AddComponent<Button>();
@@ -190,15 +154,15 @@ namespace Mozzi.Editor
             RectTransform edge = Ensure(panel, UiNames.FarmPanelBox);
             float left = IconLeft - PanelGap - width;
             float bottom = ReferenceHeight - iconTop - IconSize;
-            BottomLeft(edge, left, bottom, width, height);
-            SetImage(edge, PanelEdge, true);
+            FormalUiBuild.BottomLeft(edge, left, bottom, width, height);
+            FormalUiBuild.SetImage(edge, PanelEdge, true);
 
             RectTransform box = Ensure(edge, "Fill");
-            Stretch(box, 2f);
-            SetImage(box, PanelCream, true);
+            FormalUiBuild.Stretch(box, 2f);
+            FormalUiBuild.SetImage(box, PanelCream, true);
 
             TMP_Text title = EnsureText(box, UiNames.FarmPanelTitle, sample);
-            TopLeft(title.rectTransform, BoxPad, 4f, width - BoxPad * 2f, BoxTitleHeight);
+            FormalUiBuild.TopLeft(title.rectTransform, BoxPad, 4f, width - BoxPad * 2f, BoxTitleHeight);
             StyleText(title, 18f, TextDark, TextAlignmentOptions.Center);
             title.fontStyle = FontStyles.Bold;
 
@@ -214,13 +178,13 @@ namespace Mozzi.Editor
             float textWidth = UpgradeBoxWidth - BoxPad * 3f - UpgradeButtonWidth;
 
             TMP_Text text = EnsureText(box, textName, sample);
-            TopLeft(text.rectTransform, BoxPad, top, textWidth, UpgradeTextHeight);
+            FormalUiBuild.TopLeft(text.rectTransform, BoxPad, top, textWidth, UpgradeTextHeight);
             StyleText(text, 15f, TextDark, TextAlignmentOptions.Left);
             text.lineSpacing = -10f;
             text.textWrappingMode = TextWrappingModes.NoWrap;
 
             RectTransform button = EnsureButton(box, buttonName, template, "-");
-            TopLeft(button, UpgradeBoxWidth - BoxPad - UpgradeButtonWidth, top + (UpgradeTextHeight - BoxRowHeight) * 0.5f,
+            FormalUiBuild.TopLeft(button, UpgradeBoxWidth - BoxPad - UpgradeButtonWidth, top + (UpgradeTextHeight - BoxRowHeight) * 0.5f,
                 UpgradeButtonWidth, BoxRowHeight);
         }
 
@@ -278,46 +242,6 @@ namespace Mozzi.Editor
             return text;
         }
 
-        private static void SetImage(RectTransform rect, Color color, bool raycast)
-        {
-            Image image = rect.GetComponent<Image>();
-            if (image == null)
-            {
-                image = rect.gameObject.AddComponent<Image>();
-            }
-
-            image.color = color;
-            image.raycastTarget = raycast;
-        }
-
-        // 부모를 꽉 채우되 사방으로 inset 만큼 들인다 (음수면 밖으로 나간다).
-        private static void Stretch(RectTransform rect, float inset)
-        {
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.pivot = new Vector2(0.5f, 0.5f);
-            rect.offsetMin = new Vector2(inset, inset);
-            rect.offsetMax = new Vector2(-inset, -inset);
-        }
-
-        private static void TopLeft(RectTransform rect, float x, float y, float width, float height)
-        {
-            rect.anchorMin = new Vector2(0f, 1f);
-            rect.anchorMax = new Vector2(0f, 1f);
-            rect.pivot = new Vector2(0f, 1f);
-            rect.anchoredPosition = new Vector2(x, -y);
-            rect.sizeDelta = new Vector2(width, height);
-        }
-
-        private static void BottomLeft(RectTransform rect, float x, float y, float width, float height)
-        {
-            rect.anchorMin = new Vector2(0f, 0f);
-            rect.anchorMax = new Vector2(0f, 0f);
-            rect.pivot = new Vector2(0f, 0f);
-            rect.anchoredPosition = new Vector2(x, y);
-            rect.sizeDelta = new Vector2(width, height);
-        }
-
         // 부모 아래끝 가운데에서 위로 centerY 만큼 올라간 자리에 가운데를 둔다.
         private static void BottomCenter(RectTransform rect, float centerY, float width, float height)
         {
@@ -326,26 +250,6 @@ namespace Mozzi.Editor
             rect.pivot = new Vector2(0.5f, 0.5f);
             rect.anchoredPosition = new Vector2(0f, centerY);
             rect.sizeDelta = new Vector2(width, height);
-        }
-
-        private static Transform Find(Transform root, string childName)
-        {
-            for (int i = 0; i < root.childCount; i++)
-            {
-                Transform child = root.GetChild(i);
-                if (child.name == childName)
-                {
-                    return child;
-                }
-
-                Transform deeper = Find(child, childName);
-                if (deeper != null)
-                {
-                    return deeper;
-                }
-            }
-
-            return null;
         }
     }
 }

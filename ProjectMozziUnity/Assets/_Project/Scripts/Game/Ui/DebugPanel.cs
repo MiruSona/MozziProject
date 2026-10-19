@@ -120,7 +120,7 @@ namespace Mozzi.Game.Ui
             _synthesis.Skip(SkipSeconds);
             _stall.Skip(SkipSeconds);
             Debug.Log("[Debug] " + SkipSeconds + "초 건너뜀 · " + _farm.OfflineReport.Describe()
-                + " · 합성 완료 " + _synthesis.OfflineDoneCount + " · " + _stall.OfflineReport.Describe());
+                + " · 합성 완료 " + _synthesis.OfflineDoneCount + " · " + OfflineTextUtil.StallLine(_stall.OfflineReport));
             _onSkipped(SkipSeconds);
         }
 

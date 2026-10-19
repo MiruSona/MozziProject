@@ -1192,3 +1192,10 @@
 - 들어옴 20261019-fd8c3a4b `v0.0.1 첫 공개 Release — PC·안드로이드 빌드` (mem/0.3.0)
 - 거절 tag-standard body-thin `VFXTool 서브모듈은 공개 저장소에 올린 뒤 붙인다`
 - 들어옴 20261019-43c00219 `VFXTool 서브모듈은 공개 저장소에 올린 뒤 붙인다` (mem/0.3.0)
+- 거절 title-shape tag-standard sources-shape body-thin `앱이 뒤에 멈췄다 돌아오면 AppForegroundEvent 로 못 돈 초를 따라잡는다`
+- 거절 tag-standard severity sources-shape body-thin `세이브는 이번 실행에 등록 안 된 칸도 읽은 그대로 보존한다`
+- 거절 title-shape tag-standard body-thin `감사 지적 18개 고치기 — 갈래 넷 병렬 + 뒷정리 한 판으로 약 1시간`
+- 들어옴 20261019-11e29c57 `복귀 때 AppForegroundEvent 로 못 돈 초를 따라잡는다` (mem/0.3.0)
+- 거절 severity `세이브는 등록 안 된 칸도 읽은 그대로 보존한다`
+- 들어옴 20261019-ae08ae89 `감사 18건 고치기 — 갈래 넷 + 뒷정리로 1시간` (mem/0.3.0)
+- 들어옴 20261019-1fc252b9 `세이브는 등록 안 된 칸도 읽은 그대로 보존한다` (mem/0.3.0)

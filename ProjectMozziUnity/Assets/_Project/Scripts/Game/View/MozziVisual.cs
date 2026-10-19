@@ -219,7 +219,7 @@ namespace Mozzi.Game.View
         // Play 만으로는 그 프레임에 값이 안 들어온다 — Update(0) 로 한 번 굴려야 반영된다 (실측 2026-09-20).
         // 꺼진 마리(디버그 · 캡처 연출로 SetActive(false) 한 것)는 목록에 남아 Step 을 계속 받는다.
         // 꺼진 Animator 에 Play · Update 를 부르면 Unity 가 매 프레임 경고를 찍으니 건너뛴다.
-        // 다시 켜지면 다음 Step 이 상태를 새로 고르니 따로 되살릴 것이 없다.
+        // 다시 켜지면 Animator 가 기본 상태(Idle)로 돌아가고, 뛰는 중이면 다음 Step 이 Hop 을 다시 고른다.
         private void PlayState(int stateHash, float normalized)
         {
             if (_animator.isActiveAndEnabled == false)

@@ -8,13 +8,6 @@ namespace Mozzi.Game.Farm
         // 담장 상한 = Farm 표 fenceMax + 담장 단계만큼 더한 수 (Growth 표 fence 행).
         int FenceMax { get; }
 
-        int FenceLevel { get; }
-
-        int MaxFenceLevel { get; }
-
-        // 다음 담장 단계 값. 최대면 -1.
-        int NextFencePrice { get; }
-
         // 바닥 재료 합계 한도 = Farm 표 floorMax + 바닥 넓히기 단계만큼 더한 수. 합계가 닿으면 생산이 멈춘다.
         int FloorMax { get; }
 
@@ -57,10 +50,7 @@ namespace Mozzi.Game.Farm
 
         bool Remove(int mozziId);
 
-        // 담장을 한 단계 올린다. 최대이거나 골드가 모자라면 false.
-        bool BuyFence();
-
-        // 농장 강화 셋 (GrowthUtil.KindFloor · KindCollector · KindFeeder). 그 밖의 kind 는 단계 0 · 값 -1 · 사기 false.
+        // 농장 강화 넷 (GrowthUtil.KindFence · KindFloor · KindCollector · KindFeeder). 그 밖의 kind 는 단계 0 · 값 -1 · 사기 false.
         int UpgradeLevel(string kind);
 
         int MaxUpgradeLevel(string kind);

@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace Mozzi.Game.Clock
 {
-    // 게임 초 누적 · 날짜 · 낮/밤 · 안 켠 초. 밤은 상태일 뿐 다른 시계를 안 건드린다.
+    // 날짜 · 낮/밤 · 안 켠 초. 밤은 상태일 뿐 다른 시계를 안 건드린다.
     // OfflineSeconds 는 PostInit 에서 정해지므로 뒤 Manager 의 PostInit 에서 읽는다.
-    public sealed class ClockManager : IManager, IProcess, ISavable, IClockHub
+    public sealed class ClockManager : IManager, ISavable, IClockHub
     {
         private const string Key = "Clock";
 
@@ -19,11 +19,6 @@ namespace Mozzi.Game.Clock
         public string SaveKey
         {
             get { return Key; }
-        }
-
-        public double ElapsedSeconds
-        {
-            get { return _state.elapsedSeconds; }
         }
 
         public int Day
@@ -59,11 +54,6 @@ namespace Mozzi.Game.Clock
 
             Debug.Log("[Clock] 날짜 " + _state.day + " · 밤 " + _state.isNight
                 + " · 안 켠 초 " + _offlineSeconds.ToString("F1"));
-        }
-
-        public void Process(float deltaTime)
-        {
-            _state.elapsedSeconds += deltaTime;
         }
 
         public void Dispose()

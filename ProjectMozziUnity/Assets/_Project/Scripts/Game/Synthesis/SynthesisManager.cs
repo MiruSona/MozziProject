@@ -5,6 +5,7 @@ using Mozzi.Data;
 using Mozzi.Events;
 using Mozzi.Game.Clock;
 using Mozzi.Game.Codex;
+using Mozzi.Game.Farm;
 using Mozzi.Game.Storage;
 using Mozzi.Game.Wallet;
 using Mozzi.Save;
@@ -19,7 +20,6 @@ namespace Mozzi.Game.Synthesis
         private const string Key = "Synthesis";
 
         private readonly List<MozziSpeciesRow> _candidates = new List<MozziSpeciesRow>();
-        private readonly List<string> _candidateIds = new List<string>();
         private readonly List<int> _justDone = new List<int>();
 
         private SynthesisState _state = new SynthesisState();
@@ -29,11 +29,13 @@ namespace Mozzi.Game.Synthesis
         private IClockHub _clock;
         private IWalletHub _wallet;
         private IStorageHub _storage;
+        private IFarmHub _farm;
         private ICodexHub _codex;
 
         private int _maxSlotCount;
         private int _maxShortcutLevel;
         private int _offlineDoneCount;
+        private EventSubscription _foregroundSub;
 
         public string SaveKey
         {
@@ -115,6 +117,7 @@ namespace Mozzi.Game.Synthesis
             _clock = InGameHub.Get<IClockHub>();
             _wallet = InGameHub.Get<IWalletHub>();
             _storage = InGameHub.Get<IStorageHub>();
+            _farm = InGameHub.Get<IFarmHub>();
             _codex = InGameHub.Get<ICodexHub>();
 
             _maxSlotCount = GrowthUtil.MaxLevel(_data.Growths, GrowthUtil.KindSlot);
@@ -128,6 +131,8 @@ namespace Mozzi.Game.Synthesis
             _save.Register(this);
             NormalizeSlots();
             _offlineDoneCount = ApplyOffline(_clock.OfflineSeconds);
+            // 앱이 멈췄다 돌아오면 못 돈 시간을 오프라인과 같은 길로 따라잡는다.
+            _foregroundSub = EventBus.Subscribe<AppForegroundEvent>(this, evt => Skip(evt.Seconds));
             Debug.Log("[Synthesis] 칸 " + _state.slotCount + "/" + _maxSlotCount
                 + " · 단축 " + _state.shortcutLevel + "/" + _maxShortcutLevel + " · " + Describe());
         }
@@ -156,6 +161,10 @@ namespace Mozzi.Game.Synthesis
 
         public void Dispose()
         {
+            if (_foregroundSub != null)
+            {
+                _foregroundSub.Dispose();
+            }
         }
 
         // 범위 밖이면 잠긴 빈 칸을 준다.
@@ -169,7 +178,7 @@ namespace Mozzi.Game.Synthesis
             return _state.slots[slotIndex];
         }
 
-        // 버튼에서 오므로(핸들러 아님) 이번에 새로 끝난 칸만 이벤트를 낸다.
+        // 디버그 버튼과 앱 복귀(AppForegroundEvent)에서 온다. 이번에 새로 끝난 칸만 이벤트를 낸다.
         public void Skip(double seconds)
         {
             _offlineDoneCount = ApplyOffline(seconds);
@@ -186,35 +195,15 @@ namespace Mozzi.Game.Synthesis
             SynthesisRuleRow rule = RuleOf(a, b);
 
             MozziSpeciesRow fixedRow = SynthesisRollUtil.FindFixed(_data.Species, a, b);
-            MozziSpeciesRow shinyRow = ShinyTargetOf(fixedRow, a);
-
-            SynthesisRollUtil.CollectOtherFamily(_data.Species, a, b, _codex.IsFamilyOpen(SynthesisRollUtil.FamilySwamp), _candidates);
-            _candidateIds.Clear();
-            for (int i = 0; i < _candidates.Count; i++)
-            {
-                _candidateIds.Add(_candidates[i].Id);
-            }
-
             string fixedId = null;
             float pFixed = 0f;
-            float pOther = rule.POtherFamilyTop;
-            float pShiny = rule.PShinyTop;
             if (fixedRow != null)
             {
                 fixedId = fixedRow.Id;
                 pFixed = rule.PFixed;
-                pOther = rule.POtherFamily;
-                pShiny = rule.PShiny;
             }
 
-            string shinyId = null;
-            if (shinyRow != null)
-            {
-                shinyId = shinyRow.Id;
-            }
-
-            return new SynthesisPreview(fixedId, new List<string>(_candidateIds), shinyId,
-                pFixed, pOther, pShiny, rule.Gold, rule.WaitSec * ShortcutRate);
+            return new SynthesisPreview(fixedId, pFixed, rule.Gold, rule.WaitSec * ShortcutRate);
         }
 
         public bool Start(int slotIndex, string speciesA, string speciesB)
@@ -254,6 +243,40 @@ namespace Mozzi.Game.Synthesis
 
             EventBus.Publish(new SynthesisStartedEvent(slotIndex, slot.remainingSec));
             return true;
+        }
+
+        // 칸 · 골드 · (보관함 + 농장) 마릿수를 먼저 보고, 보관함에 모자란 만큼 농장에서 옮겨 Start 한다.
+        // 그래도 Start 가 실패하면 옮긴 마리를 농장에 되돌린다 — 찹쌀이가 보관함에 남지 않게.
+        public bool StartPullingFromFarm(int slotIndex, string speciesA, string speciesB)
+        {
+            if (CanStartWithFarm(slotIndex, speciesA, speciesB) == false)
+            {
+                Debug.LogWarning("[Synthesis] 칸 · 골드 · 재료가 안 맞아 시작 못 함 : " + speciesA + " + " + speciesB);
+                return false;
+            }
+
+            List<string> moved = new List<string>();
+            bool pulled = PullFromFarm(speciesA, NeedOf(speciesA, speciesB), moved);
+            if (pulled && speciesA != speciesB)
+            {
+                pulled = PullFromFarm(speciesB, 1, moved);
+            }
+
+            if (pulled && Start(slotIndex, speciesA, speciesB))
+            {
+                return true;
+            }
+
+            Debug.LogWarning("[Synthesis] 시작 실패 · 옮긴 " + moved.Count + "마리를 농장에 되돌림");
+            for (int i = 0; i < moved.Count; i++)
+            {
+                if (_storage.PlaceToFarm(moved[i]) == false)
+                {
+                    Debug.LogWarning("[Synthesis] 되돌리기 실패 · 보관함에 남음 : " + moved[i]);
+                }
+            }
+
+            return false;
         }
 
         public string Take(int slotIndex)
@@ -398,6 +421,75 @@ namespace Mozzi.Game.Synthesis
             }
 
             return _justDone.Count;
+        }
+
+        private bool CanStartWithFarm(int slotIndex, string speciesA, string speciesB)
+        {
+            if (GetSlot(slotIndex).status != SynthesisSlotStatus.Empty)
+            {
+                return false;
+            }
+
+            SynthesisRuleRow rule = RuleOf(_data.Species.Get(speciesA), _data.Species.Get(speciesB));
+            if (_wallet.CanPay(rule.Gold) == false)
+            {
+                return false;
+            }
+
+            if (OwnedCount(speciesA) < NeedOf(speciesA, speciesB))
+            {
+                return false;
+            }
+
+            return OwnedCount(speciesB) >= NeedOf(speciesB, speciesA);
+        }
+
+        private int OwnedCount(string speciesId)
+        {
+            return _storage.Count(speciesId) + _farm.CountOf(speciesId);
+        }
+
+        // speciesId 를 몇 마리 넣어야 하나. 같은 종 둘이면 2다.
+        private static int NeedOf(string speciesId, string other)
+        {
+            if (speciesId == other)
+            {
+                return 2;
+            }
+
+            return 1;
+        }
+
+        // 보관함에 need 마리가 되도록 농장에서 옮긴다. 옮긴 종은 moved 에 적는다.
+        private bool PullFromFarm(string speciesId, int need, List<string> moved)
+        {
+            int count = need - _storage.Count(speciesId);
+            for (int i = 0; i < count; i++)
+            {
+                int mozziId = FindFarmMozzi(speciesId);
+                if (mozziId < 0 || _storage.TakeFromFarm(mozziId) == false)
+                {
+                    return false;
+                }
+
+                moved.Add(speciesId);
+            }
+
+            return true;
+        }
+
+        private int FindFarmMozzi(string speciesId)
+        {
+            IReadOnlyList<FarmMozzi> mozzis = _farm.Mozzis;
+            for (int i = 0; i < mozzis.Count; i++)
+            {
+                if (mozzis[i].SpeciesId == speciesId)
+                {
+                    return mozzis[i].Id;
+                }
+            }
+
+            return -1;
         }
 
         // 같은 종 둘이면 2마리가 있어야 한다.

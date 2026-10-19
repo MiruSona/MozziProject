@@ -20,21 +20,5 @@ namespace Mozzi.Game.Stall
         {
             get { return ServedCount == 0; }
         }
-
-        public string Describe()
-        {
-            if (IsEmpty)
-            {
-                return "안 켠 동안 판 떡 없음";
-            }
-
-            string tail = "";
-            if (ClosedForNight)
-            {
-                tail = " · 손님을 다 받아 밤";
-            }
-
-            return "안 켠 " + Seconds.ToString("F0") + "초 : " + ServedCount + "명에게 팔아 " + GoldEarned + "G" + tail;
-        }
     }
 }

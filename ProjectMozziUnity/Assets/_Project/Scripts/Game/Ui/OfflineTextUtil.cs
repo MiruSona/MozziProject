@@ -70,7 +70,7 @@ namespace Mozzi.Game.Ui
             return "합성 " + done + "칸 완료 · 받으러 가요";
         }
 
-        private static string StallLine(StallOfflineReport report)
+        public static string StallLine(StallOfflineReport report)
         {
             if (report.IsEmpty)
             {

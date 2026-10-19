@@ -15,11 +15,6 @@ namespace Mozzi.Hubs
             _name = name;
         }
 
-        public int Count
-        {
-            get { return _hubs.Count; }
-        }
-
         public T Get<T>() where T : class
         {
             T hub;

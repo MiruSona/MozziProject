@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Mozzi.Core;
 using Mozzi.Data;
+using Mozzi.Events;
 using Mozzi.Game;
 using Mozzi.Game.Clock;
 using Mozzi.Game.Farm;
@@ -253,9 +255,71 @@ namespace Mozzi.Tests
             Assert.That(odd[1], Is.EqualTo(0));
             Assert.That(odd[0], Is.LessThanOrEqualTo(7));
 
+            List<int> tiny = new List<int> { 1, 1, 1 };
+            FarmUpgradeMath.TrimToMax(tiny, 2);
+            Assert.That(tiny[0] + tiny[1] + tiny[2], Is.EqualTo(2));
+
             List<int> under = new List<int> { 3, 4 };
             FarmUpgradeMath.TrimToMax(under, 50);
             Assert.That(under, Is.EqualTo(new List<int> { 3, 4 }));
+        }
+
+        [Test]
+        public void Offline_BreedingStopsAtFenceMax()
+        {
+            FarmManager farm = Build(State(2, 0));
+
+            farm.Skip(365 * 24 * 3600);
+
+            Assert.That(farm.MozziCount, Is.EqualTo(farm.FenceMax));
+        }
+
+        [Test]
+        public void Offline_BirthsMatchBreedPeriods()
+        {
+            FarmManager farm = Build(State(2, 0));
+            double period = _data.Farms.Get(DataKeys.DefaultRowId).BreedPeriodSec;
+
+            farm.Skip(period * 3);
+
+            Assert.That(farm.MozziCount, Is.EqualTo(5));
+        }
+
+        // 농장 문서 8절 : 오프라인 한 번에 돌린 것과 1초씩 Process 한 것이 같아야 한다.
+        [Test]
+        public void Skip_EqualsProcessOneSecondSteps()
+        {
+            FarmManager skipped = Build(State(2, 0));
+            skipped.Skip(600);
+
+            InGameHub.Clear();
+            _inventory = new FakeInventoryHub();
+            FarmManager stepped = Build(State(2, 0));
+            for (int i = 0; i < 600; i++)
+            {
+                stepped.Process(1f);
+            }
+
+            Assert.That(stepped.PileOf(Ingredient), Is.EqualTo(skipped.PileOf(Ingredient)));
+            Assert.That(stepped.FloorTotal, Is.EqualTo(skipped.FloorTotal));
+            Assert.That(stepped.MozziCount, Is.EqualTo(skipped.MozziCount));
+        }
+
+        [Test]
+        public void FenceUpgrade_RaisesFenceMax_KeepsOldSaveLevel()
+        {
+            _wallet.Money = 100000;
+            FarmState state = State(0, 0);
+            state.fenceLevel = 1;
+            FarmManager farm = Build(state);
+
+            Assert.That(farm.UpgradeLevel(GrowthUtil.KindFence), Is.EqualTo(1));
+            Assert.That(farm.FenceMax, Is.EqualTo(30));
+            Assert.That(farm.BuyUpgrade(GrowthUtil.KindFence), Is.True);
+            Assert.That(farm.FenceMax, Is.EqualTo(40));
+
+            FarmState saved = JsonUtility.FromJson<FarmState>(farm.CaptureJson());
+            Assert.That(saved.fenceLevel, Is.EqualTo(2));
         }
 
         [Test]
@@ -335,6 +399,22 @@ namespace Mozzi.Tests
         }
 
         // mozzis 마리의 grass1 과 redbean 더미 pile 을 가진 세이브.
+        // 앱이 멈췄다 돌아오면(AppForegroundEvent) 그 초만큼 번식이 따라잡혀야 한다.
+        [Test]
+        public void AppForeground_CatchesUpBreeding()
+        {
+            // 앞 시험들이 Dispose 안 한 농장의 구독이 남아 있을 수 있어 먼저 비운다.
+            EventBus.Clear();
+            FarmManager farm = Build(State(2, 0));
+            int before = farm.MozziCount;
+            double period = _data.Farms.Get(DataKeys.DefaultRowId).BreedPeriodSec;
+
+            EventBus.Publish(new AppForegroundEvent(period * 3));
+            farm.Dispose();
+
+            Assert.That(farm.MozziCount, Is.GreaterThan(before));
+        }
+
         private static FarmState State(int mozzis, int pile)
         {
             FarmState state = new FarmState();

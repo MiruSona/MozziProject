@@ -19,7 +19,7 @@ namespace Mozzi.Game.Farm
         private const string FarmRowId = DataKeys.DefaultRowId;
 
         // 오프라인은 「다음 번식까지 남은 초」 걸음으로 실시간과 같은 함수를 돌린다 (농장 문서 8절).
-        // 사건 사이는 시계가 직선으로 쌓이므로 결과는 1초 걸음과 같고, 걸음 수는 며칠이어도 수천 회다.
+        // 사건 사이는 시계가 직선으로 쌓이므로 결과는 1초 걸음과 같다. 더 바뀔 것이 없으면 남은 시간을 한 걸음에 돌린다.
         private const double OfflineMaxStepSec = 60;
         private const double OfflineMinStepSec = 0.001;
 
@@ -31,7 +31,7 @@ namespace Mozzi.Game.Farm
         private readonly Dictionary<string, int> _piles = new Dictionary<string, int>();
         private readonly List<string> _collectorSkip = new List<string>();
 
-        // 농장 강화 셋(바닥 넓히기 · 수집기 · 먹이 공급기)의 단계와 최대 단계. 담장은 따로 둔다.
+        // 농장 강화 넷(담장 · 바닥 넓히기 · 수집기 · 먹이 공급기)의 단계와 최대 단계.
         private readonly Dictionary<string, int> _levels = new Dictionary<string, int>();
         private readonly Dictionary<string, int> _maxLevels = new Dictionary<string, int>();
 
@@ -43,54 +43,20 @@ namespace Mozzi.Game.Farm
 
         private FarmRow _row;
         private int _nextMozziId = 1;
-        private int _fenceLevel;
-        private int _maxFenceLevel;
         private double _collectorClock;
         private bool _restored;
         private OfflineReport _offlineReport;
+        private EventSubscription _foregroundSub;
 
         public string SaveKey
         {
             get { return Key; }
         }
 
-        // 담장 단계의 rate 는 「더해지는 마리 수」라 누적값이다 — 단계마다 더하지 않고 현재 단계 한 행만 더한다.
+        // 담장 상한 = Farm 표 fenceMax + 담장 단계만큼 더한 수 (누적값 한 행).
         public int FenceMax
         {
-            get
-            {
-                GrowthRow row = GrowthUtil.Find(_data.Growths, GrowthUtil.KindFence, _fenceLevel);
-                if (row == null)
-                {
-                    return _row.FenceMax;
-                }
-
-                return _row.FenceMax + (int)row.Rate;
-            }
-        }
-
-        public int FenceLevel
-        {
-            get { return _fenceLevel; }
-        }
-
-        public int MaxFenceLevel
-        {
-            get { return _maxFenceLevel; }
-        }
-
-        public int NextFencePrice
-        {
-            get
-            {
-                GrowthRow row = GrowthUtil.Find(_data.Growths, GrowthUtil.KindFence, _fenceLevel + 1);
-                if (row == null)
-                {
-                    return -1;
-                }
-
-                return row.Price;
-            }
+            get { return _row.FenceMax + (int)RateOf(GrowthUtil.KindFence); }
         }
 
         // 바닥 재료 합계 한도 = Farm 표 floorMax + 바닥 넓히기 단계만큼 더한 수 (누적값 한 행).
@@ -177,7 +143,7 @@ namespace Mozzi.Game.Farm
             _wallet = InGameHub.Get<IWalletHub>();
 
             _row = _data.Farms.Get(FarmRowId);
-            _maxFenceLevel = GrowthUtil.MaxLevel(_data.Growths, GrowthUtil.KindFence);
+            AddUpgradeKind(GrowthUtil.KindFence);
             AddUpgradeKind(GrowthUtil.KindFloor);
             AddUpgradeKind(GrowthUtil.KindCollector);
             AddUpgradeKind(GrowthUtil.KindFeeder);
@@ -190,6 +156,8 @@ namespace Mozzi.Game.Farm
             }
 
             ApplyOffline(_clock.OfflineSeconds);
+            // 앱이 멈췄다 돌아오면 못 돈 시간을 오프라인과 같은 길로 따라잡는다.
+            _foregroundSub = EventBus.Subscribe<AppForegroundEvent>(this, evt => Skip(evt.Seconds));
             Debug.Log("[Farm] 마릿수 " + _mozzis.Count + "/" + FenceMax + " · " + _offlineReport.Describe());
         }
 
@@ -221,6 +189,10 @@ namespace Mozzi.Game.Farm
 
         public void Dispose()
         {
+            if (_foregroundSub != null)
+            {
+                _foregroundSub.Dispose();
+            }
         }
 
         public int CountOf(string speciesId)
@@ -299,20 +271,7 @@ namespace Mozzi.Game.Farm
             return false;
         }
 
-        public bool BuyFence()
-        {
-            int price = NextFencePrice;
-            if (price < 0 || _wallet.Pay(price) == false)
-            {
-                return false;
-            }
-
-            _fenceLevel++;
-            EventBus.Publish(new FenceUpgradedEvent(_fenceLevel, FenceMax));
-            return true;
-        }
-
-        // 바닥 넓히기 · 수집기 · 먹이 공급기의 지금 단계. 그 밖의 kind 는 0.
+        // 담장 · 바닥 넓히기 · 수집기 · 먹이 공급기의 지금 단계. 그 밖의 kind 는 0.
         public int UpgradeLevel(string kind)
         {
             int level;
@@ -366,7 +325,7 @@ namespace Mozzi.Game.Farm
         {
             FarmState state = new FarmState();
             state.nextMozziId = _nextMozziId;
-            state.fenceLevel = _fenceLevel;
+            state.fenceLevel = _levels[GrowthUtil.KindFence];
             state.floorLevel = _levels[GrowthUtil.KindFloor];
             state.collectorLevel = _levels[GrowthUtil.KindCollector];
             state.feederLevel = _levels[GrowthUtil.KindFeeder];
@@ -409,7 +368,7 @@ namespace Mozzi.Game.Farm
             _restored = true;
             _nextMozziId = Math.Max(1, state.nextMozziId);
             // 표가 줄어든 옛 세이브도 표 안으로 맞춘다.
-            _fenceLevel = Mathf.Clamp(state.fenceLevel, 0, _maxFenceLevel);
+            _levels[GrowthUtil.KindFence] = Mathf.Clamp(state.fenceLevel, 0, _maxLevels[GrowthUtil.KindFence]);
             _levels[GrowthUtil.KindFloor] = Mathf.Clamp(state.floorLevel, 0, _maxLevels[GrowthUtil.KindFloor]);
             _levels[GrowthUtil.KindCollector] = Mathf.Clamp(state.collectorLevel, 0, _maxLevels[GrowthUtil.KindCollector]);
             _levels[GrowthUtil.KindFeeder] = Mathf.Clamp(state.feederLevel, 0, _maxLevels[GrowthUtil.KindFeeder]);
@@ -660,6 +619,11 @@ namespace Mozzi.Game.Farm
             while (remaining > 0)
             {
                 double step = Math.Min(NextEventSec(), remaining);
+                if (Stalled())
+                {
+                    step = remaining;
+                }
+
                 remaining -= step;
 
                 for (int i = 0; i < _speciesOrder.Count; i++)
@@ -739,6 +703,44 @@ namespace Mozzi.Game.Farm
             }
 
             return Math.Max(next, OfflineMinStepSec);
+        }
+
+        // 더 걸어도 바뀌는 것이 없나 : 번식할 종이 없고, 생산이 모두 막혔고(창고 상한 · 바닥 한도), 수집기가 옮길 것이 없다.
+        // 그러면 남은 시간을 한 걸음에 돌려도 1초 걸음과 같다 — 막힌 생산 · 번식 시계는 0 이고 수집기 시계는 나머지(%)로 맞춰진다.
+        private bool Stalled()
+        {
+            bool fenceFull = _mozzis.Count >= FenceMax;
+            bool floorFull = FloorTotal >= FloorMax;
+            for (int i = 0; i < _speciesOrder.Count; i++)
+            {
+                string id = _speciesOrder[i];
+                if (_countBySpecies[id] >= 2 && fenceFull == false)
+                {
+                    return false;
+                }
+
+                string ingredientId = _data.Species.Get(id).IngredientId;
+                bool producing = _countBySpecies[id] > 0 && string.IsNullOrEmpty(ingredientId) == false;
+                if (producing && floorFull == false && _inventory.Count(ingredientId) + PileOf(ingredientId) < _inventory.Cap(ingredientId))
+                {
+                    return false;
+                }
+            }
+
+            if (CollectorAmount <= 0)
+            {
+                return true;
+            }
+
+            foreach (KeyValuePair<string, int> pair in _piles)
+            {
+                if (pair.Value > 0 && _inventory.IsFull(pair.Key) == false)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         // 보고용 합계. order 를 주면 처음 보는 id 를 순서 목록에도 넣는다.

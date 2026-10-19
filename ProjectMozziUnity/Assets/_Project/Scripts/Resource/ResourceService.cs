@@ -7,9 +7,6 @@ namespace Mozzi.Resource
 {
     public sealed class ResourceService : ServiceBase, IResourceHub
     {
-        private readonly IPrefabSource _source;
-        private readonly ISpriteSource _spriteSource;
-
         // 키 → 스프라이트. 못 찾은 것도 null 로 담아 매번 다시 찾지 않는다.
         private readonly Dictionary<string, Sprite> _sprites = new Dictionary<string, Sprite>();
 
@@ -21,22 +18,6 @@ namespace Mozzi.Resource
 
         // 반납된 것을 매다는 비활성 루트.
         private Transform _poolRoot;
-
-        public ResourceService(IPrefabSource source, ISpriteSource sprites)
-        {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            if (sprites == null)
-            {
-                throw new ArgumentNullException(nameof(sprites));
-            }
-
-            _source = source;
-            _spriteSource = sprites;
-        }
 
         public override void Init()
         {
@@ -62,7 +43,13 @@ namespace Mozzi.Resource
             else
             {
                 // 뼈대 전체에서 Instantiate 를 부르는 유일한 자리다.
-                go = UnityEngine.Object.Instantiate(_source.Load(key));
+                GameObject prefab = Resources.Load<GameObject>(key);
+                if (prefab == null)
+                {
+                    throw new InvalidOperationException("Resources 에 " + key + " 프리팹이 없다");
+                }
+
+                go = UnityEngine.Object.Instantiate(prefab);
             }
 
             // 빌려줄 수 있는지 먼저 본다. 못 빌려주면 꺼낸 것을 되돌려 반쯤 빌려준 상태를 남기지 않는다.
@@ -143,7 +130,7 @@ namespace Mozzi.Resource
                 return cached;
             }
 
-            Sprite sprite = _spriteSource.Load(key);
+            Sprite sprite = Resources.Load<Sprite>(SpriteKeys.Root + key);
             _sprites[key] = sprite;
 
             // 캐시에 담고 나서 알리므로 키마다 한 번만 뜬다.
@@ -153,43 +140,6 @@ namespace Mozzi.Resource
             }
 
             return sprite;
-        }
-
-        public void ClearPool(string key)
-        {
-            Stack<GameObject> pool;
-            if (_pools.TryGetValue(key, out pool) == false)
-            {
-                return;
-            }
-
-            while (pool.Count > 0)
-            {
-                GameObject go = pool.Pop();
-                if (go != null)
-                {
-                    UnityEngine.Object.Destroy(go);
-                }
-            }
-
-            _pools.Remove(key);
-        }
-
-        public override void Dispose()
-        {
-            List<string> keys = new List<string>(_pools.Keys);
-            for (int i = 0; i < keys.Count; i++)
-            {
-                ClearPool(keys[i]);
-            }
-
-            _keyOf.Clear();
-            _sprites.Clear();
-
-            if (_poolRoot != null)
-            {
-                UnityEngine.Object.Destroy(_poolRoot.gameObject);
-            }
         }
     }
 }

@@ -25,6 +25,7 @@ namespace Mozzi.Game.Ui
         private readonly Dictionary<string, Image> _ingredientIcons = new Dictionary<string, Image>();
         private readonly Dictionary<TMP_Text, float> _bumps = new Dictionary<TMP_Text, float>();
         private readonly List<TMP_Text> _bumpDone = new List<TMP_Text>();
+        private readonly List<TMP_Text> _bumpKeys = new List<TMP_Text>();
 
         private TMP_Text _title;
         private TMP_Text _gold;
@@ -352,10 +353,11 @@ namespace Mozzi.Game.Ui
             }
 
             _bumpDone.Clear();
-            List<TMP_Text> keys = new List<TMP_Text>(_bumps.Keys);
-            for (int i = 0; i < keys.Count; i++)
+            _bumpKeys.Clear();
+            _bumpKeys.AddRange(_bumps.Keys);
+            for (int i = 0; i < _bumpKeys.Count; i++)
             {
-                TMP_Text text = keys[i];
+                TMP_Text text = _bumpKeys[i];
                 float t = _bumps[text] + deltaTime;
                 _bumps[text] = t;
 

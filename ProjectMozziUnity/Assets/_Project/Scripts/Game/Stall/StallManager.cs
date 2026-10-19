@@ -113,10 +113,12 @@ namespace Mozzi.Game.Stall
             _offlineReport = ApplyOffline(_clock.OfflineSeconds);
 
             _subscriptions.Add(EventBus.Subscribe<DayStartedEvent>(this, OnDayStarted));
+            // 앱이 멈췄다 돌아오면 못 돈 시간을 오프라인과 같은 길로 따라잡는다.
+            _subscriptions.Add(EventBus.Subscribe<AppForegroundEvent>(this, evt => Skip(evt.Seconds)));
 
             Debug.Log("[Stall] 열림 " + _state.isOpen + " · 점원 " + _state.hasClerk + " · 진열 " + _state.shelf.Count
                 + "/" + _row.ShelfMax + " · 줄 " + _state.queue.Count + " · 오늘 " + _state.servedToday + "/" + _row.CustomersPerDay
-                + " · " + _offlineReport.Describe());
+                + " · 오프라인 판매 " + _offlineReport.ServedCount + "명 " + _offlineReport.GoldEarned + "G · 밤 " + _offlineReport.ClosedForNight);
         }
 
         public void Process(float deltaTime)

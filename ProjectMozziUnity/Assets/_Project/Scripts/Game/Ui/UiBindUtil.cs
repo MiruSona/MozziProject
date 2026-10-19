@@ -102,8 +102,8 @@ namespace Mozzi.Game.Ui
             }
         }
 
-        // 깊이 우선. 화면 하나의 자식 수는 수십이라 충분하다.
-        private static Transform FindDeep(Transform root, string childName)
+        // 깊이 우선. 화면 하나의 자식 수는 수십이라 충분하다. Editor 손질기도 같이 쓴다.
+        public static Transform FindDeep(Transform root, string childName)
         {
             for (int i = 0; i < root.childCount; i++)
             {

@@ -55,6 +55,7 @@ namespace Mozzi.Game.Farm
                 return;
             }
 
+            List<int> orig = new List<int>(counts);
             int kept = 0;
             for (int i = 0; i < counts.Count; i++)
             {
@@ -64,7 +65,8 @@ namespace Mozzi.Game.Farm
 
             for (int i = 0; i < counts.Count && kept < max; i++)
             {
-                if (counts[i] <= 0)
+                // 버림으로 깎인 칸만 되돌린다 (원래 0 이던 칸은 안 늘린다).
+                if (orig[i] <= counts[i])
                 {
                     continue;
                 }

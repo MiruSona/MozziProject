@@ -181,8 +181,8 @@ namespace Mozzi.Editor
             return rect;
         }
 
-        // 아래 버튼 줄 뿌리 : 내용 칸 아래끝에 붙는 전체 폭 칸. 자식 버튼은 BottomRowButton 으로 왼쪽부터 놓는다.
-        public static RectTransform MakeBottomRow(Transform root)
+        // 아래 버튼 줄 : 내용 칸 아래끝에 붙는 전체 폭 칸에 버튼을 가운데 정렬로 한 줄 놓는다.
+        public static RectTransform MakeBottomRow(Transform root, string[] names, string[] labels, float[] widths)
         {
             RectTransform row = NewNode(root, UiNames.BottomRow);
             row.anchorMin = new Vector2(0.5f, 0f);
@@ -190,6 +190,14 @@ namespace Mozzi.Editor
             row.pivot = new Vector2(0.5f, 0f);
             row.anchoredPosition = new Vector2(0f, FormalLayout.RowBottom);
             row.sizeDelta = new Vector2(FormalLayout.StageWidth, FormalLayout.RowHeight);
+
+            float[] lefts = RowLefts(widths);
+            for (int i = 0; i < names.Length; i++)
+            {
+                RectTransform button = MakeButton(row, names[i], labels[i], FormalLayout.RowFontSize);
+                BottomLeft(button, lefts[i], 0f, widths[i], FormalLayout.RowHeight);
+            }
+
             return row;
         }
 

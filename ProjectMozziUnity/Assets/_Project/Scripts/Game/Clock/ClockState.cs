@@ -6,7 +6,6 @@ namespace Mozzi.Game.Clock
     [Serializable]
     public sealed class ClockState
     {
-        public double elapsedSeconds;
         public int day = 1;
         public bool isNight;
     }

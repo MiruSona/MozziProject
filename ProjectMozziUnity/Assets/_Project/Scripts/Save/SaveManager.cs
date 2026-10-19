@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using Mozzi.Core;
 using Mozzi.Events;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+[assembly: InternalsVisibleTo("Mozzi.Tests.EditMode")]
 
 namespace Mozzi.Save
 {
@@ -26,7 +29,6 @@ namespace Mozzi.Save
         private readonly Dictionary<string, string> _loadedJson = new Dictionary<string, string>();
 
         private string _filePath;
-        private SaveSettings _settings = new SaveSettings();
         private float _autoSaveClock;
         private long _loadedAtUtcTicks;
 
@@ -51,17 +53,18 @@ namespace Mozzi.Save
             get { return _loadedAtUtcTicks != 0; }
         }
 
-        public SaveSettings Settings
-        {
-            get { return _settings; }
-        }
-
         public void Init()
         {
-            _filePath = Path.Combine(Application.persistentDataPath, FileName);
-            LoadFile();
+            LoadFrom(Path.Combine(Application.persistentDataPath, FileName));
             Application.quitting += SaveOnQuit;
             _backgroundSub = EventBus.Subscribe<AppBackgroundEvent>(this, OnAppBackground);
+        }
+
+        // 시험이 진짜 세이브를 안 덮게 임시 경로로 읽는 자리. 게임은 Init 으로만 온다.
+        internal void LoadFrom(string filePath)
+        {
+            _filePath = filePath;
+            LoadFile();
         }
 
         public void PostInit()
@@ -145,7 +148,6 @@ namespace Mozzi.Save
             SaveFile file = new SaveFile();
             file.version = SaveFile.CurrentVersion;
             file.savedAtUtcTicks = DateTime.UtcNow.Ticks;
-            file.settings = _settings;
 
             for (int i = 0; i < _savables.Count; i++)
             {
@@ -153,6 +155,20 @@ namespace Mozzi.Save
                 entry.key = _savables[i].SaveKey;
                 entry.json = _savables[i].CaptureJson();
                 file.entries.Add(entry);
+            }
+
+            // 이번 실행에 등록 안 된 매니저(부팅 중 예외·이름 바뀜)의 칸은 읽은 그대로 보존한다. 안 그러면 다음 저장 때 사라진다.
+            foreach (KeyValuePair<string, string> loaded in _loadedJson)
+            {
+                if (file.entries.Exists(e => e.key == loaded.Key))
+                {
+                    continue;
+                }
+
+                SaveEntry keep = new SaveEntry();
+                keep.key = loaded.Key;
+                keep.json = loaded.Value;
+                file.entries.Add(keep);
             }
 
             try
@@ -213,7 +229,6 @@ namespace Mozzi.Save
         {
             _loadedAtUtcTicks = 0;
             _loadedJson.Clear();
-            _settings = new SaveSettings();
             _writeBlocked = false;
 
             if (File.Exists(_filePath) == false)
@@ -265,10 +280,6 @@ namespace Mozzi.Save
             }
 
             _loadedAtUtcTicks = file.savedAtUtcTicks;
-            if (file.settings != null)
-            {
-                _settings = file.settings;
-            }
 
             for (int i = 0; i < file.entries.Count; i++)
             {

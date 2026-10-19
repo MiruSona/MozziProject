@@ -17,21 +17,12 @@ namespace Mozzi.Tests
             get { return Json != null; }
         }
 
-        public SaveSettings Settings
-        {
-            get { return null; }
-        }
-
         public void Register(ISavable savable)
         {
             if (Json != null)
             {
                 savable.RestoreJson(Json);
             }
-        }
-
-        public void SaveNow()
-        {
         }
 
         public void DeleteAndRestart()

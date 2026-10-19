@@ -10,19 +10,9 @@ namespace Mozzi.Hubs
             return _table.Get<T>();
         }
 
-        public static bool TryGet<T>(out T hub) where T : class
-        {
-            return _table.TryGet<T>(out hub);
-        }
-
         public static void Register<T>(T hub, object owner) where T : class
         {
             _table.Register<T>(hub, owner);
-        }
-
-        public static void UnregisterAllBy(object owner)
-        {
-            _table.UnregisterAllBy(owner);
         }
 
         public static void Clear()

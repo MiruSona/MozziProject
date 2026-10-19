@@ -18,10 +18,5 @@ namespace Mozzi.Core
         {
             IsDead = true;
         }
-
-        public void MarkDead()
-        {
-            IsDead = true;
-        }
     }
 }

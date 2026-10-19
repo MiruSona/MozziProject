@@ -149,7 +149,6 @@ namespace Mozzi.Game.Ui
             _subscriptions.Add(EventBus.Subscribe<MozziBornEvent>(this, OnMozziBorn));
             _subscriptions.Add(EventBus.Subscribe<MozziPlacedEvent>(this, OnMozziPlaced));
             _subscriptions.Add(EventBus.Subscribe<MozziRemovedEvent>(this, OnMozziRemoved));
-            _subscriptions.Add(EventBus.Subscribe<FenceUpgradedEvent>(this, OnFenceUpgraded));
             _subscriptions.Add(EventBus.Subscribe<FarmUpgradedEvent>(this, OnFarmUpgraded));
             _subscriptions.Add(EventBus.Subscribe<StorageUpgradedEvent>(this, OnStorageUpgraded));
             _subscriptions.Add(EventBus.Subscribe<IngredientDroppedEvent>(this, OnIngredientDropped));
@@ -166,6 +165,7 @@ namespace Mozzi.Game.Ui
             _subscriptions.Add(EventBus.Subscribe<CustomerServedEvent>(this, OnCustomerServed));
             _subscriptions.Add(EventBus.Subscribe<RiceCakeMadeEvent>(this, OnRiceCakeMade));
             _subscriptions.Add(EventBus.Subscribe<RecipeDiscoveredEvent>(this, OnRecipeDiscovered));
+            _subscriptions.Add(EventBus.Subscribe<AppForegroundEvent>(this, OnAppForeground));
 
             // 맨 뒤 — 앞 Manager 들의 오프라인 진행이 다 끝난 결과를 읽는다 (세로조각1판설계 4-3).
             if (_save.HasSaveFile && _clock.OfflineSeconds >= OfflinePopupMinSec)
@@ -214,6 +214,7 @@ namespace Mozzi.Game.Ui
             }
 
             _overlays.Clear();
+            _returnStack.Clear();
             _open = null;
 
             if (_offlinePopup != null)
@@ -306,7 +307,7 @@ namespace Mozzi.Game.Ui
 
         public void CloseAll()
         {
-            _returnStack.Clear();
+            CloseStacked(0);
             HideOpen();
         }
 
@@ -343,15 +344,11 @@ namespace Mozzi.Game.Ui
             return null;
         }
 
-        // 메인 화면 강화 판의 사기. 담장 · 창고는 제 Manager 가, 바닥 · 수집기 · 공급기는 FarmManager 가 판다.
+        // 메인 화면 강화 판의 사기. 창고는 InventoryManager 가, 나머지(담장 · 바닥 · 수집기 · 공급기)는 FarmManager 가 판다.
         // 값이 바뀌면 각 Upgraded 이벤트 · GoldChangedEvent 가 판을 되읽는다.
         private void OnBuyUpgrade(string kind)
         {
-            if (kind == GrowthUtil.KindFence)
-            {
-                _farm.BuyFence();
-            }
-            else if (kind == GrowthUtil.KindStorage)
+            if (kind == GrowthUtil.KindStorage)
             {
                 _inventory.BuyStorage();
             }
@@ -369,15 +366,15 @@ namespace Mozzi.Game.Ui
             FarmRow farmRow = _data.Farms.Get(DataKeys.DefaultRowId);
 
             string next = null;
-            double rate = NextRate(GrowthUtil.KindFence, _farm.FenceLevel);
+            double rate = NextRate(GrowthUtil.KindFence, _farm.UpgradeLevel(GrowthUtil.KindFence));
             if (rate >= 0)
             {
                 next = (farmRow.FenceMax + (int)rate) + "마리";
             }
 
             string now = _farm.MozziCount + "/" + _farm.FenceMax + "마리";
-            SetUpgradeRow(GrowthUtil.KindFence, FarmUpgradeText.Line("담장", _farm.FenceLevel, _farm.MaxFenceLevel, now, next),
-                _farm.NextFencePrice);
+            SetUpgradeRow(GrowthUtil.KindFence, FarmUpgradeText.Line("담장", _farm.UpgradeLevel(GrowthUtil.KindFence),
+                _farm.MaxUpgradeLevel(GrowthUtil.KindFence), now, next), _farm.NextUpgradePrice(GrowthUtil.KindFence));
 
             int level = _farm.UpgradeLevel(GrowthUtil.KindFloor);
             next = null;
@@ -471,15 +468,29 @@ namespace Mozzi.Game.Ui
             int index = _returnStack.IndexOf(screen);
             if (index >= 0)
             {
-                _returnStack.RemoveRange(index, _returnStack.Count - index);
+                _returnStack.RemoveAt(index);
+                CloseStacked(index);
+                HideOpen();
             }
             else if (_open != null)
             {
+                // 쌓는 화면은 OnClosed 를 안 부른다 — 돌아왔을 때 고르던 재료 · 결과가 그대로 있어야 한다.
                 _returnStack.Add(_open);
+                HideOpen(false);
             }
 
-            HideOpen();
             Show(screen);
+        }
+
+        // 쌓인 덮개 중 index 부터 위를 버린다. 쌓을 때 미뤄 둔 OnClosed 를 여기서 부른다.
+        private void CloseStacked(int index)
+        {
+            for (int i = index; i < _returnStack.Count; i++)
+            {
+                _returnStack[i].OnClosed();
+            }
+
+            _returnStack.RemoveRange(index, _returnStack.Count - index);
         }
 
         // 농장 건물에서 바로 여는 길. 쌓인 겹을 다 버린다.
@@ -494,7 +505,7 @@ namespace Mozzi.Game.Ui
             Show(screen);
         }
 
-        private void HideOpen()
+        private void HideOpen(bool close = true)
         {
             if (_open == null)
             {
@@ -506,7 +517,11 @@ namespace Mozzi.Game.Ui
                 _actionPopup.Hide();
             }
 
-            _open.OnClosed();
+            if (close)
+            {
+                _open.OnClosed();
+            }
+
             _open.gameObject.SetActive(false);
             _open = null;
         }
@@ -719,14 +734,24 @@ namespace Mozzi.Game.Ui
             RefreshUpgrade();
         }
 
-        private void OnFenceUpgraded(FenceUpgradedEvent evt)
+        // UiManager 가 맨 뒤에 구독하므로, 앞 Manager 들이 따라잡은 결과(OfflineReport)를 읽는다.
+        private void OnAppForeground(AppForegroundEvent evt)
         {
-            _farmScreen.SetFence(_farm.MozziCount, evt.FenceMax);
-            RefreshUpgrade();
+            RefreshAll();
+            RefreshOpen();
+            if (evt.Seconds >= OfflinePopupMinSec)
+            {
+                ShowOfflinePopup(evt.Seconds);
+            }
         }
 
         private void OnFarmUpgraded(FarmUpgradedEvent evt)
         {
+            if (evt.Kind == GrowthUtil.KindFence)
+            {
+                _farmScreen.SetFence(_farm.MozziCount, _farm.FenceMax);
+            }
+
             RefreshUpgrade();
         }
 

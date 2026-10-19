@@ -9,8 +9,6 @@ namespace Mozzi.Game.Storage
         // 마릿수가 1 이상인 종만. 처음 들어온 순서다.
         IReadOnlyList<CountEntry> Entries { get; }
 
-        int Total { get; }
-
         int Count(string speciesId);
 
         void Add(string speciesId, int amount);

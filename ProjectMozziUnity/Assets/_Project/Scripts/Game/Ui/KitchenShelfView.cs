@@ -65,11 +65,6 @@ namespace Mozzi.Game.Ui
             get { return Mathf.Max(1, (_items.Count + _jars.Length - 1) / _jars.Length); }
         }
 
-        public int Page
-        {
-            get { return _page; }
-        }
-
         public void SetItems(IReadOnlyList<KitchenJarItem> items)
         {
             _items.Clear();
