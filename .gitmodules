@@ -28,3 +28,6 @@
 [submodule "Tools/AssetTool"]
 	path = Tools/AssetTool
 	url = https://github.com/MiruSona/officina-asset-tool.git
+[submodule "Tools/JudgeModel"]
+	path = Tools/JudgeModel
+	url = https://github.com/MiruSona/officina-judge-model.git

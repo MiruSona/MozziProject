@@ -1190,3 +1190,5 @@
 - 거절 summary-len title-shape tag-standard sources-note-only `폴더 이름을 바꾼 뒤 Unity 가 Safe Mode 를 되풀이하면 Library/Bee 를 지운다`
 - 들어옴 20261019-25d32a70 `폴더 이름 변경 뒤 Safe Mode 반복이면 Library/Bee 삭제` (mem/0.3.0)
 - 들어옴 20261019-fd8c3a4b `v0.0.1 첫 공개 Release — PC·안드로이드 빌드` (mem/0.3.0)
+- 거절 tag-standard body-thin `VFXTool 서브모듈은 공개 저장소에 올린 뒤 붙인다`
+- 들어옴 20261019-43c00219 `VFXTool 서브모듈은 공개 저장소에 올린 뒤 붙인다` (mem/0.3.0)
