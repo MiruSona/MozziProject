@@ -1,0 +1,1161 @@
+{
+  "version": 1,
+  "profile": "mozzi_people",
+  "status": "ok",
+  "must_failed": [],
+  "checked": {
+    "mode": "loose",
+    "files": 6
+  },
+  "failed": [],
+  "skipped": [
+    "baseline",
+    "bbox_drift"
+  ],
+  "rules": [
+    {
+      "rule": "max_colors",
+      "ok": true,
+      "detail": "한도 40가지를 넘은 그림 0개",
+      "items": [
+        {
+          "where": "owner_v12_A_12101.png",
+          "colors": 34,
+          "limit": 40,
+          "ok": true
+        },
+        {
+          "where": "owner_v12_A_12102.png",
+          "colors": 40,
+          "limit": 40,
+          "ok": true
+        },
+        {
+          "where": "owner_v12_B_12201.png",
+          "colors": 17,
+          "limit": 40,
+          "ok": true
+        },
+        {
+          "where": "owner_v12_C_12301.png",
+          "colors": 40,
+          "limit": 40,
+          "ok": true
+        },
+        {
+          "where": "owner_v12_C_12302.png",
+          "colors": 38,
+          "limit": 40,
+          "ok": true
+        },
+        {
+          "where": "owner_v12_C_12303.png",
+          "colors": 34,
+          "limit": 40,
+          "ok": true
+        }
+      ]
+    },
+    {
+      "rule": "ramp_colors",
+      "ok": true,
+      "detail": "램프 밖 색 203가지 (exact_match 가 꺼져 있어 알리기만 한다)",
+      "items": [
+        {
+          "color": "#0D0B0E",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#111118",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#140F0F",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#151314",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#19171D",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#1B1C24",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#1F1916",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#1F2026",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#202032",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#211E29",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#232129",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#241C1A",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#252024",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#262530",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#281A13",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#281B16",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#28273E",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#2C2A32",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#2E2E45",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#2E2F4A",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#2E3247",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#2F1814",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#2F292E",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#302929",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#302D34",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#323146",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#34323A",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#343951",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#353856",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#363439",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#3A383E",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#3B3940",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#3C435C",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#3D1A17",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#3D2647",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#3D3B45",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#3D3D56",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#3F241C",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#3F3E5B",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#404966",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#414046",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#42261F",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#433F48",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#43424A",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#434349",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#44241E",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#462C26",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#474551",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#494758",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#4A211B",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#4B2F54",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#4B4955",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#4E385E",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#56565C",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#582C29",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#5C1E1D",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#5C3255",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#5C3832",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#5D251D",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#5E302C",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#5E4C6D",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#64507A",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#66626A",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#673730",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#684F48",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#6B2524",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#6B4276",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#6D2D2A",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#6D667A",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#712F38",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#713639",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#734240",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#73447C",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#766E86",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#785E8A",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#795B55",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#7B6586",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#7D7294",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#7E3A3A",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#804946",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#805094",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#805850",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#8578A4",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#86554E",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#874341",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#8A4E4F",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#8A7B76",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#8E6A5F",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#928C8E",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#93494B",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#94434C",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#95494C",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#96807F",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#978CA4",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#9897A1",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#9C575B",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#9C86AC",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#9C93A1",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#9D5F5B",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#9D93C1",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#9D94B2",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#9E7C71",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#A06BA7",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#A1595A",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#A3565B",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#A395C6",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#A877BA",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#AA78B4",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#ABA4CF",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#AC6D9B",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#AC9DC9",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#AD706C",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#AF6266",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#B06469",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#B0A2D2",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#B0A8C6",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#B26067",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#B26568",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#B4A9C0",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#B65562",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#B8A4C5",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#B96C72",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#BC6E70",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#BC7B79",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#BCBADF",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#BE7273",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#C06F75",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#C1B9D8",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#C3B5E2",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#C3C1C9",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#C55E69",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#C595CA",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#C67C80",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#C68683",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#C8787A",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#C8C7C9",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#C9B5B1",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#CB7D81",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#CBBAD5",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#CE7E7F",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#CFC6DB",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#D33831",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#D3CAE9",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#D48385",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#D5888A",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#D58C91",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#D75059",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#D7D2E2",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#D89694",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#D98B8B",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#D99683",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#D9C5D2",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#DA5768",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#DA9091",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#DA9196",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#DC9696",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#DCCCE2",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#DD8D8F",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#DDDCE1",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#E0DDE5",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#E15056",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#E19695",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#E1A19F",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#E1A2A1",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#E24056",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#E37D80",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#E3E0E8",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#E5A19E",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#E69A99",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#E6B1AF",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#E9E5EE",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#EAB0AD",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#EAB2B0",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#EC918E",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#EDB3A0",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#EFA7AB",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#F2ABB2",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#F3C7B8",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#F3DAE1",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#F3F2F3",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#F4D2D5",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#F5CDC0",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#F6BBA4",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#F6C0B7",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#F6F2F8",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#F7C5B3",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#F7C6D1",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#F7DCD1",
+          "first": "owner_v12_B_12201.png"
+        },
+        {
+          "color": "#F7F7F6",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#F8CABC",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#F8D6E6",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#F8F8F8",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#F9D4C5",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#F9DACC",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#FADFD3",
+          "first": "owner_v12_A_12101.png"
+        },
+        {
+          "color": "#FAF9F9",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#FBDED1",
+          "first": "owner_v12_C_12301.png"
+        },
+        {
+          "color": "#FCAFCB",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#FCDDCA",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#FCE0D0",
+          "first": "owner_v12_A_12102.png"
+        },
+        {
+          "color": "#FDFDFC",
+          "first": "owner_v12_C_12302.png"
+        },
+        {
+          "color": "#FDFEFC",
+          "first": "owner_v12_C_12303.png"
+        },
+        {
+          "color": "#FEFEFD",
+          "first": "owner_v12_A_12101.png"
+        }
+      ]
+    },
+    {
+      "rule": "alpha",
+      "ok": true,
+      "detail": "반투명 픽셀이 있는 프레임 0개",
+      "items": []
+    },
+    {
+      "rule": "baseline",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    },
+    {
+      "rule": "bbox_drift",
+      "ok": true,
+      "detail": "낱장 모드라 건너뛴다",
+      "items": []
+    }
+  ],
+  "warnings": [
+    {
+      "rule": "outline",
+      "ok": false,
+      "detail": "외곽선 방식이 다른 그림 3장",
+      "items": [
+        {
+          "where": "owner_v12_A_12101.png",
+          "why": [
+            "외곽선 판정 selout+light 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "selout+light",
+          "black": 0.0619,
+          "dark": 0.9781,
+          "lit": 1.182,
+          "solid_share": 0.2259,
+          "inner_share": 0.2441,
+          "hue_diff": 6.84
+        },
+        {
+          "where": "owner_v12_A_12102.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.3516,
+          "dark": 0.9732,
+          "lit": 1.148,
+          "solid_share": 0.172,
+          "inner_share": 0.1312,
+          "hue_diff": 13.0
+        },
+        {
+          "where": "owner_v12_B_12201.png",
+          "why": [
+            "외곽선 판정 mixed 가 style.outline selout 과 다르다"
+          ],
+          "verdict": "mixed",
+          "black": 0.2361,
+          "dark": 0.9182,
+          "lit": 0.658,
+          "solid_share": 0.2361,
+          "inner_share": 0.2045,
+          "hue_diff": 35.26
+        }
+      ]
+    },
+    {
+      "rule": "ramp_shape",
+      "ok": false,
+      "detail": "모양이 걸린 램프 11줄",
+      "items": [
+        {
+          "ramp": "line",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            19.71,
+            3.89
+          ],
+          "luma": [
+            29.4,
+            47.29,
+            48.31,
+            48.56,
+            83.27
+          ]
+        },
+        {
+          "ramp": "paper",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 5,
+          "padded": 0,
+          "hue_steps": [
+            4.65,
+            4.71,
+            0.93
+          ],
+          "luma": [
+            191.28,
+            218.81,
+            231.28,
+            237.29,
+            251.5
+          ]
+        },
+        {
+          "ramp": "pink",
+          "why": [
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            2.5,
+            3.81,
+            8.73
+          ],
+          "luma": [
+            139.87,
+            173.23,
+            190.18,
+            205.81
+          ]
+        },
+        {
+          "ramp": "navy",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            8.98,
+            25.49
+          ],
+          "luma": [
+            47.55,
+            57.98,
+            80.21
+          ]
+        },
+        {
+          "ramp": "sky",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            0.25
+          ],
+          "luma": [
+            124.89,
+            188.89,
+            231.59
+          ]
+        },
+        {
+          "ramp": "mozzi_yellow",
+          "why": [
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만",
+            "밝은 쪽이 따뜻한 쪽(노랑)으로 안 간다"
+          ],
+          "steps": 4,
+          "padded": 1,
+          "hue_steps": [
+            0.15,
+            0.59,
+            1.76
+          ],
+          "luma": [
+            153.5,
+            186.19,
+            201.37,
+            220.64
+          ]
+        },
+        {
+          "ramp": "food_redbean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            0.0,
+            1.11
+          ],
+          "luma": [
+            59.92,
+            81.1,
+            121.47
+          ]
+        },
+        {
+          "ramp": "food_mugwort",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            2.45,
+            9.36
+          ],
+          "luma": [
+            85.85,
+            122.58,
+            209.76
+          ]
+        },
+        {
+          "ramp": "food_bean",
+          "why": [
+            "단 수 3 (채운 칸 2 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 3,
+          "padded": 2,
+          "hue_steps": [
+            3.81,
+            1.38
+          ],
+          "luma": [
+            153.33,
+            198.03,
+            228.01
+          ]
+        },
+        {
+          "ramp": "food_cake",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [],
+          "luma": [
+            234.21,
+            251.17
+          ]
+        },
+        {
+          "ramp": "food_jujube",
+          "why": [
+            "단 수 2 (채운 칸 3 뺌) — 기본 은 4~6단",
+            "hue shift 없음 — 이웃 칸 색조 차가 모두 5° 미만"
+          ],
+          "steps": 2,
+          "padded": 3,
+          "hue_steps": [
+            1.41
+          ],
+          "luma": [
+            73.06,
+            100.13
+          ]
+        }
+      ]
+    }
+  ],
+  "info": [
+    {
+      "rule": "color_cap.table_merged",
+      "detail": "색 한도 표 : 기본 표 8·16·32·48·64 가 겹쳐 남았다 (통째로 쓰려면 table_mode: replace)"
+    },
+    {
+      "rule": "ramp_shape.single",
+      "detail": "한 색 램프 1줄 — 끝 색 되풀이를 접으면 1단이라 모양을 안 잰다",
+      "items": [
+        "food_sesame"
+      ]
+    }
+  ]
+}

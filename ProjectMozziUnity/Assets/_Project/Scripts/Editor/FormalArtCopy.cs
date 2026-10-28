@@ -69,7 +69,7 @@ namespace Mozzi.Editor
         {
             { "가판대/out/stall_bg_b", "Screen/stall_bg" },
             { "가판대/화풍통일/out/Screen/stall_counter", "Screen/stall_counter" },
-            { "가판대/화풍통일/out/Screen/stall_owner", "Screen/stall_owner" },
+            { "가판대/주인v12/out/Screen/stall_owner", "Screen/stall_owner" },   // 10-28 주인 v12 (손님 화풍 120×240)
             { "가판대/화풍통일/out/Screen/display_case", "Screen/display_case" },
             { "가판대/화풍통일/out/Screen/stall_prop_vase", "Screen/stall_prop_vase" },
             { "가판대/out/prop_register", "Screen/stall_prop_register" },

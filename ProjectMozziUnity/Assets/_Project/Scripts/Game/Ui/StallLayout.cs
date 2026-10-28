@@ -18,9 +18,9 @@ namespace Mozzi.Game.Ui
         public const float CounterX = -17f;
         public const float CounterY = 660f;
 
-        // 주인 그림 왼쪽 위. 허리 아래는 계산대 뒤로 숨는다. 문(x 364~507) 앞에 서서 왼쪽에서 오는 손님을 맞는다 (그림 125 폭 · 가운데 435).
+        // 주인 그림 왼쪽 위. 허리 아래는 계산대 뒤로 숨는다. 문(x 364~507) 앞에 서서 왼쪽에서 오는 손님을 맞는다 (그림 120×240 · 가운데 433 · 정본 정식/가판대/주인v12/README.md).
         public const float OwnerX = 373f;
-        public const float OwnerY = 518f;
+        public const float OwnerY = 498f;   // 10-28 v12 : 20 올려 분홍 소매 · 손이 계산대 윗면 위로 보이게
 
         // 장식 다섯 (그림만, 누름 없음)의 왼쪽 아래 끝. 정본 : 정식/반복08/README 「코드에 넘길 것」.
         // 벽 셋(액자 · 선반 · 등나무 접시)은 배경 바로 위, 바닥 둘(화분 · 칠판 간판)은 계산대 앞 · 손님 뒤다.

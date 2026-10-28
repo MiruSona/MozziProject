@@ -602,3 +602,25 @@
 - 주방 화면 (옛 「만들기 판」 을 대신한다) · 차림표 목록
 - 주인 등장 (기능목록 Won't #47 을 뒤집는다)
 - 길 위 손님 · 문으로 드나드는 애니메이션
+
+## 2026-10-28 — 가판대 주인 v12 · 손님 화풍으로 (시안만 · 게임에 안 넣음)
+
+- **왜** : 지금 주인장(`Screen/stall_owner.png` 125×174 · 정면 허리 위)은 잔 디테일 애니풍이라 손님(120×240 옆모습 SD)과 등신·밀도가 다르다. 사용자 결정(mem `20261028-ad71adb3`) : 시점은 정면 그대로, 캔버스는 손님과 같은 120×240 전신.
+- 파일 : `2026-10-28-가판대주인-v12-손님화풍.png` (윗줄 = [지금 · A · B · C] 각각 옆에 손님 조합 ×3, 발끝 맞춤 · 아랫줄 = 얼굴만 ×6).
+- 원본 : `Docs/Reference/Art/정식/가판대/raw/owner_v12_<A|B|C>_<씨앗>.png` · 손님 조합 `raw/customer_ref_1028.png` (body + shirt_green + face_01 + hair_01_brown).
+- 검사 : `arttool check --profile 화풍/profiles/mozzi_people.yaml` → `정식/가판대/화풍통일/check/check_people_owner_v12.json`. 여섯 장 모두 ok (반투명 0 · 색 40 이하).
+- 생성 6회 × 9 = **54**. 손으로 칠한 곳은 없다. **판정 대기.**
+
+| 후보 | 도구 · 씨앗 | 입력 | 색 수 | 키 (손님 214) | 남은 것 · 흠 |
+| --- | --- | --- | --- | --- | --- |
+| A | `create_image_pro_flash` 120×240 · **12102** (12101 버림 — 키 172 로 작음) | style = 손님 조합 (outline · shading · detail, 색은 안 따름) | 40 | 232 | 짝짝이 부츠 · 시스루 가슴 · 다이아 · 벚꽃 둘 다 남음. 외곽선 경고 `mixed` |
+| B | `edit_image_pro_flash` method=reference · **12201** | 바탕 = 손님 조합 · 참고 = `stall_owner` 를 120 폭으로 LANCZOS 축소(알파 0/255) 해 120×240 에 올림 | 17 | 213 | 키·발 자리가 손님과 같다. 부츠가 흰색 · 다이아가 작다. 외곽선 경고 `mixed` |
+| C | `create_image_pro_flash` 120×240 · **12303** (12301 · 12302 버림 — 키 180 · 185) | A 와 같음 | 34 | 178 | 다이아 · 벚꽃 · 초커 또렷. 세 번 다 손님보다 작게 나왔다 (발끝 217) |
+
+- 프롬프트 (A · 12102) : `super-deformed chibi girl cafe shop owner filling the whole tall canvas: the top of her beret touches near the top edge and her boots touch the bottom edge. 2 heads tall, big round head and small body, standing still, full body, facing front toward the viewer, arms down, cute round face. She wears a dark navy beret with two small pale pink cherry blossoms on its front, big purple eyes with white highlights, a small red diamond mark under one eye, long dusty salmon-pink hair (#DC949F mid tone, #F8BBC0 highlights) reaching her waist, black choker with a small pink flower, bare shoulders, sheer black mesh over her upper chest, white bustier top, off-shoulder dark charcoal sleeves with white hem, dark charcoal short skirt, mismatched pale lavender boots (one ankle boot, one knee-high boot). Simple flat 3-tone shading, light from the upper left, 1px dark warm brown outline, low detail, same size, proportions, line weight and pixel density as the reference customer sprite, pixel art game sprite` · max_colors 40
+  - style 쓰임 글 : `art style and size only: same character height on the canvas (top of head 26px from the top, feet at the bottom edge), head-to-body proportion, big round head, 1px dark brown outline, simple 3-tone shading, pixel density. Do not copy the side view, the hoodie, the hair or the colours.`
+  - 12101 은 첫 문장이 `… 2 heads tall, …` 로 시작하고 「캔버스를 채워라」 가 없었다.
+- 편집 글 (B) : `Same body proportions and art style as the source, but redraw as the reference girl facing the front: navy beret with two pink cherry blossoms, long salmon-pink hair to the waist, big purple eyes, small red diamond mark under one eye, black choker, white bustier, off-shoulder dark charcoal sleeves, dark charcoal short skirt, pale lavender boots. Front view, arms down, feet at the bottom.`
+  - 참고 쓰임 글 : `Keep the same body proportions, head size, height, outline and simple shading style of the source sprite, but turn the character to face the front and change her into the reference character: her navy beret with two pink cherry blossoms, long salmon-pink hair, face with big purple eyes and a small red diamond mark under one eye, black choker, white bustier, off-shoulder dark charcoal sleeves, dark charcoal skirt, pale lavender boots.`
+- 프롬프트 (C · 12303) : `tall full-body sprite that fills the whole 240px-tall canvas from top to bottom: beret top about 25px below the top edge, boots on the bottom edge. Super-deformed chibi girl shop owner, 2 heads tall, big round head and small body, front view facing the viewer, standing straight, arms down. MOST IMPORTANT identity details, all clearly visible: (1) a dark navy beret with TWO small pale pink cherry blossoms on the front; (2) one small solid red diamond (rhombus) mark #FA6270 on her cheek right under one eye; (3) very long dusty salmon-pink hair (#DC949F, highlights #F8BBC0) falling past her waist on both sides; (4) a black choker; (5) a white bustier top; (6) off-shoulder dark charcoal sleeves with bare shoulders; (7) a dark charcoal short skirt; pale lavender boots. Big purple eyes, small closed smile. Simple flat 3-tone shading, light from the upper left, 1px dark warm brown outline, low detail, same size, proportions and pixel density as the reference customer sprite, pixel art game sprite` · style 은 A 와 같음 · max_colors 40
+- **알게 된 것** : 10-03 v11 과 달리 이번 B(손님 몸 바탕 + 주인 참고)는 얼굴·옷이 주인으로 바뀌었다 — 참고 그림을 120×240 캔버스에 맞춰 준 덕으로 보인다. create 는 투명 배경이면 인물을 캔버스보다 작게 그리는 일이 잦다 (다섯 번 중 넷이 키 172~185).
