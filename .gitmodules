@@ -31,3 +31,6 @@
 [submodule "Tools/JudgeModel"]
 	path = Tools/JudgeModel
 	url = https://github.com/MiruSona/officina-judge-model.git
+[submodule "Tools/VFXTool"]
+	path = Tools/VFXTool
+	url = https://github.com/MiruSona/officina-vfx-tool.git
