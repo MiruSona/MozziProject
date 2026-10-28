@@ -11,6 +11,16 @@
       },
       "hash": "0b4c588ee75a07198841d92aab653e6b39445089"
     },
+    "com.officina.vfx": {
+      "version": "file:../../Tools/VFXTool/Unity/com.officina.vfx",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "17.3.0",
+        "com.unity.modules.particlesystem": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.2.2"
+      }
+    },
     "com.unity.2d.animation": {
       "version": "13.0.6",
       "depth": 0,
@@ -243,7 +253,7 @@
     },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.2.2",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
